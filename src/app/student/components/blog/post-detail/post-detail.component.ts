@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EndsWithHtmlGuard } from 'src/app/shared/guards/format/endsWithHtml.guard';
+import { EndsWithHtmlGuard } from 'src/app/student/shared/guards/endsWithHtml.guard';
 
 @Component({
   selector: 'app-post-detail',
