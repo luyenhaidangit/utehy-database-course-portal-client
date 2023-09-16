@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent as StudentLayoutComponent } from './student/shared/components/layout/layout.component';
+import { LayoutComponent as TeacherLayoutComponent } from './teacher/shared/components/layout/layout.component';
 import { LayoutComponent as AdminLayoutComponent } from './admin/shared/components/layout/layout.component';
 
 const routes: Routes = [
@@ -8,6 +9,11 @@ const routes: Routes = [
     path: '',
     component: StudentLayoutComponent,
     loadChildren: () => import('./student/student.module').then((m) => m.StudentModule),
+  },
+  {
+    path: 'teacher',
+    component: TeacherLayoutComponent,
+    loadChildren: () => import('./teacher/teacher.module').then((m) => m.TeacherModule),
   },
   {
     path: 'admin',
