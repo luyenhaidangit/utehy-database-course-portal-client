@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutComponent as StudentLayoutComponent } from './student/shared/components/layout/layout.component';
-import { LayoutComponent as TeacherLayoutComponent } from './teacher/shared/components/layout/layout.component';
-import { LayoutComponent as AdminLayoutComponent } from './admin/shared/components/layout/layout.component';
+import { StudentComponent } from './student/student.component';
+import { TeacherComponent } from './teacher/teacher.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: StudentLayoutComponent,
+    component: StudentComponent,
     loadChildren: () => import('./student/student.module').then((m) => m.StudentModule),
   },
   {
     path: 'teacher',
-    component: TeacherLayoutComponent,
+    component: TeacherComponent,
     loadChildren: () => import('./teacher/teacher.module').then((m) => m.TeacherModule),
   },
   {
     path: 'admin',
-    component: AdminLayoutComponent,
+    component: AdminComponent,
     loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
   },
 ];
