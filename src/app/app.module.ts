@@ -14,13 +14,14 @@ import { LoadingBarModule } from '@ngx-loading-bar/core';
 
 import { ToastrModule } from 'ngx-toastr';
 
+import { SocialLoginModule } from '@abacritt/angularx-social-login';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SocialAuthConfig } from './student/configs/social-auth.config';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,9 +34,15 @@ import { AppComponent } from './app.component';
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
     LoadingBarModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    SocialLoginModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: SocialAuthConfig,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

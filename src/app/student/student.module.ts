@@ -12,12 +12,18 @@ import { AuthGoogleComponent } from './components/auth/auth-google/auth-google.c
 import { AuthFacebookComponent } from './components/auth/auth-facebook/auth-facebook.component';
 import { AuthGithubComponent } from './components/auth/auth-github/auth-github.component';
 
-
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, FooterComponent, StudentComponent, AuthComponent, AuthEmailPhoneComponent, AuthGoogleComponent, AuthFacebookComponent, AuthGithubComponent],
-  imports: [
-    CommonModule,
-    StudentRoutingModule
-  ]
+  declarations: [
+    LayoutComponent,
+    HeaderComponent,
+    FooterComponent,
+    StudentComponent,
+    AuthComponent,
+    AuthEmailPhoneComponent,
+    AuthGoogleComponent,
+    AuthFacebookComponent,
+    AuthGithubComponent,
+  ],
+  imports: [CommonModule, StudentRoutingModule],
 })
-export class StudentModule { }
+export class StudentModule {}
