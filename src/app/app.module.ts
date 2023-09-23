@@ -7,6 +7,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
@@ -31,6 +32,7 @@ import { SocialAuthConfig } from './student/configs/social-auth.config';
     OverlayModule,
     HttpClientModule,
     ModalModule.forRoot(),
+    CarouselModule.forRoot(),
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
     LoadingBarModule,
