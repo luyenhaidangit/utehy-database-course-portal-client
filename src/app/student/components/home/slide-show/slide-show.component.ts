@@ -7,10 +7,14 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None,
 })
 export class SlideShowComponent {
-  public itemsPerSlide = 1;
-  public singleSlideOffset = false;
-  public noWrap = false;
-  public cycleInterval = 3000;
+  public slideConfig = {
+    itemsPerSlide: 1,
+    singleSlideOffset: false,
+    noWrap: false,
+    cycleInterval: 5000,
+    startIndex: 0,
+  };
+
   public slides = [
     { image: 'https://files.fullstack.edu.vn/f8-prod/banners/Banner_04_2.png' },
     {

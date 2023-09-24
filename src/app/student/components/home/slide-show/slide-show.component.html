@@ -1,11 +1,11 @@
 <div class="slide-show">
   <div class="slide-show__wrapper">
     <carousel
-      [itemsPerSlide]="itemsPerSlide"
-      [singleSlideOffset]="singleSlideOffset"
-      [noWrap]="noWrap"
-      [interval]="5000"
-      [startFromIndex]="0"
+      [itemsPerSlide]="slideConfig.itemsPerSlide"
+      [singleSlideOffset]="slideConfig.singleSlideOffset"
+      [noWrap]="slideConfig.noWrap"
+      [interval]="slideConfig.cycleInterval"
+      [startFromIndex]="slideConfig.startIndex"
     >
       <slide
         *ngFor="let slide of slides; let index = index"
