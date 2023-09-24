@@ -4,8 +4,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
   selector: 'app-student',
   templateUrl: './student.component.html',
   styleUrls: ['./student.component.css'],
-  encapsulation: ViewEncapsulation.ShadowDom
+  encapsulation: ViewEncapsulation.None,
 })
-export class StudentComponent {
-
-}
+export class StudentComponent {}

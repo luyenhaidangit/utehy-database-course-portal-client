@@ -1,116 +1,100 @@
 @import url("~bootstrap/dist/css/bootstrap.min.css");
-* {
+@import url("~bootstrap-icons/font/bootstrap-icons.min.css");
+
+:root {
   --primary-color: #f05123;
-  --primary-color-2: #f05024a4;
-  --primary-color-hover: #d97053ce;
-  --bs-border-primary: #f04f23cf;
-
-  --bs-black: #000;
-  --bs-white: #fff;
-  --bs-blue: #0d6efd;
-  --bs-indigo: #6610f2;
-  --bs-purple: #6f42c1;
-  --bs-pink: #d63384;
-  --bs-red: #dc3545;
-  --bs-orange: #fd7e14;
-  --bs-yellow: #ffc107;
-  --bs-green: #198754;
-  --bs-teal: #20c997;
-  --bs-cyan: #0dcaf0;
-
-  --bs-gray-100: #f8f9fa;
-  --bs-gray-200: #e9ecef;
-  --bs-gray-300: #dee2e6;
-  --bs-gray-400: #ced4da;
-  --bs-gray-500: #adb5bd;
-  --bs-gray-600: #6c757d;
-  --bs-gray-700: #495057;
-  --bs-gray-800: #343a40;
-  --bs-gray-900: #212529;
-  --bs-secondary: #6c757d;
-
-  --text-color-1: #fefefe;
-  --text-color-2: #dae4f0;
-  --text-color-3: #808b9a;
-  --text-color-4: #4e586b;
-  --text-color-5: #323c4a;
-  --text-color-6: #2e3441;
-  --text-color-7: #424242;
-  --text-color-8: #333;
-  --text-color-9: #25272a;
-  --bs-span-1: #106eea;
-  --bs-span-2: #1473e6;
-  --bs-span-3: #4080ff;
-  --p-color-1: #0093fc;
-  --p-color-2: #808b9a;
-  --p-color-3: #4e586b;
-  --p-color-4: #45494f;
-
-  --bg-1: #fbfdff;
-  --bg-2: #f6f7f9;
-  --bg-3: #f2f9ff;
-  /* --bg-4: #eef4fc; */
-  --bg-5: #eaedf2;
-  --bg-6: #c9fffc;
-  --bg-7: #0093fc;
-
-  --bs-light: #f8f9fa;
-  --light-icon-color: #919191;
-
-  --bs-success: #198754;
-  --bs-warning: #ffc107;
-  --bs-danger: #dc3545;
-  --bs-error: #a31515;
-
-  --table-border-color: #ccc;
-  --border-color-1: #e7e7e7;
-  --border-color-2: #bdc6dc;
-  --border-color-3: #bdc6dc;
-  --border-color-white: #191d1e;
-  --border-bottom-color: #e4eef0;
-
-  --font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-
+  --black-color: #000;
+  --white-color: #fff;
+  --gray-color: #666;
+  --text-color: #333;
+  --plum-color: #b80257;
+  --fb-color: #4080ff;
+  --mail-color: #f47425;
+  --invalid-color: #f33a58;
+  --desc-color: #0000008a;
+  --first-color: #1dbfaf;
+  --second-color: #1dbfaf;
+  --button-color: #1dbfaf;
   --button-image: linear-gradient(70.06deg, #2cccff -5%, #22dfbf 106%);
-
-  --bg-gradient-0: linear-gradient(#14ffe9, #ffeb3b, #ff00e0);
-  --bg-gradient-1: linear-gradient(
-    to bottom,
-    rgb(255, 255, 255) 60%,
-    rgba(0, 0, 0, 0)
-  );
-
-  --bg-gradient-3: linear-gradient(#fbfdff, #fbfdff) padding-box,
-    linear-gradient(180deg, #5ebbff, #a174ff 40%) border-box;
-  --bg-gradient-4: linear-gradient(rgb(251, 253, 255), rgb(251, 253, 255))
-      padding-box padding-box,
-    linear-gradient(rgb(94, 187, 255) 0%, rgb(161, 116, 255) 40%) border-box
-      border-box;
-  --bg-gradient-5: linear-gradient(
-    115deg,
-    #feed07 0%,
-    #fe6a50 5%,
-    #ed00aa 15%,
-    #2fe3fe 50%,
-    #8900ff 100%
-  );
-  --bg-gradient-6: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
-  --bs-disabled: #e9e9e9;
+  --system-ui: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --font-code: "SF Mono", monospace;
-  --box-shadow-light: rgb(83 68 40 / 20%) 0px 0px 12px 0.02px,
-    inset rgb(83 68 40 / 20%) 0px 0px 2px 0.02px;
   --home-slideshow-left-space: 116px;
   --home-section-left-space: 160px;
-  --navbar-button-hovered-color: #ffe4ef;
 }
 
-a {
-  text-decoration: none;
+*,
+::after,
+::before {
+  box-sizing: inherit;
 }
 
-ul {
-  list-style: none;
+:root,
+:host {
+  --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Solid";
+  --fa-font-regular: normal 400 1em/1 "Font Awesome 6 Regular";
+  --fa-font-light: normal 300 1em/1 "Font Awesome 6 Light";
+  --fa-font-thin: normal 100 1em/1 "Font Awesome 6 Thin";
+  --fa-font-duotone: normal 900 1em/1 "Font Awesome 6 Duotone";
+  --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands";
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.15;
+}
+
+body {
+  font-family: var(--system-ui);
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  overflow-y: auto;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  -webkit-user-drag: none;
+  -ms-content-zooming: none;
+}
+
+@media (min-width: 1024px) {
+  html::-webkit-scrollbar {
+    border-radius: 0;
+    height: 8px;
+    width: 8px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+  }
+}
+
+@media (min-width: 1024px) {
+}
+html ::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 0;
+}
+
+::selection {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+button,
+input {
+  overflow: visible;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
 }
