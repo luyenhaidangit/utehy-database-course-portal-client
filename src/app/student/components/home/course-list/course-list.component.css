@@ -1,0 +1,42 @@
+.home_wrapper{
+    background-color: antiquewhite;
+    height: 1000px;
+    margin: 70px 0 0;
+}
+.ScrollList_label__moi {
+    background-color: #1473e6;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 3px 6px;
+    position: relative;
+    right: -8px;
+    text-transform: uppercase;
+    top: -6px;
+}
+.ScrollList_body__iMN-l {
+    min-height: 200px;
+    padding-bottom: 0;
+}
+.index-module_row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -4px;
+    margin-right: -4px;
+}
+
+.index-module_l-3{
+    width: 25%;
+}
+
+@media (min-width: 1113px)
+{
+
+}
+
+@media (min-width: 740px){
+
+
+
+}
