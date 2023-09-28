@@ -1,0 +1,32 @@
+<div class="slide-show">
+  <div class="slide-show__wrapper">
+    <carousel
+      [itemsPerSlide]="slideConfig.itemsPerSlide"
+      [singleSlideOffset]="slideConfig.singleSlideOffset"
+      [noWrap]="slideConfig.noWrap"
+      [interval]="slideConfig.cycleInterval"
+      [startFromIndex]="slideConfig.startIndex"
+    >
+      <slide
+        *ngFor="let slide of slides; let index = index"
+        class="mx-auto slide-show__item"
+      >
+        <div class="slide-show__item-left">
+          <h2 class="slide-show__item-left__title">Học ReactJs Miễn Phí!</h2>
+          <p class="slide-show__item-left__description">
+            F8 được nhắc tới ở mọi nơi, ở đâu có cơ hội việc làm cho nghề IT và
+            có những con người yêu thích lập trình F8 sẽ ở đó.
+          </p>
+          <span class="slide-show__item-left__btn">Đăng ký ngay</span>
+        </div>
+        <div class="slide-show__item-right">
+          <img
+            [src]="slide.image"
+            class="img-fluid"
+            alt="slide-show__item-img"
+          />
+        </div>
+      </slide>
+    </carousel>
+  </div>
+</div>

@@ -11,6 +11,7 @@ import { AuthEmailPhoneComponent } from './components/auth/auth-email-phone/auth
 import { AuthGoogleComponent } from './components/auth/auth-google/auth-google.component';
 import { AuthFacebookComponent } from './components/auth/auth-facebook/auth-facebook.component';
 import { AuthGithubComponent } from './components/auth/auth-github/auth-github.component';
+import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AuthGithubComponent } from './components/auth/auth-github/auth-github.c
     AuthGoogleComponent,
     AuthFacebookComponent,
     AuthGithubComponent,
+    SidebarComponent,
   ],
   imports: [CommonModule, StudentRoutingModule],
 })

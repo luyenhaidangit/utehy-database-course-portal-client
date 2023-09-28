@@ -7,6 +7,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
@@ -32,6 +33,7 @@ import { ErrorInterceptor } from './_interceptors/error.interceptor';
     OverlayModule,
     HttpClientModule,
     ModalModule.forRoot(),
+    CarouselModule.forRoot(),
     LoadingBarHttpClientModule,
     LoadingBarRouterModule,
     LoadingBarModule,

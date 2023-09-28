@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { HomeRoutingModule } from './home-routing.module';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
+import { HomeRoutingModule } from './home-routing.module';
+import { SlideShowComponent } from './slide-show/slide-show.component';
+import { HomeComponent } from './home.component';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    HomeRoutingModule
-  ]
+  declarations: [HomeComponent, SlideShowComponent],
+  imports: [CommonModule, HomeRoutingModule, CarouselModule.forRoot()],
 })
-export class HomeModule { }
+export class HomeModule {}
