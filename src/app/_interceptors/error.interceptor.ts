@@ -47,6 +47,9 @@ export class ErrorInterceptor implements HttpInterceptor {
               };
               this.router.navigateByUrl('/server-error');
               break;
+            case 503:
+              this.router.navigateByUrl('/server-maintenance');
+              break;
             default:
               this.toastr.error('Something unexpected went wrong');
               console.log(error);

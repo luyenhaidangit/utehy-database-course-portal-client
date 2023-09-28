@@ -6,6 +6,10 @@ import { AdminComponent } from './admin/admin.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { TestErrorComponent } from './errors/test-error/test-error.component';
+import { Error404Component } from './student/shared/components/error/error404/error404.component';
+import { Error400Component } from './student/shared/components/error/error400/error400.component';
+import { Error500Component } from './student/shared/components/error/error500/error500.component';
+import { Error503Component } from './student/shared/components/error/error503/error503.component';
 
 const routes: Routes = [
   {
@@ -26,9 +30,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
   },
-  { path: 'errors', component: TestErrorComponent },
-  { path: 'not-found', component: NotFoundComponent },
-  { path: 'server-error', component: ServerErrorComponent },
+  { path: 'errors', component: Error400Component },
+  { path: 'not-found', component: Error404Component },
+  { path: 'server-error', component: Error500Component },
+  { path: 'server-maintenance', component: Error503Component },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' },
 ];
 
