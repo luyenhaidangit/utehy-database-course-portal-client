@@ -9,11 +9,21 @@
 
 .main-content {
   max-width: calc(100% - 96px);
-  padding: 0 40px 0 20px;
+  padding: 0 28px 0 20px;
   flex: 1 1;
 }
 
+@media (max-width: 1171px) {
+  .main-content {
+    max-width: calc(100% - 160px);
+  }
+}
+
 @media (max-width: 1023px) {
+  .main-app {
+    display: unset;
+  }
+
   .main-content {
     max-width: 100%;
     padding: 0 20px;

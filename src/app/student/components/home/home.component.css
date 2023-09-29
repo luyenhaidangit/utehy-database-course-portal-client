@@ -1,0 +1,6 @@
+.home-wrapper {
+  margin-top: 16px;
+  overflow: hidden;
+  /* max-width: calc(100% - 60px); */
+  /* max-width: 920px; */
+}
