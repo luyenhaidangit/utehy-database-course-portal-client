@@ -1,9 +1,11 @@
-.home_wrapper{
-    /* background-color: antiquewhite; */
-    /* height: 1000px; */
+.ScrollList_vertical{
     margin: 70px 0 0;
     padding: 0 44px 74px;
     overflow: hidden;
+}
+.ScrollList_body {
+    min-height: 200px;
+    padding-bottom: 0;
 }
 *{
     box-sizing: border-box;
@@ -16,7 +18,7 @@ a {
     background-color: transparent;
 }
 a:-webkit-any-link {
-    color: -webkit-link;
+    /* color: -webkit-link; */
     cursor: pointer;
     text-decoration: none;
     
@@ -36,37 +38,19 @@ a:focus, a:hover, a:visited {
     margin-right: auto;
     margin-top: 16px;
 }
-.ScrollList_label__moi {
-    background-color: #1473e6;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 1.2rem;
-    font-weight: 500;
-    padding: 3px 6px;
-    position: relative;
-    right: -8px;
-    text-transform: uppercase;
-    top: -6px;
-}
-.ScrollList_body__iMN-l {
-    min-height: 200px;
-    padding-bottom: 0;
-}
-
 .CommonItem_thumb{
     width: 100%;
     height: 100%;
 }
-.CourseItem_old-price {
-    font-size: 1rem;
-    margin-right: 8px;
-    text-decoration: line-through;
-    color: red;
-    font-size: 1rem;
-    font-weight: 600;
+.CommonItem_link {
+    border-radius: 16px;
+    display: block;
+    object-fit: cover;
+    overflow: hidden;
+    /* padding-top: 56.25%; */
+    position: relative;
+    width: 100%;
 }
-
-
 .CommonItem_cta-btn__OK{
     background-color: #fff;
     border-color: #fff;
@@ -100,29 +84,6 @@ a:focus, a:hover, a:visited {
     user-select: none;
     white-space: nowrap;
 }
-.CommonItem_link {
-    border-radius: 16px;
-    display: block;
-    object-fit: cover;
-    overflow: hidden;
-    /* padding-top: 56.25%; */
-    position: relative;
-    width: 100%;
-}
-.Home_courseItem{
-    position: relative;
-}
-.CourseItem_pro-icon {
-    background-color: rgba(0,0,0,.3);
-    border-radius: 8px;
-    left: 12px;
-    padding: 5px;
-    pointer-events: none;
-    position: absolute;
-    top: 12px;
-    width: 26px;
-    z-index: 10;
-}
 .CommonItem_link.CommonItem_has-link::after {
     background-color: rgba(0,0,0,.5);
     border-radius: 16px;
@@ -145,9 +106,76 @@ a:focus, a:hover, a:visited {
     visibility: visible;
     top:50%;
 }
+.ScrollList_heading-wrap {
+    align-items: baseline;
+    display: flex;
+    position: relative;
+}
+.ScrollList_heading a{
+    align-items: baseline;
+    display: flex;
+    position: relative;
+}
+.ScrollList_view-all {
+    background-color: transparent;
+    color: var(--primary-color);
+    color: #f05123;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-right: 4px;
+    padding: 8px 0 8px 8px;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: absolute;
+    top: 5px;
+    right: 0;
+    display: flex;
+}
 .CommonItem_title{
     font-size: 1rem;
 }
+.CommonItem_title a, .CommonItem_title span {
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    color: #292929;
+    display: -webkit-box;
+    font-size: 1rem;
+    line-height: 1.4;
+    overflow: hidden;
+}
+
+.CourseItem_students-count{
+    color: #666;
+    font-size: 1rem;
+}
+.svg-inline--fa {
+    display:  inline-block;
+    height: 1em;
+    overflow: visible;
+    vertical-align: -0.125em;
+}
+.ScrollList_view-all svg {
+    font-size: 1.2rem;
+    margin-left: 4px;
+    position: relative;
+    top: 3px;
+    transition: .3s ease;
+}
+.fa-arrow-right, .fa-chevron-right{
+    display: inline-block;
+    height: 0.7em;
+    overflow: visible;
+    vertical-align: -0.125em;
+}
+
+
+
+
+
+
 
 /* repon */
 
@@ -157,13 +185,14 @@ a:focus, a:hover, a:visited {
     padding-left: 12px;
     padding-right: 12px;
 }
-
 .index-module_row {
     margin-left: -12px;
     margin-right: -12px;
     display: flex;
     flex-wrap: wrap;
 }
+
+
 
 @media (max-width: 1023px) {
     .index-module_row {
@@ -209,13 +238,15 @@ a:focus, a:hover, a:visited {
 
 
 
-    /* .index-module_row  {
-        flex-shrink: 0;
-        margin-bottom: 32px;
-        overflow: hidden;
-    } */
 
-  
+
+
+
+
+
+
+
+
 
 
 
