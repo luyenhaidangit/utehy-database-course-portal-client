@@ -10,6 +10,10 @@ import { HomeComponent } from './home.component';
 import { CourseFreeComponent } from './course-free/course-free.component';
 import { FeaturedPostComponent } from './featured-post/featured-post.component';
 import { FeaturedVideoComponent } from './featured-video/featured-video.component';
+import { CourseListComponent } from './course-list/course-list.component';
+import { CourseListFreeComponent } from './course-list-free/course-list-free.component';
+import { PostImpressiveComponent } from './post-impressive/post-impressive.component';
+import { VideoOutstandComponent } from './video-outstand/video-outstand.component';
 
 @NgModule({
   declarations: [
