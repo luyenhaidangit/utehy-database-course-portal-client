@@ -23,6 +23,10 @@ import { VideoOutstandComponent } from './video-outstand/video-outstand.componen
     CourseFreeComponent,
     FeaturedPostComponent,
     FeaturedVideoComponent,
+    CourseListComponent,
+    CourseListFreeComponent,
+    PostImpressiveComponent,
+    VideoOutstandComponent,
   ],
   imports: [CommonModule, HomeRoutingModule, CarouselModule.forRoot()],
 })
