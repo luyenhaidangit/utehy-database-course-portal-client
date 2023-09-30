@@ -33,18 +33,11 @@
   padding-bottom: 0;
 }
 
-.course-pro__body > div {
-  gap: 16px;
-}
-
-.course-pro__item {
-  min-width: 240px;
-}
-
 .course-pro__item-wrapper {
   overflow: unset;
   position: relative;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
+  padding: 0 8px;
 }
 
 .course-pro__item-link {
@@ -117,7 +110,6 @@
 .course-pro__item-link > img::after {
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 16px;
-  content: "klfdslfkjslkf";
   position: absolute;
   transition: all 0.3s ease 0s;
 }
@@ -135,11 +127,11 @@
 .course-pro__item-icon {
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 8px;
-  left: 12px;
+  left: 20px;
   padding: 5px;
   pointer-events: none;
   position: absolute;
-  top: 6px;
+  top: 10px;
   width: 20px;
   display: flex;
   justify-content: center;
@@ -170,7 +162,11 @@
   }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 992px) {
+  .course-pro__item-wrapper {
+    min-width: 240px;
+  }
+
   .course-pro__body-wrapper {
     flex-wrap: nowrap;
     overflow: auto;

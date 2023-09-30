@@ -1,5 +1,6 @@
 @import url("~bootstrap/dist/css/bootstrap.min.css");
 @import url("~bootstrap-icons/font/bootstrap-icons.min.css");
+@import url("~@fortawesome/fontawesome-free/css/all.min.css");
 
 :root {
   --primary-color: #f05123;
