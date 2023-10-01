@@ -114,3 +114,20 @@ li {
 .cursor-pointer {
   cursor: pointer !important;
 }
+
+.student-header__default-title {
+  color: #242424;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-right: auto;
+  word-wrap: break-word;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  color: #292929;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+.student-paragraphs__default-text {
+  font-size: 0.9rem;
+}
