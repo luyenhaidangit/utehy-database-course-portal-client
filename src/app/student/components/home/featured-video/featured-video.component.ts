@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './featured-video.component.html',
   styleUrls: [
     './featured-video.component.css',
-    '../course-pro/course-pro.component.css',
     '../course-free/course-free.component.css',
   ],
 })

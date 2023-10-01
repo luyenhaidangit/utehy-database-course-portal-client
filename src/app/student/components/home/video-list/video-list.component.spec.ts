@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CourseProComponent } from './course-pro.component';
+import { VideoListComponent } from './video-list.component';
 
-describe('CourseProComponent', () => {
-  let component: CourseProComponent;
-  let fixture: ComponentFixture<CourseProComponent>;
+describe('VideoListComponent', () => {
+  let component: VideoListComponent;
+  let fixture: ComponentFixture<VideoListComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CourseProComponent]
+      declarations: [VideoListComponent]
     });
-    fixture = TestBed.createComponent(CourseProComponent);
+    fixture = TestBed.createComponent(VideoListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -177,6 +177,6 @@
   }
 
   .course-pro__item {
-    max-width: unset;
+    max-width: 260px;
   }
 }
