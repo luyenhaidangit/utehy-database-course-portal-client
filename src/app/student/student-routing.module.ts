@@ -20,6 +20,11 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'course',
+    loadChildren: () =>
+      import('./components/course-detail/course-detail.module').then((m) => m.CourseDetailModule),
+  },
+  {
     path: 'error',
     loadChildren: () =>
       import('./shared/components/error/error.module').then(

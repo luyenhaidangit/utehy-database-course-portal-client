@@ -13,7 +13,6 @@ import { AuthFacebookComponent } from './components/auth/auth-facebook/auth-face
 import { AuthGithubComponent } from './components/auth/auth-github/auth-github.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { NewsFeedComponent } from './shared/components/news-feed/news-feed.component';
-import { CourseDetailComponent } from './components/course-detail/course-detail.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +27,6 @@ import { CourseDetailComponent } from './components/course-detail/course-detail.
     AuthGithubComponent,
     SidebarComponent,
     NewsFeedComponent,
-    CourseDetailComponent,
   ],
   imports: [CommonModule, StudentRoutingModule],
 })
