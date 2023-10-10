@@ -1,21 +1,32 @@
-<!-- <button type="button" class="btn btn-primary" (click)="openModal()">
-  Create template modal
-</button> -->
-
 <ng-template #template>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Modal</h4>
-    <button
-      type="button"
-      class="btn-close close pull-right"
-      aria-label="Close"
-      (click)="modalRef?.hide()"
-    >
-      <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
+  <div class="modal-header border-0 d-flex flex-column">
+    <div class="d-flex justify-content-end w-100">
+      <i
+        class="fa-solid fa-xmark auth-modal__close-btn"
+        (click)="modalRef?.hide()"
+      ></i>
+    </div>
+    <div class="d-flex flex-column align-items-center w-100">
+      <img
+        class="auth-modal__logo-btn"
+        src="https://accounts.fullstack.edu.vn/assets/icon/f8_icon.png"
+        alt="F8"
+      />
+      <h1 class="auth-modal__title">Chào mừng đến với F8</h1>
+    </div>
   </div>
-  <div class="modal-body">
-    This is a modal.
+  <div class="modal-body d-flex flex-column align-items-center">
+    <app-auth-email-phone></app-auth-email-phone>
+    <app-auth-google></app-auth-google>
     <app-auth-facebook></app-auth-facebook>
+    <app-auth-github></app-auth-github>
+    <div class="auth-modal__register">
+      Bạn chưa có tài khoản? <span>Đăng ký</span>
+    </div>
+    <div class="auth-modal__term">
+      Việc bạn tiếp tục sử dụng trang web này đồng nghĩa bạn đồng ý với
+      <span>điều khoản sử dụng</span>
+      của chúng tôi.
+    </div>
   </div>
 </ng-template>
