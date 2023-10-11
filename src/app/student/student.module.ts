@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CountdownModule } from 'ngx-countdown';
 
 import { StudentRoutingModule } from './student-routing.module';
 import { LayoutComponent } from './shared/components/layout/layout.component';
@@ -13,6 +14,7 @@ import { AuthFacebookComponent } from './components/auth/auth-facebook/auth-face
 import { AuthGithubComponent } from './components/auth/auth-github/auth-github.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { NewsFeedComponent } from './shared/components/news-feed/news-feed.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,6 @@ import { NewsFeedComponent } from './shared/components/news-feed/news-feed.compo
     SidebarComponent,
     NewsFeedComponent,
   ],
-  imports: [CommonModule, StudentRoutingModule],
+  imports: [CommonModule, StudentRoutingModule, FormsModule, CountdownModule],
 })
 export class StudentModule {}

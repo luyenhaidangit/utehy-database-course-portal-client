@@ -1,7 +1,69 @@
-<div class="auth-modal__sign-wrapper">
-  <img
-    class="auth-modal__sign-icon"
-    src="https://accounts.fullstack.edu.vn/assets/images/signin/personal-18px.svg"
-    alt="Đăng nhập với personal"
-  /><span class="auth-modal__sign-button">Sử dụng email / số điện thoại</span>
-</div>
+<form (ngSubmit)="onSubmitFormLoginPhone()">
+  <div class="d-flex justify-content-between align-items-center">
+    <label class="auth-phone__label">Số điện thoại</label>
+    <label class="auth-phone__label">Đăng nhập với email</label>
+  </div>
+  <div class="auth-phone__input-wrapper mb-3">
+    <div class="auth-phone__input d-flex align-items-center">
+      <div class="auth-phone__input-select">
+        <div class="auth-phone__input-select__phone">
+          <span>VN +84</span>
+        </div>
+      </div>
+      <input
+        class="auth-phone__input-form"
+        placeholder="Số điện thoại"
+        name="phone"
+        maxlength="12"
+        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+        [(ngModel)]="numberPhone"
+      />
+    </div>
+  </div>
+  <div class="auth-phone__input-wrapper mb-4">
+    <div class="auth-phone__input d-flex align-items-center w-100">
+      <input
+        class="auth-phone__input-form"
+        type="text"
+        placeholder="Nhập mã xác nhận"
+        name="otp"
+        maxlength="6"
+        value=""
+        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+        [disabled]="numberPhone.length < 9 || !requestedSendOtp"
+        [(ngModel)]="otp"
+      />
+      <div
+        class="auth-phone__input-send-btn {{
+          numberPhone.length < 9 ||
+          statusViewPhone === authConstant.statusViewPhoneSendOtp
+            ? 'disable'
+            : ''
+        }}"
+        (click)="handleRequestSendOtp()"
+      >
+        <span *ngIf="statusViewPhone === authConstant.statusViewPhoneNotSendOtp"
+          >Gửi mã
+        </span>
+        <span *ngIf="statusViewPhone === authConstant.statusViewPhoneSendOtp"
+          >Gửi lại mã
+          <countdown
+            #countdown
+            [config]="config"
+            (event)="handleCountdownEvent($event)"
+          ></countdown
+        ></span>
+      </div>
+    </div>
+  </div>
+  <div class="auth-phone__input-wrapper">
+    <button
+      type="submit"
+      class="auth-phone__input-submit d-flex align-items-center w-100 {{
+        numberPhone.length < 9 || otp.length !== 6 ? 'disable' : ''
+      }}"
+    >
+      <span>Đăng nhập</span>
+    </button>
+  </div>
+</form>
