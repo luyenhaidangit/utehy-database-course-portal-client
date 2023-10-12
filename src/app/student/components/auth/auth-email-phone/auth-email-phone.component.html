@@ -1,7 +1,19 @@
-<form (ngSubmit)="onSubmitFormLoginPhone()">
+<form
+  *ngIf="authView === authConstant.viewPhone"
+  (ngSubmit)="onSubmitFormLoginPhone()"
+>
   <div class="d-flex justify-content-between align-items-center">
     <label class="auth-phone__label">Số điện thoại</label>
-    <label class="auth-phone__label">Đăng nhập với email</label>
+    <label
+      (click)="
+        changeViewEvent.emit({
+          title: authConstant.titleLoginEmailPhone,
+          view: authConstant.viewEmail
+        })
+      "
+      class="auth-phone__label"
+      >Đăng nhập với email</label
+    >
   </div>
   <div class="auth-phone__input-wrapper mb-3">
     <div class="auth-phone__input d-flex align-items-center">
@@ -61,6 +73,60 @@
       type="submit"
       class="auth-phone__input-submit d-flex align-items-center w-100 {{
         numberPhone.length < 9 || otp.length !== 6 ? 'disable' : ''
+      }}"
+    >
+      <span>Đăng nhập</span>
+    </button>
+  </div>
+</form>
+
+<form
+  *ngIf="authView === authConstant.viewEmail"
+  (ngSubmit)="onSubmitFormLoginEmail()"
+>
+  <div class="d-flex justify-content-between align-items-center">
+    <label class="auth-phone__label">Email</label>
+    <label
+      (click)="
+        changeViewEvent.emit({
+          title: authConstant.titleLoginEmailPhone,
+          view: authConstant.viewPhone
+        })
+      "
+      class="auth-phone__label"
+      >Đăng nhập với SĐT</label
+    >
+  </div>
+  <div class="auth-phone__input-wrapper mb-3">
+    <div class="auth-phone__input d-flex align-items-center w-100">
+      <input
+        class="auth-phone__input-form w-100"
+        placeholder="Địa chỉ email"
+        name="email"
+        maxlength="50"
+        [(ngModel)]="email"
+      />
+    </div>
+  </div>
+  <div class="auth-phone__input-wrapper mb-4">
+    <div class="auth-phone__input d-flex align-items-center w-100">
+      <input
+        class="auth-phone__input-form w-100"
+        type="password"
+        placeholder="Mật khẩu"
+        name="password"
+        autocomplete="password"
+        [(ngModel)]="password"
+      />
+    </div>
+  </div>
+  <div class="auth-phone__input-wrapper w-100">
+    <button
+      type="submit"
+      class="auth-phone__input-submit d-flex align-items-center w-100 {{
+        !validationHelper.isEmailValid(email) || password.length < 4
+          ? 'disable'
+          : ''
       }}"
     >
       <span>Đăng nhập</span>

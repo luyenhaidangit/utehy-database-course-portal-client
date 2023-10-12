@@ -2,11 +2,17 @@
   <div class="modal-header border-0 d-flex flex-column">
     <div
       class="modal-header__icon d-flex justify-content-end {{
-        authView === authConstant.viewPhone ? 'justify-content-between' : ''
+        authView === authConstant.viewPhone ||
+        authView === authConstant.viewEmail
+          ? 'justify-content-between'
+          : ''
       }} w-100"
     >
       <i
-        *ngIf="authView === authConstant.viewPhone"
+        *ngIf="
+          authView === authConstant.viewPhone ||
+          authView === authConstant.viewEmail
+        "
         (click)="
           changeViewAuth(authConstant.titleDefault, authConstant.viewDefault)
         "
@@ -54,7 +60,12 @@
     </div>
     <div class="modal-body__wrapper">
       <app-auth-email-phone
-        *ngIf="authView === authConstant.viewPhone"
+        *ngIf="
+          authView === authConstant.viewPhone ||
+          authView === authConstant.viewEmail
+        "
+        [authView]="authView"
+        (changeViewEvent)="changeViewAuth($event.title, $event.view)"
       ></app-auth-email-phone>
     </div>
     <div class="modal-body__wrapper">

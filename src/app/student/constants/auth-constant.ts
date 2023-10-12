@@ -6,6 +6,7 @@ const authConstant = {
   //View
   viewDefault: 1,
   viewPhone: 2,
+  viewEmail: 3,
 
   //Status View
   statusViewPhoneNotSendOtp: 1,

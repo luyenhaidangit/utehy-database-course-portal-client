@@ -8,6 +8,7 @@ import {
 import authConstant from 'src/app/student/constants/auth-constant';
 import { CountdownConfig } from 'ngx-countdown';
 import { CountdownComponent } from 'ngx-countdown/countdown.component';
+import validationHelper from 'src/app/student/helpers/validation-helpers';
 
 @Component({
   selector: 'app-auth-email-phone',
@@ -15,11 +16,21 @@ import { CountdownComponent } from 'ngx-countdown/countdown.component';
   styleUrls: ['./auth-email-phone.component.css'],
 })
 export class AuthEmailPhoneComponent {
-  authConstant: any = authConstant;
-  statusViewPhone: number = authConstant.statusViewPhoneNotSendOtp;
+  @Input() authView!: number;
+  @Output() changeViewEvent = new EventEmitter<{
+    title: string;
+    view: number;
+  }>();
+  @ViewChild('countdown', { static: false }) countdown!: CountdownComponent;
 
+  validationHelper: any = validationHelper;
+  authConstant: any = authConstant;
+
+  statusViewPhone: number = authConstant.statusViewPhoneNotSendOtp;
   numberPhone: string = '';
   otp: string = '';
+  email: string = '';
+  password: string = '';
 
   requestedSendOtp: boolean = false;
 
@@ -27,9 +38,6 @@ export class AuthEmailPhoneComponent {
     leftTime: 60,
     formatDate: ({ date }) => `${date / 1000}`,
   };
-  @ViewChild('countdown', { static: false }) countdown!: CountdownComponent;
-
-  onSubmitFormLoginPhone() {}
 
   handleRequestSendOtp() {
     if (
@@ -46,4 +54,8 @@ export class AuthEmailPhoneComponent {
       this.statusViewPhone = authConstant.statusViewPhoneNotSendOtp;
     }
   }
+
+  onSubmitFormLoginPhone() {}
+
+  onSubmitFormLoginEmail() {}
 }
