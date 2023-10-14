@@ -15,6 +15,8 @@ import { AuthGithubComponent } from './components/auth/auth-github/auth-github.c
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { NewsFeedComponent } from './shared/components/news-feed/news-feed.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CourseComponent } from './components/course/course.component';
+import { LearningComponent } from './components/learning/learning.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AuthGithubComponent,
     SidebarComponent,
     NewsFeedComponent,
+    CourseComponent,
+    LearningComponent,
   ],
   imports: [CommonModule, StudentRoutingModule, FormsModule, CountdownModule],
 })

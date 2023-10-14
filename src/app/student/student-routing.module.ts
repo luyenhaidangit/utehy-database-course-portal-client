@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CourseComponent } from './components/course/course.component';
+import { LearningComponent } from './components/learning/learning.component';
 
 const routes: Routes = [
   {
@@ -20,9 +22,12 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'course',
-    loadChildren: () =>
-      import('./components/course-detail/course-detail.module').then((m) => m.CourseDetailModule),
+    path: 'courses/:slug',
+    component: CourseComponent,
+  },
+  {
+    path: 'learning/:slug',
+    component: LearningComponent,
   },
   {
     path: 'error',
