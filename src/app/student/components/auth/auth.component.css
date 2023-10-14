@@ -10,7 +10,8 @@
   max-width: calc(100vw - 32px);
   position: relative;
   width: var(--width);
-  min-height: 592px;
+  height: 592px;
+  overflow-y: auto;
   width: 520px;
   padding: 0;
 }
@@ -91,7 +92,7 @@
   line-height: 1.8;
   margin-bottom: 0;
   padding: 24px 16px 0;
-  position: absolute;
+  /* position: absolute; */
   bottom: 100px;
 }
 
@@ -106,7 +107,7 @@
   color: #666;
   font-size: 0.7rem;
   left: 0;
-  position: absolute;
+  /* position: absolute; */
   right: 0;
   margin-left: auto;
   margin-right: auto;
@@ -117,4 +118,8 @@
 
 .auth-modal__term > span {
   text-decoration: underline;
+}
+
+.style-bottom {
+  bottom: 72px;
 }

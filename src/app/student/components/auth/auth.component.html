@@ -20,7 +20,7 @@
       ></i>
       <i
         class="fa-solid fa-xmark auth-modal__close-btn"
-        (click)="modalRef?.hide()"
+        (click)="closeModal()"
       ></i>
     </div>
     <div class="d-flex flex-column align-items-center w-100">
@@ -38,10 +38,29 @@
       class="modal-body__wrapper"
     >
       <div
+        *ngIf="authAction === authConstant.loginAction"
         (click)="
           changeViewAuth(
             authConstant.titleLoginEmailPhone,
             authConstant.viewPhone
+          )
+        "
+        class="auth-modal__sign-wrapper"
+      >
+        <img
+          class="auth-modal__sign-icon"
+          src="https://accounts.fullstack.edu.vn/assets/images/signin/personal-18px.svg"
+          alt="Đăng nhập với personal"
+        /><span class="auth-modal__sign-button"
+          >Sử dụng email / số điện thoại</span
+        >
+      </div>
+      <div
+        *ngIf="authAction === authConstant.registerAction"
+        (click)="
+          changeViewAuth(
+            authConstant.titleRegisterDefault,
+            authConstant.viewRegisterPhone
           )
         "
         class="auth-modal__sign-wrapper"
@@ -62,7 +81,9 @@
       <app-auth-email-phone
         *ngIf="
           authView === authConstant.viewPhone ||
-          authView === authConstant.viewEmail
+          authView === authConstant.viewEmail ||
+          authView === authConstant.viewRegisterPhone ||
+          authView === authConstant.viewRegisterEmail
         "
         [authView]="authView"
         (changeViewEvent)="changeViewAuth($event.title, $event.view)"
@@ -71,7 +92,29 @@
     <div class="modal-body__wrapper">
       <div class="d-flex flex-column align-items-center">
         <div class="auth-modal__register">
-          Bạn chưa có tài khoản? <span>Đăng ký</span>
+          Bạn chưa có tài khoản?
+          <span
+            *ngIf="authAction === authConstant.loginAction"
+            (click)="
+              changeViewAuth(
+                authConstant.titleRegisterDefault,
+                authConstant.viewDefault
+              );
+              authAction = authConstant.registerAction
+            "
+            >Đăng ký</span
+          >
+          <span
+            *ngIf="authAction === authConstant.registerAction"
+            (click)="
+              changeViewAuth(
+                authConstant.titleDefault,
+                authConstant.viewDefault
+              );
+              authAction = authConstant.loginAction
+            "
+            >Đăng nhập</span
+          >
         </div>
         <div class="auth-modal__term">
           Việc bạn tiếp tục sử dụng trang web này đồng nghĩa bạn đồng ý với

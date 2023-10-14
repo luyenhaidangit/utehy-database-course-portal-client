@@ -31,6 +31,22 @@ export class AuthEmailPhoneComponent {
   otp: string = '';
   email: string = '';
   password: string = '';
+  registerPhoneForm: any = {
+    name: '',
+    phone: '',
+    otp: '',
+
+    isNameFocused: false,
+  };
+
+  registerEmailForm: any = {
+    name: '',
+    email: '',
+    password: '',
+    otp: '',
+
+    isNameFocused: false,
+  };
 
   requestedSendOtp: boolean = false;
 
@@ -49,6 +65,28 @@ export class AuthEmailPhoneComponent {
     }
   }
 
+  handleRequestSendOtpRegister() {
+    if (
+      this.registerPhoneForm.name.length >= 6 &&
+      this.registerPhoneForm.phone.length >= 9 &&
+      this.statusViewPhone === authConstant.statusViewPhoneNotSendOtp
+    ) {
+      this.requestedSendOtp = true;
+      this.statusViewPhone = authConstant.statusViewPhoneSendOtp;
+    }
+  }
+
+  handleRequestSendOtpEmailRegister() {
+    if (
+      this.registerEmailForm.name.length >= 6 &&
+      this.registerEmailForm.email.length >= 9 &&
+      this.statusViewPhone === authConstant.statusViewPhoneNotSendOtp
+    ) {
+      this.requestedSendOtp = true;
+      this.statusViewPhone = authConstant.statusViewPhoneSendOtp;
+    }
+  }
+
   handleCountdownEvent(event: any) {
     if (event.status === 3) {
       this.statusViewPhone = authConstant.statusViewPhoneNotSendOtp;
@@ -58,4 +96,8 @@ export class AuthEmailPhoneComponent {
   onSubmitFormLoginPhone() {}
 
   onSubmitFormLoginEmail() {}
+
+  onSubmitFormRegisterPhone() {}
+
+  onSubmitFormRegisterEmail() {}
 }

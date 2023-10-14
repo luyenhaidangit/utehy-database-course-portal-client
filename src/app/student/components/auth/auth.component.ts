@@ -20,6 +20,7 @@ export class AuthComponent {
   authConstant: any = authConstant;
   titleContent: string = authConstant.titleDefault;
   authView: number = authConstant.viewDefault;
+  authAction: number = authConstant.loginAction;
 
   constructor(private modalService: BsModalService) {}
 
@@ -28,6 +29,11 @@ export class AuthComponent {
   }
 
   closeModal() {
+    console.log('haha');
+    this.titleContent = authConstant.titleDefault;
+    this.authView = authConstant.viewDefault;
+    this.authAction = authConstant.loginAction;
+
     this.modalRef?.hide();
   }
 
