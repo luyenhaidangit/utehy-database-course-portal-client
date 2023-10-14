@@ -4,28 +4,36 @@ import {
   Output,
   EventEmitter,
   ViewChild,
+  OnInit,
+  HostListener,
 } from '@angular/core';
 import authConstant from 'src/app/student/constants/auth-constant';
 import { CountdownConfig } from 'ngx-countdown';
 import { CountdownComponent } from 'ngx-countdown/countdown.component';
 import validationHelper from 'src/app/student/helpers/validation-helpers';
+import { PhoneService } from 'src/app/student/services/data/phone.service';
 
 @Component({
   selector: 'app-auth-email-phone',
   templateUrl: './auth-email-phone.component.html',
   styleUrls: ['./auth-email-phone.component.css'],
 })
-export class AuthEmailPhoneComponent {
+export class AuthEmailPhoneComponent implements OnInit {
   @Input() authView!: number;
   @Output() changeViewEvent = new EventEmitter<{
     title: string;
     view: number;
   }>();
-  @ViewChild('countdown', { static: false }) countdown!: CountdownComponent;
+  @ViewChild('countdown', { static: false })
+  countdown!: CountdownComponent;
 
   validationHelper: any = validationHelper;
   authConstant: any = authConstant;
 
+  openSelectPhoneCountry: boolean = false;
+  countryData: any;
+  countryCurrent: any;
+  requestedSendOtp: boolean = false;
   statusViewPhone: number = authConstant.statusViewPhoneNotSendOtp;
   numberPhone: string = '';
   otp: string = '';
@@ -38,7 +46,6 @@ export class AuthEmailPhoneComponent {
 
     isNameFocused: false,
   };
-
   registerEmailForm: any = {
     name: '',
     email: '',
@@ -47,13 +54,42 @@ export class AuthEmailPhoneComponent {
 
     isNameFocused: false,
   };
+  numberPhoneSearch: string = '';
 
-  requestedSendOtp: boolean = false;
+  constructor(private phoneService: PhoneService) {}
+
+  ngOnInit() {
+    this.phoneService.getPhoneCodeCountry().subscribe((data: any) => {
+      this.countryData = data;
+      this.countryData.map((country: any) => {
+        if (country.dial_code === authConstant.defaultPhoneCodeCountry) {
+          this.countryCurrent = country;
+        }
+      });
+    });
+  }
 
   config: CountdownConfig = {
     leftTime: 60,
     formatDate: ({ date }) => `${date / 1000}`,
   };
+
+  onSearchPhone() {
+    this.countryData = this.countryData.map((country: any) => {
+      if (
+        country.name
+          .toLowerCase()
+          .includes(this.numberPhoneSearch.toLowerCase()) ||
+        country.dial_code
+          .toLowerCase()
+          .includes(this.numberPhoneSearch.toLowerCase())
+      ) {
+        return { ...country, enable: true };
+      } else {
+        return { ...country, enable: false };
+      }
+    });
+  }
 
   handleRequestSendOtp() {
     if (
@@ -93,7 +129,9 @@ export class AuthEmailPhoneComponent {
     }
   }
 
-  onSubmitFormLoginPhone() {}
+  onSubmitFormLoginPhone() {
+    console.log(this.countryCurrent);
+  }
 
   onSubmitFormLoginEmail() {}
 

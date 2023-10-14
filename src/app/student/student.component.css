@@ -131,3 +131,7 @@ li {
 .student-paragraphs__default-text {
   font-size: 0.9rem;
 }
+
+.overflow-unset {
+  overflow: unset !important;
+}

@@ -132,3 +132,54 @@
   font-size: 0.75rem;
   margin-left: 8px;
 }
+
+.auth-phone__select {
+  z-index: 9999;
+  position: absolute;
+  top: 48px;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.03), 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+  width: 105%;
+  min-height: 240px;
+}
+
+.auth-phone__select-search {
+  align-items: center;
+  border-bottom: 1px solid rgba(22, 24, 35, 0.12);
+  display: flex;
+  font-size: 0.9rem;
+  padding-left: 8px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  width: calc(100% - 8px);
+}
+
+.auth-phone__select-search > i {
+  margin-left: 8px;
+}
+
+.auth-phone__select-search > input {
+  border: none;
+  caret-color: var(--primary-color);
+  flex: 1 1;
+  outline: none;
+  padding: 12px;
+}
+
+.auth-phone__select-list-item {
+  margin-top: 40px;
+  padding: 8px 16px;
+  font-size: 0.8rem;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.auth-phone__select-item-text {
+  cursor: pointer;
+  padding: 8px 0;
+  white-space: nowrap;
+}
