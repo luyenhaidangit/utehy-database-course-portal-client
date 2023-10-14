@@ -5,13 +5,12 @@ import {
   EventEmitter,
   ViewChild,
   OnInit,
-  HostListener,
 } from '@angular/core';
 import authConstant from 'src/app/student/constants/auth-constant';
+import { phoneCodeCountry } from 'src/app/shared/data/phone.data';
 import { CountdownConfig } from 'ngx-countdown';
 import { CountdownComponent } from 'ngx-countdown/countdown.component';
 import validationHelper from 'src/app/student/helpers/validation-helpers';
-import { PhoneService } from 'src/app/student/services/data/phone.service';
 
 @Component({
   selector: 'app-auth-email-phone',
@@ -56,16 +55,12 @@ export class AuthEmailPhoneComponent implements OnInit {
   };
   numberPhoneSearch: string = '';
 
-  constructor(private phoneService: PhoneService) {}
-
   ngOnInit() {
-    this.phoneService.getPhoneCodeCountry().subscribe((data: any) => {
-      this.countryData = data;
-      this.countryData.map((country: any) => {
-        if (country.dial_code === authConstant.defaultPhoneCodeCountry) {
-          this.countryCurrent = country;
-        }
-      });
+    this.countryData = phoneCodeCountry;
+    this.countryData.map((country: any) => {
+      if (country.dial_code === authConstant.defaultPhoneCodeCountry) {
+        this.countryCurrent = country;
+      }
     });
   }
 
