@@ -38,7 +38,7 @@
         name="phone"
         maxlength="12"
         oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-        [(ngModel)]="numberPhone"
+        [(ngModel)]="loginPhoneForm.phone"
       />
     </div>
     <div *ngIf="openSelectPhoneCountry" class="auth-phone__select">
@@ -75,17 +75,17 @@
         maxlength="6"
         value=""
         oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-        [disabled]="numberPhone.length < 9 || !requestedSendOtp"
-        [(ngModel)]="otp"
+        [disabled]="loginPhoneForm.phone.length < 9 || !requestedSendOtp"
+        [(ngModel)]="loginPhoneForm.otp"
       />
       <div
         class="auth-phone__input-send-btn {{
-          numberPhone.length < 9 ||
+          loginPhoneForm.phone.length < 9 ||
           statusViewPhone === authConstant.statusViewPhoneSendOtp
             ? 'disable'
             : ''
         }}"
-        (click)="handleRequestSendOtp()"
+        (click)="handleRequestLoginSendOtp()"
       >
         <span *ngIf="statusViewPhone === authConstant.statusViewPhoneNotSendOtp"
           >Gửi mã
