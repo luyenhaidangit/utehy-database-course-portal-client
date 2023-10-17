@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -11,7 +12,7 @@ export class StudentApiService {
   private baseUrl: string = environment.apiStudentBaseUrl;
   private token: string = JSON.parse(localStorage.getItem('user') || '{}')?.token || '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private toastr: ToastrService) {}
 
   setBaseUrl(baseUrl: string) {
     this.baseUrl = baseUrl;
@@ -68,7 +69,7 @@ export class StudentApiService {
     });
   }
 
-  private handleErrorResponse(error: HttpErrorResponse) {
-    console.error('HTTP Error:', error);
-  }
+    handleErrorResponse(error: HttpErrorResponse) {
+        console.error('HTTP Error:', error);
+    }
 }

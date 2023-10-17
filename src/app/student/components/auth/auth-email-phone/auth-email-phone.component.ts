@@ -1,11 +1,13 @@
 import {Component,Input,Output,EventEmitter,ViewChild,OnInit} from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import authConstant from 'src/app/student/constants/auth-constant';
 import { phoneCodeCountry } from 'src/app/shared/data/phone.data';
 import { CountdownConfig } from 'ngx-countdown';
 import { CountdownComponent } from 'ngx-countdown/countdown.component';
 import validationHelper from 'src/app/student/helpers/validation-helpers';
 import { AuthService } from 'src/app/student/services/api/auth.service';
+import { ToastrService } from 'src/app/student/services/utilities/toastr.service';
+import { UserService } from 'src/app/student/services/api/user.service';
 
 @Component({
   selector: 'app-auth-email-phone',
@@ -29,6 +31,11 @@ export class AuthEmailPhoneComponent {
     phone: '',
     otp: ''
   }
+  loginEmailForm: any = {
+    email: '',
+    password: '',
+    rememberMe: true
+  }
   numberPhone: string = '';
   otp: string = '';
   email: string = '';
@@ -49,8 +56,11 @@ export class AuthEmailPhoneComponent {
     isNameFocused: false,
   };
   numberPhoneSearch: string = '';
+  errorMessage: any = {
+    account: ''
+  }
 
-  constructor(private authService: AuthService, private toastr: ToastrService ) { }
+  constructor(private authService: AuthService, private userService: UserService, private ngxToastr: NgxToastrService, private toastr: ToastrService ) { }
 
   config: CountdownConfig = {
     leftTime: 60,
@@ -83,22 +93,13 @@ export class AuthEmailPhoneComponent {
         if(response.status){
          
         }else{
-          this.toastr.error(response.message,'',{
+          this.ngxToastr.error(response.message,'',{
             progressBar: true
           });
         }
       },error => {
         console.log(error);
-        if (error.status === 400) {
-          for (const key in error.error.errors) {
-            if (error.error.errors.hasOwnProperty(key)) {
-                this.toastr.error(key,  error.error.errors[key][0]);
-            }
-          }
-        }
-        if (error.status === 500) {
-          this.toastr.error(`Xuất hiện lỗi: ${error.message}`);
-        }
+        this.toastr.handleErrorResponseWithNotification(error);
       });
     }
   }
@@ -135,7 +136,27 @@ export class AuthEmailPhoneComponent {
     console.log(this.countryCurrent);
   }
 
-  onSubmitFormLoginEmail() {}
+  onSubmitFormLoginEmail() {
+    if(validationHelper.isEmailValid(this.loginEmailForm.email) && this.loginEmailForm.password.length >= 6){
+      this.authService.loginEmail(this.loginEmailForm).subscribe(response => {
+        if(response.status){
+          localStorage.setItem('user', JSON.stringify({ token: response.data }));
+
+          this.userService.getUserInfo().subscribe(responseUser => {
+            console.log(responseUser);
+            if(response.status){
+             this.authService.setAuthData(responseUser.data);
+            }
+          })
+        }else{
+          // this.toastr.handleErrorMessageWithNotification(response.message);
+          this.errorMessage.account = "Tài khoản hoặc mật khẩu không chính xác";
+        }
+      },error => {
+        this.toastr.handleErrorResponseWithNotification(error);
+      });
+    }
+  }
 
   onSubmitFormRegisterPhone() {}
 

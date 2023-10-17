@@ -23,9 +23,10 @@
   <div class="navbar-search__icon"><i class="bi bi-search"></i></div>
   <div class="navbar-actions">
     <div id="navbar-actions__portal"></div>
-    <a (click)="authComponent.openModal()" class="navbar-actions__login-btn"
+    <a *ngIf="!_authService.getIsAuthenticated()" (click)="authComponent.openModal()" class="navbar-actions__login-btn"
       >Đăng nhập</a
     >
+    <span *ngIf="_authService.getIsAuthenticated()">Luyện Hải Đăng</span>
   </div>
 </div>
 

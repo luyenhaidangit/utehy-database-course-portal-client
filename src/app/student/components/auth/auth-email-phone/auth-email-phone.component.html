@@ -137,11 +137,11 @@
         placeholder="Địa chỉ email"
         name="email"
         maxlength="50"
-        [(ngModel)]="email"
+        [(ngModel)]="loginEmailForm.email"
       />
     </div>
   </div>
-  <div class="auth-phone__input-wrapper mb-4">
+  <div class="auth-phone__input-wrapper mb-2">
     <div class="auth-phone__input d-flex align-items-center w-100">
       <input
         class="auth-phone__input-form w-100"
@@ -149,15 +149,19 @@
         placeholder="Mật khẩu"
         name="password"
         autocomplete="password"
-        [(ngModel)]="password"
+        [(ngModel)]="loginEmailForm.password"
+        (input)="errorMessage.account = ''"
       />
     </div>
   </div>
-  <div class="auth-phone__input-wrapper w-100">
+  <div *ngIf="errorMessage.account.length > 0" class="auth-phone__input-helper text-danger">
+    Tài khoản hoặc mật khẩu không chính xác
+  </div>
+  <div class="auth-phone__input-wrapper mt-4 w-100">
     <button
       type="submit"
       class="auth-phone__input-submit d-flex align-items-center w-100 {{
-        !validationHelper.isEmailValid(email) || password.length < 4
+        !validationHelper.isEmailValid(loginEmailForm.email) || loginEmailForm.password.length < 6
           ? 'disable'
           : ''
       }}"

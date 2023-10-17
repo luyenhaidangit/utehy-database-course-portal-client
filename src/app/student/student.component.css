@@ -139,6 +139,7 @@ li {
 
 .toast-error{
   background-color: #fff !important;
+  color: #000 !important;
 }
 
 .ngx-toastr{
@@ -158,6 +159,10 @@ li {
     font-family: var(--toastify-font-family);
     cursor: pointer !important;
     direction: ltr;
-    color: red !important;
     font-size: 0.9rem;
+}
+
+.toast-error .toast-progress{
+  background-color: red !important;
+  opacity: 0.5 !important;
 }
