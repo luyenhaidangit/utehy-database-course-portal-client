@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
 // import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { StudentApiService } from '../configs/student-api.service';
+import { HttpStudentLoadingService } from 'src/app/shared/services/https/http-student-loading.service';
 
 @Injectable({
   providedIn: 'root', 
 })
 export class AuthService {
-  private isAuthenticated: boolean = false;
-  private userData: any = null;
+  public isAuthenticated: boolean = false;
+  public userData: any = null;
 
-  constructor(private http: StudentApiService) { }
+  constructor(private http: HttpStudentLoadingService) {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if(user?.token){
+      this.getUserInfo().subscribe(res => {
+        if(res.status){
+          this.setAuthData(res.data);
+        }
+      })
+    }
+  }
 
   setAuthData(data: any): void {
     this.isAuthenticated = true;
@@ -22,12 +31,8 @@ export class AuthService {
     this.userData = null;
   }
 
-  getIsAuthenticated(): boolean {
-    return this.isAuthenticated;
-  }
-
-  getUserData(): any {
-    return this.userData;
+  getUserInfo(): Observable<any> {
+    return this.http.get('user/user-info');
   }
 
   getOtpLoginPhone(phone: string): Observable<any> {

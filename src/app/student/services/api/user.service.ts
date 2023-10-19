@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { StudentApiService } from '../configs/student-api.service';
+import { HttpStudentLoadingService } from 'src/app/shared/services/https/http-student-loading.service';
 
 @Injectable({
   providedIn: 'root', 
 })
 export class UserService {
-  constructor(private http: StudentApiService) { }
+  constructor(private http: HttpStudentLoadingService) { }
 
   getUserInfo(): Observable<any> {
     return this.http.get('user/user-info');

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,6 +21,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SocialAuthConfig } from './student/configs/social-auth.config';
 
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingUiModule } from './shared/components/loading-ui/loading-ui.module';
+import { LoadingUiComponent } from './shared/components/loading-ui/loading-ui.component';
+
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -38,10 +43,13 @@ import { SocialAuthConfig } from './student/configs/social-auth.config';
     LoadingBarModule,
     ToastrModule.forRoot(),
     SocialLoginModule,
+    NgxSpinnerModule,
+    LoadingUiModule
   ],
   providers: [
     { provide: 'SocialAuthServiceConfig', useValue: SocialAuthConfig },
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

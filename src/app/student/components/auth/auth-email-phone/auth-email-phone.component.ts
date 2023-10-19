@@ -1,4 +1,4 @@
-import {Component,Input,Output,EventEmitter,ViewChild,OnInit} from '@angular/core';
+import {Component,Input,Output,EventEmitter,ViewChild} from '@angular/core';
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import authConstant from 'src/app/student/constants/auth-constant';
 import { phoneCodeCountry } from 'src/app/shared/data/phone.data';
@@ -17,6 +17,7 @@ import { UserService } from 'src/app/student/services/api/user.service';
 export class AuthEmailPhoneComponent {
   @Input() authView!: number;
   @Output() changeViewEvent = new EventEmitter<{title: string; view: number;}>();
+  @Output() changeStatusModalEvent = new EventEmitter<boolean>();
   @ViewChild('countdown', { static: false }) countdown!: CountdownComponent;
 
   validationHelper: any = validationHelper;
@@ -145,7 +146,8 @@ export class AuthEmailPhoneComponent {
           this.userService.getUserInfo().subscribe(responseUser => {
             console.log(responseUser);
             if(response.status){
-             this.authService.setAuthData(responseUser.data);
+              this.changeStatusModalEvent.emit(false);
+              this.authService.setAuthData(responseUser.data);
             }
           })
         }else{

@@ -267,6 +267,38 @@ button.gsc-search-button {
   text-decoration: none;
 }
 
+.navbar-action__my-learn{
+  background-color: transparent;
+  color: #333;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 8px;
+}
+
+.navbar-action__notify{
+  background-color: transparent;
+  color: rgb(112, 112, 112);
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.navbar-actions__portal{
+  display: flex;
+  align-items: center;
+}
+
+.navbar-action__avatar > img{
+  border-radius: 50%;
+  height: 28px;
+  object-fit: cover;
+  width: 28px;
+  cursor: pointer;
+}
+
 @media (max-width: 1023px) {
   .navbar-wrapper {
     justify-content: flex-start;

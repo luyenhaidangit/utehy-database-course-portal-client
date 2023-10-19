@@ -2,17 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { LoadingUiService } from '../../components/loading-ui/loading-ui.service';
+import loadingUiConstant from '../../components/loading-ui/loading-ui.constant';
 
 @Injectable({
   providedIn: 'root',
 })
-export class StudentApiService {
+export class HttpStudentLoadingService {
   private baseUrl: string = environment.apiStudentBaseUrl;
   private token: string = JSON.parse(localStorage.getItem('user') || '{}')?.token || '';
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {}
+  constructor(private http: HttpClient, private loadingUi: LoadingUiService) {}
 
   setBaseUrl(baseUrl: string) {
     this.baseUrl = baseUrl;
@@ -33,11 +36,15 @@ export class StudentApiService {
   }
 
   post(endpoint: string, data: any): Observable<any> {
+    this.loadingUi.show(loadingUiConstant.type.dualRing);
     const headers = this.createHeaders();
     return this.http.post(`${this.baseUrl}/${endpoint}`, data, { headers }).pipe(
       catchError((error: HttpErrorResponse) => {
         this.handleErrorResponse(error);
         return throwError(error);
+      }),
+      finalize(() => {
+        this.loadingUi.hide();
       })
     );
   }
