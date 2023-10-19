@@ -13,16 +13,19 @@ import loadingUiConstant from '../../components/loading-ui/loading-ui.constant';
 })
 export class HttpStudentLoadingService {
   private baseUrl: string = environment.apiStudentBaseUrl;
-  private token: string = JSON.parse(localStorage.getItem('user') || '{}')?.token || '';
 
-  constructor(private http: HttpClient, private loadingUi: LoadingUiService) {}
+  constructor(
+    private http: HttpClient,
+    private loadingUi: LoadingUiService,
+  ) {}
 
   setBaseUrl(baseUrl: string) {
     this.baseUrl = baseUrl;
   }
 
-  setToken(token: string) {
-    this.token = token;
+  getToken(): string {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user.token || '';
   }
 
   get(endpoint: string): Observable<any> {
@@ -71,12 +74,12 @@ export class HttpStudentLoadingService {
 
   private createHeaders() {
     return new HttpHeaders({
-      Authorization: `Bearer ${this.token}`,
+      Authorization: `Bearer ${this.getToken()}`,
       'Content-Type': 'application/json',
     });
   }
 
-    handleErrorResponse(error: HttpErrorResponse) {
-        console.error('HTTP Error:', error);
-    }
+  handleErrorResponse(error: HttpErrorResponse) {
+    console.error('HTTP Error:', error);
+  }
 }
