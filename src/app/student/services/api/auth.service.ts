@@ -18,12 +18,19 @@ export class AuthService {
           this.setAuthData(res.data);
         }
       })
+    }else{
+      this.removeAuthData();
     }
   }
 
   setAuthData(data: any): void {
     this.isAuthenticated = true;
     this.userData = data;
+  }
+
+  removeAuthData(): void {
+    this.isAuthenticated = false;
+    this.userData = null;
   }
 
   logout(): void {
