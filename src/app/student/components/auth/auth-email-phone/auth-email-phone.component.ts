@@ -100,7 +100,9 @@ export class AuthEmailPhoneComponent {
         }
       },error => {
         console.log(error);
-        this.toastr.handleErrorResponseWithNotification(error);
+        this.ngxToastr.error("Xuất hiện lỗi hệ thống, vui lòng thử lại sau!",'',{
+          progressBar: true
+        });
       });
     }
   }
@@ -134,7 +136,26 @@ export class AuthEmailPhoneComponent {
   }
 
   onSubmitFormLoginPhone() {
-    console.log(this.countryCurrent);
+    if (this.loginPhoneForm.phone.length >= 9 && this.loginPhoneForm.otp.length >= 6){
+      console.log(this.loginPhoneForm);
+      this.authService.loginPhone(this.loginPhoneForm).subscribe(response => {
+        if(response.status){
+          localStorage.setItem('user', JSON.stringify({ token: response.data }));
+
+          this.userService.getUserInfo().subscribe(responseUser => {
+            if(response.status){
+              this.changeStatusModalEvent.emit(false);
+              this.authService.setAuthData(responseUser.data);
+            }
+          })
+        }else{
+          // this.toastr.handleErrorMessageWithNotification(response.message);
+          this.errorMessage.account = "Số điện thoại hoặc mã OTP không hợp lệ!";
+        }
+      },error => {
+        this.toastr.handleErrorResponseWithNotification(error);
+      });
+    }
   }
 
   onSubmitFormLoginEmail() {

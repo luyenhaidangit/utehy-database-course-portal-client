@@ -65,7 +65,7 @@
       </div>
     </div>
   </div>
-  <div class="auth-phone__input-wrapper mb-4">
+  <div class="auth-phone__input-wrapper mb-2">
     <div class="auth-phone__input d-flex align-items-center w-100">
       <input
         class="auth-phone__input-form"
@@ -77,6 +77,7 @@
         oninput="this.value = this.value.replace(/[^0-9]/g, '')"
         [disabled]="loginPhoneForm.phone.length < 9 || !requestedSendOtp"
         [(ngModel)]="loginPhoneForm.otp"
+        (input)="errorMessage.account = ''"
       />
       <div
         class="auth-phone__input-send-btn {{
@@ -101,11 +102,14 @@
       </div>
     </div>
   </div>
-  <div class="auth-phone__input-wrapper">
+  <div *ngIf="errorMessage.account.length > 0" class="auth-phone__input-helper text-danger">
+    Số điện thoại hoặc mã OTP không hợp lệ!
+  </div>
+  <div class="auth-phone__input-wrapper mt-4">
     <button
       type="submit"
       class="auth-phone__input-submit d-flex align-items-center w-100 {{
-        numberPhone.length < 9 || otp.length !== 6 ? 'disable' : ''
+        loginPhoneForm.phone.length < 9 || loginPhoneForm.otp.length < 6 ? 'disable' : ''
       }}"
     >
       <span>Đăng nhập</span>

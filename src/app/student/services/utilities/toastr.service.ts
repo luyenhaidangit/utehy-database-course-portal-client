@@ -17,6 +17,11 @@ export class ToastrService {
                 }
             }
         }
+        if (error.status === 500) {
+          this.toastr.error("Xuất hiện lỗi hệ thống, vui lòng thử lại!",'',{
+            progressBar: true
+          });
+        }
     }
 
     handleErrorMessageWithNotification(error: string) {
