@@ -22,8 +22,8 @@
   </div>
   <div class="navbar-search__icon"><i class="bi bi-search"></i></div>
   <div class="navbar-actions">
-      <a *ngIf="!authService.isAuthenticated" (click)="authComponent.openModal()" class="navbar-actions__login-btn">Đăng nhập</a>
-      <div *ngIf="authService.isAuthenticated" class="d-flex align-items-center">
+      <a *ngIf="authService.isAuthenticated === false" (click)="authComponent.openModal()" class="navbar-actions__login-btn">Đăng nhập</a>
+      <div *ngIf="authService.isAuthenticated === true" class="d-flex align-items-center">
         <div class="navbar-action__my-learn cursor-pointer">
           Khoá học của tôi
         </div>

@@ -7,7 +7,7 @@ import { HttpStudentLoadingService } from 'src/app/shared/services/https/http-st
   providedIn: 'root', 
 })
 export class AuthService {
-  public isAuthenticated: boolean = false;
+  public isAuthenticated: any = null;
   public userData: any = null;
 
   constructor(private http: HttpStudentLoadingService) {
