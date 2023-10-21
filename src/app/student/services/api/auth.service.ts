@@ -48,6 +48,10 @@ export class AuthService {
     return this.http.post(`auth/send-otp-login-numberphone?numberphone=${encodedPhone}`, {});
   }
 
+  getOtpRegisterPhone(request: any): Observable<any> {
+    return this.http.post(`auth/send-otp-login-numberphone`, request);
+  }
+
   loginPhone(request: any): Observable<any> {
     return this.httpLoading.post(`auth/login-by-verify-otp-numberphone`, request);
   }
