@@ -96,17 +96,6 @@ export class AuthEmailPhoneComponent {
     });
   }
 
-  handleRequestSendOtpEmailRegister() {
-    if (
-      this.registerEmailForm.name.length >= 6 &&
-      this.registerEmailForm.email.length >= 9 &&
-      this.statusViewPhone === authConstant.statusViewPhoneNotSendOtp
-    ) {
-      this.requestedSendOtp = true;
-      this.statusViewPhone = authConstant.statusViewPhoneSendOtp;
-    }
-  }
-
   handleCountdownEvent(event: any) {
     if (event.status === 3) {
       this.statusViewPhone = authConstant.statusViewPhoneNotSendOtp;
@@ -238,5 +227,50 @@ export class AuthEmailPhoneComponent {
     }
   }
 
-  onSubmitFormRegisterEmail() {}
+  //Register email
+  handleRequestSendOtpEmailRegister() {
+    if (
+      this.registerEmailForm.name.length >= 6 &&
+      this.registerEmailForm.email.length >= 9 &&
+      this.statusViewPhone === authConstant.statusViewPhoneNotSendOtp
+    ) {
+      this.requestedSendOtp = true;
+      this.statusViewPhone = authConstant.statusViewPhoneSendOtp;
+
+      this.authService.getOtpLoginEmail(this.registerEmailForm).subscribe(response => {
+        if(response.status){
+         console.log(response)
+        }else{
+          this.ngxToastr.error(response.message,'',{
+            progressBar: true
+          });
+        }
+      },error => {
+        console.log(error);
+        this.ngxToastr.error("Xuất hiện lỗi hệ thống, vui lòng thử lại sau!",'',{
+          progressBar: true
+        });
+      });
+    }
+  }
+
+  onSubmitFormRegisterEmail() {
+    console.log(this.registerEmailForm.name.length,this.registerEmailForm.email.length,this.registerEmailForm.password.length);
+    if (this.registerEmailForm.name.length >= 6 && this.registerEmailForm.email.length >= 9 && this.registerEmailForm.password.length >= 8 && this.registerEmailForm.name.length >= 6){
+      this.authService.verifyOtpLoginEmail(this.registerEmailForm).subscribe(response => {
+        if(response.status){
+          localStorage.setItem('user', JSON.stringify({ token: response.data }));
+
+          this.userService.getUserInfo().subscribe(responseUser => {
+            if(response.status){
+              this.changeStatusModalEvent.emit(false);
+              this.authService.setAuthData(responseUser.data);
+            }
+          })
+        }
+      },error => {
+        console.log(error);
+      });
+    }
+  }
 }

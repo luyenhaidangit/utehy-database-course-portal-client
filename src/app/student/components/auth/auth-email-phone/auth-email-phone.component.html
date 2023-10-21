@@ -328,7 +328,7 @@
 
 <form
   *ngIf="authView === authConstant.viewRegisterEmail"
-  (ngSubmit)="onSubmitFormLoginEmail()"
+  (ngSubmit)="onSubmitFormRegisterEmail()"
 >
   <div class="d-flex justify-content-between align-items-center">
     <label class="auth-phone__label">Tên của bạn</label>
@@ -396,7 +396,7 @@
   <div class="auth-phone__input-helper mb-3">
     Gợi ý: Mật khẩu cần có ít nhất 8 kí tự
   </div>
-  <div class="auth-phone__input-wrapper mb-3">
+  <div class="auth-phone__input-wrapper mb-1">
     <div class="auth-phone__input d-flex align-items-center w-100">
       <input
         class="auth-phone__input-form"
@@ -433,7 +433,10 @@
       </div>
     </div>
   </div>
-  <div class="auth-phone__input-wrapper w-100">
+  <div *ngIf="errorMessage.account.length > 0" class="auth-phone__input-helper text-danger">
+    Tài khoản hoặc mật khẩu không chính xác
+  </div>
+  <div class="auth-phone__input-wrapper mt-3 w-100">
     <button
       type="submit"
       class="auth-phone__input-submit d-flex align-items-center w-100 {{
