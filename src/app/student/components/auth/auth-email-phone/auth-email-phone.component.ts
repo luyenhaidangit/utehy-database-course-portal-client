@@ -15,19 +15,34 @@ import { UserService } from 'src/app/student/services/api/user.service';
   styleUrls: ['./auth-email-phone.component.css'],
 })
 export class AuthEmailPhoneComponent {
+  //Binding
   @Input() authView!: number;
   @Output() changeViewEvent = new EventEmitter<{title: string; view: number;}>();
   @Output() changeStatusModalEvent = new EventEmitter<boolean>();
+
+  //Child component
   @ViewChild('countdown', { static: false }) countdown!: CountdownComponent;
 
+  //Helper
   validationHelper: any = validationHelper;
+
+  //Constant
   authConstant: any = authConstant;
 
+  //Error
+  errorMessage: any = {
+    account: ''
+  }
+
+  //Common
   countryData: any = phoneCodeCountry;
-  countryCurrent: any = phoneCodeCountry.find(item => item.dial_code === authConstant.defaultPhoneCodeCountry);;
-  statusViewPhone: number = authConstant.statusViewPhoneNotSendOtp;
+  countryCurrent: any = phoneCodeCountry.find(item => item.dial_code === authConstant.defaultPhoneCodeCountry);
   openSelectPhoneCountry: boolean = false;
+  numberPhoneSearch: string = '';
+  statusViewPhone: number = authConstant.statusViewPhoneNotSendOtp;
   requestedSendOtp: boolean = false;
+
+  //Form
   loginPhoneForm: any = {
     phone: '',
     otp: ''
@@ -37,10 +52,6 @@ export class AuthEmailPhoneComponent {
     password: '',
     rememberMe: true
   }
-  numberPhone: string = '';
-  otp: string = '';
-  email: string = '';
-  password: string = '';
   registerPhoneForm: any = {
     name: '',
     phone: '',
@@ -48,6 +59,10 @@ export class AuthEmailPhoneComponent {
 
     isNameFocused: false,
   };
+  numberPhone: string = '';
+  otp: string = '';
+  email: string = '';
+  password: string = '';
   registerEmailForm: any = {
     name: '',
     email: '',
@@ -56,10 +71,6 @@ export class AuthEmailPhoneComponent {
 
     isNameFocused: false,
   };
-  numberPhoneSearch: string = '';
-  errorMessage: any = {
-    account: ''
-  }
 
   constructor(private authService: AuthService, private userService: UserService, private ngxToastr: NgxToastrService, private toastr: ToastrService ) { }
 
@@ -83,28 +94,6 @@ export class AuthEmailPhoneComponent {
         return { ...country, enable: false };
       }
     });
-  }
-
-  handleRequestLoginSendOtp() {
-    if (this.loginPhoneForm.phone.length >= 9 && this.statusViewPhone === authConstant.statusViewPhoneNotSendOtp) {
-      this.requestedSendOtp = true;
-      this.statusViewPhone = authConstant.statusViewPhoneSendOtp;
-      const phone = this.countryCurrent.dial_code + this.loginPhoneForm.phone;
-      this.authService.getOtpLoginPhone(phone).subscribe(response => {
-        if(response.status){
-         
-        }else{
-          this.ngxToastr.error(response.message,'',{
-            progressBar: true
-          });
-        }
-      },error => {
-        console.log(error);
-        this.ngxToastr.error("Xuất hiện lỗi hệ thống, vui lòng thử lại sau!",'',{
-          progressBar: true
-        });
-      });
-    }
   }
 
   handleRequestSendOtpRegister() {
@@ -135,11 +124,35 @@ export class AuthEmailPhoneComponent {
     }
   }
 
+  //Login phone
+  handleRequestLoginSendOtp() {
+    if (this.loginPhoneForm.phone.length >= 9 && this.statusViewPhone === authConstant.statusViewPhoneNotSendOtp) {
+      this.requestedSendOtp = true;
+      this.statusViewPhone = authConstant.statusViewPhoneSendOtp;
+      const phone = this.countryCurrent.dial_code + this.loginPhoneForm.phone;
+      this.authService.getOtpLoginPhone(phone).subscribe(response => {
+        if(response.status){
+         
+        }else{
+          this.ngxToastr.error(response.message,'',{
+            progressBar: true
+          });
+        }
+      },error => {
+        console.log(error);
+        this.ngxToastr.error("Xuất hiện lỗi hệ thống, vui lòng thử lại sau!",'',{
+          progressBar: true
+        });
+      });
+    }
+  }
+
   onSubmitFormLoginPhone() {
     if (this.loginPhoneForm.phone.length >= 9 && this.loginPhoneForm.otp.length >= 6){
-      console.log(this.loginPhoneForm);
+      this.loginEmailForm.phone = this.countryCurrent.dial_code + this.loginPhoneForm.phone;
       this.authService.loginPhone(this.loginPhoneForm).subscribe(response => {
         if(response.status){
+          console.log(response);
           localStorage.setItem('user', JSON.stringify({ token: response.data }));
 
           this.userService.getUserInfo().subscribe(responseUser => {
@@ -148,16 +161,16 @@ export class AuthEmailPhoneComponent {
               this.authService.setAuthData(responseUser.data);
             }
           })
-        }else{
-          // this.toastr.handleErrorMessageWithNotification(response.message);
-          this.errorMessage.account = "Số điện thoại hoặc mã OTP không hợp lệ!";
         }
       },error => {
-        this.toastr.handleErrorResponseWithNotification(error);
+        if(error.error.status === 400){
+          this.errorMessage.account = "Số điện thoại hoặc mã OTP không hợp lệ!";
+        }
       });
     }
   }
 
+  //Login email
   onSubmitFormLoginEmail() {
     if(validationHelper.isEmailValid(this.loginEmailForm.email) && this.loginEmailForm.password.length >= 6){
       this.authService.loginEmail(this.loginEmailForm).subscribe(response => {
@@ -181,7 +194,10 @@ export class AuthEmailPhoneComponent {
     }
   }
 
-  onSubmitFormRegisterPhone() {}
+  //Register phone
+  onSubmitFormRegisterPhone() {
+
+  }
 
   onSubmitFormRegisterEmail() {}
 }

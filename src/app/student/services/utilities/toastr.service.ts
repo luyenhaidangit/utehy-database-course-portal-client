@@ -9,13 +9,21 @@ export class ToastrService {
   constructor(private http: HttpClient, private toastr: NgxToastrService) {}
     handleErrorResponseWithNotification(error: HttpErrorResponse) {
         if (error.status === 400) {
-            for (const key in error.error.errors) {
+            if(error.error.errors.length > 0){
+              for (const key in error.error.errors) {
                 if (error.error.errors.hasOwnProperty(key)) {
                   this.toastr.error(error.error.errors[key][0],'',{
                     progressBar: true
                   });
                 }
             }
+          }
+
+          if(error.error.message){
+            this.toastr.error(error.error.message,'',{
+              progressBar: true
+            });
+          }
         }
         if (error.status === 500) {
           this.toastr.error("Xuất hiện lỗi hệ thống, vui lòng thử lại!",'',{

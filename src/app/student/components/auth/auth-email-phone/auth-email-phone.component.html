@@ -220,11 +220,21 @@
       >Đăng ký với email</label
     >
   </div>
-  <div class="auth-phone__input-wrapper mb-2">
+  <div class="auth-phone__input-wrapper overflow-unset position-relative mb-3">
     <div class="auth-phone__input d-flex align-items-center">
       <div class="auth-phone__input-select">
-        <div class="auth-phone__input-select__phone">
-          <span>VN +84</span>
+        <div
+          class="auth-phone__input-select__phone"
+          (click)="openSelectPhoneCountry = !openSelectPhoneCountry"
+        >
+          <span *ngIf="countryCurrent"
+            >{{ countryCurrent.code }} {{ countryCurrent.dial_code }}
+            <i
+              *ngIf="!openSelectPhoneCountry"
+              class="fa-solid fa-angle-down"
+            ></i>
+            <i *ngIf="openSelectPhoneCountry" class="fa-solid fa-angle-up"></i>
+          </span>
         </div>
       </div>
       <input
@@ -235,6 +245,29 @@
         oninput="this.value = this.value.replace(/[^0-9]/g, '')"
         [(ngModel)]="registerPhoneForm.phone"
       />
+    </div>
+    <div *ngIf="openSelectPhoneCountry" class="auth-phone__select">
+      <div class="auth-phone__select-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input
+          [(ngModel)]="numberPhoneSearch"
+          name="numberPhoneSearch"
+          type="text"
+          placeholder="Tìm kiếm"
+          (input)="onSearchPhone()"
+        />
+      </div>
+      <div class="auth-phone__select-list-item">
+        <div *ngFor="let item of countryData" class="auth-phone__select-item">
+          <div
+            *ngIf="item.enable !== false"
+            class="auth-phone__select-item-text"
+            (click)="countryCurrent = item; openSelectPhoneCountry = false"
+          >
+            {{ item?.name }} {{ item?.dial_code }}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="auth-phone__input-wrapper mb-3">

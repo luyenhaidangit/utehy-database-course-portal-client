@@ -49,7 +49,7 @@ export class AuthService {
   }
 
   loginPhone(request: any): Observable<any> {
-    return this.httpLoading.post(`auth/login-by-verify-otp-numberphone?phone=${request.phone}&otp=${request.otp}`, {});
+    return this.httpLoading.post(`auth/login-by-verify-otp-numberphone`, request);
   }
 
   loginEmail(request: any): Observable<any> {
