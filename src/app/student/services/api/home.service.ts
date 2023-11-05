@@ -12,4 +12,8 @@ export class HomeService {
   getBannersHome(request: any): Observable<any> {
     return this.http.get(`home/get-banners?place=${request.Place}&type=${request.Type}`);
   }
+
+  getCoursesHome(): Observable<any> {
+    return this.http.get(`home/get-courses`);
+  }
 }
