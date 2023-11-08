@@ -9,20 +9,20 @@
 
   <div class="course-pro__body">
     <div class="course-pro__body-wrapper row mt-2">
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
+      <div *ngFor="let page of pages;" routerLink="{{ page.url }}" class="course-pro__item col col-xl-3 col-lg-4 p-0">
         <div class="course-pro__item-wrapper">
           <div class="course-pro__item-link cursor-pointer">
             <button type="button">Xem chi tiết</button>
             <div class="course-pro__item-link__img position-relative">
               <img
                 class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png"
+                src="{{baseUrlApi + page.image}}"
                 alt="HTML CSS Pro"
               />
               <div class="position-absolute overley"></div>
             </div>
           </div>
-          <h3 class="course-pro__item-title mt-2">Vẽ sơ đồ ER</h3>
+          <h3 class="course-pro__item-title mt-2">{{ page.title }}</h3>
           <div class="course-pro__item-icon">
             <img
               src="https://fullstack.edu.vn/static/media/crown_icon.3e4800f7485935ab6ea312a7080a85fe.svg"
@@ -30,82 +30,7 @@
             />
           </div>
           <div class="course-pro__item-price">
-            <span class="course-pro__item-price__old-price">Công cụ sơ đồ ER để trực quan hóa cách các thực thể hệ thống như người hoặc đối tượng liên quan với nhau.</span>
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem chi tiết</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/courses/27/64e184ee5d7a2.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-2">Bộ câu hỏi trắc nghiệm về CSDL</h3>
-          <div class="course-pro__item-icon">
-            <img
-              src="https://fullstack.edu.vn/static/media/crown_icon.3e4800f7485935ab6ea312a7080a85fe.svg"
-              alt=""
-            />
-          </div>
-          <div class="course-pro__item-price">
-            <span class="course-pro__item-price__old-price">Tổng hợp câu hỏi trắc nghiệm CSDL có đáp án đầy đủ nhằm giúp các bạn dễ dàng ôn tập lại toàn bộ các kiến thức.</span>
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem chi tiết</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/courses/19/62f13cb607b4b.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-2">Thực thi SQL</h3>
-          <div class="course-pro__item-icon">
-            <img
-              src="https://fullstack.edu.vn/static/media/crown_icon.3e4800f7485935ab6ea312a7080a85fe.svg"
-              alt=""
-            />
-          </div>
-          <div class="course-pro__item-price">
-            <span class="course-pro__item-price__old-price">Trình biên dịch SQL trực tuyến ngay trên nền tảng web, không cần phải cài đặt trên máy tính cá nhân.</span>
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem chi tiết</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/courses/19/62f13cb607b4b.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-2">Thảo luận và diễn dàn</h3>
-          <div class="course-pro__item-icon">
-            <img
-              src="https://fullstack.edu.vn/static/media/crown_icon.3e4800f7485935ab6ea312a7080a85fe.svg"
-              alt=""
-            />
-          </div>
-          <div class="course-pro__item-price">
-            <span class="course-pro__item-price__old-price">Nơi người dùng có thể tương tác, chia sẻ kiến thức, và giải quyết thắc mắc về CSDL.</span>
+            <span class="course-pro__item-price__old-price">{{ page.description }}</span>
           </div>
         </div>
       </div>
