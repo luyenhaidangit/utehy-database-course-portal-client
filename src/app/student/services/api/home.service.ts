@@ -17,6 +17,10 @@ export class HomeService {
     return this.http.get(`home/get-courses`);
   }
 
+  getPostsHome(): Observable<any> {
+    return this.http.get(`home/get-posts`);
+  }
+
   getPageFeaturesHome(): Observable<any> {
     return this.http.get(`home/get-feature-pages`);
   }
