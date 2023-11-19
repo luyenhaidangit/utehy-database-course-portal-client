@@ -124,6 +124,7 @@
 
 .course-pro__item-link__img > img {
   height: 152px;
+  width: 100%;
 }
 
 .course-pro__item-link__img > .overley {

@@ -47,12 +47,4 @@ export class SlideShowComponent implements OnInit {
       this.banners = convertResult;
     });
   }
-
-  public slides = [
-    { image: 'https://files.fullstack.edu.vn/f8-prod/banners/Banner_04_2.png' },
-    {
-      image:
-        'https://files.fullstack.edu.vn/f8-prod/banners/20/6308a6bf603a4.png',
-    },
-  ];
 }

@@ -19,7 +19,6 @@ export class PostListComponent implements OnInit {
     this.homeService.getPostsHome().subscribe((result: any) => {
       if(result.status){
         this.posts = result.data;
-        console.log("ol",this.posts);
       }
     });
   }

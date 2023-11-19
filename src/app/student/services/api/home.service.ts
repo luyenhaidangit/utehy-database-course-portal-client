@@ -24,4 +24,8 @@ export class HomeService {
   getPageFeaturesHome(): Observable<any> {
     return this.http.get(`home/get-feature-pages`);
   }
+
+  getVideosHome(): Observable<any> {
+    return this.http.get(`home/get-videos`);
+  }
 }
