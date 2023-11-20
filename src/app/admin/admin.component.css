@@ -1,2 +1,14 @@
 @import url("./assets/css/bootstrap.css");
 @import url("./assets/css/app.css");
+
+.bg-dark-ui{
+    background-color: #252b3b;
+}
+
+#sidebar-menu ul li a:hover {
+    color: #d7e4ec;
+}
+
+#sidebar-menu ul li a{
+    padding: .625rem 1rem;
+}
