@@ -187,7 +187,7 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@^16.0.0", "@angular/common@^16.0.0 || ^17.0.0", "@angular/common@>=13.0.0", "@angular/common@>=14.0.0", "@angular/common@>=15.0.0", "@angular/common@>=16.0.0", "@angular/common@>=16.0.0-0", "@angular/common@16.2.3":
+"@angular/common@^16.0.0", "@angular/common@^16.0.0 || ^17.0.0", "@angular/common@>=12.0.0", "@angular/common@>=13.0.0", "@angular/common@>=14.0.0", "@angular/common@>=15.0.0", "@angular/common@>=16.0.0", "@angular/common@>=16.0.0-0", "@angular/common@16.2.3":
   version "16.2.3"
   resolved "https://registry.npmjs.org/@angular/common/-/common-16.2.3.tgz"
   integrity sha512-hOC2yqISBRAzltuVJQ3CEJxHRp9mWggysp0or5HydbcmvB6WIroECL7U0u36VA95zC9SXnymHA13OwiFPpmahA==
@@ -215,7 +215,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@^16.0.0", "@angular/core@^16.0.0 || ^17.0.0", "@angular/core@>=14.0.0", "@angular/core@>=15.0.0", "@angular/core@>=16.0.0", "@angular/core@>=16.0.0-0", "@angular/core@16.2.3":
+"@angular/core@^16.0.0", "@angular/core@^16.0.0 || ^17.0.0", "@angular/core@>=12.0.0", "@angular/core@>=14.0.0", "@angular/core@>=15.0.0", "@angular/core@>=16.0.0", "@angular/core@>=16.0.0-0", "@angular/core@16.2.3":
   version "16.2.3"
   resolved "https://registry.npmjs.org/@angular/core/-/core-16.2.3.tgz"
   integrity sha512-YCzm7Rd2l0Ti0dZ1Mw3OfoQqlLolDN6jBEPy9Ah1s/KB+jKwNK9An3g8A9H6/jQIFwHCtxRad3LYH5ftknNMBQ==
@@ -2390,6 +2390,18 @@
   resolved "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.12.tgz"
   integrity sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==
 
+"@types/lodash-es@^4.17.6":
+  version "4.17.11"
+  resolved "https://registry.npmjs.org/@types/lodash-es/-/lodash-es-4.17.11.tgz"
+  integrity sha512-eCw8FYAWHt2DDl77s+AMLLzPn310LKohruumpucZI4oOFJkIgnlaJcy23OKMJxx4r9PeTF13Gv6w+jqjWQaYUg==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  version "4.14.201"
+  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.201.tgz"
+  integrity sha512-y9euML0cim1JrykNxADLfaG0FgD1g/yTHwUs/Jg9ZIU7WKj2/4IW9Lbb1WZbvck78W/lfGXFfe+u2EGfIJXdLQ==
+
 "@types/mime@*", "@types/mime@^1":
   version "1.3.2"
   resolved "https://registry.npmjs.org/@types/mime/-/mime-1.3.2.tgz"
@@ -3077,6 +3089,11 @@ camelcase@^5.3.1:
   version "5.3.1"
   resolved "https://registry.npmjs.org/camelcase/-/camelcase-5.3.1.tgz"
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
+
+can-use-dom@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.npmjs.org/can-use-dom/-/can-use-dom-0.1.0.tgz"
+  integrity sha512-ceOhN1DL7Y4O6M0j9ICgmTYziV89WMd96SvSl0REd8PMgrY0B/WBOPoed5S1KUmJqXgUXh8gzSe6E3ae27upsQ==
 
 caniuse-lite@^1.0.30001464, caniuse-lite@^1.0.30001517:
   version "1.0.30001527"
@@ -4700,6 +4717,11 @@ jiti@^1.18.2:
   resolved "https://registry.npmjs.org/jiti/-/jiti-1.19.3.tgz"
   integrity sha512-5eEbBDQT/jF1xg6l36P+mWGGoH9Spuy0PCdSr2dtWRDGC6ph/w9ZCL4lmESW8f8F7MwT3XKescfP0wnZWAKL9w==
 
+jquery@^3.4.1, jquery@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz"
+  integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
+
 js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
@@ -4960,6 +4982,11 @@ locate-path@^7.1.0:
   dependencies:
     p-locate "^6.0.0"
 
+lodash-es@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.21.tgz"
+  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
+
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.npmjs.org/lodash.debounce/-/lodash.debounce-4.0.8.tgz"
@@ -5104,6 +5131,16 @@ methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/methods/-/methods-1.1.2.tgz"
   integrity sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==
+
+metismenu@^3.0.7:
+  version "3.0.7"
+  resolved "https://registry.npmjs.org/metismenu/-/metismenu-3.0.7.tgz"
+  integrity sha512-omMwIAahlzssjSi3xY9ijkhXI8qEaQTqBdJ9lHmfV5Bld2UkxO2h2M3yWsteAlGJ/nSHi4e69WHDE2r18Ickyw==
+
+metismenujs@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.npmjs.org/metismenujs/-/metismenujs-1.4.0.tgz"
+  integrity sha512-a+3/XVkG8fVA6HBYu1yQkUkVpbh2n9po3vhSzu/Pu5k6s2hbteFZMRzUQyHt6FF28N8pLOpzcb47w4ErBHEsDQ==
 
 micromatch@^4.0.2, micromatch@^4.0.4:
   version "4.0.5"
@@ -6407,6 +6444,32 @@ sigstore@^1.3.0:
     "@sigstore/sign" "^1.0.0"
     "@sigstore/tuf" "^1.0.3"
     make-fetch-happen "^11.0.1"
+
+simplebar-angular@^3.2.4:
+  version "3.2.4"
+  resolved "https://registry.npmjs.org/simplebar-angular/-/simplebar-angular-3.2.4.tgz"
+  integrity sha512-cBjr+GD2c4RaO85Yyo0Y1PsKeRdIgu5tgXp3FiNqyUwlisQUKZVweDiVuCtlec4nJTIwNJSoPV6yW8S1ek1B/A==
+  dependencies:
+    simplebar-core "^1.2.4"
+    tslib "^2.3.0"
+
+simplebar-core@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.npmjs.org/simplebar-core/-/simplebar-core-1.2.4.tgz"
+  integrity sha512-P+Sqshef4fq3++gQ82TgNYcgl3qZFSCP5jS2/8NMmw18oagXOijMzs1G+vm6RUY3oMvpwH3wGoqh9u6SyDjHfQ==
+  dependencies:
+    "@types/lodash-es" "^4.17.6"
+    can-use-dom "^0.1.0"
+    lodash "^4.17.21"
+    lodash-es "^4.17.21"
+
+simplebar@^6.2.5:
+  version "6.2.5"
+  resolved "https://registry.npmjs.org/simplebar/-/simplebar-6.2.5.tgz"
+  integrity sha512-vfxKR6KNBsPx7+sZnqO7T8VuCvi4px6OlycrrkNgyjvoHhRW7LIyVkHhUfXxbz33Gw99Wb9UMMsnEZv35wtLSw==
+  dependencies:
+    can-use-dom "^0.1.0"
+    simplebar-core "^1.2.4"
 
 slash@^4.0.0:
   version "4.0.0"

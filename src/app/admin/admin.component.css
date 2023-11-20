@@ -12,3 +12,11 @@
 #sidebar-menu ul li a{
     padding: .625rem 1rem;
 }
+
+#sidebar-menu ul li a.active {
+    color: #d7e4ec!important;
+}
+
+.menu-title{
+    color: #8590a5 !important;
+}
