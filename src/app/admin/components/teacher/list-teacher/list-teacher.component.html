@@ -74,8 +74,14 @@
              </div>
              <div class="table overflow-auto">
                 <table id="datatable" class="table table-bordered dt-responsive nowrap mt-3" style="border-collapse: collapse; border-spacing: 0; width: 100%">
-                   <thead>
+                   <thead class="thead-light">
                       <tr>
+                          <th style="width: 20px;">
+                           <div class="custom-control custom-checkbox">
+                               <input (change)="selectAllTeachers($event)" [checked]="selectedItems.length === teachers.length" type="checkbox" class="custom-control-input" id="select-box" title="select-box" placeholder="select-box">
+                               <label class="custom-control-label" for="select-box">&nbsp;</label>
+                           </div>
+                         </th>
                          <th>Id</th>
                          <th>Họ tên/Email</th>
                          <th>Số diện thoại</th>
@@ -85,6 +91,12 @@
                    </thead>
                    <tbody>
                       <tr *ngFor="let teacher of teachers;">
+                        <td>
+                           <div class="custom-control custom-checkbox">
+                               <input (change)="toggleSelection(teacher.id)" id="select-box-{{ teacher.id }}" [checked]="isSelected(teacher.id)" type="checkbox" class="custom-control-input">
+                               <label class="custom-control-label" for="select-box-{{ teacher.id }}">&nbsp;</label>
+                           </div>
+                        </td>
                          <td>{{ teacher.id }}</td>
                          <td>
                             <div class="d-flex align-items-center gap-2">
