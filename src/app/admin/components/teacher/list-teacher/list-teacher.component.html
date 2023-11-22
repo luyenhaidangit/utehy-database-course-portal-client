@@ -1,0 +1,123 @@
+<div class="row">
+    <div class="col-12">
+       <div
+          class="page-title-box d-flex align-items-center justify-content-between"
+          >
+          <h4 class="mb-0">Danh sách giáo viên</h4>
+          <div class="page-title-right">
+             <ol class="breadcrumb m-0">
+                <li
+                   routerLink="/admin/dashboard"
+                   class="breadcrumb-item d-flex align-items-center"
+                   >
+                   <span>Trang chủ</span>
+                   <i class="breadcrumb-item-arrow fa-solid fa-angle-right"></i>
+                </li>
+                <li class="breadcrumb-item active">
+                   <span>Quản lý giáo viên</span>
+                </li>
+             </ol>
+          </div>
+       </div>
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-12">
+       <div class="card">
+          <div class="card-body">
+             <div class="group-action">
+                <div class="row">
+                   <div class="group-action__left col-xl-10 col-md-9 col-sm-12">
+                      <div class="row">
+                         <div class="form-group col-md-4">
+                            <input
+                               class="form-control"
+                               type="text"
+                               placeholder="Tên hoặc email"
+                               />
+                         </div>
+                         <div class="form-group col-md-4">
+                            <input
+                               class="form-control"
+                               type="text"
+                               placeholder="Số điện thoại"
+                               />
+                         </div>
+                         <div class="form-group col-md-3">
+                            <select class="form-control">
+                               <option>Trạng thái</option>
+                               <option>Hoạt động</option>
+                               <option>Không hoạt động</option>
+                            </select>
+                            <!-- <ng-select [items]="null" bindLabel="name" placeholder="Trạng thái"></ng-select> -->
+                            <!-- <input class="form-control cursor-pointer" type="text" readonly disable placeholder="Trạng thái"> -->
+                         </div>
+                         <div class="form-group col-md-1">
+                            <button
+                               type="button"
+                               class="btn btn-primary waves-effect waves-light"
+                               >
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                         </div>
+                      </div>
+                   </div>
+                   <div class="group-action__right col-xl-2 col-md-3 col-sm-12">
+                      <button
+                         type="button"
+                         class="btn btn-success waves-effect waves-light"
+                         >
+                      <i class="fa-solid fa-plus mr-1"></i> Thêm mới
+                      </button>
+                   </div>
+                </div>
+             </div>
+             <div class="table overflow-auto">
+                <table id="datatable" class="table table-bordered dt-responsive nowrap mt-3" style="border-collapse: collapse; border-spacing: 0; width: 100%">
+                   <thead>
+                      <tr>
+                         <th>Id</th>
+                         <th>Họ tên/Email</th>
+                         <th>Số diện thoại</th>
+                         <th>Trạng thái</th>
+                         <th>Hành động</th>
+                      </tr>
+                   </thead>
+                   <tbody>
+                      <tr *ngFor="let teacher of teachers;">
+                         <td>{{ teacher.id }}</td>
+                         <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <div>
+                                    <img src="{{ teacher.avatarUrl }}" alt="Header Avatar" class="rounded-circle header-profile-user">
+                                </div>
+                                <div>
+                                    <span>{{ teacher.name }}</span>
+                                    <br/>
+                                    <span class="text-muted">{{ teacher.email }}</span>
+                                </div>
+                            </div>
+                         </td>
+                         <td>
+                            {{ teacher.phoneNumber }}
+                         </td>
+                         <td>
+                            <div class="custom-control custom-switch mb-2" dir="ltr">
+                                <input type="checkbox" class="custom-control-input" id="switch-{{ teacher.id }}" [checked]="teacher.status" disabled>
+                                <label class="custom-control-label" for="switch-{{ teacher.id }}"></label>
+                            </div>
+                         </td>
+                         <td>
+                            <span class="text-info cursor-pointer"><i class="fa-solid fa-eye"></i></span>
+                            <span class="text-warning cursor-pointer ml-2"><i class="fa-solid fa-pen"></i></span>
+                            <span class="text-danger cursor-pointer ml-2"><i class="fa-solid fa-trash"></i></span>
+                         </td>
+                      </tr>
+                   </tbody>
+                </table>
+             </div>
+          </div>
+       </div>
+    </div>
+    <!-- end col -->
+ </div>

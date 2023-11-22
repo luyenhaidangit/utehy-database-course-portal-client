@@ -9,12 +9,11 @@ import { VerticalMenuComponent } from './shared/components/vertical-menu/vertica
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { RightSideBarComponent } from './shared/components/right-side-bar/right-side-bar.component';
 
-
 @NgModule({
   declarations: [LayoutComponent, AdminComponent, HeaderComponent, VerticalMenuComponent, FooterComponent, RightSideBarComponent],
   imports: [
     CommonModule,
-    AdminRoutingModule
-  ]
+    AdminRoutingModule,
+  ],
 })
 export class AdminModule { }

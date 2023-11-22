@@ -10,6 +10,19 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () => import('./components/dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
+  {
+    path: 'course',
+    loadChildren: () => import('./components/course/course.module').then((m) => m.CourseModule),
+  },
+  {
+    path: 'teacher',
+    loadChildren: () => import('./components/teacher/teacher.module').then((m) => m.TeacherModule),
+  },
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
