@@ -25,4 +25,8 @@ export class VerticalMenuComponent implements OnInit {
     new SimpleBar(document.getElementById('simplebar') as HTMLElement);
     this.currentUrl = this.router.url;
   }
+
+  isActive(url: string): boolean {
+    return this.router.url.startsWith(url);
+  }
 }

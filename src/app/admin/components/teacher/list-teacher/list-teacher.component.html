@@ -64,6 +64,7 @@
                       <button
                          type="button"
                          class="btn btn-success waves-effect waves-light"
+                         routerLink="/admin/teacher/create"
                          >
                       <i class="fa-solid fa-plus mr-1"></i> Thêm mới
                       </button>
@@ -76,11 +77,17 @@
                       <tr>
                           <th style="width: 20px;">
                            <div class="custom-control custom-checkbox">
-                               <input (change)="selectAllTeachers($event)" [checked]="selectedItems.length === teachers.length" type="checkbox" class="custom-control-input" id="select-box" title="select-box" placeholder="select-box">
+                               <input (change)="selectAllTeachers($event)" [checked]="selectedItems.length === teachers.length && selectedItems.length > 0" type="checkbox" class="custom-control-input" id="select-box" title="select-box" placeholder="select-box">
                                <label class="custom-control-label" for="select-box">&nbsp;</label>
                            </div>
                          </th>
-                         <th>Id</th>
+                         <th class="order-sort" (click)="onSortAndOrderChange(orderConstant.id)" [ngClass]="{'order-sort-active': selectedSortAndOrder?.orderBy === orderConstant.id }">
+                           Id
+                           <span *ngIf="selectedSortAndOrder?.orderBy === orderConstant.id" class="order-sort-group">
+                              <i *ngIf="selectedSortAndOrder?.sortBy === sortConstant.desc" class="bi bi-sort-down"></i>
+                              <i *ngIf="selectedSortAndOrder?.sortBy === sortConstant.asc" class="bi bi-sort-up"></i>
+                           </span>
+                         </th>
                          <th>Họ tên / Email</th>
                          <th>Số diện thoại</th>
                          <th>Trạng thái</th>
@@ -146,8 +153,8 @@
                </div>
                <div class="per-page">
                   Hiển thị 
-                  <select class="mx-1">
-                     <option *ngFor="let item of config.defaultPerPage;" [ngValue]="item.value">{{ item.label }}</option>
+                  <select class="mx-1" (change)="onPerPageChange($event)">
+                     <option *ngFor="let item of config.perPageOptions;" [ngValue]="item.value">{{ item.label }}</option>
                   </select>
                   bản ghi
                </div>

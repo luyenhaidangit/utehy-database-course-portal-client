@@ -13,7 +13,7 @@
                 </li>
 
                 <li routerLink="/admin/teacher">
-                    <a class="waves-effect {{ currentUrl === '/admin/teacher' ? 'active' : '' }}">
+                    <a class="waves-effect" [class.active]="isActive('/admin/teacher')">
                         <i class="ri-dashboard-line"></i>
                         <span>Quản lý giáo viên</span>
                     </a>

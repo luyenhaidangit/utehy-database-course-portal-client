@@ -1,4 +1,5 @@
 @import url("./assets/css/bootstrap.css");
+@import url("~bootstrap-icons/font/bootstrap-icons.min.css");
 @import url("./assets/css/app.css");
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
@@ -60,4 +61,15 @@
     font-size: 13px;
     padding-top: 11px;
     border-radius: 100% !important;
+}
+
+.order-sort{
+    cursor: pointer;
+}
+
+.order-sort-active{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
