@@ -49,8 +49,6 @@
                                <option>Hoạt động</option>
                                <option>Không hoạt động</option>
                             </select>
-                            <!-- <ng-select [items]="null" bindLabel="name" placeholder="Trạng thái"></ng-select> -->
-                            <!-- <input class="form-control cursor-pointer" type="text" readonly disable placeholder="Trạng thái"> -->
                          </div>
                          <div class="form-group col-md-1">
                             <button
@@ -72,7 +70,7 @@
                    </div>
                 </div>
              </div>
-             <div class="table overflow-auto">
+             <div class="table-data overflow-auto">
                 <table id="datatable" class="table table-bordered dt-responsive nowrap mt-3" style="border-collapse: collapse; border-spacing: 0; width: 100%">
                    <thead class="thead-light">
                       <tr>
@@ -83,7 +81,7 @@
                            </div>
                          </th>
                          <th>Id</th>
-                         <th>Họ tên/Email</th>
+                         <th>Họ tên / Email</th>
                          <th>Số diện thoại</th>
                          <th>Trạng thái</th>
                          <th>Hành động</th>
@@ -127,6 +125,32 @@
                       </tr>
                    </tbody>
                 </table>
+             </div>
+             <div class="table-filter d-flex justify-content-between align-items-center mt-2">
+               <div class="page-index">
+                  <ul class="pagination pagination-rounded">
+                     <li class="page-item" (click)="setPage(currentPage - 1)" [class.disabled]="currentPage === 1">
+                       <span class="page-link"><i class="fa-solid fa-angle-left"></i></span>
+                     </li>
+                   
+                     <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+                       <li class="page-item" (click)="setPage(i + 1)" [class.active]="currentPage === i + 1">
+                         <span class="page-link">{{ i + 1 }}</span>
+                       </li>
+                     </ng-container>
+                   
+                     <li class="page-item" (click)="setPage(currentPage + 1)" [class.disabled]="currentPage === totalPages">
+                       <span class="page-link"><i class="fa-solid fa-angle-right"></i></span>
+                     </li>
+                   </ul>
+               </div>
+               <div class="per-page">
+                  Hiển thị 
+                  <select class="mx-1">
+                     <option *ngFor="let item of config.defaultPerPage;" [ngValue]="item.value">{{ item.label }}</option>
+                  </select>
+                  bản ghi
+               </div>
              </div>
           </div>
        </div>

@@ -43,3 +43,21 @@
 .custom-switch .custom-control-input:disabled:checked ~ .custom-control-label::before{
     background-color: rgba(86, 100, 210, 1);
 }
+
+.page-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.page-link{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    font-size: 13px;
+    padding-top: 11px;
+    border-radius: 100% !important;
+}
