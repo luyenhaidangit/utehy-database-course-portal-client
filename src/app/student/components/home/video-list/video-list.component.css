@@ -117,6 +117,10 @@
   white-space: nowrap;
 }
 
+.course-pro__item-link__img > img{
+  height: 152px;
+}
+
 .course-pro__item-link__img > .overley {
   position: absolute;
   top: 0;
@@ -175,6 +179,7 @@
   font-size: 0.7rem;
   font-weight: 600;
   padding: 6px 12px;
+  cursor: pointer;
 }
 
 .course-pro__item-video-info {

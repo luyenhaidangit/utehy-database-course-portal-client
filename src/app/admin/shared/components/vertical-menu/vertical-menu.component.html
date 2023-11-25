@@ -1,0 +1,31 @@
+<div class="vertical-menu bg-dark-ui">
+
+    <div id="simplebar" data-simplebar class="h-100">
+        <div id="sidebar-menu">
+            <ul class="metismenu list-unstyled" id="side-menu">
+                <li class="menu-title">Menu</li>
+
+                <li routerLink="/admin/dashboard">
+                    <a class="waves-effect {{ currentUrl === '/admin/dashboard' ? 'active' : '' }}">
+                        <i class="ri-dashboard-line"></i>
+                        <span>Trang điều khiển</span>
+                    </a>
+                </li>
+
+                <li routerLink="/admin/teacher">
+                    <a class="waves-effect" [class.active]="isActive('/admin/teacher')">
+                        <i class="ri-dashboard-line"></i>
+                        <span>Quản lý giáo viên</span>
+                    </a>
+                </li>
+
+                <li routerLink="/admin/course">
+                    <a class="waves-effect {{ currentUrl === '/admin/course' ? 'active' : '' }}">
+                        <i class="ri-dashboard-line"></i>
+                        <span>Quản lý khoá học</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

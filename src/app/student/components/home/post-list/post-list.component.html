@@ -15,21 +15,21 @@
 
   <div class="course-pro__body">
     <div class="course-pro__body-wrapper row mt-2">
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
+      <div *ngFor="let post of posts;" class="course-pro__item col col-xl-3 col-lg-4 p-0">
         <div class="course-pro__item-wrapper">
           <div class="course-pro__item-link cursor-pointer">
             <button type="button">Xem bài viết</button>
             <div class="course-pro__item-link__img position-relative">
               <img
                 class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/blog_posts/65/6139fe28a9844.png"
+                src="{{ post.image }}"
                 alt="HTML CSS Pro"
               />
               <div class="position-absolute overley"></div>
             </div>
           </div>
           <h3 class="course-pro__item-title mt-3">
-            Tổng hợp các sản phẩm của học viên tại F8
+            {{ post.title }}
           </h3>
           <div
             class="course-pro__item-author cursor-pointer d-flex align-items-center g-2 mt-2"
@@ -44,278 +44,11 @@
               </div>
               <span
                 class="course-pro__item-author__name d-flex align-items-center ms-2"
-                >Sơn Đặng <i class="fa-solid fa-check ms-1"></i
+                >{{ post.user.name }} <i class="fa-solid fa-check ms-1"></i
               ></span>
             </div>
             <span class="course-pro__item-author__reading-time"
-              ><i class="fa-solid fa-circle"></i>2 phút đọc</span
-            >
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem bài viết</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153f692d366e.jpg"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-3">
-            Tổng hợp các sản phẩm của học viên tại F8
-          </h3>
-          <div
-            class="course-pro__item-author cursor-pointer d-flex align-items-center g-2 mt-2"
-          >
-            <div class="d-flex align-items-center">
-              <div class="course-pro__item-author__avatar">
-                <img
-                  class="img-fluid"
-                  src="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/64f9a2fd4e064.jpg"
-                  alt="Avatar User"
-                />
-              </div>
-              <span
-                class="course-pro__item-author__name d-flex align-items-center ms-2"
-                >Sơn Đặng <i class="fa-solid fa-check ms-1"></i
-              ></span>
-            </div>
-            <span class="course-pro__item-author__reading-time"
-              ><i class="fa-solid fa-circle"></i>2 phút đọc</span
-            >
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem bài viết</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/blog_posts/677/615436b218d0a.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-3">
-            Tổng hợp các sản phẩm của học viên tại F8
-          </h3>
-          <div
-            class="course-pro__item-author cursor-pointer d-flex align-items-center g-2 mt-2"
-          >
-            <div class="d-flex align-items-center">
-              <div class="course-pro__item-author__avatar">
-                <img
-                  class="img-fluid"
-                  src="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/64f9a2fd4e064.jpg"
-                  alt="Avatar User"
-                />
-              </div>
-              <span
-                class="course-pro__item-author__name d-flex align-items-center ms-2"
-                >Sơn Đặng <i class="fa-solid fa-check ms-1"></i
-              ></span>
-            </div>
-            <span class="course-pro__item-author__reading-time"
-              ><i class="fa-solid fa-circle"></i>2 phút đọc</span
-            >
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem bài viết</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/blog_posts/51/6139c6453456e.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-3">
-            Tổng hợp các sản phẩm của học viên tại F8
-          </h3>
-          <div
-            class="course-pro__item-author cursor-pointer d-flex align-items-center g-2 mt-2"
-          >
-            <div class="d-flex align-items-center">
-              <div class="course-pro__item-author__avatar">
-                <img
-                  class="img-fluid"
-                  src="https://files.fullstack.edu.vn/f8-prod/blog_posts/51/6139c6453456e.png"
-                  alt="Avatar User"
-                />
-              </div>
-              <span
-                class="course-pro__item-author__name d-flex align-items-center ms-2"
-                >Sơn Đặng <i class="fa-solid fa-check ms-1"></i
-              ></span>
-            </div>
-            <span class="course-pro__item-author__reading-time"
-              ><i class="fa-solid fa-circle"></i>2 phút đọc</span
-            >
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem bài viết</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/blog_posts/65/6139fe28a9844.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-3">
-            Tổng hợp các sản phẩm của học viên tại F8
-          </h3>
-          <div
-            class="course-pro__item-author cursor-pointer d-flex align-items-center g-2 mt-2"
-          >
-            <div class="d-flex align-items-center">
-              <div class="course-pro__item-author__avatar">
-                <img
-                  class="img-fluid"
-                  src="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/64f9a2fd4e064.jpg"
-                  alt="Avatar User"
-                />
-              </div>
-              <span
-                class="course-pro__item-author__name d-flex align-items-center ms-2"
-                >Sơn Đặng <i class="fa-solid fa-check ms-1"></i
-              ></span>
-            </div>
-            <span class="course-pro__item-author__reading-time"
-              ><i class="fa-solid fa-circle"></i>2 phút đọc</span
-            >
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem bài viết</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/blog_posts/279/6153f692d366e.jpg"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-3">
-            Tổng hợp các sản phẩm của học viên tại F8
-          </h3>
-          <div
-            class="course-pro__item-author cursor-pointer d-flex align-items-center g-2 mt-2"
-          >
-            <div class="d-flex align-items-center">
-              <div class="course-pro__item-author__avatar">
-                <img
-                  class="img-fluid"
-                  src="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/64f9a2fd4e064.jpg"
-                  alt="Avatar User"
-                />
-              </div>
-              <span
-                class="course-pro__item-author__name d-flex align-items-center ms-2"
-                >Sơn Đặng <i class="fa-solid fa-check ms-1"></i
-              ></span>
-            </div>
-            <span class="course-pro__item-author__reading-time"
-              ><i class="fa-solid fa-circle"></i>2 phút đọc</span
-            >
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem bài viết</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/blog_posts/677/615436b218d0a.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-3">
-            Tổng hợp các sản phẩm của học viên tại F8
-          </h3>
-          <div
-            class="course-pro__item-author cursor-pointer d-flex align-items-center g-2 mt-2"
-          >
-            <div class="d-flex align-items-center">
-              <div class="course-pro__item-author__avatar">
-                <img
-                  class="img-fluid"
-                  src="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/64f9a2fd4e064.jpg"
-                  alt="Avatar User"
-                />
-              </div>
-              <span
-                class="course-pro__item-author__name d-flex align-items-center ms-2"
-                >Sơn Đặng <i class="fa-solid fa-check ms-1"></i
-              ></span>
-            </div>
-            <span class="course-pro__item-author__reading-time"
-              ><i class="fa-solid fa-circle"></i>2 phút đọc</span
-            >
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem bài viết</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/blog_posts/51/6139c6453456e.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-3">
-            Tổng hợp các sản phẩm của học viên tại F8
-          </h3>
-          <div
-            class="course-pro__item-author cursor-pointer d-flex align-items-center g-2 mt-2"
-          >
-            <div class="d-flex align-items-center">
-              <div class="course-pro__item-author__avatar">
-                <img
-                  class="img-fluid"
-                  src="https://files.fullstack.edu.vn/f8-prod/blog_posts/51/6139c6453456e.png"
-                  alt="Avatar User"
-                />
-              </div>
-              <span
-                class="course-pro__item-author__name d-flex align-items-center ms-2"
-              >
-                Sơn Đặng <i class="fa-solid fa-check ms-1"></i
-              ></span>
-            </div>
-            <span class="course-pro__item-author__reading-time"
-              ><i class="fa-solid fa-circle"></i>2 phút đọc</span
+              ><i class="fa-solid fa-circle"></i>{{ post.readingTime }} phút đọc</span
             >
           </div>
         </div>

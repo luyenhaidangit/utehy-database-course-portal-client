@@ -25,15 +25,13 @@ export class AuthComponent {
   constructor(private modalService: BsModalService) {}
 
   openModal() {
+    this.titleContent = authConstant.titleDefault;
+    this.authView = authConstant.viewDefault;
+    this.authAction = authConstant.loginAction;
     this.modalRef = this.modalService.show(this.template);
   }
 
   closeModal() {
-    console.log('haha');
-    this.titleContent = authConstant.titleDefault;
-    this.authView = authConstant.viewDefault;
-    this.authAction = authConstant.loginAction;
-
     this.modalRef?.hide();
   }
 

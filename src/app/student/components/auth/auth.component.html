@@ -87,6 +87,7 @@
         "
         [authView]="authView"
         (changeViewEvent)="changeViewAuth($event.title, $event.view)"
+        (changeStatusModalEvent)="closeModal()"
       ></app-auth-email-phone>
     </div>
     <div class="modal-body__wrapper">

@@ -18,6 +18,9 @@ const authConstant = {
   //Auth Action
   loginAction: 1,
   registerAction: 2,
+
+  //Phone
+  defaultPhoneCodeCountry: '+84',
 };
 
 export default authConstant;

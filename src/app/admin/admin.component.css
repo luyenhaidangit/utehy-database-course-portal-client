@@ -1,0 +1,75 @@
+@import url("./assets/css/bootstrap.css");
+@import url("~bootstrap-icons/font/bootstrap-icons.min.css");
+@import url("./assets/css/app.css");
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+.bg-dark-ui{
+    background-color: #252b3b;
+}
+
+#sidebar-menu ul li a:hover {
+    color: #d7e4ec;
+}
+
+#sidebar-menu ul li a{
+    padding: .625rem 1rem;
+}
+
+#sidebar-menu ul li a.active {
+    color: #d7e4ec!important;
+}
+
+.menu-title{
+    color: #8590a5 !important;
+}
+
+.breadcrumb-item + .breadcrumb-item::before{
+    display: none;
+}
+
+.breadcrumb-item-arrow{
+    padding-left: 0.5rem;
+    font-size: 13px;
+}
+
+.breadcrumb-item{
+    cursor: pointer;
+}
+
+.page-content{
+    padding-bottom: 0px;
+    min-height: calc(100vh - 60px);
+}
+
+.custom-switch .custom-control-input:disabled:checked ~ .custom-control-label::before{
+    background-color: rgba(86, 100, 210, 1);
+}
+
+.page-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.page-link{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    font-size: 13px;
+    padding-top: 11px;
+    border-radius: 100% !important;
+}
+
+.order-sort{
+    cursor: pointer;
+}
+
+.order-sort-active{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}

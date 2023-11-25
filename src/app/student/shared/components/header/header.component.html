@@ -22,10 +22,18 @@
   </div>
   <div class="navbar-search__icon"><i class="bi bi-search"></i></div>
   <div class="navbar-actions">
-    <div id="navbar-actions__portal"></div>
-    <a (click)="authComponent.openModal()" class="navbar-actions__login-btn"
-      >Đăng nhập</a
-    >
+      <a *ngIf="authService.isAuthenticated === false" (click)="authComponent.openModal()" class="navbar-actions__login-btn">Đăng nhập</a>
+      <div *ngIf="authService.isAuthenticated === true" class="d-flex align-items-center">
+        <div class="navbar-action__my-learn cursor-pointer">
+          Khoá học của tôi
+        </div>
+        <div class="navbar-action__notify d-flex align-items-center justify-content-center ms-2 me-3">
+          <i class="fa-solid fa-bell"></i>
+        </div>
+        <div class="navbar-action__avatar d-flex align-items-center justify-content-center">
+          <img class="NavBar_avatar__OG7ib" src="https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg" alt="Luyện Hải Đăng">
+        </div>
+      </div>
   </div>
 </div>
 

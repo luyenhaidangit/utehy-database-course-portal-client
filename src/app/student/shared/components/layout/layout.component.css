@@ -1,6 +1,7 @@
 .main-app {
   display: flex;
   min-height: 100vh;
+  margin-top: 66px;
 }
 
 .sidebar {

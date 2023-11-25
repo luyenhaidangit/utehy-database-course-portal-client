@@ -1,7 +1,7 @@
 <div class="course-pro my-4">
   <div class="course-pro__header">
     <div class="course-pro__number-student">
-      <strong>353.834+</strong> người khác đã học
+      <strong>{{totalNumberRegistrations| number: '1.0-3'}}+</strong> người khác đã học
     </div>
     <div
       class="course-pro__header-title__wrapper w-100 d-flex justify-content-between"
@@ -18,203 +18,23 @@
 
   <div class="course-pro__body">
     <div class="course-pro__body-wrapper row mt-2">
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
+      <div *ngFor="let course of courses;" class="course-pro__item col col-xl-3 col-lg-4 p-0">
         <div class="course-pro__item-wrapper">
           <div class="course-pro__item-link cursor-pointer">
             <button type="button">Xem khoá học</button>
             <div class="course-pro__item-link__img position-relative">
               <img
                 class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/courses/7.png"
+                src="{{baseUrlApi + course.imageUrl}}"
                 alt="HTML CSS Pro"
               />
               <div class="position-absolute overley"></div>
             </div>
           </div>
-          <h3 class="course-pro__item-title mt-2">HTML CSS Pro</h3>
+          <h3 class="course-pro__item-title mt-2">{{ course.title }}</h3>
           <div class="course-pro__item-user-join">
             <i class="fa-solid fa-users me-1"></i>
-            118.868
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem khoá học</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/courses/21/63e1bcbaed1dd.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-2">HTML CSS Pro</h3>
-          <div class="course-pro__item-user-join">
-            <i class="fa-solid fa-users me-1"></i>
-            118.868
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem khoá học</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/courses/2.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-2">HTML CSS Pro</h3>
-          <div class="course-pro__item-user-join">
-            <i class="fa-solid fa-users me-1"></i>
-            118.868
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem khoá học</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/courses/3.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-2">HTML CSS Pro</h3>
-          <div class="course-pro__item-user-join">
-            <i class="fa-solid fa-users me-1"></i>
-            118.868
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem khoá học</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/courses/7.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-2">HTML CSS Pro</h3>
-          <div class="course-pro__item-user-join">
-            <i class="fa-solid fa-users me-1"></i>
-            118.868
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem khoá học</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/courses/21/63e1bcbaed1dd.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-2">HTML CSS Pro</h3>
-          <div class="course-pro__item-user-join">
-            <i class="fa-solid fa-users me-1"></i>
-            118.868
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem khoá học</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/courses/2.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-2">HTML CSS Pro</h3>
-          <div class="course-pro__item-user-join">
-            <i class="fa-solid fa-users me-1"></i>
-            118.868
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem khoá học</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/courses/3.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-2">HTML CSS Pro</h3>
-          <div class="course-pro__item-user-join">
-            <i class="fa-solid fa-users me-1"></i>
-            118.868
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem khoá học</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/courses/7.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-2">HTML CSS Pro</h3>
-          <div class="course-pro__item-user-join">
-            <i class="fa-solid fa-users me-1"></i>
-            118.868
-          </div>
-        </div>
-      </div>
-      <div class="course-pro__item col col-xl-3 col-lg-4 p-0">
-        <div class="course-pro__item-wrapper">
-          <div class="course-pro__item-link cursor-pointer">
-            <button type="button">Xem khoá học</button>
-            <div class="course-pro__item-link__img position-relative">
-              <img
-                class="img-fluid"
-                src="https://files.fullstack.edu.vn/f8-prod/courses/21/63e1bcbaed1dd.png"
-                alt="HTML CSS Pro"
-              />
-              <div class="position-absolute overley"></div>
-            </div>
-          </div>
-          <h3 class="course-pro__item-title mt-2">HTML CSS Pro</h3>
-          <div class="course-pro__item-user-join">
-            <i class="fa-solid fa-users me-1"></i>
-            118.868
+              {{ course.numberRegistrations | number: '1.0-3' }}
           </div>
         </div>
       </div>
