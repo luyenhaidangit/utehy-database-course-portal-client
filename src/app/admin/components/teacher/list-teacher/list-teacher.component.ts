@@ -26,15 +26,19 @@ export class ListTeacherComponent implements OnInit {
   };
   //Paging
   public currentPage: any;
-  public pageSize: any;
+  public pageSize: any = 10;
   public pageIndex: any;
   public totalPages: any;
-  public search: any = {};
+  public totalRecords: any;
+  public search: any = {
+    nameOrEmail: '',
+    phoneNumber: '',
+    status: ''
+  };
 
   constructor(private teacherService: TeacherService,private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    console.log("vzof ham")
     this.route.queryParams.subscribe(params => {
       const request = {
         ...params,
@@ -49,9 +53,30 @@ export class ListTeacherComponent implements OnInit {
   getTeachers(request: any) {
     this.teacherService.getTeachers(request).subscribe((result: any) => {
       if(result.status){
+        if(request.pageIndex !== 1 && result.data.items.length === 0){
+          this.route.queryParams.subscribe(params => {
+            const request = {
+              ...params,
+              pageIndex: 1,
+            };
+      
+            this.router.navigate([], {
+              relativeTo: this.route,
+              queryParams: request,
+              queryParamsHandling: 'merge',
+            });
+          });
+        }
+
         this.teachers = result.data.items;
         this.totalPages = result.data.totalPages;
         this.currentPage = result.data.pageIndex;
+        this.totalRecords = result.data.totalRecords;
+        this.pageSize = result.data.pageSize;
+        
+        if(this.teachers.length === 0){
+          this.pageIndex = 1;
+        }
       }
     });
   }
@@ -129,6 +154,23 @@ export class ListTeacherComponent implements OnInit {
         ...params,
         orderBy: this.selectedSortAndOrder.orderBy,
         sortBy: this.selectedSortAndOrder.sortBy,
+      };
+
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: request,
+        queryParamsHandling: 'merge',
+      });
+    });
+  }
+
+  onSearchChange(){
+    this.route.queryParams.subscribe(params => {
+      const request = {
+        ...params,
+        nameOrEmail: this.search.nameOrEmail ? this.search.nameOrEmail : null,
+        phoneNumber: this.search.phoneNumber ? this.search.phoneNumber : null,
+        status: this.search.status ? this.search.status : null,
       };
 
       this.router.navigate([], {

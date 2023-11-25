@@ -34,6 +34,7 @@
                                class="form-control"
                                type="text"
                                placeholder="Tên hoặc email"
+                               [(ngModel)]="search.nameOrEmail"
                                />
                          </div>
                          <div class="form-group col-md-4">
@@ -41,17 +42,18 @@
                                class="form-control"
                                type="text"
                                placeholder="Số điện thoại"
+                               [(ngModel)]="search.phoneNumber"
                                />
                          </div>
                          <div class="form-group col-md-3">
-                            <select class="form-control">
-                               <option>Trạng thái</option>
-                               <option>Hoạt động</option>
-                               <option>Không hoạt động</option>
+                            <select class="form-control" [(ngModel)]="search.status">
+                               <option value="" [attr.selected]="search.status === '' ? true : null">Trạng thái</option>
+                               <option value="true" [attr.selected]="search.status === 'true' ? true : null">Hoạt động</option>
+                               <option value="false" [attr.selected]="search.status === 'false' ? true : null">Không hoạt động</option>
                             </select>
                          </div>
                          <div class="form-group col-md-1">
-                            <button
+                            <button (click)="onSearchChange()"
                                type="button"
                                class="btn btn-primary waves-effect waves-light"
                                >
@@ -87,6 +89,7 @@
                               <i *ngIf="selectedSortAndOrder?.sortBy === sortConstant.desc" class="bi bi-sort-down"></i>
                               <i *ngIf="selectedSortAndOrder?.sortBy === sortConstant.asc" class="bi bi-sort-up"></i>
                            </span>
+                           <span *ngIf="!selectedSortAndOrder?.orderBy && !selectedSortAndOrder?.sortBy"><img src="../../../../../assets/sort.png" height="14.41" width="14.41" style="margin-top: -3px;" alt="icon-sort"></span>
                          </th>
                          <th>Họ tên / Email</th>
                          <th>Số diện thoại</th>
@@ -154,7 +157,7 @@
                <div class="per-page">
                   Hiển thị 
                   <select class="mx-1" (change)="onPerPageChange($event)">
-                     <option *ngFor="let item of config.perPageOptions;" [ngValue]="item.value">{{ item.label }}</option>
+                     <option *ngFor="let item of config.perPageOptions;" [ngValue]="item.value" [attr.selected]="item.value === pageSize ? true : null">{{ item.label }}</option>
                   </select>
                   bản ghi
                </div>
