@@ -139,12 +139,12 @@
              <div class="table-filter d-flex justify-content-between align-items-center mt-2">
                <div class="page-index">
                   <ul class="pagination pagination-rounded">
-                     <li class="page-item" (click)="setPage(currentPage - 1)" [class.disabled]="currentPage === 1">
+                     <li class="page-item" (click)="setPage(currentPage - 1)" [class.disabled]="currentPage === 1 || teachers.length === 0">
                        <span class="page-link"><i class="fa-solid fa-angle-left"></i></span>
                      </li>
                    
-                     <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
-                       <li class="page-item" (click)="setPage(i + 1)" [class.active]="currentPage === i + 1">
+                     <ng-container *ngIf="teachers.length > 0">
+                       <li *ngFor="let page of [].constructor(totalPages); let i = index" class="page-item" (click)="setPage(i + 1)" [class.active]="currentPage === i + 1">
                          <span class="page-link">{{ i + 1 }}</span>
                        </li>
                      </ng-container>

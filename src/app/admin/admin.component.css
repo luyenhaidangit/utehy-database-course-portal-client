@@ -2,6 +2,7 @@
 @import url("~bootstrap-icons/font/bootstrap-icons.min.css");
 @import url("./assets/css/app.css");
 @import "~@ng-select/ng-select/themes/default.theme.css";
+@import url('~ngx-toastr/toastr');
 
 .bg-dark-ui{
     background-color: #252b3b;
@@ -72,4 +73,24 @@
     display: flex;
     align-items: center;
     gap: 6px;
+}
+
+@media (max-width: 768px) {
+    .col-table-reponsive{
+        width: calc(100% - 12px);
+        margin-left: 12px;
+    }
+}
+
+.danger-notice{
+    color: red;
+    font-size: 12px !important;
+}
+
+.danger-notice > div{
+    margin-top: 6px;
+}
+
+button[type="submit"] {
+    cursor: pointer;
 }
