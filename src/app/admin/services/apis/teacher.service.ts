@@ -16,4 +16,8 @@ export class TeacherService {
   createTeachers(request: any): Observable<any> {
     return this.http.post('teacher/create', request);
   }
+
+  getTeacherById(request: any): Observable<any> {
+    return this.http.get(`teacher/get-by-id?id=${request.id}`,{});
+  }
 }

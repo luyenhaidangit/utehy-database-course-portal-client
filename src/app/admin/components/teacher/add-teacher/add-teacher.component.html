@@ -97,7 +97,8 @@
                 <div class="form-group">
                     <div class="d-flex">
                         <div class="ml-auto">
-                            <button [disabled]="form.invalid || validVerificationType() !== 1" type="submit" class="btn btn-success waves-effect waves-light">Xác nhận</button>
+                            <button routerLink="/admin/teacher" type="button" class="btn btn-secondary waves-effect waves-light">Quay lại</button>
+                            <button [disabled]="form.invalid || validVerificationType() !== 1" type="submit" class="btn btn-success waves-effect waves-light ml-2">Xác nhận</button>
                         </div>
                     </div>
                 </div>

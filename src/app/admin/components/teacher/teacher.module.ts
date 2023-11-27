@@ -8,12 +8,14 @@ import { EditTeacherComponent } from './edit-teacher/edit-teacher.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { UiSwitchModule } from 'ngx-ui-switch';
+import { DetailTeacherComponent } from './detail-teacher/detail-teacher.component';
 
 @NgModule({
   declarations: [
     ListTeacherComponent,
     AddTeacherComponent,
-    EditTeacherComponent
+    EditTeacherComponent,
+    DetailTeacherComponent
   ],
   imports: [
     CommonModule,
