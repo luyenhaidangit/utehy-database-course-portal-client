@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
+import { TeacherService } from 'src/app/admin/services/apis/teacher.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-teacher',
@@ -17,14 +19,26 @@ export class AddTeacherComponent implements OnInit {
     status: true,
   };
 
-  constructor(private ngxToastr: NgxToastrService) { }
+  constructor(private ngxToastr: NgxToastrService,private teacherService: TeacherService,private router:Router) { }
 
   ngOnInit() {
     
   }
 
   onSubmit(){
-    console.log(this.teacher);
+    this.teacherService.createTeachers(this.teacher).subscribe((result: any) => {
+      if(result.status){
+        this.ngxToastr.success(result.message,'',{
+          progressBar: true
+        });
+        this.router.navigate(['/admin/teacher']);
+      }
+    },error => {
+      console.log(error);
+      this.ngxToastr.error(error.error.message,'',{
+        progressBar: true
+      });
+    });
   }
 
   validVerificationType(): number {
