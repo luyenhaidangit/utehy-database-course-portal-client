@@ -134,3 +134,8 @@ button[type="submit"] {
     background-color: green !important;
     opacity: 0.5 !important;
   }
+
+.lds-dual-ring:after{
+    border: 2px solid #3848ca;
+    border-color: #3848ca transparent #3848ca transparent;
+}
