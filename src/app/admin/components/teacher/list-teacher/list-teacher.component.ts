@@ -6,11 +6,28 @@ import orderConstant from 'src/app/admin/constants/orderConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-list-teacher',
   templateUrl: './list-teacher.component.html',
-  styleUrls: ['./list-teacher.component.css']
+  styleUrls: ['./list-teacher.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      state('hidden', style({
+        opacity: 0,
+        height: '0',
+        display: 'none'
+      })),
+      state('visible', style({
+        opacity: 1,
+        height: '100%',
+        display: 'flex'
+      })),
+      transition('hidden => visible', animate('300ms ease-out')),
+      transition('visible => hidden', animate('300ms ease-in'))
+    ]),
+  ],
 })
 export class ListTeacherComponent implements OnInit {
   //Constant
@@ -185,10 +202,6 @@ export class ListTeacherComponent implements OnInit {
   }
 
   handleDelete(id: number){
-    const request = {
-      id: id
-    };
-
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         cancelButton: "btn btn-danger ml-2",
@@ -236,22 +249,55 @@ export class ListTeacherComponent implements OnInit {
         });
       }
     });
+  }
 
-    // this.teacherService.deleteTeacher(request).subscribe((result: any) => {
-    //   if(result.status){
-    //     if(result.status){
-    //       this.ngxToastr.success(result.message,'',{
-    //         progressBar: true
-    //       });
-    //       this.router.navigate(['/admin/teacher']);
-    //     }
-    //   },error => {
-    //     console.log(error);
-    //     this.ngxToastr.error(error.error.message,'',{
-    //       progressBar: true
-    //     });
-    //   });
-    //   }
-    // });
+  handleOnDeleteMultiple(){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        cancelButton: "btn btn-danger ml-2",
+        confirmButton: "btn btn-success",
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: `Bạn có muốn xoá các bản ghi có Id: ${this.selectedItems.join(', ')} không?`,
+      text: "Sau khi xoá bản sẽ không thể khôi phục dữ liệu!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xác nhận",
+      cancelButtonText: "Bỏ qua",
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const request = {
+          ids: this.selectedItems
+        }
+
+        this.teacherService.deleteMultipleTeacher(request).subscribe((result: any) => {
+          if(result.status){
+            swalWithBootstrapButtons.fire({
+              title: "Xoá thành công!",
+              text: result.message,
+              icon: "success"
+            });
+
+            this.route.queryParams.subscribe(params => {
+              const request = {
+                ...params,
+                pageIndex: params['pageIndex'] ? params['pageIndex'] : DEFAULT_PAGE_INDEX,
+                pageSize: params['pageSize'] ? params['pageSize'] : DEFAULT_PAGE_SIZE,
+              };
+        
+              this.getTeachers(request);
+            });
+          }
+        },error => {
+          console.log(error);
+          this.ngxToastr.error(error.error.message,'',{
+            progressBar: true
+          });
+        });
+      }
+    });
   }
 }

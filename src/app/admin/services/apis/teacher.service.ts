@@ -28,4 +28,8 @@ export class TeacherService {
   deleteTeacher(request: any): Observable<any> {
     return this.http.post('teacher/delete', request);
   }
+
+  deleteMultipleTeacher(request: any): Observable<any> {
+    return this.http.post('teacher/delete-multiple', request);
+  }
 }
