@@ -222,6 +222,13 @@
   dependencies:
     tslib "^2.3.0"
 
+"@angular/core@4.4.6":
+  version "4.4.6"
+  resolved "https://registry.npmjs.org/@angular/core/-/core-4.4.6.tgz"
+  integrity sha512-n07a/ePLb/hYlwzi2L2QC+nXXZACzE/dvM5PnUAyYOKg6mq/fwKnRIU0gV/lxl9CNiLfeNsAbWQ8jxBZ+BP5lg==
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/forms@^16.0.0", "@angular/forms@^16.0.0 || ^17.0.0", "@angular/forms@>=10.0.0", "@angular/forms@>=14.0.0":
   version "16.2.3"
   resolved "https://registry.npmjs.org/@angular/forms/-/forms-16.2.3.tgz"
@@ -5864,6 +5871,14 @@ ngx-spinner@^16.0.2:
   dependencies:
     tslib "^2.3.0"
 
+ngx-sweetalert2@^0.2.7:
+  version "0.2.7"
+  resolved "https://registry.npmjs.org/ngx-sweetalert2/-/ngx-sweetalert2-0.2.7.tgz"
+  integrity sha512-86GkhzGYbae5A1TMgDW6uMWkq76NwZRdd5UNjgXGXGSYjcJARI0BnuGfqax84uj0fvJk95BI/jUPlZX7psauYg==
+  dependencies:
+    "@angular/core" "4.4.6"
+    sweetalert2 "^6.11.5"
+
 ngx-toastr@^17.0.2:
   version "17.0.2"
   resolved "https://registry.npmjs.org/ngx-toastr/-/ngx-toastr-17.0.2.tgz"
@@ -6918,6 +6933,13 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
+rxjs@^5.0.1:
+  version "5.5.12"
+  resolved "https://registry.npmjs.org/rxjs/-/rxjs-5.5.12.tgz"
+  integrity sha512-xx2itnL5sBbqeeiVgNPVuQQ1nC8Jp2WfNJhXWHmElW9YmrpS9UVnNzhP3EH3HFqexO5Tlp8GhYY+WEcqcVMvGw==
+  dependencies:
+    symbol-observable "1.0.1"
+
 "rxjs@^6.5.3 || ^7.0.0", "rxjs@^6.5.3 || ^7.4.0", "rxjs@^6.5.3 || ^7.6.0", "rxjs@^6.5.5 || ^7.4.0", rxjs@^7.5.5, rxjs@~7.8.0, rxjs@7.8.1:
   version "7.8.1"
   resolved "https://registry.npmjs.org/rxjs/-/rxjs-7.8.1.tgz"
@@ -7509,6 +7531,21 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
+sweetalert2@^11.10.1:
+  version "11.10.1"
+  resolved "https://registry.npmjs.org/sweetalert2/-/sweetalert2-11.10.1.tgz"
+  integrity sha512-qu145oBuFfjYr5yZW9OSdG6YmRxDf8CnkgT/sXMfrXGe+asFy2imC2vlaLQ/L/naZ/JZna1MPAY56G4qYM0VUQ==
+
+sweetalert2@^6.11.5:
+  version "6.11.5"
+  resolved "https://registry.npmjs.org/sweetalert2/-/sweetalert2-6.11.5.tgz"
+  integrity sha512-8Otu1SlWGS/u3e31cOg+uqrwyoQbByEScKp7UupmCfwEZE9St3coO1e6CXv83YzZtzdDgowdK1hBPKPW7SRp4Q==
+
+symbol-observable@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/symbol-observable/-/symbol-observable-1.0.1.tgz"
+  integrity sha512-Kb3PrPYz4HanVF1LVGuAdW6LoVgIwjUYJGzFe7NDrBLCN4lsV/5J0MFurV+ygS4bRVwrCEt2c7MQ1R2a72oJDw==
+
 symbol-observable@4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/symbol-observable/-/symbol-observable-4.0.0.tgz"
@@ -7642,6 +7679,11 @@ tree-kill@1.2.2:
 
 treeverse@^3.0.0:
   version "3.0.0"
+
+tslib@^1.7.1:
+  version "1.14.1"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
+  integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
 tslib@^2.0.0, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.3.1, tslib@>=2.5.0:
   version "2.6.2"
@@ -8183,6 +8225,11 @@ yocto-queue@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-1.0.0.tgz"
   integrity sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==
+
+zone.js@^0.8.4:
+  version "0.8.29"
+  resolved "https://registry.npmjs.org/zone.js/-/zone.js-0.8.29.tgz"
+  integrity sha512-mla2acNCMkWXBD+c+yeUrBUrzOxYMNFdQ6FGfigGGtEVBPJx07BQeJekjt9DmH1FtZek4E9rE1eRR9qQpxACOQ==
 
 zone.js@~0.13.0:
   version "0.13.1"

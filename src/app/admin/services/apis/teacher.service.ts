@@ -24,4 +24,8 @@ export class TeacherService {
   editTeacher(request: any): Observable<any> {
     return this.http.post('teacher/edit', request);
   }
+
+  deleteTeacher(request: any): Observable<any> {
+    return this.http.post('teacher/delete', request);
+  }
 }

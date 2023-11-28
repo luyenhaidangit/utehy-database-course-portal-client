@@ -4,6 +4,8 @@ import { DEFAULT_PER_PAGE_OPTIONS, DEFAULT_PAGE_INDEX, DEFAULT_PAGE_SIZE } from 
 import sortConstant from 'src/app/admin/constants/sortConstant';
 import orderConstant from 'src/app/admin/constants/orderConstant';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import { ToastrService as NgxToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-teacher',
@@ -36,7 +38,7 @@ export class ListTeacherComponent implements OnInit {
     status: ''
   };
 
-  constructor(private teacherService: TeacherService,private route: ActivatedRoute, private router: Router) { }
+  constructor(private teacherService: TeacherService,private route: ActivatedRoute, private router: Router, private ngxToastr: NgxToastrService) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -73,6 +75,7 @@ export class ListTeacherComponent implements OnInit {
         this.currentPage = result.data.pageIndex;
         this.totalRecords = result.data.totalRecords;
         this.pageSize = result.data.pageSize;
+        this.selectedItems = [];
         
         if(this.teachers.length === 0){
           this.pageIndex = 1;
@@ -179,5 +182,76 @@ export class ListTeacherComponent implements OnInit {
         queryParamsHandling: 'merge',
       });
     });
+  }
+
+  handleDelete(id: number){
+    const request = {
+      id: id
+    };
+
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        cancelButton: "btn btn-danger ml-2",
+        confirmButton: "btn btn-success",
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: `Bạn có chắc muốn xoá giáo viên có Id ${id}?`,
+      text: "Sau khi xoá bản sẽ không thể khôi phục dữ liệu!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xác nhận",
+      cancelButtonText: "Bỏ qua",
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const request = {
+          id: id
+        }
+
+        this.teacherService.deleteTeacher(request).subscribe((result: any) => {
+          if(result.status){
+            swalWithBootstrapButtons.fire({
+              title: "Xoá thành công!",
+              text: `Bản ghi giáo viên có Id ${id} đã bị xoá!`,
+              icon: "success"
+            });
+
+            this.route.queryParams.subscribe(params => {
+              const request = {
+                ...params,
+                pageIndex: params['pageIndex'] ? params['pageIndex'] : DEFAULT_PAGE_INDEX,
+                pageSize: params['pageSize'] ? params['pageSize'] : DEFAULT_PAGE_SIZE,
+              };
+        
+              this.getTeachers(request);
+            });
+          }
+        },error => {
+          console.log(error);
+          this.ngxToastr.error(error.error.message,'',{
+            progressBar: true
+          });
+        });
+      }
+    });
+
+    // this.teacherService.deleteTeacher(request).subscribe((result: any) => {
+    //   if(result.status){
+    //     if(result.status){
+    //       this.ngxToastr.success(result.message,'',{
+    //         progressBar: true
+    //       });
+    //       this.router.navigate(['/admin/teacher']);
+    //     }
+    //   },error => {
+    //     console.log(error);
+    //     this.ngxToastr.error(error.error.message,'',{
+    //       progressBar: true
+    //     });
+    //   });
+    //   }
+    // });
   }
 }

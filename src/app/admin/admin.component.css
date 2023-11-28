@@ -1,6 +1,7 @@
 @import url("./assets/css/bootstrap.css");
 @import url("~bootstrap-icons/font/bootstrap-icons.min.css");
 @import url("./assets/css/app.css");
+@import url('~sweetalert2/dist/sweetalert2.min.css');
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import url('~ngx-toastr/toastr');
 
