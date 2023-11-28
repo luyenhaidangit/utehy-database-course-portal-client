@@ -20,4 +20,8 @@ export class TeacherService {
   getTeacherById(request: any): Observable<any> {
     return this.http.get(`teacher/get-by-id?id=${request.id}`,{});
   }
+
+  editTeacher(request: any): Observable<any> {
+    return this.http.post('teacher/edit', request);
+  }
 }
