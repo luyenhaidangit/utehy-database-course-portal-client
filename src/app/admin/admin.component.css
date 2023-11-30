@@ -149,3 +149,11 @@ button[type="submit"] {
 .custom-control-input[disabled] ~ .custom-control-label, .custom-control-input:disabled ~ .custom-control-label{
     color: unset;
 }
+
+.navigation-menu-main.active i{
+    color: #d7e4ec!important;
+}
+
+.navigation-menu-main:hover i{
+    color: #d7e4ec!important;
+}
