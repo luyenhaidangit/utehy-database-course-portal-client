@@ -26,21 +26,17 @@
                     </a>
                 </li>
 
-                <li>
-                    <a class="waves-effect navigation-menu-main {{ currentUrl === '/admin/course' ? 'active' : '' }}">
-                        <i class="fa-regular fa-circle-question pb-0"></i>
-                        <span>Ngân hàng câu hỏi</span>
+                <li class="{{ currentUrl === '/admin/question' ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ currentUrl === '/admin/question' ? 'active' : '' }}">
+                        <div class="navigation-label">
+                            <i class="fa-regular fa-circle-question pb-0"></i>
+                            <span>Ngân hàng câu hỏi</span>
+                        </div>
+                        <i class="fa-solid fa-angle-down"></i>
                     </a>
 
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="pages-starter.html">Starter Page</a></li>
-                        <li><a href="pages-maintenance.html">Maintenance</a></li>
-                        <li><a href="pages-comingsoon.html">Coming Soon</a></li>
-                        <li><a href="pages-timeline.html">Timeline</a></li>
-                        <li><a href="pages-faqs.html">FAQs</a></li>
-                        <li><a href="pages-pricing.html">Pricing</a></li>
-                        <li><a href="pages-404.html">Error 404</a></li>
-                        <li><a href="pages-500.html">Error 500</a></li>
+                    <ul class="sub-menu {{ currentUrl === '/admin/question' ? 'mm-show' : '' }}">
+                        <li class="cursor-pointer" routerLink="/admin/question"><a class="{{ currentUrl === '/admin/question' ? 'active' : '' }}">Quản lý câu hỏi</a></li>
                     </ul>
                 </li>
             </ul>

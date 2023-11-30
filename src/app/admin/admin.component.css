@@ -157,3 +157,15 @@ button[type="submit"] {
 .navigation-menu-main:hover i{
     color: #d7e4ec!important;
 }
+
+#sidebar-menu ul li a{
+    padding: .625rem 1rem .625rem 1.75rem;
+}
+
+#sidebar-menu ul li a i{
+    font-size: 15px;
+}
+
+#sidebar-menu ul li ul.sub-menu li a{
+    padding: .4rem 1.5rem .4rem 4rem;
+}

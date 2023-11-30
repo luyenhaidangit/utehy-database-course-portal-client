@@ -19,6 +19,10 @@ const routes: Routes = [
     loadChildren: () => import('./components/teacher/teacher.module').then((m) => m.TeacherModule),
   },
   {
+    path: 'question',
+    loadChildren: () => import('./components/question/question.module').then((m) => m.QuestionModule),
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
