@@ -1,1 +1,557 @@
-<p>list-question works!</p>
+<div class="row">
+    <div class="col-12">
+       <div
+          class="page-title-box d-flex align-items-center justify-content-between"
+          >
+          <h4 class="mb-0">Danh sách câu hỏi</h4>
+          <div class="page-title-right">
+             <ol class="breadcrumb m-0">
+                <li
+                   routerLink="/admin/question"
+                   class="breadcrumb-item d-flex align-items-center"
+                   >
+                   <span>Trang chủ</span>
+                   <i class="breadcrumb-item-arrow fa-solid fa-angle-right"></i>
+                </li>
+                <li class="breadcrumb-item active">
+                   <span>Quản lý câu hỏi</span>
+                </li>
+             </ol>
+          </div>
+       </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-3 col-lg-4">
+        <div class="card">
+            <div class="card-header bg-transparent border-bottom">
+                <h6 class="mb-0 fw-700 fs-r-1">BỘ LỌC</h6>
+            </div>
+
+            <div class="card-body pb-0">
+                <div class="d-flex justify-content-between cursor-pointer" (click)="collapseFilter.questionCategory = !collapseFilter.questionCategory" [attr.aria-expanded]="!collapseFilter.questionCategory" aria-controls="collapseBasic">
+                    <h5 class="font-size-14 fw-700 mb-3">LOẠI CÂU HỎI</h5>
+                    <i class="fa-solid fa-angle-down"></i>
+                </div>
+
+                <div [collapse]="collapseFilter.questionCategory" [isAnimated]="true" id="accordion" class="custom-accordion categories-accordion mb-3">
+                    <div class="categories-group-card">
+                        <div class="alert alert-success" role="alert">
+                            Tip: Nhấn chuột phải để thao tác
+                        </div>
+
+                        <button type="button" class="btn btn-success waves-effect waves-light w-100 mb-2">
+                            <i class="fa-solid fa-plus mr-1"></i> Thêm mới
+                        </button>
+
+                        <form class="app-search form-search d-none d-lg-block pt-0 pb-0">
+                            <div class="position-relative">
+                                <input type="text" class="form-control" placeholder="Tìm kiếm...">
+                                <span class="fa-solid fa-magnifying-glass ri-search-line"></span>
+                            </div>
+                        </form>
+
+                        <div id="categories-tree" class="mt-3 px-0" role="tree">
+                            <app-question-category-tree [categories]="questionCategories"></app-question-category-tree>
+                        </div>
+
+                        <!-- <div id="categories-tree" class="mt-3 px-0" role="tree">
+                            <div class="tree-ul ml-3">
+                                <div class="tree-li cursor-pointer"><i class="fa-solid fa-folder text-warning mr-1"></i> Cây 1</div>
+                                <div class="tree-li cursor-pointer"><i class="fa-solid fa-folder text-warning mr-1"></i> Cây 1</div>
+                                <div class="tree-li cursor-pointer"><i class="fa-solid fa-folder text-warning mr-1"></i> Cây 1</div>
+                                <div class="tree-li cursor-pointer position-relative">
+                                    <i class="fa-solid fa-sort-down position-absolute position-left-3"></i>
+                                    <i class="fa-solid fa-folder text-warning mr-1"></i> Cây 1
+                                    <div class="tree-ul ml-3">
+                                        <div class="tree-li cursor-pointer"><i class="fa-solid fa-folder text-warning mr-1"></i> Cây 2</div>
+                                        <div class="tree-li cursor-pointer"><i class="fa-solid fa-folder text-warning mr-1"></i> Cây 2</div>
+                                        <div class="tree-li cursor-pointer">
+                                            <i class="fa-solid fa-folder text-warning mr-1"></i> Cây 2
+                                            <div class="tree-li cursor-pointer">
+                                                <i class="fa-solid fa-folder text-warning mr-1"></i> Cây 3
+                                                <div class="tree-ul ml-3">
+                                                    <div class="tree-li cursor-pointer"><i class="fa-solid fa-folder text-warning mr-1"></i> Cây 4</div>
+                                                    <div class="tree-li cursor-pointer"><i class="fa-solid fa-folder text-warning mr-1"></i> Cây 4</div>
+                                                    <div class="tree-li cursor-pointer">
+                                                        <i class="fa-solid fa-folder text-warning mr-1"></i> Cây 4
+                                                        <div class="tree-li cursor-pointer">
+                                                            <i class="fa-solid fa-folder text-warning mr-1"></i> Cây 5
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>     -->
+                                            
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body border-top">
+                <div>
+                    <h5 class="font-size-14 mb-4">Price</h5>
+
+                    <input type="text" id="pricerange">
+                </div>
+            </div>
+
+            <div class="custom-accordion">
+                <div class="card-body border-top">
+                    <div>
+                        <h5 class="font-size-14 mb-0"><a href="#collapseExample1" class="text-dark d-block" data-toggle="collapse" >Discount <i class="mdi mdi-minus float-right accor-plus-icon"></i></a></h5>
+
+                        <div class="collapse show" id="collapseExample1">
+
+                            <div class="mt-4">
+                                <div class="custom-control custom-radio mt-2">
+                                    <input type="radio" id="productdiscountRadio6" name="productdiscountRadio1" class="custom-control-input">
+                                    <label class="custom-control-label" for="productdiscountRadio6">50% or more</label>
+                                </div>
+                                <div class="custom-control custom-radio mt-2">
+                                    <input type="radio" id="productdiscountRadio5" name="productdiscountRadio1" class="custom-control-input">
+                                    <label class="custom-control-label" for="productdiscountRadio5">40% or more</label>
+                                </div>
+                                <div class="custom-control custom-radio mt-2">
+                                    <input type="radio" id="productdiscountRadio4" name="productdiscountRadio1" class="custom-control-input">
+                                    <label class="custom-control-label" for="productdiscountRadio4">30% or more</label>
+                                </div>
+                                <div class="custom-control custom-radio mt-2">
+                                    <input type="radio" id="productdiscountRadio3" name="productdiscountRadio1" class="custom-control-input">
+                                    <label class="custom-control-label" for="productdiscountRadio3">20% or more</label>
+                                </div>
+                                <div class="custom-control custom-radio mt-2">
+                                    <input type="radio" id="productdiscountRadio2" name="productdiscountRadio1" class="custom-control-input">
+                                    <label class="custom-control-label" for="productdiscountRadio2">10% or more</label>
+                                </div>
+                                <div class="custom-control custom-radio mt-2">
+                                    <input type="radio" id="productdiscountRadio1" name="productdiscountRadio1" class="custom-control-input">
+                                    <label class="custom-control-label" for="productdiscountRadio1">Less than 10%</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body border-top">
+                    <div>
+                        <h5 class="font-size-14 mb-0"><a href="#collapseExample2" class="text-dark d-block" data-toggle="collapse">Size <i class="mdi mdi-minus float-right accor-plus-icon"></i></a></h5>
+
+                        <div class="collapse show" id="collapseExample2">
+
+                            <div class="mt-4">
+                                <div class="custom-control custom-radio mt-2">
+                                    <input type="radio" id="productsizeRadio1" name="productsizeRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="productsizeRadio1">X-Large</label>
+                                </div>
+                                <div class="custom-control custom-radio mt-2">
+                                    <input type="radio" id="productsizeRadio2" name="productsizeRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="productsizeRadio2">Large</label>
+                                </div>
+                                <div class="custom-control custom-radio mt-2">
+                                    <input type="radio" id="productsizeRadio3" name="productsizeRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="productsizeRadio3">Medium</label>
+                                </div>
+                                <div class="custom-control custom-radio mt-2">
+                                    <input type="radio" id="productsizeRadio4" name="productsizeRadio" class="custom-control-input">
+                                    <label class="custom-control-label" for="productsizeRadio4">Small</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body border-top">
+                    <div>
+                        <h5 class="font-size-14 mb-0"><a href="#collapseExample3" class="collapsed text-dark d-block" data-toggle="collapse">Customer Rating <i class="mdi mdi-minus float-right accor-plus-icon"></i></a></h5>
+
+                        <div class="collapse" id="collapseExample3">
+
+                            <div class="mt-4">
+                                <div class="custom-control custom-radio mt-2">
+                                    <input type="radio" id="productratingRadio1" name="productratingRadio1" class="custom-control-input">
+                                    <label class="custom-control-label" for="productratingRadio1">4 <i class="mdi mdi-star text-warning"></i>  & Above</label>
+                                </div>
+                                <div class="custom-control custom-radio mt-2">
+                                    <input type="radio" id="productratingRadio2" name="productratingRadio1" class="custom-control-input">
+                                    <label class="custom-control-label" for="productratingRadio2">3 <i class="mdi mdi-star text-warning"></i>  & Above</label>
+                                </div>
+                                <div class="custom-control custom-radio mt-2">
+                                    <input type="radio" id="productratingRadio3" name="productratingRadio1" class="custom-control-input">
+                                    <label class="custom-control-label" for="productratingRadio3">2 <i class="mdi mdi-star text-warning"></i>  & Above</label>
+                                </div>
+                                <div class="custom-control custom-radio mt-2">
+                                    <input type="radio" id="productratingRadio4" name="productratingRadio1" class="custom-control-input">
+                                    <label class="custom-control-label" for="productratingRadio4">1 <i class="mdi mdi-star text-warning"></i></label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div>
+                                <h5>Clothes & Accessories</h5>
+                                <ol class="breadcrumb p-0 bg-transparent mb-2">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Fashion</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Clothing</a></li>
+                                    <li class="breadcrumb-item active">T-shirts</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-inline float-md-right">
+                                <div class="search-box ml-2">
+                                    <div class="position-relative">
+                                        <input type="text" class="form-control rounded" placeholder="Search...">
+                                        <i class="mdi mdi-magnify search-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <ul class="list-inline my-3 ecommerce-sortby-list">
+                        <li class="list-inline-item"><span class="font-weight-medium font-family-secondary">Sort by:</span></li>
+                        <li class="list-inline-item active"><a href="#">Popularity</a></li>
+                        <li class="list-inline-item"><a href="#">Newest</a></li>
+                        <li class="list-inline-item"><a href="#">Discount</a></li>
+                    </ul>
+
+                    <div class="row no-gutters">
+                        <div class="col-xl-4 col-sm-6">
+                            <div class="product-box">
+                                <div class="product-img">
+                                    <div class="product-ribbon badge badge-warning">
+                                        Trending
+                                    </div>
+                                    <div class="product-like">
+                                        <a href="#">
+                                            <i class="mdi mdi-heart-outline"></i>
+                                        </a>
+                                    </div>
+                                    <img src="assets/images/product/img-1.png" alt="" class="img-fluid mx-auto d-block">
+                                </div>
+                                
+                                <div class="text-center">
+                                    <p class="font-size-12 mb-1">Blue color, T-shirt</p>
+                                    <h5 class="font-size-15"><a href="#" class="text-dark">Full sleeve T-shirt</a></h5>
+
+                                    <h5 class="mt-3 mb-0">$240</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-sm-6">
+                            <div class="product-box">
+                                <div class="product-img">
+                                    <div class="product-ribbon badge badge-primary">
+                                        - 25 %
+                                    </div>
+                                    <div class="product-like">
+                                        <a href="#">
+                                            <i class="mdi mdi-heart-outline"></i>
+                                        </a>
+                                    </div>
+                                    <img src="assets/images/product/img-2.png" alt="" class="img-fluid mx-auto d-block">
+                                </div>
+                                
+                                <div class="text-center">
+                                    <p class="font-size-12 mb-1">Half sleeve, T-shirt</p>
+                                    <h5 class="font-size-15"><a href="#" class="text-dark">Half sleeve T-shirt </a></h5>
+
+                                    <h5 class="mt-3 mb-0"><span class="text-muted mr-2"><del>$240</del></span>$225</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-sm-6">
+                            <div class="product-box">
+                                <div class="product-img">
+                                    <div class="product-like">
+                                        <a href="#">
+                                            <i class="mdi mdi-heart text-danger"></i>
+                                        </a>
+                                    </div>
+                                    <img src="assets/images/product/img-3.png" alt="" class="img-fluid mx-auto d-block">
+                                </div>
+                                
+                                <div class="text-center">
+                                    <p class="font-size-12 mb-1">Green color, Hoodie</p>
+                                    <h5 class="font-size-15"><a href="#" class="text-dark">Hoodie (Green)</a></h5>
+
+                                    <h5 class="mt-3 mb-0"><span class="text-muted mr-2"><del>$290</del></span>$275</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-sm-6">
+                            <div class="product-box">
+                                <div class="product-img">
+                                    <div class="product-like">
+                                        <a href="#">
+                                            <i class="mdi mdi-heart-outline"></i>
+                                        </a>
+                                    </div>
+                                    <img src="assets/images/product/img-4.png" alt="" class="img-fluid mx-auto d-block">
+                                </div>
+                                
+                                <div class="text-center">
+                                    <p class="font-size-12 mb-1">Gray color, Hoodie</p>
+                                    <h5 class="font-size-15"><a href="#" class="text-dark">Hoodie (Green)</a></h5>
+
+                                    <h5 class="mt-3 mb-0"><span class="text-muted mr-2"><del>$290</del></span>$275</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-sm-6">
+                            <div class="product-box">
+                                <div class="product-img">
+                                    <div class="product-like">
+                                        <a href="#">
+                                            <i class="mdi mdi-heart text-danger"></i>
+                                        </a>
+                                    </div>
+                                    <img src="assets/images/product/img-5.png" alt="" class="img-fluid mx-auto d-block">
+                                </div>
+                                
+                                <div class="text-center">
+                                    <p class="font-size-12 mb-1">Blue color, T-shirt</p>
+                                    <h5 class="font-size-15"><a href="#" class="text-dark">Full sleeve T-shirt</a></h5>
+
+                                    <h5 class="mt-3 mb-0">$242</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-sm-6">
+                            <div class="product-box">
+                                <div class="product-img">
+                                    <div class="product-ribbon badge badge-primary">
+                                        - 22 %
+                                    </div>
+                                    <div class="product-like">
+                                        <a href="#">
+                                            <i class="mdi mdi-heart-outline"></i>
+                                        </a>
+                                    </div>
+                                    <img src="assets/images/product/img-6.png" alt="" class="img-fluid mx-auto d-block">
+                                    
+                                </div>
+                                
+                                <div class="text-center">
+                                    <p class="font-size-12 mb-1">Black color, T-shirt</p>
+                                    <h5 class="font-size-15"><a href="#" class="text-dark">Half sleeve T-shirt </a></h5>
+
+                                    <h5 class="mt-3 mb-0"><span class="text-muted mr-2"><del>$240</del></span>$225</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-sm-6">
+                            <div>
+                                <p class="mb-sm-0 mt-2">Page <span class="font-weight-bold">2</span> Of <span class="font-weight-bold">113</span></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="float-sm-right">
+                                <ul class="pagination pagination-rounded mb-sm-0">
+                                    <li class="page-item disabled">
+                                        <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">1</a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a href="#" class="page-link">2</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">3</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">4</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">5</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-12">
+       <div class="card">
+          <div class="card-body">
+             <div class="group-action">
+                <div class="row">
+                   <div class="group-action__left col-xl-10 col-md-9 col-sm-12">
+                      <div class="row">
+                         <div class="form-group col-md-4">
+                            <input
+                               class="form-control"
+                               type="text"
+                               placeholder="Tên hoặc email"
+                               [(ngModel)]="search.nameOrEmail"
+                               />
+                         </div>
+                         <div class="form-group col-md-4">
+                            <input
+                               class="form-control"
+                               type="text"
+                               placeholder="Số điện thoại"
+                               [(ngModel)]="search.phoneNumber"
+                               />
+                         </div>
+                         <div class="form-group col-md-3">
+                            <select class="form-control" [(ngModel)]="search.status">
+                               <option value="" [attr.selected]="search.status === '' ? true : null">Trạng thái</option>
+                               <option value="true" [attr.selected]="search.status === 'true' ? true : null">Hoạt động</option>
+                               <option value="false" [attr.selected]="search.status === 'false' ? true : null">Không hoạt động</option>
+                            </select>
+                         </div>
+                         <div class="form-group col-md-1">
+                            <button (click)="onSearchChange()"
+                               type="button"
+                               class="btn btn-primary waves-effect waves-light"
+                               >
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                         </div>
+                      </div>
+                   </div>
+                   <div class="group-action__right col-xl-2 col-md-3 col-sm-12">
+                      <button
+                         type="button"
+                         class="btn btn-success waves-effect waves-light"
+                         routerLink="/admin/teacher/create"
+                         >
+                      <i class="fa-solid fa-plus mr-1"></i> Thêm mới
+                      </button>
+                   </div>
+                   <div class="group-action__right col-xl-2 col-md-4 col-sm-12">
+                     <button
+                        [@fadeInOut]="selectedItems.length > 0 ? 'visible' : 'hidden'"
+                        type="button"
+                        class="btn btn-danger waves-effect waves-light align-items-center"
+                        (click)="handleOnDeleteMultiple()"
+                        >
+                        <i class="fa-solid fa-trash mr-1"></i> Xoá {{ selectedItems.length}} bản ghi
+                     </button>
+                  </div>
+                </div>
+             </div>
+             <div class="table-data overflow-auto">
+                <table id="datatable" class="table table-bordered dt-responsive nowrap mt-3" style="border-collapse: collapse; border-spacing: 0; width: 100%">
+                   <thead class="thead-light">
+                      <tr>
+                          <th style="width: 20px;">
+                           <div class="custom-control custom-checkbox">
+                               <input (change)="selectAllTeachers($event)" [checked]="selectedItems.length === teachers.length && selectedItems.length > 0" type="checkbox" class="custom-control-input" id="select-box" title="select-box" placeholder="select-box">
+                               <label class="custom-control-label" for="select-box">&nbsp;</label>
+                           </div>
+                         </th>
+                         <th class="order-sort" (click)="onSortAndOrderChange(orderConstant.id)" [ngClass]="{'order-sort-active': selectedSortAndOrder?.orderBy === orderConstant.id }">
+                           Id
+                           <span *ngIf="selectedSortAndOrder?.orderBy === orderConstant.id" class="order-sort-group">
+                              <i *ngIf="selectedSortAndOrder?.sortBy === sortConstant.desc" class="bi bi-sort-down"></i>
+                              <i *ngIf="selectedSortAndOrder?.sortBy === sortConstant.asc" class="bi bi-sort-up"></i>
+                           </span>
+                           <span *ngIf="!selectedSortAndOrder?.orderBy && !selectedSortAndOrder?.sortBy"><img src="../../../../../assets/sort.png" height="14.41" width="14.41" style="margin-top: -3px;" alt="icon-sort"></span>
+                         </th>
+                         <th>Họ tên / Email</th>
+                         <th>Số diện thoại</th>
+                         <th>Trạng thái</th>
+                         <th>Hành động</th>
+                      </tr>
+                   </thead>
+                   <tbody>
+                      <tr *ngFor="let teacher of teachers;">
+                        <td>
+                           <div class="custom-control custom-checkbox">
+                               <input (change)="toggleSelection(teacher.id)" id="select-box-{{ teacher.id }}" [checked]="isSelected(teacher.id)" type="checkbox" class="custom-control-input">
+                               <label class="custom-control-label" for="select-box-{{ teacher.id }}">&nbsp;</label>
+                           </div>
+                        </td>
+                         <td>{{ teacher.id }}</td>
+                         <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <div>
+                                    <img src="{{ teacher.avatarUrl }}" alt="Header Avatar" class="rounded-circle header-profile-user">
+                                </div>
+                                <div>
+                                    <span>{{ teacher.name }}</span>
+                                    <br/>
+                                    <span class="text-muted">{{ teacher.email }}</span>
+                                </div>
+                            </div>
+                         </td>
+                         <td>
+                            {{ teacher.phoneNumber }}
+                         </td>
+                         <td>
+                            <div class="custom-control custom-switch mb-2" dir="ltr">
+                                <input type="checkbox" class="custom-control-input" id="switch-{{ teacher.id }}" [checked]="teacher.status" disabled>
+                                <label class="custom-control-label" for="switch-{{ teacher.id }}"></label>
+                            </div>
+                         </td>
+                         <td>
+                            <span class="text-info cursor-pointer" [routerLink]="['/admin/teacher/detail', teacher.id]"><i class="fa-solid fa-eye"></i></span>
+                            <span class="text-warning cursor-pointer ml-2" [routerLink]="['/admin/teacher/edit', teacher.id]"><i class="fa-solid fa-pen"></i></span>
+                            <span class="text-danger cursor-pointer ml-2" (click)="handleDelete(teacher.id)"><i class="fa-solid fa-trash"></i></span>
+                         </td>
+                      </tr>
+                   </tbody>
+                </table>
+             </div>
+
+             <div class="table-filter d-flex justify-content-between align-items-center mt-2">
+               <div class="page-index">
+                  <ul class="pagination pagination-rounded">
+                     <li class="page-item" (click)="setPage(currentPage - 1)" [class.disabled]="currentPage === 1 || teachers.length === 0">
+                       <span class="page-link"><i class="fa-solid fa-angle-left"></i></span>
+                     </li>
+                   
+                     <ng-container *ngIf="teachers.length > 0">
+                       <li *ngFor="let page of [].constructor(totalPages); let i = index" class="page-item" (click)="setPage(i + 1)" [class.active]="currentPage === i + 1">
+                         <span class="page-link">{{ i + 1 }}</span>
+                       </li>
+                     </ng-container>
+                   
+                     <li class="page-item" (click)="setPage(currentPage + 1)" [class.disabled]="currentPage === totalPages">
+                       <span class="page-link"><i class="fa-solid fa-angle-right"></i></span>
+                     </li>
+                   </ul>
+               </div>
+               <div class="per-page">
+                  Hiển thị 
+                  <select class="mx-1" (change)="onPerPageChange($event)">
+                     <option *ngFor="let item of config.perPageOptions;" [ngValue]="item.value" [attr.selected]="item.value === pageSize ? true : null">{{ item.label }}</option>
+                  </select>
+                  bản ghi
+               </div>
+             </div>
+          </div>
+       </div>
+    </div> -->
+ </div>

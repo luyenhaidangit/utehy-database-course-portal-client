@@ -6,6 +6,8 @@ import { ListQuestionComponent } from './list-question/list-question.component';
 import { AddQuestionComponent } from './add-question/add-question.component';
 import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { DetailQuestionComponent } from './detail-question/detail-question.component';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { QuestionCategoryTreeComponent } from './question-category-tree/question-category-tree.component';
 
 
 @NgModule({
@@ -13,11 +15,13 @@ import { DetailQuestionComponent } from './detail-question/detail-question.compo
     ListQuestionComponent,
     AddQuestionComponent,
     EditQuestionComponent,
-    DetailQuestionComponent
+    DetailQuestionComponent,
+    QuestionCategoryTreeComponent
   ],
   imports: [
     CommonModule,
-    QuestionRoutingModule
+    QuestionRoutingModule,
+    CollapseModule.forRoot(),
   ]
 })
 export class QuestionModule { }

@@ -1,5 +1,21 @@
 @import url("~@fortawesome/fontawesome-free/css/all.min.css");
 
+/* cursor */
 .cursor-pointer{
     cursor: pointer;
+}
+
+/* font-weight */
+.fw-700{
+    font-weight: 700 !important;
+}
+
+/* font-size */
+.fs-r-1{
+    font-size: 1rem !important;
+}
+
+/* border */
+.bb-0{
+    border-bottom: 0 !important;
 }

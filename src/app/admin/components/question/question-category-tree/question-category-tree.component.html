@@ -1,0 +1,7 @@
+<div class="tree-ul ml-3 position-relative">
+    <div *ngFor="let category of categories" class="tree-li cursor-pointer mt-1" (click)="toggleCategory($event, category)" [class.active]="category.id === activeCategoryId">
+      <i *ngIf="category.questionCategories" class="fa-solid fa-sort-down position-absolute position-left-3"></i>
+      <i class="fa-solid fa-folder text-warning mr-1"></i> <span [class.active]="category.id === activeCategoryId">{{ category.name }}</span>
+      <app-question-category-tree *ngIf="category.isExpanded && category.questionCategories" [categories]="category.questionCategories"></app-question-category-tree>
+    </div>
+</div>
