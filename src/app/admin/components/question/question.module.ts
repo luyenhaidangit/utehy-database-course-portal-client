@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DndModule } from 'ngx-drag-drop';
 
 import { QuestionRoutingModule } from './question-routing.module';
 import { ListQuestionComponent } from './list-question/list-question.component';
@@ -22,6 +23,7 @@ import { QuestionCategoryTreeComponent } from './question-category-tree/question
     CommonModule,
     QuestionRoutingModule,
     CollapseModule.forRoot(),
+    DndModule
   ]
 })
 export class QuestionModule { }

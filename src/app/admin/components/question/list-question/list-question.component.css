@@ -17,3 +17,11 @@
 .card-body.pb-0{
     padding-bottom: 0 !important;
 }
+
+.position-left-3{
+    left: -14px;
+}
+
+span.active{
+    font-weight: 700;
+}
