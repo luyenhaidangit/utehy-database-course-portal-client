@@ -36,7 +36,7 @@
                 </div>
 
                 <div [collapse]="collapseFilter.questionCategory" [isAnimated]="true" id="accordion" class="custom-accordion categories-accordion mb-3">
-                    <div class="categories-group-card">
+                    <div class="categories-group-card bb-0">
                         <div class="alert alert-success" role="alert">
                             Tip: Nhấn chuột phải để thao tác
                         </div>
@@ -53,7 +53,7 @@
                         </form>
 
                         <div id="categories-tree" class="mt-3 px-0" role="tree">
-                            <app-question-category-tree [categories]="questionCategories"></app-question-category-tree>
+                            <app-question-category-tree class="tree-c" [categories]="questionCategories"></app-question-category-tree>
                         </div>               
                     </div>
                 </div>
@@ -368,49 +368,3 @@
         </div>
     </div>
  </div>
- 
- <mat-list-item
- class="dndPlaceholder border bg-opacity-25 mb-1"
- dndPlaceholderRef />
-
- <div class="container-fluid">
-
-    <ng-template #recursiveList let-list>
-      <mat-list-item class="dndPlaceholder border bg-opacity-25 mb-1" dndPlaceholderRef />
-  
-      <div *ngFor="let item of list" class="">
-        <mat-list-item [dndDraggable]="item" dndEffectAllowed="move" (dndMoved)="onDragged(item, list, 'move')" class="tree-li cursor-pointer mt-1" (click)="toggleCategory($event, item)" [class.active]="item.id === activeCategoryId">
-            <i *ngIf="item.questionCategories" class="fa-solid fa-sort-down position-absolute position-left-3"></i>
-            <i class="fa-solid fa-folder text-warning mr-1"></i>
-            <span [class.active]="item.id === activeCategoryId" matListItemTitle>{{ item.name }}</span>
-        </mat-list-item>
-  
-        <mat-list
-          *ngIf="item.questionCategories"
-          (dndDrop)="onDrop($event, item.questionCategories)"
-          class="d-flex flex-column bg-light pt-2 pb-0 ps-2"
-          style="min-height: unset"
-          dndDropzone
-          dndEffectAllowed="move">
-  
-          <ng-container *ngTemplateOutlet="recursiveList; context: { $implicit: item.questionCategories }" />
-        </mat-list>
-      </div>
-    </ng-template>
-  
-    <div class="row">
-      <div class="col-12 offset-lg-2 col-lg-4">
-        <mat-list
-          (dndDrop)="onDrop($event, questionCategories)"
-          class="d-flex flex-column bg-light gap-1"
-          dndDropzone
-          dndEffectAllowed="move">
-  
-          <ng-container *ngTemplateOutlet="recursiveList; context: { $implicit: questionCategories }" />
-        </mat-list>
-      </div>
-      <div class="col-12 col-lg-4">
-        <pre>{{questionCategories | json}}</pre>
-      </div>
-    </div>
-  </div>

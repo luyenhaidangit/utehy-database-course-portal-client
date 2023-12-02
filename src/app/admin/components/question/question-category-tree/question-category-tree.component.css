@@ -2,6 +2,6 @@
     left: -14px;
 }
 
-span.active{
+.tree-li.active > span{
     font-weight: 700;
 }

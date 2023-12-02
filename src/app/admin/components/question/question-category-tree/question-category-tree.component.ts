@@ -1,27 +1,33 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { QuestionCategoryTreeService } from 'src/app/admin/services/components/question-category-tree.service';
 
 @Component({
   selector: 'app-question-category-tree',
   templateUrl: './question-category-tree.component.html',
-  // template: `
-  //   <div class="tree-ul ml-3">
-  //     <div *ngFor="let category of categories" class="tree-li cursor-pointer">
-  //       <i class="fa-solid fa-folder text-warning mr-1"></i> {{ category.name }}
-  //       <app-question-category-tree *ngIf="category.questionCategories" [categories]="category.questionCategories"></app-question-category-tree>
-  //     </div>
-  //   </div>
-  // `,
   styleUrls: ['./question-category-tree.component.css']
 })
 export class QuestionCategoryTreeComponent {
   @Input() categories: any[] = [];
+  @Input() activeCategoryId: number = 0;
+  @Output() menuClicked: any = new EventEmitter<number>();
 
-  activeCategoryId: number = 0;
+  constructor(public questionCategoryTreeService: QuestionCategoryTreeService) { }
 
-  toggleCategory(event: Event, category: any): void {
+  activeId: number = 0;
+
+  // toggleCategory(event: Event, category: any): void {
+  //   event.stopPropagation();
+  //   this.activeCategoryId = category.id;
+  //   category.isExpanded = !category.isExpanded;
+  //   console.log(category.id);
+  //   this.menuClicked.emit(category.id);
+  //   console.log("ok",category.id);
+  //   console.log("l",this.activeId);
+  // }
+
+  handleOnClickMenu(event: any, category: any){
     event.stopPropagation();
-    console.log(category.id);
-    // this.activeCategoryId = category.id;
     category.isExpanded = !category.isExpanded;
+    this.questionCategoryTreeService.setActiveCategoryId(category.id);
   }
 }
