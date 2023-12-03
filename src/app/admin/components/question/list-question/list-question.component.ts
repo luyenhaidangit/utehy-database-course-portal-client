@@ -34,7 +34,6 @@ export class ListQuestionComponent implements OnInit {
     this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
       if(result.status){
         this.questionCategories = result.data;
-        console.log(this.questionCategories);
       }
     });
   }

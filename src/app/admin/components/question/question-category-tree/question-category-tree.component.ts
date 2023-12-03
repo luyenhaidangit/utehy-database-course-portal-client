@@ -31,14 +31,14 @@ export class QuestionCategoryTreeComponent implements OnChanges {
     this.questionCategoryTreeService.setActiveCategoryIdSelect(category.id);
   }
 
-  isQuestionCategoriesIncludeKey(categories: any, key: string): boolean {
-    if (!categories) {
+  isQuestionCategoriesIncludeKey(category: any): boolean {
+    if (!category?.questionCategories) {
       return false;
     }
   
-    const containsKeyword = categories.some((questionCategory: any) => {
-      const currentCategoryMatch = questionCategory.name.trim().toLowerCase().includes(key.trim().toLowerCase());
-      const childCategoriesMatch = this.isQuestionCategoriesIncludeKey(questionCategory.questionCategories, key);
+    const containsKeyword = category?.questionCategories.some((questionCategory: any) => {
+      const currentCategoryMatch = questionCategory.name.trim().toLowerCase().includes(this.questionCategoryTreeService.searchKey.trim().toLowerCase());
+      const childCategoriesMatch = this.isQuestionCategoriesIncludeKey(questionCategory);
       return currentCategoryMatch || childCategoriesMatch;
     });
   
@@ -47,6 +47,7 @@ export class QuestionCategoryTreeComponent implements OnChanges {
 
   ngOnChanges(changes: any) {
     if (changes.search) {
+      this.questionCategoryTreeService.setSearchKey(changes.search.currentValue)
       this.activeCategoryId = 0;
       this.questionCategoryTreeService.setActiveCategoryId(0);
     }

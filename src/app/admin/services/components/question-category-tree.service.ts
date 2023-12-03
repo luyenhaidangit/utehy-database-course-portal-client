@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class QuestionCategoryTreeService {
   public activeCategoryId: number = 0;
   public activeCategoryIdSelect: number = 0;
+  public searchKey: string = '';
 
   constructor() { }
 
@@ -15,5 +16,9 @@ export class QuestionCategoryTreeService {
 
   setActiveCategoryIdSelect(categoryId: number): void {
     this.activeCategoryIdSelect = categoryId;
+  }
+
+  setSearchKey(key: string): void {
+    this.searchKey = key;
   }
 }

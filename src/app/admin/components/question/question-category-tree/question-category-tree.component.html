@@ -1,9 +1,9 @@
 <div *ngIf="type === 1" class="tree-ul ml-3 position-relative">
   <div *ngFor="let category of categories" class="tree-li cursor-pointer mt-1" (click)="handleOnClickMenu($event,category)" [class.active]="category.id === questionCategoryTreeService.activeCategoryId">
-    <ng-container *ngIf="(category.name.trim().toLowerCase().includes(search.trim().toLowerCase())) || (isQuestionCategoriesIncludeKey(category.questionCategories,search)) || (category.id === 0)">
+    <ng-container *ngIf="category.name.trim().toLowerCase().includes(questionCategoryTreeService.searchKey.toLowerCase()) || isQuestionCategoriesIncludeKey(category) || category.id === 0">
       <i *ngIf="category.questionCategories" class="fa-solid fa-sort-down position-absolute position-left-3"></i>
-      <i class="fa-solid fa-folder text-warning mr-1"></i> <span [class.active]="category.id === activeCategoryId">{{ category.name }}</span>
-      <app-question-category-tree *ngIf="category.isExpanded && category.questionCategories || (isQuestionCategoriesIncludeKey(category.questionCategories,search) && search !== '')" [categories]="category.questionCategories" [activeCategoryId]="activeCategoryId" [type]="type"></app-question-category-tree>
+      <i class="fa-solid fa-folder text-warning mr-1"></i> <span [class.active]="category.id === activeCategoryId">{{ category.name }} </span>
+      <app-question-category-tree *ngIf="category.isExpanded && category.questionCategories || (isQuestionCategoriesIncludeKey(category) && questionCategoryTreeService.searchKey !== '')" [categories]="category.questionCategories" [activeCategoryId]="activeCategoryId" [type]="type"></app-question-category-tree>
     </ng-container>
   </div>
 </div>
