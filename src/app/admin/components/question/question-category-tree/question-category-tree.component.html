@@ -1,8 +1,15 @@
-<div *ngIf="type === 1" class="tree-ul ml-3 position-relative">
-  <div *ngFor="let category of categories" class="tree-li cursor-pointer mt-1" (click)="handleOnClickMenu($event,category)" [class.active]="category.id === questionCategoryTreeService.activeCategoryId">
+<div *ngIf="type === 1" class="tree-ul ml-3">
+  <div *ngFor="let category of categories" class="tree-li cursor-pointer position-relative mt-1" (click)="handleOnClickMenu($event,category)" (contextmenu)="handleOnOpenActionQuestionCategoryMenu($event,category)" [class.active]="category.id === questionCategoryTreeService.activeCategoryId">
     <ng-container *ngIf="category.name.trim().toLowerCase().includes(questionCategoryTreeService.searchKey.toLowerCase()) || isQuestionCategoriesIncludeKey(category) || category.id === 0">
       <i *ngIf="category.questionCategories" class="fa-solid fa-sort-down position-absolute position-left-3"></i>
-      <i class="fa-solid fa-folder text-warning mr-1"></i> <span [class.active]="category.id === activeCategoryId">{{ category.name }} </span>
+      <i class="fa-solid fa-folder text-warning mr-1"></i> <span class="position-relative" [class.active]="category.id === activeCategoryId">
+        {{ category.name }} 
+        <div *ngIf="category.id === questionCategoryTreeService.selectQuestionCategoryId" class="dropdown d-inline-block user-dropdown position-absolute question-category-menu">
+          <div (click)="handleOnClickMenuAction($event,questionCategoryConstant.addAction,category)">Thêm thư mục con</div>
+          <div (click)="handleOnClickMenuAction($event,questionCategoryConstant.editAction,category)">Sửa</div>
+          <div (click)="handleOnClickMenuAction($event,questionCategoryConstant.deleteAction,category)">Xoá</div>
+        </div>
+      </span>
       <app-question-category-tree *ngIf="category.isExpanded && category.questionCategories || (isQuestionCategoriesIncludeKey(category) && questionCategoryTreeService.searchKey !== '')" [categories]="category.questionCategories" [activeCategoryId]="activeCategoryId" [type]="type"></app-question-category-tree>
     </ng-container>
   </div>

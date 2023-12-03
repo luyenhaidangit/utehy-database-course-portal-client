@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, HostListener  } from '@angular/core';
 import { QuestionCategoryTreeService } from 'src/app/admin/services/components/question-category-tree.service';
+import questionCategoryConstant from 'src/app/admin/constants/question-category.constant';
 
 @Component({
   selector: 'app-question-category-tree',
@@ -15,20 +16,24 @@ export class QuestionCategoryTreeComponent implements OnChanges {
   @Input() search: string = '';
   @Output() menuClicked: any = new EventEmitter<number>();
 
-  constructor(public questionCategoryTreeService: QuestionCategoryTreeService) {}
+  questionCategoryConstant: any = questionCategoryConstant;
 
-  activeId: number = 0;
+  selectQuestionCategoryId: number = -1;
+
+  constructor(public questionCategoryTreeService: QuestionCategoryTreeService) {}
 
   handleOnClickMenu(event: any, category: any){
     event.stopPropagation();
     category.isExpanded = !category.isExpanded;
     this.questionCategoryTreeService.setActiveCategoryId(category.id);
+    this.questionCategoryTreeService.setSelectQuestionCategoryId(-1);
   }
 
   handleOnClickMenuSelect(event: any, category: any){
     event.stopPropagation();
     category.isExpanded = !category.isExpanded;
     this.questionCategoryTreeService.setActiveCategoryIdSelect(category.id);
+    this.questionCategoryTreeService.setSelectQuestionCategoryId(-1);
   }
 
   isQuestionCategoriesIncludeKey(category: any): boolean {
@@ -51,5 +56,21 @@ export class QuestionCategoryTreeComponent implements OnChanges {
       this.activeCategoryId = 0;
       this.questionCategoryTreeService.setActiveCategoryId(0);
     }
+  }
+
+  handleOnOpenActionQuestionCategoryMenu(event: any,category: any){
+    if(this.questionCategoryTreeService.activeCategoryId === category.id && category.id !== 0){
+      this.questionCategoryTreeService.setSelectQuestionCategoryId(category.id);
+    }
+    event.preventDefault();    
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleDocumentClick(event: MouseEvent): void {
+    this.questionCategoryTreeService.setSelectQuestionCategoryId(-1);
+  }
+
+  handleOnClickMenuAction(event: any, action: number ,category: any): void {
+    this.questionCategoryTreeService.setSelectQuestionCategoryId(-1);
   }
 }
