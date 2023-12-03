@@ -1,13 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { QuestionCategoryService } from 'src/app/admin/services/apis/question-category.service';
-import {
-  DndDraggableDirective,
-  DndDropEvent,
-  DndDropzoneDirective,
-  DndHandleDirective,
-  DndPlaceholderRefDirective,
-  DropEffect,
-} from 'ngx-drag-drop';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import questionCategoryConstant from 'src/app/admin/constants/question-category.constant';
 
 @Component({
   selector: 'app-list-question',
@@ -16,21 +10,57 @@ import {
 })
 export class ListQuestionComponent implements OnInit {
   //Collapse
+  questionCategoryConstant: any = questionCategoryConstant;
   collapseFilter: any = {
     questionCategory: false,
   };
-
   questionCategories: any = [];
+  questionCategoriesSelect: any = [];
+
+  //Modal
+  createQuestionCategoryModalRef?: BsModalRef;
+  @ViewChild('createQuestionCategoryTemplate') createQuestionCategoryTemplate!: TemplateRef<any>;
+  questionCategory: any = {
+    name: ''
+  };
 
   // Constructor
-  constructor(private questionCategoryService: QuestionCategoryService) { }
+  constructor(private questionCategoryService: QuestionCategoryService, private modalService: BsModalService) { }
 
   // Event
   ngOnInit() {
     this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
       if(result.status){
         this.questionCategories = result.data;
+        console.log(this.questionCategories);
       }
     });
+  }
+
+  //Action
+  handleOnClickCreateQuestionCategoryButton(){
+    this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
+      if(result.status){
+        const filteredArray = result.data.filter((item: any) => item.id !== null && item.id !== 0);
+        this.questionCategoriesSelect = [
+          {
+            id: 0,
+            name: 'Tất cả',
+            questionCategories: filteredArray
+          }
+        ]
+      }
+    });
+
+    this.createQuestionCategoryModalRef = this.modalService.show(this.createQuestionCategoryTemplate,
+    Object.assign({}, { class: 'modal-dialog modal-dialog-scrollable' }));
+  }
+
+  handleOnCloseCreateQuestionCategoryModal() {
+    this.createQuestionCategoryModalRef?.hide();
+  }
+
+  handleOnSubmitCreateQuestionCategoryForm(){
+
   }
 }

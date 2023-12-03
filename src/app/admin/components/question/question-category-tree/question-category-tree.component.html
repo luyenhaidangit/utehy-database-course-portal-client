@@ -1,7 +1,15 @@
-<div class="tree-ul ml-3 position-relative">
+<div *ngIf="type === 1" class="tree-ul ml-3 position-relative">
     <div *ngFor="let category of categories" class="tree-li cursor-pointer mt-1" (click)="handleOnClickMenu($event,category)" [class.active]="category.id === questionCategoryTreeService.activeCategoryId">
       <i *ngIf="category.questionCategories" class="fa-solid fa-sort-down position-absolute position-left-3"></i>
       <i class="fa-solid fa-folder text-warning mr-1"></i> <span [class.active]="category.id === activeCategoryId">{{ category.name }}</span>
-      <app-question-category-tree *ngIf="category.isExpanded && category.questionCategories" [categories]="category.questionCategories" [activeCategoryId]="activeCategoryId"></app-question-category-tree>
+      <app-question-category-tree *ngIf="category.isExpanded && category.questionCategories" [categories]="category.questionCategories" [activeCategoryId]="activeCategoryId" [type]="type"></app-question-category-tree>
     </div>
+</div>
+
+<div class="tree-ul ml-3 position-relative">
+  <div *ngFor="let category of categoriesSelect" class="tree-li cursor-pointer mt-1" (click)="handleOnClickMenuSelect($event,category)" [class.active]="category.id === questionCategoryTreeService.activeCategoryIdSelect">
+    <i *ngIf="category.questionCategories" class="fa-solid fa-sort-down position-absolute text-dark position-left-3"></i>
+    <i class="fa-solid fa-folder text-warning mr-1"></i> <span class="text-dark" [class.active]="category.id === activeCategoryIdSelect">{{ category.name }}</span>
+    <app-question-category-tree *ngIf="category.isExpanded && category.questionCategories" [categoriesSelect]="category.questionCategories" [activeCategoryIdSelect]="activeCategoryIdSelect" [type]="type"></app-question-category-tree>
+  </div>
 </div>

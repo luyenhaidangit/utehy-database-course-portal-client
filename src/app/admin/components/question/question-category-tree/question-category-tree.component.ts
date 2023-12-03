@@ -8,10 +8,13 @@ import { QuestionCategoryTreeService } from 'src/app/admin/services/components/q
 })
 export class QuestionCategoryTreeComponent {
   @Input() categories: any[] = [];
+  @Input() categoriesSelect: any[] = [];
   @Input() activeCategoryId: number = 0;
+  @Input() activeCategoryIdSelect: number = 0;
+  @Input() type: number = 0;
   @Output() menuClicked: any = new EventEmitter<number>();
 
-  constructor(public questionCategoryTreeService: QuestionCategoryTreeService) { }
+  constructor(public questionCategoryTreeService: QuestionCategoryTreeService) {}
 
   activeId: number = 0;
 
@@ -29,5 +32,12 @@ export class QuestionCategoryTreeComponent {
     event.stopPropagation();
     category.isExpanded = !category.isExpanded;
     this.questionCategoryTreeService.setActiveCategoryId(category.id);
+  }
+
+  handleOnClickMenuSelect(event: any, category: any){
+    event.stopPropagation();
+    console.log("cs",this.categoriesSelect,"ff",category.id,'f',this.questionCategoryTreeService.activeCategoryIdSelect)
+    category.isExpanded = !category.isExpanded;
+    this.questionCategoryTreeService.setActiveCategoryIdSelect(category.id);
   }
 }
