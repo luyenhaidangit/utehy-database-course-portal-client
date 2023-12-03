@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { QuestionCategoryService } from 'src/app/admin/services/apis/question-category.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import questionCategoryConstant from 'src/app/admin/constants/question-category.constant';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-list-question',
@@ -14,6 +15,7 @@ export class ListQuestionComponent implements OnInit {
   collapseFilter: any = {
     questionCategory: false,
   };
+  questionCategorySearch = '';
   questionCategories: any = [];
   questionCategoriesSelect: any = [];
 

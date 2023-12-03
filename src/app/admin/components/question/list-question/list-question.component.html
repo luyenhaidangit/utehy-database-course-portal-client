@@ -47,13 +47,13 @@
 
                         <form class="app-search form-search d-none d-lg-block pt-0 pb-0">
                             <div class="position-relative">
-                                <input type="text" class="form-control" placeholder="Tìm kiếm...">
-                                <span class="fa-solid fa-magnifying-glass ri-search-line"></span>
+                              <input [(ngModel)]="questionCategorySearch" name="searchTerm" type="text" class="form-control" placeholder="Tìm kiếm...">
+                              <span class="fa-solid fa-magnifying-glass ri-search-line"></span>
                             </div>
                         </form>
 
                         <div id="categories-tree" class="mt-3 px-0" role="tree">
-                            <app-question-category-tree [type]="questionCategoryConstant.questionCategoryTreeType" [categories]="questionCategories"></app-question-category-tree>
+                            <app-question-category-tree [search]="questionCategorySearch" [type]="questionCategoryConstant.questionCategoryTreeType" [categories]="questionCategories"></app-question-category-tree>
                         </div>               
                     </div>
                 </div>
