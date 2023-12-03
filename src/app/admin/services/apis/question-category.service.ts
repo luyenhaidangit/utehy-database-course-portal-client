@@ -11,4 +11,8 @@ export class QuestionCategoryService {
   getQuestionCategoryTree(): Observable<any> {
     return this.http.get('question-category/get-tree', {});
   }
+
+  createQuestionCategory(request: any): Observable<any> {
+    return this.http.post('question-category/create', request);
+  }
 }

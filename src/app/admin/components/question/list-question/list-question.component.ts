@@ -2,7 +2,8 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { QuestionCategoryService } from 'src/app/admin/services/apis/question-category.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import questionCategoryConstant from 'src/app/admin/constants/question-category.constant';
-import { FormsModule } from '@angular/forms';
+import { ToastrService as NgxToastrService } from 'ngx-toastr';
+import { QuestionCategoryTreeService } from 'src/app/admin/services/components/question-category-tree.service';
 
 @Component({
   selector: 'app-list-question',
@@ -23,14 +24,22 @@ export class ListQuestionComponent implements OnInit {
   createQuestionCategoryModalRef?: BsModalRef;
   @ViewChild('createQuestionCategoryTemplate') createQuestionCategoryTemplate!: TemplateRef<any>;
   questionCategory: any = {
-    name: ''
+    name: '',
+    description: '',
+    priority: 0,
+    parentQuestionCategoryId: null
   };
 
   // Constructor
-  constructor(private questionCategoryService: QuestionCategoryService, private modalService: BsModalService) { }
+  constructor(private ngxToastr: NgxToastrService,private questionCategoryService: QuestionCategoryService, private modalService: BsModalService, private questionCategoryTreeService: QuestionCategoryTreeService) { }
 
   // Event
   ngOnInit() {
+    this.getQuestionCategoryTree();
+  }
+
+  //Action
+  getQuestionCategoryTree(){
     this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
       if(result.status){
         this.questionCategories = result.data;
@@ -38,8 +47,13 @@ export class ListQuestionComponent implements OnInit {
     });
   }
 
-  //Action
   handleOnClickCreateQuestionCategoryButton(){
+    this.questionCategory = {
+      name: '',
+      description: '',
+      priority: 0,
+      parentQuestionCategoryId: null
+    };
     this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
       if(result.status){
         const filteredArray = result.data.filter((item: any) => item.id !== null && item.id !== 0);
@@ -62,6 +76,21 @@ export class ListQuestionComponent implements OnInit {
   }
 
   handleOnSubmitCreateQuestionCategoryForm(){
+    const request = { ...this.questionCategory, parentQuestionCategoryId: this.questionCategoryTreeService.activeCategoryIdSelect === 0 ? null : this.questionCategoryTreeService.activeCategoryIdSelect }; 
 
+    this.questionCategoryService.createQuestionCategory(request).subscribe((result: any) => {
+      if(result.status){
+        this.ngxToastr.success(result.message,'',{
+          progressBar: true
+        });
+        this.getQuestionCategoryTree();
+        this.createQuestionCategoryModalRef?.hide();
+      }
+    },error => {
+      console.log(error);
+      this.ngxToastr.error(error.error.message,'',{
+        progressBar: true
+      });
+    });
   }
 }
