@@ -12,7 +12,9 @@ import { QuestionCategoryService } from 'src/app/admin/services/apis/question-ca
 })
 export class QuestionCategoryTreeComponent implements OnChanges {
   createQuestionCategoryModalRef?: BsModalRef;
+  deleteQuestionCategoryModalRef?: BsModalRef;
   @ViewChild('createQuestionCategoryTemplate') createQuestionCategoryTemplate!: TemplateRef<any>;
+  @ViewChild('deleteQuestionCategoryTemplate') deleteQuestionCategoryTemplate!: TemplateRef<any>;
 
   @Input() categories: any[] = [];
   @Input() categoriesSelect: any[] = [];
@@ -20,6 +22,8 @@ export class QuestionCategoryTreeComponent implements OnChanges {
   @Input() activeCategoryIdSelect: number = 0;
   @Input() type: number = 0;
   @Input() search: string = '';
+
+  @Output() changeTreeEvent = new EventEmitter();
 
   questionCategory: any = {
     name: '',
@@ -142,6 +146,13 @@ export class QuestionCategoryTreeComponent implements OnChanges {
         console.log("Data",this.questionCategoryTreeService.activeCategoryIdSelect)
     }
 
+    if(action === questionCategoryConstant.deleteAction){
+      this.questionCategory =  { ...category };
+
+      this.deleteQuestionCategoryModalRef = this.modalService.show(this.deleteQuestionCategoryTemplate,
+        Object.assign({}, { class: 'modal-dialog' }));
+    }
+
     this.questionCategoryTreeService.setSelectQuestionCategoryId(-1);
   }
 
@@ -158,7 +169,8 @@ export class QuestionCategoryTreeComponent implements OnChanges {
         this.ngxToastr.success(result.message,'',{
           progressBar: true
         });
-        this.getQuestionCategoryTree();
+        this.questionCategoryTreeService.setChangeTree(0);
+        
         this.createQuestionCategoryModalRef?.hide();
       }
     },error => {
@@ -175,7 +187,7 @@ export class QuestionCategoryTreeComponent implements OnChanges {
           this.ngxToastr.success(result.message,'',{
             progressBar: true
           });
-          this.getQuestionCategoryTree();
+          this.questionCategoryTreeService.setChangeTree(request.id);
           this.createQuestionCategoryModalRef?.hide();
         }
       },error => {
@@ -184,8 +196,23 @@ export class QuestionCategoryTreeComponent implements OnChanges {
           progressBar: true
         });
       });
-    } else {
-      
+    } else if(this.questionCategoryTreeService.typeAction === questionCategoryConstant.deleteAction){
+      const request = { id: this.questionCategory.id };
+
+      this.questionCategoryService.deleteQuestionCategory(request).subscribe((result: any) => {
+        if(result.status){
+          this.ngxToastr.success(result.message,'',{
+            progressBar: true
+          });
+          this.questionCategoryTreeService.setChangeTree(request.id);
+          this.deleteQuestionCategoryModalRef?.hide();
+        }
+      },error => {
+        console.log(error);
+        this.ngxToastr.error(error.error.message,'',{
+          progressBar: true
+        });
+      });
     }
   }
 

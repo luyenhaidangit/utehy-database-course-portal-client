@@ -17,7 +17,7 @@
 
 <div *ngIf="type === questionCategoryConstant.questionCategorySelectTreeType" class="tree-ul ml-3 position-relative">
   <div *ngFor="let category of categoriesSelect" class="tree-li cursor-pointer mt-1" (click)="handleOnClickMenuSelect($event,category)" [class.active]="category.id === questionCategoryTreeService.activeCategoryIdSelect || (typeAction === 2 && questionCategoryTreeService.activeCategoryIdSelect === category.id)">
-    <ng-container *ngIf="(questionCategoryTreeService.typeAction === 2 && questionCategoryTreeService.questionCategoryEdit !== category.id)">
+    <ng-container *ngIf="(questionCategoryTreeService.typeAction === 2 && questionCategoryTreeService.questionCategoryEdit !== category.id) || (questionCategoryTreeService.typeAction === 1)">
       <i *ngIf="category.questionCategories" class="fa-solid fa-sort-down position-absolute text-dark position-left-3"></i>
     <i class="fa-solid fa-folder text-warning mr-1"></i> <span class="text-dark" [class.active]="category.id === activeCategoryIdSelect">{{ category.name }}</span>
     <app-question-category-tree *ngIf="(category.isExpanded && category.questionCategories) || (questionCategoryTreeService.typeAction === 2 && isQuestionCategoriesIncludeId(category))" [categoriesSelect]="category.questionCategories" [activeCategoryIdSelect]="activeCategoryIdSelect" [type]="type"></app-question-category-tree>
@@ -77,4 +77,20 @@
       <button type="button" class="btn btn-light waves-effect" (click)="handleOnCloseCreateQuestionCategoryModal()">Đóng</button>
       <button [disabled]="addQuestionCategoryForm.invalid" type="button" class="btn btn-primary waves-effect waves-light" (click)="handleOnSubmitCreateQuestionCategoryForm()">Xác nhận</button>
   </div>
+</ng-template>
+
+<ng-template #deleteQuestionCategoryTemplate>
+  <div class="modal-header">
+    <h5 class="modal-title" id="staticBackdropLabel">Xác nhận xoá loại câu hỏi</h5>
+    <button (click)="this.deleteQuestionCategoryModalRef?.hide()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p>Bạn có chắc muốn xoá loại câu hỏi {{ questionCategory.name }}</p>
+</div>
+<div class="modal-footer">
+    <button (click)="this.deleteQuestionCategoryModalRef?.hide()" type="button" class="btn btn-light waves-effect" data-dismiss="modal">Đóng</button>
+    <button type="button" class="btn btn-danger waves-effect waves-light" (click)="handleOnSubmitCreateQuestionCategoryForm()">Xác nhận</button>
+</div>
 </ng-template>

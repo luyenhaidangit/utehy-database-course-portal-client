@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ export class QuestionCategoryTreeService {
   public selectQuestionCategoryId: number = -1;
   public typeAction: number = -1;
   public questionCategoryEdit = 0;
+  public myValueChange = new EventEmitter<number>();
 
   constructor() { }
 
@@ -35,5 +36,9 @@ export class QuestionCategoryTreeService {
 
   setQuestionCategoryEdit(id: number){
     this.questionCategoryEdit = id;
+  }
+
+  setChangeTree(id: number){
+    this.myValueChange.emit(id);
   }
 }

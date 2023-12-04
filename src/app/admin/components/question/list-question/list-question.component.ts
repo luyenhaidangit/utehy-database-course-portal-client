@@ -37,6 +37,11 @@ export class ListQuestionComponent implements OnInit {
   // Event
   ngOnInit() {
     this.getQuestionCategoryTree();
+
+    this.questionCategoryTreeService.myValueChange.subscribe((newValue) => {
+      this.getQuestionCategoryTree(); 
+      this.questionCategoryTreeService.setActiveCategoryId(0);
+    });
   }
 
   //Action
@@ -69,6 +74,7 @@ export class ListQuestionComponent implements OnInit {
     });
 
     this.questionCategoryTreeService.setActiveCategoryIdSelect(0);
+    this.questionCategoryTreeService.setTypeAction(1);
 
     this.createQuestionCategoryModalRef = this.modalService.show(this.createQuestionCategoryTemplate,
     Object.assign({}, { class: 'modal-dialog modal-dialog-scrollable' }));
