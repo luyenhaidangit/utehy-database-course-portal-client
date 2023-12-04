@@ -8,7 +8,8 @@ export class QuestionCategoryTreeService {
   public activeCategoryIdSelect: number = 0;
   public searchKey: string = '';
   public selectQuestionCategoryId: number = -1;
-
+  public typeAction: number = -1;
+  public questionCategoryEdit = 0;
 
   constructor() { }
 
@@ -26,5 +27,13 @@ export class QuestionCategoryTreeService {
 
   setSelectQuestionCategoryId(id: number){
     this.selectQuestionCategoryId = id;
+  }
+
+  setTypeAction(id: number){
+    this.typeAction = id;
+  }
+
+  setQuestionCategoryEdit(id: number){
+    this.questionCategoryEdit = id;
   }
 }

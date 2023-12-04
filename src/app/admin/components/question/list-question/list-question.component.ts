@@ -19,6 +19,7 @@ export class ListQuestionComponent implements OnInit {
   questionCategorySearch = '';
   questionCategories: any = [];
   questionCategoriesSelect: any = [];
+  activeCategoryIdSelect: number = 0;
 
   //Modal
   createQuestionCategoryModalRef?: BsModalRef;
@@ -31,7 +32,7 @@ export class ListQuestionComponent implements OnInit {
   };
 
   // Constructor
-  constructor(private ngxToastr: NgxToastrService,private questionCategoryService: QuestionCategoryService, private modalService: BsModalService, private questionCategoryTreeService: QuestionCategoryTreeService) { }
+  constructor(private ngxToastr: NgxToastrService,private questionCategoryService: QuestionCategoryService, private modalService: BsModalService, public questionCategoryTreeService: QuestionCategoryTreeService) { }
 
   // Event
   ngOnInit() {
@@ -66,6 +67,8 @@ export class ListQuestionComponent implements OnInit {
         ]
       }
     });
+
+    this.questionCategoryTreeService.setActiveCategoryIdSelect(0);
 
     this.createQuestionCategoryModalRef = this.modalService.show(this.createQuestionCategoryTemplate,
     Object.assign({}, { class: 'modal-dialog modal-dialog-scrollable' }));

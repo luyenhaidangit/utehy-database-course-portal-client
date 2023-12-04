@@ -15,4 +15,8 @@ export class QuestionCategoryService {
   createQuestionCategory(request: any): Observable<any> {
     return this.http.post('question-category/create', request);
   }
+
+  editQuestionCategory(request: any): Observable<any> {
+    return this.http.post('question-category/edit', request);
+  }
 }
