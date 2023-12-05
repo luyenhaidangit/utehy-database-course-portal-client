@@ -25,3 +25,15 @@
 span.active{
     font-weight: 700;
 }
+
+.pt-12{
+    padding-top: 12px;
+}
+
+.fs-17{
+    font-size: 17px !important;
+}
+
+.border-gray-search{
+    border: 1px solid #ced4da !important;
+}

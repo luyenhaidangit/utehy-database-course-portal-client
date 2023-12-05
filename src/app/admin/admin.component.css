@@ -169,3 +169,13 @@ button[type="submit"] {
 #sidebar-menu ul li ul.sub-menu li a{
     padding: .4rem 1.5rem .4rem 4rem;
 }
+
+/* font-weight */
+.fw-100{
+    font-weight: 100 !important;
+}
+
+/* table */
+.select-checkbox-column{
+    width: 20px;
+}

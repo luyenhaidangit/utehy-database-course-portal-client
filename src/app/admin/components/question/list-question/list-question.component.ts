@@ -4,6 +4,11 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import questionCategoryConstant from 'src/app/admin/constants/question-category.constant';
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import { QuestionCategoryTreeService } from 'src/app/admin/services/components/question-category-tree.service';
+import { QuestionService } from 'src/app/admin/services/apis/question.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import sortConstant from 'src/app/admin/constants/sortConstant';
+import orderConstant from 'src/app/admin/constants/orderConstant';
+import { DEFAULT_PER_PAGE_OPTIONS, DEFAULT_PAGE_INDEX, DEFAULT_PAGE_SIZE } from 'src/app/admin/configs/paging.config';
 
 @Component({
   selector: 'app-list-question',
@@ -11,15 +16,37 @@ import { QuestionCategoryTreeService } from 'src/app/admin/services/components/q
   styleUrls: ['./list-question.component.css']
 })
 export class ListQuestionComponent implements OnInit {
+  //Constant
+  sortConstant: any = sortConstant;
+  orderConstant: any = orderConstant;
+   //Config
+   public config: { [key: string]: any, perPageOptions: any[]  } = { perPageOptions: DEFAULT_PER_PAGE_OPTIONS };
+
   //Collapse
   questionCategoryConstant: any = questionCategoryConstant;
   collapseFilter: any = {
     questionCategory: false,
+    typeQuestion: false,
   };
+  
   questionCategorySearch = '';
   questionCategories: any = [];
   questionCategoriesSelect: any = [];
   activeCategoryIdSelect: number = 0;
+
+  //Question
+  questions: any = [];
+  search: any = {
+    orderBy: '',
+    sortBy: '',
+    questionCategory: 0,
+    type: 0,
+    title: ''
+  };
+  selectedItems: number[] = [];
+  pageSize: any = 10;
+  pageIndex: any;
+  totalPages: any;
 
   //Modal
   createQuestionCategoryModalRef?: BsModalRef;
@@ -32,11 +59,13 @@ export class ListQuestionComponent implements OnInit {
   };
 
   // Constructor
-  constructor(private ngxToastr: NgxToastrService,private questionCategoryService: QuestionCategoryService, private modalService: BsModalService, public questionCategoryTreeService: QuestionCategoryTreeService) { }
+  constructor(private ngxToastr: NgxToastrService,private questionCategoryService: QuestionCategoryService, private modalService: BsModalService, public questionCategoryTreeService: QuestionCategoryTreeService, private questionService: QuestionService,private router: Router, private route: ActivatedRoute) { }
 
   // Event
   ngOnInit() {
     this.getQuestionCategoryTree();
+
+    this.getQuestions();
 
     this.questionCategoryTreeService.myValueChange.subscribe((newValue) => {
       this.getQuestionCategoryTree(); 
@@ -44,7 +73,7 @@ export class ListQuestionComponent implements OnInit {
     });
   }
 
-  //Action
+  //Question category
   getQuestionCategoryTree(){
     this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
       if(result.status){
@@ -101,5 +130,101 @@ export class ListQuestionComponent implements OnInit {
         progressBar: true
       });
     });
+  }
+
+  //Question
+  getQuestions(): void{
+    this.questionService.getQuestions().subscribe((result: any) => {
+      if(result.status){
+        this.questions = result.data.items;
+      }
+    });
+  }
+
+  selectAllQuestions(event: any): void{
+    if (event.target.checked) {
+      this.selectedItems = this.questions.map((teacher: any) => teacher.id);
+    } else {
+      this.selectedItems = [];
+    }
+  }
+
+  onPerPageChange(event: any): void {
+    this.pageSize = +event.target.value;
+
+    this.route.queryParams.subscribe(params => {
+      const request = {
+        ...params,
+        pageSize: this.pageSize,
+      };
+
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: request,
+        queryParamsHandling: 'merge',
+      });
+    });
+  }
+
+  onSortAndOrderChange(orderBy: string) {
+    if(this.search.orderBy === orderBy){
+      this.search.sortBy = this.search.sortBy === sortConstant.asc ? sortConstant.desc: sortConstant.asc;
+    }else{
+      this.search.sortBy = sortConstant.desc;
+    }
+
+    this.search = {
+      orderBy: orderBy,
+      sortBy: this.search.sortBy
+    };
+
+    this.route.queryParams.subscribe(params => {
+      const request = {
+        ...params,
+        orderBy: this.search.orderBy,
+        sortBy: this.search.sortBy,
+      };
+
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: request,
+        queryParamsHandling: 'merge',
+      });
+    });
+  }
+
+  isSelected(teacherId: number): boolean {
+    return this.selectedItems.includes(teacherId);
+  }
+
+  toggleSelection(questionId: number): void {
+    if (this.isSelected(questionId)) {
+        this.selectedItems = this.selectedItems.filter((id) => id !== questionId);
+    } else {
+        this.selectedItems.push(questionId);
+    }
+  }
+
+  setPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.pageIndex = page;
+      
+      this.route.queryParams.subscribe(params => {
+        const request = {
+          ...params,
+          pageIndex: this.pageIndex,
+        };
+
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: request,
+          queryParamsHandling: 'merge',
+        });
+      });
+    }
+  }
+
+  handleDelete(id: number){
+    
   }
 }
