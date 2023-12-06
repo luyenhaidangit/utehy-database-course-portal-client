@@ -27,6 +27,7 @@ export class VerticalMenuComponent implements OnInit {
   }
 
   isActive(url: string): boolean {
+    console.log(this.router.url,"và",url,"end",this.router.url.startsWith(url))
     return this.router.url.startsWith(url);
   }
 }

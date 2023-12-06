@@ -26,8 +26,8 @@
                     </a>
                 </li>
 
-                <li class="{{ currentUrl === '/admin/question' ? 'mm-active' : '' }}">
-                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ currentUrl === '/admin/question' ? 'active' : '' }}">
+                <li class="{{ isActive('/admin/question') ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/admin/question') ? 'active' : '' }}">
                         <div class="navigation-label">
                             <i class="fa-regular fa-circle-question pb-0"></i>
                             <span>Ngân hàng câu hỏi</span>
@@ -35,8 +35,8 @@
                         <i class="fa-solid fa-angle-down"></i>
                     </a>
 
-                    <ul class="sub-menu {{ currentUrl === '/admin/question' ? 'mm-show' : '' }}">
-                        <li class="cursor-pointer" routerLink="/admin/question"><a class="{{ currentUrl === '/admin/question' ? 'active' : '' }}">Quản lý câu hỏi</a></li>
+                    <ul class="sub-menu {{ isActive('/admin/question') ? 'mm-show' : '' }}">
+                        <li class="cursor-pointer" routerLink="/admin/question"><a class="{{ isActive('/admin/question') ? 'active' : '' }}">Quản lý câu hỏi</a></li>
                     </ul>
                 </li>
             </ul>

@@ -45,7 +45,7 @@ export class ListQuestionComponent implements OnInit {
   };
   selectedItems: number[] = [];
   pageSize: any = 10;
-  pageIndex: any;
+  pageIndex: any = 1;
   totalPages: any;
 
   //Modal
@@ -137,6 +137,7 @@ export class ListQuestionComponent implements OnInit {
     this.questionService.getQuestions().subscribe((result: any) => {
       if(result.status){
         this.questions = result.data.items;
+        this.totalPages = result.data.totalPages;
       }
     });
   }
