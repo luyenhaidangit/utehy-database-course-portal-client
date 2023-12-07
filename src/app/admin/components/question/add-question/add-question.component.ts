@@ -3,6 +3,8 @@ import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import { TeacherService } from 'src/app/admin/services/apis/teacher.service';
 import { Router } from '@angular/router';
 import questionConstant from 'src/app/admin/constants/question.constant';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { classicEditorConfig } from 'src/app/admin/configs/ckeditor.config';
 
 @Component({
   selector: 'app-add-question',
@@ -12,9 +14,12 @@ import questionConstant from 'src/app/admin/constants/question.constant';
 export class AddQuestionComponent {
   //Question
   questionContant: any = questionConstant;
+  classicEditor = ClassicEditor;
+  config: { [key: string]: any, classicEditorConfig: any  } = { classicEditorConfig: classicEditorConfig };
 
   question: any = {
     type: 1,
+    title: ''
   };
 
   //Data
