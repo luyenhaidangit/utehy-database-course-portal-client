@@ -46,67 +46,54 @@
                     </div>
                     <div class="row">
                         <div class="col-12 col-lg-8">
-                            <ckeditor [config]="config.classicEditorConfig" [editor]="classicEditor" [data]="question.title"></ckeditor>
+                            <ckeditor [config]="config.classicEditorConfig" [editor]="classicEditor" [data]="question.title" class="title-editor"></ckeditor>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <label class="col-md-3 col-lg-3 col-form-label" for="name">Họ và tên <span class="text-danger">*</span></label>
-                        <div class="col-md-9 col-lg-6 col-table-reponsive p-0">
-                            <input class="form-control" [(ngModel)]="teacher.name" name="name" id="name" type="text" placeholder="Họ và tên" required/>
-                            <div *ngIf="form.controls['name']?.invalid && (form.controls['name']?.dirty || form.controls['name'].touched)" class="danger-notice">
-                                <div *ngIf="form.controls['name'].errors?.['required']">Tên không được để trống</div>
+                        <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Đáp án câu hỏi</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-8">
+                            <div class="question-answer">
+                                <div class="question-answer-item mb-4" *ngFor="let question of question.questionAnswers; let index = index">
+                                    <div class="font-weight-bold mb-1">({{ question.charIndex }})</div>
+                                    <div class="d-flex gap-2">
+                                        <div class="question-answer-item-left">
+                                            <ckeditor [config]="config.classicEditorConfig" [editor]="classicEditor" [data]="question.title"></ckeditor>
+                                        </div>  
+                                        <div class="question-answer-item-right">
+                                            <i class="fa-solid fa-trash text-danger cursor-pointer" (click)="handleOnDeleteAnswerQuesion(index)"></i>
+                                            <i class="fa-solid fa-chevron-up text-primary cursor-pointer" (click)="handleMoveQuestion(index, 'up')"></i>
+                                            <i class="fa-solid fa-chevron-down text-primary cursor-pointer" (click)="handleMoveQuestion(index, 'down')"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-question-answer-btn btn btn-primary" (click)="addQuestionAnswer()">
+                                Thêm câu trả lời
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <label class="col-md-3 col-lg-3 col-form-label" for="email">Email</label>
-                        <div class="col-md-9 col-lg-6 col-table-reponsive p-0">
-                            <input class="form-control" [(ngModel)]="teacher.email" name="email" id="email" type="email" placeholder="Email" email/>
-                            <div *ngIf="(form.controls['email']?.dirty || form.controls['email']?.touched)" class="danger-notice">
-                                <div *ngIf="form.controls['email'].errors?.['email']">Định dạng email không đúng</div>
-                                <div *ngIf="validVerificationType() === -1">Email không được để trống</div>
-                            </div>
+                        <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Câu trả lời đúng</label>
+                    </div>                                                                                                                                                                                                                                                                                                                                                                     
+
+                    <div class="add-question-answer-correct d-flex gap-4">
+                        <div class="custom-control custom-radio" *ngFor="let answer of question.questionAnswers; let index = index">
+                          <input 
+                            type="radio" 
+                            id="verification-type-{{ index }}" 
+                            name="question-answer" 
+                            class="custom-control-input" 
+                            [checked]="answer.isCorrect"
+                            (change)="handleOnChangeCorrectAnswerQuestion(answer)">
+                          <label class="custom-control-label font-weight-normal" for="verification-type-{{ index }}">{{ answer.charIndex }}</label>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <label class="col-md-3 col-lg-3 col-form-label" for="phone">Số điện thoại</label>
-                        <div class="col-md-9 col-lg-6 col-table-reponsive p-0">
-                            <input class="form-control" [(ngModel)]="teacher.phone" name="phone" id="phone" type="tel" placeholder="Số điện thoại" pattern="[0-9]{10,12}" />
-                            <div *ngIf="(form.controls['phone']?.dirty || form.controls['phone']?.touched)" class="danger-notice">
-                                <div *ngIf="form.controls['phone'].hasError('pattern')">Định dạng số điện thoại không đúng</div>
-                                <div *ngIf="validVerificationType() === -2">Số điện thoại không được để trống</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <label class="col-md-3 col-lg-3 col-form-label" for="verificationType">Kiểu xác thực</label>
-                        <div class="col-md-9 col-lg-6 col-table-reponsive d-flex align-items-center gap-4">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" id="verification-type-email" name="verificationType" class="custom-control-input" [(ngModel)]="teacher.verificationType" [value]="2" checked="">
-                                <label class="custom-control-label font-weight-normal" for="verification-type-email">Email</label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input type="radio" id="verification-type-phone" name="verificationType" class="custom-control-input" [(ngModel)]="teacher.verificationType" [value]="1">
-                                <label class="custom-control-label font-weight-normal" for="verification-type-phone">Số điện thoại</label>
-                            </div>  
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="custom-control custom-switch ml-3" dir="ltr">
-                            <input type="checkbox" class="custom-control-input" id="status" name="status" [(ngModel)]="teacher.status" [checked]="teacher.status">
-                            <label class="custom-control-label" for="status">Trạng thái</label>
-                        </div>
-                    </div>
+                      </div>
                 </div>
                 <div class="form-group">
                     <div class="d-flex">

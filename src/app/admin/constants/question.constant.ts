@@ -16,7 +16,33 @@ const questionConstant = {
             key: 4,
             value: "Điền vào chỗ trống" 
         }
-    ]
+    ],
+    defaultQuestionAnswerMultipleAnswers: [
+        {
+            charIndex: "A",
+            title: "",
+            order: 4,
+            isCorrect: true
+        },
+        {
+            charIndex: "B",
+            title: "",
+            order: 3,
+            isCorrect: false
+        },
+        {
+            charIndex: "C",
+            title: "",
+            order: 2,
+            isCorrect: false
+        },
+        {
+            charIndex: "D",
+            title: "",
+            order: 1,
+            isCorrect: false
+        }
+    ],
 };
     
 export default questionConstant;

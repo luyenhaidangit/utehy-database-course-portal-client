@@ -1,3 +1,4 @@
 export const classicEditorConfig ={
-    language: 'vi'
+    language: 'vi',
+    height: '400px'
 };

@@ -32,9 +32,7 @@
               "src/styles.css",
               "./node_modules/ngx-ui-switch/ui-switch.component.scss"
             ],
-            "scripts": [ 
-              "node_modules/@ckeditor/ckeditor5-build-classic/build/translations/de.js"
-            ],
+            "scripts": [],
             "allowedCommonJsDependencies": [
               "can-use-dom",
               "sweetalert2"
