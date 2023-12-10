@@ -93,12 +93,57 @@
                             (change)="handleOnChangeCorrectAnswerQuestion(answer)">
                           <label class="custom-control-label font-weight-normal" for="verification-type-{{ index }}">{{ answer.charIndex }}</label>
                         </div>
-                      </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-lg-8 mt-2">
+                            <div class="alert alert-danger" role="alert">
+                                Sau khi kỳ thi kết thúc, nếu sửa đổi câu trả lời cho các câu hỏi, điểm số sẽ không thay đổi tương ứng theo câu trả lời mới!
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="form-group">
+                    <div class="d-flex gap-3">
+                        <div class="custom-control custom-radio" *ngFor="let typeScore of questionContant.typeScores; let index = index">
+                            <input 
+                              type="radio" 
+                              id="score-answer-regular-{{index}}" 
+                              name="score-answer-regular" 
+                              class="custom-control-input" 
+                              [checked]="typeScoreAnswer === typeScore.value"
+                              [value]="typeScore.value"
+                              [(ngModel)]="typeScoreAnswer"
+                              >
+                            <label class="custom-control-label font-weight-normal" for="score-answer-regular-{{index}}">{{ typeScore.title }}</label>
+                          </div>
+                    </div>
+
+                    <div class="d-flex" [@fadeInOut]="typeScoreAnswer === 2 ? 'visible' : 'hidden'" id="accordion">
+                        <div class="col-12 col-lg-8 mt-2">
+                            <div class="row">
+                                <div class="col-3 mt-2" *ngFor="let answer of question.questionAnswers; let index = index">
+                                    <div class="mb-1">Điểm lựa chọn ({{answer.charIndex}})</div>
+                                    <div>
+                                        <input [(ngModel)]="question.questionAnswers[index].score" name="phone" id="phone" type="number" placeholder="Điểm" pattern="[0-9]{10,12}" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Danh mục câu hỏi</label>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <div class="d-flex">
                         <div class="ml-auto">
-                            <button routerLink="/admin/teacher" type="button" class="btn btn-secondary waves-effect waves-light">Quay lại</button>
+                            <button routerLink="/admin/question" type="button" class="btn btn-secondary waves-effect waves-light">Quay lại</button>
                             <button [disabled]="form.invalid || validVerificationType() !== 1" type="submit" class="btn btn-success waves-effect waves-light ml-2">Xác nhận</button>
                         </div>
                     </div>

@@ -6,11 +6,28 @@ import questionConstant from 'src/app/admin/constants/question.constant';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { classicEditorConfig } from 'src/app/admin/configs/ckeditor.config';
 import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-add-question',
   templateUrl: './add-question.component.html',
-  styleUrls: ['./add-question.component.css']
+  styleUrls: ['./add-question.component.css'],
+  animations: [
+    trigger('fadeInOut', [
+      state('hidden', style({
+        opacity: 0,
+        height: '0',
+        display: 'none'
+      })),
+      state('visible', style({
+        opacity: 1,
+        height: '100%',
+        display: 'flex'
+      })),
+      transition('hidden => visible', animate('300ms ease-out')),
+      transition('visible => hidden', animate('300ms ease-in'))
+    ]),
+  ],
 })
 export class AddQuestionComponent implements OnInit {
   //Question
@@ -26,6 +43,7 @@ export class AddQuestionComponent implements OnInit {
   };
 
   selectedAnswer: string = 'ok';
+  typeScoreAnswer: number = 1;
 
   //Data
   public teacher: any = {
