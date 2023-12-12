@@ -46,7 +46,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12 col-lg-8">
-                            <ckeditor [config]="config.classicEditorConfig" [editor]="classicEditor" [data]="question.title" class="title-editor"></ckeditor>
+                            <ckeditor (ready)="onReady($event)" id="editor" [config]="config.classicEditorConfig" [editor]="classicEditor" [data]="question.title" class="title-editor"></ckeditor>
                         </div>
                     </div>
                 </div>

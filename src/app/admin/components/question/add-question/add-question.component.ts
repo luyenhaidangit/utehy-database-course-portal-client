@@ -7,6 +7,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { classicEditorConfig } from 'src/app/admin/configs/ckeditor.config';
 import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { CkeditorUploadAdapter } from 'src/app/admin/adapters/ckeditor-upload.adapter';
 
 @Component({
   selector: 'app-add-question',
@@ -33,6 +34,7 @@ export class AddQuestionComponent implements OnInit {
   //Question
   questionContant: any = questionConstant;
   classicEditor = ClassicEditor;
+  editor: any = null;
   questionAnswersEditor = [];
   config: { [key: string]: any, classicEditorConfig: any } = { classicEditorConfig: classicEditorConfig };
 
@@ -58,6 +60,13 @@ export class AddQuestionComponent implements OnInit {
   constructor(private ngxToastr: NgxToastrService,private teacherService: TeacherService,private router:Router) { }
 
   ngOnInit() {
+  //   this.editor = ClassicEditor.create(document.querySelector('#editor') as HTMLElement) .then(editor => {
+  //     // Đã tạo thành công
+  //     console.log("Thanhf")
+  // })
+  // .catch(error => {
+  //     console.error(error);
+  // });
     // console.log()
     // this.questionAnswersEditor = Array(this.questionAnswersEditor.length).fill(null).map(() => ClassicEditor);
   }
@@ -134,5 +143,11 @@ export class AddQuestionComponent implements OnInit {
         answer.isCorrect = false;
       }
     });
+  }
+
+  onReady(editor: ClassicEditor): void {
+    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+        return new CkeditorUploadAdapter( loader );
+    };
   }
 }
