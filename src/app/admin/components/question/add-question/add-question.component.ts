@@ -73,6 +73,10 @@ export class AddQuestionComponent implements OnInit {
     questionCategoryId: 1
   };
 
+  getMaxScoreQuestionAnswers(){
+    return Math.max(...this.question.questionAnswers.map((item: any)=> item.score));
+  }
+
   //Modal question category tree
   questionCategoryTree: any[] = [];
   questionCategory: any = {
