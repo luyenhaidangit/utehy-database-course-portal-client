@@ -11,6 +11,7 @@ import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { DetailQuestionComponent } from './detail-question/detail-question.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { QuestionCategoryTreeComponent } from './question-category-tree/question-category-tree.component';
+import { AddQuestionCategoryTreeComponent } from './add-question-category-tree/add-question-category-tree.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { QuestionCategoryTreeComponent } from './question-category-tree/question
     AddQuestionComponent,
     EditQuestionComponent,
     DetailQuestionComponent,
-    QuestionCategoryTreeComponent
+    QuestionCategoryTreeComponent,
+    AddQuestionCategoryTreeComponent
   ],
   imports: [
     CommonModule,

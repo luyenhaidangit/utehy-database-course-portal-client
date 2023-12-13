@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef } from '@angular/core';
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import { TeacherService } from 'src/app/admin/services/apis/teacher.service';
 import { Router } from '@angular/router';
@@ -8,6 +8,9 @@ import { classicEditorConfig } from 'src/app/admin/configs/ckeditor.config';
 import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { CkeditorUploadAdapter } from 'src/app/admin/adapters/ckeditor-upload.adapter';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { QuestionCategoryService } from 'src/app/admin/services/apis/question-category.service';
+import { AddQuestionCategoryTreeService } from 'src/app/admin/services/components/add-question-category-tree.service';
 
 @Component({
   selector: 'app-add-question',
@@ -31,6 +34,13 @@ import { CkeditorUploadAdapter } from 'src/app/admin/adapters/ckeditor-upload.ad
   ],
 })
 export class AddQuestionComponent implements OnInit {
+  constructor(
+    private ngxToastr: NgxToastrService,private teacherService: TeacherService,
+    private router:Router,private modalService: BsModalService, 
+    private questionCategoryService: QuestionCategoryService,
+    public addQuestionCategoryTreeService: AddQuestionCategoryTreeService
+  ) { }
+
   //Question
   questionContant: any = questionConstant;
   classicEditor = ClassicEditor;
@@ -38,12 +48,41 @@ export class AddQuestionComponent implements OnInit {
   questionAnswersEditor = [];
   config: { [key: string]: any, classicEditorConfig: any } = { classicEditorConfig: classicEditorConfig };
 
+  //Question
   question: any = {
     type: 1,
     title: '',
-    questionAnswers: [...questionConstant.defaultQuestionAnswerMultipleAnswers]
+    questionAnswers: [...questionConstant.defaultQuestionAnswerMultipleAnswers],
+    questionCategoryId: null
   };
 
+  //Modal question category
+  questionCategoryTree: any[] = [];
+
+  createQuestionCategoryModalRef?: BsModalRef;
+  @ViewChild('questionCategoryTreeTemplate') questionCategoryTreeTemplate!: TemplateRef<any>;
+  
+  handleOpenQuestionCategoryTreeModal(){
+    this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
+      if(result.status){
+        this.questionCategoryTree = result.data;
+
+        const defaultCategory = result.data.find((category: any) => category.isDefault === true);
+
+        this.addQuestionCategoryTreeService.questionCategories = result.data;
+
+        this.addQuestionCategoryTreeService.id = defaultCategory.id;
+      }
+    });
+    this.createQuestionCategoryModalRef = this.modalService.show(this.questionCategoryTreeTemplate,
+      Object.assign({}, { class: 'modal-dialog modal-lg modal-dialog-scrollable' }));
+  }
+
+  handleCloseQuestionCategoryTreeModal(){
+    this.createQuestionCategoryModalRef?.hide();
+  }
+
+  //Common
   selectedAnswer: string = 'ok';
   typeScoreAnswer: number = 1;
 
@@ -56,8 +95,6 @@ export class AddQuestionComponent implements OnInit {
     verificationType: 2,
     status: true,
   };
-
-  constructor(private ngxToastr: NgxToastrService,private teacherService: TeacherService,private router:Router) { }
 
   ngOnInit() {
   //   this.editor = ClassicEditor.create(document.querySelector('#editor') as HTMLElement) .then(editor => {
@@ -103,15 +140,6 @@ export class AddQuestionComponent implements OnInit {
     }
   }
 
-  handleOnDeleteAnswerQuesion(index: number){
-    this.question.questionAnswers.splice(index, 1);
-
-    for (let i = index; i < this.question.questionAnswers.length; i++) {
-      this.question.questionAnswers[i].charIndex = String.fromCharCode(65 + i); // Update charIndex to A, B, C, ...
-      this.question.questionAnswers[i].title = "";
-    }
-  }
-
   handleMoveQuestion(index: number, direction: 'up' | 'down'): void {
     const newIndex = direction === 'up' ? index - 1 : index + 1;
   
@@ -123,16 +151,31 @@ export class AddQuestionComponent implements OnInit {
     }
   }
 
-  addQuestionAnswer(): void {
+  handleAddQuestionAnswer(): void {
     const newAnswer = {
-      charIndex: String.fromCharCode(65 + this.question.questionAnswers.length), // Assuming you want to use A, B, C, ...
+      charIndex: String.fromCharCode(65 + this.question.questionAnswers.length),
       title: '',
-      order: this.question.questionAnswers.length + 1
+      order: this.question.questionAnswers.length + 1,
+      isCorrect: this.question.questionAnswers.length > 0 ? false : true,
+      score: 1
     };
   
     this.question.questionAnswers.push(newAnswer);
+  }
 
-    console.log(this.question.questionAnswers)
+  handleOnDeleteAnswerQuesion(index: number){
+    this.question.questionAnswers.splice(index, 1);
+
+    const isCorrectAnswerExists = this.question.questionAnswers.some((answer: any) => answer.isCorrect === true);
+
+    if(!isCorrectAnswerExists && this.question.questionAnswers.length > 0){
+      this.question.questionAnswers[0].isCorrect = true;
+    }
+
+    for (let i = index; i < this.question.questionAnswers.length; i++) {
+      this.question.questionAnswers[i].charIndex = String.fromCharCode(65 + i);
+      this.question.questionAnswers[i].title = "";
+    }
   }
 
   handleOnChangeCorrectAnswerQuestion(selectedAnswer: any) {
