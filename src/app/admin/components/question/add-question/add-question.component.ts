@@ -34,12 +34,29 @@ import { AddQuestionCategoryTreeService } from 'src/app/admin/services/component
   ],
 })
 export class AddQuestionComponent implements OnInit {
+  //Init
   constructor(
     private ngxToastr: NgxToastrService,private teacherService: TeacherService,
     private router:Router,private modalService: BsModalService, 
     private questionCategoryService: QuestionCategoryService,
     public addQuestionCategoryTreeService: AddQuestionCategoryTreeService
   ) { }
+
+  ngOnInit() {
+    this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
+      if(result.status){
+        this.questionCategoryTree = result.data;
+
+        const defaultCategory = result.data.find((category: any) => category.isDefault === true);
+
+        this.questionCategory = defaultCategory;
+
+        this.addQuestionCategoryTreeService.questionCategories = result.data;
+
+        this.addQuestionCategoryTreeService.id = defaultCategory.id;
+      }
+    });
+  }
 
   //Question
   questionContant: any = questionConstant;
@@ -53,11 +70,16 @@ export class AddQuestionComponent implements OnInit {
     type: 1,
     title: '',
     questionAnswers: [...questionConstant.defaultQuestionAnswerMultipleAnswers],
-    questionCategoryId: null
+    questionCategoryId: 1
   };
 
   //Modal question category
   questionCategoryTree: any[] = [];
+  questionCategory: any = {
+    id: "",
+    name: ""
+  };
+  questionCategorySearch: string = '';
 
   createQuestionCategoryModalRef?: BsModalRef;
   @ViewChild('questionCategoryTreeTemplate') questionCategoryTreeTemplate!: TemplateRef<any>;
@@ -82,6 +104,38 @@ export class AddQuestionComponent implements OnInit {
     this.createQuestionCategoryModalRef?.hide();
   }
 
+  handleChooseQuestionCategoryId(){
+    this.question.questionCategoryId = this.addQuestionCategoryTreeService.id;
+
+    const category = this.findCategoryById(this.addQuestionCategoryTreeService.questionCategories,this.addQuestionCategoryTreeService.id);
+
+    this.questionCategory = category;
+
+    this.createQuestionCategoryModalRef?.hide();
+  }
+
+  handleChangeSearchCategory(){
+    const defaultCategory = this.addQuestionCategoryTreeService.questionCategories.find((category: any) => category.isDefault === true);
+    this.addQuestionCategoryTreeService.id = defaultCategory.id;
+  }
+
+  findCategoryById(categories: any[], targetId: number): any | null {
+    for (const category of categories) {
+        if (category.id === targetId) {
+            return category; 
+        }
+
+        if (category.questionCategories) {
+            const foundInChildren = this.findCategoryById(category.questionCategories, targetId);
+            if (foundInChildren) {
+                return foundInChildren;
+            }
+        }
+    }
+
+    return null;
+  }
+
   //Common
   selectedAnswer: string = 'ok';
   typeScoreAnswer: number = 1;
@@ -95,18 +149,6 @@ export class AddQuestionComponent implements OnInit {
     verificationType: 2,
     status: true,
   };
-
-  ngOnInit() {
-  //   this.editor = ClassicEditor.create(document.querySelector('#editor') as HTMLElement) .then(editor => {
-  //     // Đã tạo thành công
-  //     console.log("Thanhf")
-  // })
-  // .catch(error => {
-  //     console.error(error);
-  // });
-    // console.log()
-    // this.questionAnswersEditor = Array(this.questionAnswersEditor.length).fill(null).map(() => ClassicEditor);
-  }
 
   onSubmit(){
     this.teacherService.createTeachers(this.teacher).subscribe((result: any) => {

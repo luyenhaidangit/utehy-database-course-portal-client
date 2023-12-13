@@ -16,6 +16,7 @@ export class AddQuestionCategoryTreeComponent implements OnInit {
 
   @Input() categories: any[] = [];
   @Input() activeId: number = 0;
+  @Input() search: string = '';
 
   questionCategory: any = {
     name: '',
@@ -27,15 +28,21 @@ export class AddQuestionCategoryTreeComponent implements OnInit {
   questionCategoryConstant: any = questionCategoryConstant;
 
   isQuestionCategoriesIncludeKey(category: any): boolean {
+    if(category.isDefault === true){
+      return true;
+    }
+
     if (!category?.questionCategories) {
       return false;
     }
   
     const containsKeyword = category?.questionCategories.some((questionCategory: any) => {
-      const currentCategoryMatch = questionCategory.name.trim().toLowerCase().includes(this.addQuestionCategoryService.search.trim().toLowerCase());
+      const currentCategoryMatch = questionCategory.name.trim().toLowerCase().includes(this.search.trim().toLowerCase());
       const childCategoriesMatch = this.isQuestionCategoriesIncludeKey(questionCategory);
       return currentCategoryMatch || childCategoriesMatch;
     });
+
+    console.log(containsKeyword);
   
     return containsKeyword;
   }
@@ -57,7 +64,9 @@ export class AddQuestionCategoryTreeComponent implements OnInit {
     event.preventDefault();    
   }
 
-  handleOnClickMenuAction(action: number ,category: any): void {
+  handleOnClickMenuAction(event: any,action: number ,category: any): void {
+    event.stopPropagation();
+
     this.addQuestionCategoryService.type = -1;
 
     // if(action === questionCategoryConstant.addAction){
@@ -104,6 +113,6 @@ export class AddQuestionCategoryTreeComponent implements OnInit {
     //     Object.assign({}, { class: 'modal-dialog' }));
     // }
 
-    // this.questionCategoryTreeService.setSelectQuestionCategoryId(-1);
+    this.addQuestionCategoryService.currentId = -1;
   }
 }
