@@ -73,7 +73,7 @@ export class AddQuestionComponent implements OnInit {
     questionCategoryId: 1
   };
 
-  //Modal question category
+  //Modal question category tree
   questionCategoryTree: any[] = [];
   questionCategory: any = {
     id: "",
@@ -101,6 +101,12 @@ export class AddQuestionComponent implements OnInit {
   }
 
   handleCloseQuestionCategoryTreeModal(){
+    const defaultCategory = this.addQuestionCategoryTreeService.questionCategories.find((category: any) => category.isDefault === true);
+
+    this.addQuestionCategoryTreeService.id = defaultCategory.id;   
+    
+    this.questionCategorySearch = '';
+
     this.createQuestionCategoryModalRef?.hide();
   }
 

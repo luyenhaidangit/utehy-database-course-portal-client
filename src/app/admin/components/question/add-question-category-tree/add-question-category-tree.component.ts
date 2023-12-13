@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import questionCategoryConstant from 'src/app/admin/constants/question-category.constant';
 import { AddQuestionCategoryTreeService } from 'src/app/admin/services/components/add-question-category-tree.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-add-question-category-tree',
@@ -8,7 +9,10 @@ import { AddQuestionCategoryTreeService } from 'src/app/admin/services/component
   styleUrls: ['./add-question-category-tree.component.css']
 })
 export class AddQuestionCategoryTreeComponent implements OnInit {
-  constructor(public addQuestionCategoryService: AddQuestionCategoryTreeService) {}
+  constructor(
+    public addQuestionCategoryService: AddQuestionCategoryTreeService,
+    private modalService: BsModalService, 
+  ) {}
 
   ngOnInit() {
     
@@ -18,12 +22,15 @@ export class AddQuestionCategoryTreeComponent implements OnInit {
   @Input() activeId: number = 0;
   @Input() search: string = '';
 
+  //Question category tree
   questionCategory: any = {
     name: '',
     description: '',
     priority: 0,
     parentQuestionCategoryId: null
   };
+
+  type: number = 0;
 
   questionCategoryConstant: any = questionCategoryConstant;
 
@@ -41,8 +48,6 @@ export class AddQuestionCategoryTreeComponent implements OnInit {
       const childCategoriesMatch = this.isQuestionCategoriesIncludeKey(questionCategory);
       return currentCategoryMatch || childCategoriesMatch;
     });
-
-    console.log(containsKeyword);
   
     return containsKeyword;
   }
@@ -69,17 +74,17 @@ export class AddQuestionCategoryTreeComponent implements OnInit {
 
     this.addQuestionCategoryService.type = -1;
 
-    // if(action === questionCategoryConstant.addAction){
-    //   this.questionCategory = {
-    //     name: '',
-    //     description: '',
-    //     priority: 0,
-    //     parentQuestionCategoryId: category.id
-    //   };
+    if(action === questionCategoryConstant.addAction){
+      this.questionCategory = {
+        name: '',
+        description: '',
+        priority: 0,
+        parentQuestionCategoryId: category.id
+      };
   
-    //   this.createQuestionCategoryModalRef = this.modalService.show(this.createQuestionCategoryTemplate,
-    //   Object.assign({}, { class: 'modal-dialog modal-dialog-scrollable' }));
-    // }
+      this.createQuestionCategoryModalRef = this.modalService.show(this.createQuestionCategoryTemplate,
+      Object.assign({}, { class: 'modal-dialog modal-dialog-scrollable' }));
+    }
 
     // if(action === questionCategoryConstant.editAction){
     //   this.questionCategory =  { ...category };
@@ -114,5 +119,17 @@ export class AddQuestionCategoryTreeComponent implements OnInit {
     // }
 
     this.addQuestionCategoryService.currentId = -1;
+  }
+
+  //Add question category
+  @ViewChild('createQuestionCategoryTemplate') createQuestionCategoryTemplate!: TemplateRef<any>;
+  createQuestionCategoryModalRef?: BsModalRef;
+
+  handleOnSubmitCreateQuestionCategoryForm(){
+
+  }
+
+  handleOnCloseCreateQuestionCategoryModal(){
+
   }
 }
