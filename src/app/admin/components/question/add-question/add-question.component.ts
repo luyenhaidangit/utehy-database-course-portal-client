@@ -11,6 +11,8 @@ import { CkeditorUploadAdapter } from 'src/app/admin/adapters/ckeditor-upload.ad
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { QuestionCategoryService } from 'src/app/admin/services/apis/question-category.service';
 import { AddQuestionCategoryTreeService } from 'src/app/admin/services/components/add-question-category-tree.service';
+import { TagService } from 'src/app/admin/services/apis/tag.service';
+import tagConstant from 'src/app/admin/constants/tag.constant';
 
 @Component({
   selector: 'app-add-question',
@@ -39,6 +41,7 @@ export class AddQuestionComponent implements OnInit {
     private ngxToastr: NgxToastrService,private teacherService: TeacherService,
     private router:Router,private modalService: BsModalService, 
     private questionCategoryService: QuestionCategoryService,
+    private tagService: TagService,
     public addQuestionCategoryTreeService: AddQuestionCategoryTreeService
   ) { }
 
@@ -56,6 +59,16 @@ export class AddQuestionComponent implements OnInit {
         this.addQuestionCategoryTreeService.id = defaultCategory.id;
       }
     });
+
+    const getTagsRequest = {
+      type: tagConstant.type.question
+    };
+
+    this.tagService.getTags(getTagsRequest).subscribe((result: any) => {
+      if(result.status){
+        this.questionTags = result.data;
+      }
+    });
   }
 
   //Question
@@ -70,7 +83,8 @@ export class AddQuestionComponent implements OnInit {
     type: 1,
     title: '',
     questionAnswers: [...questionConstant.defaultQuestionAnswerMultipleAnswers],
-    questionCategoryId: 1
+    questionCategoryId: 1,
+    questionTags: []
   };
 
   getMaxScoreQuestionAnswers(){
@@ -102,6 +116,14 @@ export class AddQuestionComponent implements OnInit {
     });
     this.createQuestionCategoryModalRef = this.modalService.show(this.questionCategoryTreeTemplate,
       Object.assign({}, { class: 'modal-dialog modal-lg modal-dialog-scrollable' }));
+
+    this.createQuestionCategoryModalRef.onHidden?.subscribe(() => {
+      const defaultCategory = this.addQuestionCategoryTreeService.questionCategories.find((category: any) => category.isDefault === true);
+
+      this.addQuestionCategoryTreeService.id = defaultCategory.id;   
+      
+      this.questionCategorySearch = '';
+    });
   }
 
   handleCloseQuestionCategoryTreeModal(){
@@ -146,6 +168,49 @@ export class AddQuestionComponent implements OnInit {
     return null;
   }
 
+  //Queston tag
+  tagConstant: any = tagConstant;
+
+  questionCategoryTagRef?: BsModalRef;
+  @ViewChild('questionCategoryTagTemplate') questionCategoryTagTemplate!: TemplateRef<any>;
+
+  questionTags: any[] = [];
+  questionTagsSearch: string = '';
+
+  getquestionTagsSelect(){
+    return this.questionTags.filter(category => category.selected === true);
+  }
+
+  handleOpenQuestionTagModal(){
+    this.questionCategoryTagRef = this.modalService.show(this.questionCategoryTagTemplate,
+      Object.assign({}, { class: 'modal-dialog modal-lg modal-dialog-scrollable' }));
+
+    this.questionCategoryTagRef.onHidden?.subscribe(() => {
+      this.questionTags.forEach(category => {
+        if (this.question.questionTags.includes(category.id)) {
+          category.selected = true;
+        }
+      });
+
+      this.questionTagsSearch = '';
+    });
+  }
+
+  handleCloseQuestionTagModal(){
+    this.questionTagsSearch = '';
+
+    this.questionCategoryTagRef?.hide();
+  }
+
+  handleChooseQuestionTags(){
+    this.questionTagsSearch = '';
+
+    const selectedCategories = this.questionTags.filter(category => category.selected === true);
+
+    this.question.questionTags = selectedCategories.map(category => category.id);
+
+    this.questionCategoryTagRef?.hide();
+  }
   //Common
   selectedAnswer: string = 'ok';
   typeScoreAnswer: number = 1;

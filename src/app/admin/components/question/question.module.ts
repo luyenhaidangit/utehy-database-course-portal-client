@@ -10,6 +10,7 @@ import { AddQuestionComponent } from './add-question/add-question.component';
 import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { DetailQuestionComponent } from './detail-question/detail-question.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { QuestionCategoryTreeComponent } from './question-category-tree/question-category-tree.component';
 import { AddQuestionCategoryTreeComponent } from './add-question-category-tree/add-question-category-tree.component';
 
@@ -28,7 +29,8 @@ import { AddQuestionCategoryTreeComponent } from './add-question-category-tree/a
     QuestionRoutingModule,
     CollapseModule.forRoot(),
     FormsModule,
-    CKEditorModule
+    CKEditorModule,
+    NgSelectModule,
   ]
 })
 export class QuestionModule { }

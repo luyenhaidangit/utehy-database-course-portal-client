@@ -30,3 +30,7 @@
     box-shadow: none;
     border-radius: unset !important;
 }
+
+.input-type-select{
+    min-height: 38px !important;
+}
