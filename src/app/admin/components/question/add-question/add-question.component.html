@@ -245,6 +245,24 @@
                     {{ tag.name }}
                 </span>
             </ng-container>
+            <span class="add-question-tag-container">
+                <ng-container *ngIf="!isAddQuestionTag">
+                    <span class="badge badge-success add-tag-btn rounded-circle cursor-pointer">
+                        <i class="fa-solid fa-plus add-tag-btn"></i>
+                    </span>
+                </ng-container>
+                <ng-container *ngIf="isAddQuestionTag">
+                    <span class="add-question-tag" (click)="handleDocumentClick($event)">
+                        <input name="searchCategory" [(ngModel)]="questionTagName" id="searchCategory" type="text" placeholder="Tên thẻ tag" class="form-control form-control-sm d-inline add-tag-input">
+                        <span class="badge badge-success rounded cursor-pointer ml-2" (click)="handleSubmitCreateQuestionTag()">
+                            <i class="fa-solid fa-check submit-add-tag-question"></i>
+                        </span>
+                        <span class="badge badge-danger rounded cursor-pointer ml-2">
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                    </span>
+                </ng-container>
+            </span>
         </div>
     </div>
     <div class="modal-footer">

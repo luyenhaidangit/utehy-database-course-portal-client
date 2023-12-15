@@ -11,4 +11,8 @@ export class TagService {
   getTags(request: any = null): Observable<any> {
     return this.http.get('tag/get', request);
   }
+
+  createTag(request: any): Observable<any> {
+    return this.http.post('tag/create', request);
+  }
 }

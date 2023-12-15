@@ -34,3 +34,12 @@
 .input-type-select{
     min-height: 38px !important;
 }
+
+.add-tag-btn{
+    border-radius: 100%;
+}
+
+.add-tag-input{
+    width: 160px;
+    font-size: 11px;
+}

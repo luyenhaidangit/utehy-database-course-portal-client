@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef, HostListener } from '@angular/core';
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import { TeacherService } from 'src/app/admin/services/apis/teacher.service';
 import { Router } from '@angular/router';
@@ -176,6 +176,8 @@ export class AddQuestionComponent implements OnInit {
 
   questionTags: any[] = [];
   questionTagsSearch: string = '';
+  isAddQuestionTag: boolean = false;
+  questionTagName: string = '';
 
   getquestionTagsSelect(){
     return this.questionTags.filter(category => category.selected === true);
@@ -211,6 +213,47 @@ export class AddQuestionComponent implements OnInit {
 
     this.questionCategoryTagRef?.hide();
   }
+
+  @HostListener('document:click', ['$event'])
+  handleDocumentClick(event: any): void {
+    const targetElement = event.target as HTMLElement;
+
+    if (targetElement.classList.contains('submit-add-tag-question')) {
+      return;
+    } else if(targetElement.classList.contains('add-tag-btn') || targetElement.classList.contains('add-tag-input')){
+      this.isAddQuestionTag = true;
+    } else {
+      this.isAddQuestionTag = false;
+      this.questionTagName = '';
+    }
+  }
+
+  handleSubmitCreateQuestionTag(){
+    if(this.questionTagName.trim() === ''){
+      this.ngxToastr.error('Tên thẻ tag không được để trống!','',{
+        progressBar: true
+      });
+    }else{
+      const request = {
+        name: this.questionTagName,
+        type: tagConstant.type.question
+      }
+
+      this.tagService.createTag(request).subscribe((result: any) => {
+        if(result.status){
+          this.questionTagName = '';
+          this.questionTags = [...this.questionTags, request];
+          this.isAddQuestionTag = false;
+        }
+      },
+      (error) => {
+        this.ngxToastr.error(error.error.message,'',{
+          progressBar: true
+        });
+      });
+    }
+  }
+
   //Common
   selectedAnswer: string = 'ok';
   typeScoreAnswer: number = 1;
