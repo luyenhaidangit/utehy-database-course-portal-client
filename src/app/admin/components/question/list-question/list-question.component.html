@@ -180,25 +180,32 @@
                               </tr>
                            </thead>
                            <tbody>
-                              <tr *ngFor="let question of questions;">
-                                <td>
-                                   <div class="custom-control custom-checkbox">
-                                       <input (change)="toggleSelection(question.id)" id="select-box-{{ question.id }}" [checked]="isSelected(question.id)" type="checkbox" class="custom-control-input">
-                                       <label class="custom-control-label" for="select-box-{{ question.id }}">&nbsp;</label>
-                                   </div>
-                                </td>
-                                <td>{{ question.id }}</td>
-                                <td [innerHTML]="question.title"></td>
-                                <td [innerHTML]="question.feedback"></td>
-                                <td>{{ questionHelper.getTypeQuestion(question.type) }}</td>
-                                <td>{{ question.questionCategoryName }}</td>
-                                <td>{{ question.score }}</td>
-                                 <td>
-                                    <span class="text-info cursor-pointer" [routerLink]="['/admin/teacher/detail', question.id]"><i class="fa-solid fa-eye"></i></span>
-                                    <span class="text-warning cursor-pointer ml-2" [routerLink]="['/admin/teacher/edit', question.id]"><i class="fa-solid fa-pen"></i></span>
-                                    <span class="text-danger cursor-pointer ml-2" (click)="handleDelete(question.id)"><i class="fa-solid fa-trash"></i></span>
-                                 </td>
-                              </tr>
+                            <ng-container *ngIf="questions.length > 0">
+                                <tr *ngFor="let question of questions;">
+                                    <td>
+                                       <div class="custom-control custom-checkbox">
+                                           <input (change)="toggleSelection(question.id)" id="select-box-{{ question.id }}" [checked]="isSelected(question.id)" type="checkbox" class="custom-control-input">
+                                           <label class="custom-control-label" for="select-box-{{ question.id }}">&nbsp;</label>
+                                       </div>
+                                    </td>
+                                    <td>{{ question.id }}</td>
+                                    <td [innerHTML]="question.title"></td>
+                                    <td [innerHTML]="question.feedback"></td>
+                                    <td>{{ questionHelper.getTypeQuestion(question.type) }}</td>
+                                    <td>{{ question.questionCategoryName }}</td>
+                                    <td>{{ question.score }}</td>
+                                     <td>
+                                        <span class="text-info cursor-pointer" [routerLink]="['/admin/teacher/detail', question.id]"><i class="fa-solid fa-eye"></i></span>
+                                        <span class="text-warning cursor-pointer ml-2" [routerLink]="['/admin/teacher/edit', question.id]"><i class="fa-solid fa-pen"></i></span>
+                                        <span class="text-danger cursor-pointer ml-2" (click)="handleDelete(question.id)"><i class="fa-solid fa-trash"></i></span>
+                                     </td>
+                                  </tr> 
+                            </ng-container>
+                            <ng-container *ngIf="!(questions.length > 0)">
+                                <tr>
+                                    <td class="text-center" colspan="8">Không có bản ghi nào</td>
+                                  </tr>
+                            </ng-container>
                            </tbody>
                         </table>
                     </div>
@@ -216,7 +223,7 @@
                                 </li>
                               </ng-container>
                             
-                              <li class="page-item" (click)="setPage(pageIndex + 1)" [class.disabled]="pageIndex === totalPages">
+                              <li class="page-item" (click)="setPage(pageIndex + 1)" [class.disabled]="pageIndex === totalPages || questions.length === 0">
                                 <span class="page-link"><i class="fa-solid fa-angle-right"></i></span>
                               </li>
                             </ul>
