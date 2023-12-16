@@ -37,3 +37,13 @@ span.active{
 .border-gray-search{
     border: 1px solid #ced4da !important;
 }
+
+.input-type-select{
+    border: 1px solid #ced4da;
+}
+
+.input-form-space{
+    /* margin-left: 12px; */
+    /* width: calc(100% - 12px) !important; */
+    width: 100%;
+}

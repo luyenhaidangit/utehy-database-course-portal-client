@@ -1,5 +1,6 @@
 const orderConstant = {
     id: "id",
+    score: 'score'
 };
   
 export default orderConstant;

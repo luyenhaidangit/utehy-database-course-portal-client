@@ -48,6 +48,8 @@ export class AddQuestionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.addQuestionCategoryTreeService.resetState();
+
     this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
       if(result.status){
         this.questionCategoryTree = result.data;

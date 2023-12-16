@@ -92,36 +92,59 @@
         <div class="card">
             <div class="card-body pt-12">
                 <div>
-                    <div class="row align-items-center">
-                        <div class="col-md-7">
-                            <div>
-                                <h5 class="mb-0 fw-700 fs-17">DANH SÁCH CÂU HỎI</h5>
-                            </div>
-                        </div>
+                    <div class="group-action">
+                        <div class="row">
+                           <div class="group-action__left col-xl-10 col-md-9 col-sm-12">
+                              <div class="row">
+                                 <div class="form-group col-md-4">
+                                    <input
+                                       class="form-control"
+                                       type="text"
+                                       placeholder="Tìm kiếm tiêu đề câu hỏi..."
+                                       [(ngModel)]="search.title"
+                                       />
+                                 </div>
 
-                        <div class="col-md-5">
-                            <form class="app-search form-search d-none d-lg-block pt-0 pb-0">
-                                <div class="position-relative">
-                                  <input [(ngModel)]="search.title" name="searchTerm" type="text" class="form-control border-gray-search" placeholder="Tìm kiếm tiêu đề câu hỏi...">
-                                  <span class="fa-solid fa-magnifying-glass ri-search-line"></span>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                                 <div class="form-group col-md-4">
+                                    <select class="custom-select" [(ngModel)]="search.type">
+                                        <option selected="" [ngValue]="0">Loại câu hỏi</option>
+                                        <option *ngFor="let questionType of questionContant.types;" value="{{ questionType.key }}">{{ questionType.value }}</option>
+                                    </select>
+                                 </div>
 
-                    <div class="row mt-2">
-                        <div class="col-md-12">
-                            <div class="group-action__right d-flex justify-content-end">
-                                <button
-                                    type="button"
-                                    class="btn btn-success waves-effect waves-light"
-                                    routerLink="/admin/question/create"
+                                 <div class="form-group col-md-3">
+                                    <button (click)="handleOpenQuestionCategoryTreeModal()" type="button" class="btn input-type-select dropdown-toggle input-form-space d-flex justify-content-between align-items-center">
+                                        <span>{{ questionCategory.name }}</span> <i class="mdi mdi-chevron-down"></i>
+                                    </button>
+                                 </div>
+
+                                 <div class="form-group col-md-1">
+                                    <button type="button" class="btn btn-primary waves-effect waves-light" (click)="handleSubmitSearch()">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="group-action__right col-xl-2 col-md-3 col-sm-12">
+                              <button
+                                 type="button"
+                                 class="btn btn-success waves-effect waves-light"
+                                 routerLink="/admin/question/create"
+                                 >
+                              <i class="fa-solid fa-plus mr-1"></i> Thêm mới
+                              </button>
+                           </div>
+                           <!-- <div class="group-action__right col-xl-2 col-md-4 col-sm-12">
+                             <button
+                                [@fadeInOut]="selectedItems.length > 0 ? 'visible' : 'hidden'"
+                                type="button"
+                                class="btn btn-danger waves-effect waves-light align-items-center"
                                 >
-                                    <i class="fa-solid fa-plus mr-1"></i> Thêm mới
-                                </button>
-                            </div>
+                                <i class="fa-solid fa-trash mr-1"></i> Xoá {{ selectedItems.length}} bản ghi
+                             </button>
+                          </div> -->
                         </div>
-                    </div>
+                     </div>
 
                     <div class="table-data overflow-auto">
                         <table id="datatable" class="table table-bordered dt-responsive nowrap mt-3" style="border-collapse: collapse; border-spacing: 0; width: 100%">
@@ -139,12 +162,20 @@
                                       <i *ngIf="search?.sortBy === sortConstant.desc" class="bi bi-sort-down"></i>
                                       <i *ngIf="search?.sortBy === sortConstant.asc" class="bi bi-sort-up"></i>
                                    </span>
-                                   <span *ngIf="!search?.orderBy && !search?.sortBy"><img src="../../../../../assets/sort.png" height="14.41" width="14.41" style="margin-top: -3px;" alt="icon-sort"></span>
+                                   <span *ngIf="!(search?.orderBy === orderConstant.id)"><img src="../../../../../assets/sort.png" height="14.41" width="14.41" style="margin-top: -3px;" alt="icon-sort"></span>
                                  </th>
                                  <th>Tiêu đề</th>
-                                 <th>Kiểu câu hỏi</th>
+                                 <th>Phản hồi</th>
                                  <th>Loại câu hỏi</th>
-                                 <th>Tỷ lệ trả lời sai</th>
+                                 <th>Danh mục câu hỏi</th>
+                                 <th class="order-sort" (click)="onSortAndOrderChange(orderConstant.score)" [ngClass]="{'order-sort-active': search?.orderBy === orderConstant.score }">
+                                    Số điểm
+                                    <span *ngIf="search?.orderBy === orderConstant.score" class="order-sort-group">
+                                        <i *ngIf="search?.sortBy === sortConstant.desc" class="bi bi-sort-down"></i>
+                                        <i *ngIf="search?.sortBy === sortConstant.asc" class="bi bi-sort-up"></i>
+                                     </span>
+                                     <span *ngIf="!(search?.orderBy === orderConstant.score)"><img src="../../../../../assets/sort.png" height="14.41" width="14.41" style="margin-top: -3px;" alt="icon-sort"></span>
+                                </th>
                                  <th>Hành động</th>
                               </tr>
                            </thead>
@@ -156,11 +187,12 @@
                                        <label class="custom-control-label" for="select-box-{{ question.id }}">&nbsp;</label>
                                    </div>
                                 </td>
-                                 <td>{{ question.id }}</td>
-                                <td>{{ question.title }}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ question.id }}</td>
+                                <td [innerHTML]="question.title"></td>
+                                <td [innerHTML]="question.feedback"></td>
+                                <td>{{ questionHelper.getTypeQuestion(question.type) }}</td>
+                                <td>{{ question.questionCategoryName }}</td>
+                                <td>{{ question.score }}</td>
                                  <td>
                                     <span class="text-info cursor-pointer" [routerLink]="['/admin/teacher/detail', question.id]"><i class="fa-solid fa-eye"></i></span>
                                     <span class="text-warning cursor-pointer ml-2" [routerLink]="['/admin/teacher/edit', question.id]"><i class="fa-solid fa-pen"></i></span>
@@ -249,6 +281,31 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-light waves-effect" (click)="handleOnCloseCreateQuestionCategoryModal()">Đóng</button>
         <button [disabled]="addQuestionCategoryForm.invalid" type="button" class="btn btn-primary waves-effect waves-light" (click)="handleOnSubmitCreateQuestionCategoryForm()">Xác nhận</button>
+    </div>
+</ng-template>
+
+<ng-template #questionCategoryTreeTemplate>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Lựa chọn loại câu hỏi</h5>
+        <button type="button" class="close" (click)="handleCloseQuestionCategoryTreeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="app-search form-search d-none d-lg-block pt-0 pb-0">
+            <div class="position-relative">
+              <input (input)="handleChangeSearchCategory()" [(ngModel)]="questionCategorySearch" name="searchCategory" id="searchCategory" type="text" placeholder="Tìm kiếm" class="form-control">
+              <span class="fa-solid fa-magnifying-glass ri-search-line"></span>
+            </div>
+        </div>
+        <div id="categories-tree" class="mt-3 px-0" role="tree">
+            <!-- <app-question-category-tree [categoriesSelect]="questionCategoriesSelect" [search]="questionCategorySearch" [type]="questionCategoryConstant.questionCategoryTreeType" [categories]="questionCategories"></app-question-category-tree> -->
+            <app-add-question-category-tree [categories]="questionCategoryTree" [search]="questionCategorySearch"></app-add-question-category-tree>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light waves-effect" (click)="handleCloseQuestionCategoryTreeModal()">Đóng</button>
+        <button type="button" class="btn btn-primary waves-effect waves-light" (click)="handleChooseQuestionCategoryId()">Xác nhận</button>
     </div>
 </ng-template>
   

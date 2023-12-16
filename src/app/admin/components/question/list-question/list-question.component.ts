@@ -9,6 +9,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import sortConstant from 'src/app/admin/constants/sortConstant';
 import orderConstant from 'src/app/admin/constants/orderConstant';
 import { DEFAULT_PER_PAGE_OPTIONS, DEFAULT_PAGE_INDEX, DEFAULT_PAGE_SIZE } from 'src/app/admin/configs/paging.config';
+import questionConstant from 'src/app/admin/constants/question.constant';
+import questionHelper from 'src/app/admin/helpers/question.helper';
+import { AddQuestionCategoryTreeService } from 'src/app/admin/services/components/add-question-category-tree.service';
 
 @Component({
   selector: 'app-list-question',
@@ -16,6 +19,18 @@ import { DEFAULT_PER_PAGE_OPTIONS, DEFAULT_PAGE_INDEX, DEFAULT_PAGE_SIZE } from 
   styleUrls: ['./list-question.component.css']
 })
 export class ListQuestionComponent implements OnInit {
+  // Constructor
+  constructor(
+    private ngxToastr: NgxToastrService,
+    private questionCategoryService: QuestionCategoryService, 
+    private modalService: BsModalService, 
+    public questionCategoryTreeService: QuestionCategoryTreeService, 
+    private questionService: QuestionService,private router: Router, 
+    private route: ActivatedRoute,
+    public addQuestionCategoryTreeService: AddQuestionCategoryTreeService
+    ) 
+    { }
+
   //Constant
   sortConstant: any = sortConstant;
   orderConstant: any = orderConstant;
@@ -29,7 +44,6 @@ export class ListQuestionComponent implements OnInit {
     typeQuestion: false,
   };
   
-  questionCategorySearch = '';
   questionCategories: any = [];
   questionCategoriesSelect: any = [];
   activeCategoryIdSelect: number = 0;
@@ -39,7 +53,7 @@ export class ListQuestionComponent implements OnInit {
   search: any = {
     orderBy: '',
     sortBy: '',
-    questionCategory: 0,
+    questionCategoryId: 0,
     type: 0,
     title: ''
   };
@@ -48,24 +62,114 @@ export class ListQuestionComponent implements OnInit {
   pageIndex: any = 1;
   totalPages: any;
 
-  //Modal
-  createQuestionCategoryModalRef?: BsModalRef;
-  @ViewChild('createQuestionCategoryTemplate') createQuestionCategoryTemplate!: TemplateRef<any>;
-  questionCategory: any = {
-    name: '',
-    description: '',
-    priority: 0,
-    parentQuestionCategoryId: null
-  };
+  questionHelper: any = questionHelper;
 
-  // Constructor
-  constructor(private ngxToastr: NgxToastrService,private questionCategoryService: QuestionCategoryService, private modalService: BsModalService, public questionCategoryTreeService: QuestionCategoryTreeService, private questionService: QuestionService,private router: Router, private route: ActivatedRoute) { }
+  //Question category search
+  questionCategoryTree: any[] = [];
+  questionCategory: any = {
+    id: "",
+    name: ""
+  };
+  questionCategorySearch: string = '';
+
+  createQuestionCategoryModalRef?: BsModalRef;
+  @ViewChild('questionCategoryTreeTemplate') questionCategoryTreeTemplate!: TemplateRef<any>;
+  
+  handleOpenQuestionCategoryTreeModal(){
+    this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
+      if(result.status){
+        this.questionCategoryTree = result.data;
+
+        const defaultCategory = result.data.find((category: any) => category.isDefault === true);
+
+        this.addQuestionCategoryTreeService.questionCategories = result.data;
+
+        this.addQuestionCategoryTreeService.id = defaultCategory.id;
+      }
+    });
+    this.createQuestionCategoryModalRef = this.modalService.show(this.questionCategoryTreeTemplate,
+      Object.assign({}, { class: 'modal-dialog modal-lg modal-dialog-scrollable' }));
+
+    this.createQuestionCategoryModalRef.onHidden?.subscribe(() => {
+      const defaultCategory = this.addQuestionCategoryTreeService.questionCategories.find((category: any) => category.isDefault === true);
+
+      this.addQuestionCategoryTreeService.id = defaultCategory.id;   
+      
+      this.questionCategorySearch = '';
+    });
+  }
+
+  handleCloseQuestionCategoryTreeModal(){
+    const defaultCategory = this.addQuestionCategoryTreeService.questionCategories.find((category: any) => category.isDefault === true);
+
+    this.addQuestionCategoryTreeService.id = defaultCategory.id;   
+    
+    this.questionCategorySearch = '';
+
+    this.createQuestionCategoryModalRef?.hide();
+  }
+
+  handleChooseQuestionCategoryId(){
+    this.search.questionCategoryId = this.addQuestionCategoryTreeService.id;
+
+    this.addQuestionCategoryTreeService.currentId = this.addQuestionCategoryTreeService.id;
+
+    const category = this.findCategoryById(this.addQuestionCategoryTreeService.questionCategories,this.addQuestionCategoryTreeService.id);
+
+    this.questionCategory = category;
+
+    this.createQuestionCategoryModalRef?.hide();
+  }
+
+  handleChangeSearchCategory(){
+    const defaultCategory = this.addQuestionCategoryTreeService.questionCategories.find((category: any) => category.isDefault === true);
+    this.addQuestionCategoryTreeService.id = defaultCategory.id;
+  }
+
+  findCategoryById(categories: any[], targetId: number): any | null {
+    for (const category of categories) {
+        if (category.id === targetId) {
+            return category; 
+        }
+
+        if (category.questionCategories) {
+            const foundInChildren = this.findCategoryById(category.questionCategories, targetId);
+            if (foundInChildren) {
+                return foundInChildren;
+            }
+        }
+    }
+
+    return null;
+  }
 
   // Event
   ngOnInit() {
-    this.getQuestionCategoryTree();
+    this.addQuestionCategoryTreeService.resetState();
 
-    this.getQuestions();
+    this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
+      if(result.status){
+        this.questionCategoryTree = result.data;
+
+        const defaultCategory = result.data.find((category: any) => category.isDefault === true);
+
+        this.questionCategory = defaultCategory;
+
+        this.addQuestionCategoryTreeService.questionCategories = result.data;
+
+        this.addQuestionCategoryTreeService.id = defaultCategory.id;
+      }
+    });
+
+    this.route.queryParams.subscribe(params => {
+      const request = {
+        ...params,
+        pageIndex: params['pageIndex'] ? params['pageIndex'] : DEFAULT_PAGE_INDEX,
+        pageSize: params['pageSize'] ? params['pageSize'] : DEFAULT_PAGE_SIZE,
+      };
+
+      this.getQuestions(request);
+    });
 
     this.questionCategoryTreeService.myValueChange.subscribe((newValue) => {
       this.getQuestionCategoryTree(); 
@@ -105,7 +209,7 @@ export class ListQuestionComponent implements OnInit {
     this.questionCategoryTreeService.setActiveCategoryIdSelect(0);
     this.questionCategoryTreeService.setTypeAction(1);
 
-    this.createQuestionCategoryModalRef = this.modalService.show(this.createQuestionCategoryTemplate,
+    this.createQuestionCategoryModalRef = this.modalService.show(this.questionCategoryTreeTemplate,
     Object.assign({}, { class: 'modal-dialog modal-dialog-scrollable' }));
   }
 
@@ -133,8 +237,10 @@ export class ListQuestionComponent implements OnInit {
   }
 
   //Question
-  getQuestions(): void{
-    this.questionService.getQuestions().subscribe((result: any) => {
+  questionContant: any = questionConstant;
+
+  getQuestions(request: any): void{
+    this.questionService.getQuestions(request).subscribe((result: any) => {
       if(result.status){
         this.questions = result.data.items;
         this.totalPages = result.data.totalPages;
@@ -148,6 +254,24 @@ export class ListQuestionComponent implements OnInit {
     } else {
       this.selectedItems = [];
     }
+  }
+
+  //Here
+  handleSubmitSearch(){
+    this.route.queryParams.subscribe(params => {
+      const request = {
+        ...params,
+        title: this.search.title ? this.search.title : null,
+        questionCategoryId: this.search.questionCategoryId ? this.search.questionCategoryId : null,
+        type: this.search.type ? this.search.type : null
+      };
+
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: request,
+        queryParamsHandling: 'merge',
+      });
+    });
   }
 
   onPerPageChange(event: any): void {

@@ -52,6 +52,24 @@ export class AddQuestionCategoryTreeComponent implements OnInit {
     return containsKeyword;
   }
 
+  isQuestionCategoriesIncludeId(category: any): boolean {
+    if (category?.id === this.addQuestionCategoryService.currentId) {
+      return false;
+    }
+
+    if (!category?.questionCategories) {
+      return false;
+    }
+  
+    const containsKeyword = category?.questionCategories.some((questionCategory: any) => {
+      const currentCategoryMatch = questionCategory.id === this.addQuestionCategoryService.currentId;
+      const childCategoriesMatch = this.isQuestionCategoriesIncludeId(questionCategory);
+      return currentCategoryMatch || childCategoriesMatch;
+    });
+  
+    return containsKeyword;
+  }
+
   handleOnClickMenu(event: any, category: any){
     event.stopPropagation();
     category.isExpanded = !category.isExpanded;

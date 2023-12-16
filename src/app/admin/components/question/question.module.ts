@@ -22,7 +22,7 @@ import { AddQuestionCategoryTreeComponent } from './add-question-category-tree/a
     EditQuestionComponent,
     DetailQuestionComponent,
     QuestionCategoryTreeComponent,
-    AddQuestionCategoryTreeComponent
+    AddQuestionCategoryTreeComponent,
   ],
   imports: [
     CommonModule,

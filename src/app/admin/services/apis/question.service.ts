@@ -8,8 +8,8 @@ import { HttpTeacherLoadingService } from 'src/app/shared/services/https/http-te
 export class QuestionService {
   constructor(private http: HttpTeacherLoadingService) { }
 
-  getQuestions(): Observable<any> {
-    return this.http.get('question/get', {});
+  getQuestions(request: any = null): Observable<any> {
+    return this.http.get('question/get', request);
   }
 
   createQuestion(request: any): Observable<any> {

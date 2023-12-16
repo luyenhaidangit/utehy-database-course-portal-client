@@ -1,8 +1,8 @@
 <div class="tree-ul ml-3">
-    <div *ngFor="let category of categories" class="tree-li cursor-pointer position-relative mt-1" (click)="handleOnClickMenu($event,category)" (contextmenu)="handleOnOpenActionQuestionCategoryMenu($event,category)" [class.active]="category.id === addQuestionCategoryService.id">
+    <div *ngFor="let category of categories" class="tree-li cursor-pointer position-relative mt-1" (click)="handleOnClickMenu($event,category)" (contextmenu)="handleOnOpenActionQuestionCategoryMenu($event,category)" [class.active]="(category.id === addQuestionCategoryService.id && addQuestionCategoryService.currentId < 1)|| (category.id === addQuestionCategoryService.currentId)">
       <ng-container *ngIf="category.name.trim().toLowerCase().includes(addQuestionCategoryService.search.toLowerCase) || isQuestionCategoriesIncludeKey(category) || search === ''">
         <i *ngIf="category.questionCategories" class="fa-solid fa-sort-down position-absolute position-left-3"></i>
-        <i class="fa-solid fa-folder text-warning mr-1"></i> <span class="position-relative" [class.active]="category.id === addQuestionCategoryService.id">
+        <i class="fa-solid fa-folder text-warning mr-1"></i> <span class="position-relative" [class.active]="(category.id === addQuestionCategoryService.id && addQuestionCategoryService.currentId <= 1 ) || (category.id === addQuestionCategoryService.currentId)">
           {{ category.name }} 
           <!-- <div *ngIf="category.id === addQuestionCategoryService.currentId" class="dropdown d-inline-block user-dropdown position-absolute question-category-menu">
             <div (click)="handleOnClickMenuAction($event,questionCategoryConstant.addAction,category)">Thêm thư mục con</div>
@@ -10,7 +10,7 @@
             <div (click)="handleOnClickMenuAction($event,questionCategoryConstant.deleteAction,category)">Xoá</div>
           </div> -->
         </span>
-        <app-add-question-category-tree [categories]="category.questionCategories" *ngIf="category.isExpanded && category.questionCategories || (isQuestionCategoriesIncludeKey(category) && search !== '')"></app-add-question-category-tree>
+        <app-add-question-category-tree [categories]="category.questionCategories" *ngIf="category.isExpanded && category.questionCategories || (isQuestionCategoriesIncludeKey(category) && search !== '' ||(isQuestionCategoriesIncludeId(category)) )"></app-add-question-category-tree>
       </ng-container>
     </div>
 </div>

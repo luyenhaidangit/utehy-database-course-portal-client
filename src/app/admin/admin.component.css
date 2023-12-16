@@ -184,3 +184,6 @@ button[type="submit"] {
 .nav-justified .nav-item, .nav-justified>.nav-link{
     flex-basis: unset !important;
 }
+
+/* input modal */
+
