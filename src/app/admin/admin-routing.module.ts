@@ -23,6 +23,10 @@ const routes: Routes = [
     loadChildren: () => import('./components/question/question.module').then((m) => m.QuestionModule),
   },
   {
+    path: 'question-category',
+    loadChildren: () => import('./components/question-category/question-category.module').then((m) => m.QuestionCategoryModule),
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
