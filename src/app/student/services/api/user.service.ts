@@ -10,5 +10,6 @@ export class UserService {
 
   getUserInfo(): Observable<any> {
     return this.http.get('user/user-info');
+    
   }
 }

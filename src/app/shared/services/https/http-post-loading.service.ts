@@ -9,16 +9,15 @@ import { LoadingUiService } from '../../components/loading-ui/loading-ui.service
 import loadingUiConstant from '../../components/loading-ui/loading-ui.constant';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class HttpStudentLoadingService {
-  private baseUrl: string = environment.host.apiStudentBaseUrl;
+export class HttpPostLoadingService {
+  private baseUrl: string = environment.host.apiPostBaseUrl;
 
   constructor(
     private http: HttpClient,
     private loadingUi: LoadingUiService,
-  ) {}
-
+  ) { }
   setBaseUrl(baseUrl: string) {
     this.baseUrl = baseUrl;
   }
@@ -27,17 +26,7 @@ export class HttpStudentLoadingService {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return user.token || '';
   }
-
-  get(endpoint: string): Observable<any> {
-    const headers = this.createHeaders();
-    return this.http.get(`${this.baseUrl}/${endpoint}`, { headers }).pipe(
-      catchError((error: HttpErrorResponse) => {
-        this.handleErrorResponse(error);
-        return throwError(error);
-      })
-    );
-  }
-  getN(endpoint: string, data: any): Observable<any> {
+  get(endpoint: string, data: any): Observable<any> {
     const headers = this.createHeaders();
     const queryParams = this.buildQueryParams(data);
     this.loadingUi.show(loadingUiConstant.type.dualRing);
@@ -52,6 +41,7 @@ export class HttpStudentLoadingService {
       })
     );
   }
+
   buildQueryParams(data: any): string {
     if (data) {
       const params = new URLSearchParams();
@@ -64,6 +54,7 @@ export class HttpStudentLoadingService {
     }
     return '';
   }
+
   post(endpoint: string, data: any): Observable<any> {
     this.loadingUi.show(loadingUiConstant.type.dualRing);
     const headers = this.createHeaders();
@@ -108,4 +99,33 @@ export class HttpStudentLoadingService {
   handleErrorResponse(error: HttpErrorResponse) {
     console.error('HTTP Error:', error);
   }
+
+
+  postWithFormData(endpoint: string, formData: FormData): Observable<any> {
+    this.loadingUi.show(loadingUiConstant.type.dualRing);
+    const headers = this.createHeadersForFormData();
+    
+    return this.http.post(`${this.baseUrl}/${endpoint}`, formData, { headers }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        this.handleErrorResponse(error);
+        return throwError(error);
+      }),
+      finalize(() => {
+        this.loadingUi.hide();
+      })
+    );
+  }
+
+  private createHeadersForFormData() {
+    return new HttpHeaders({
+      Authorization: `Bearer ${this.getToken()}`,
+    });
+  }
+
+
+
+
+
+
+  
 }

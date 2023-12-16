@@ -18,16 +18,51 @@
                         <span>Quản lý giáo viên</span>
                     </a>
                 </li>
-
+                <li routerLink="/admin/student">
+                    <a class="waves-effect" [class.active]="isActive('/admin/student')">
+                        <i class="ri-dashboard-line"></i>
+                        <span>Quản lý sinh viên</span>
+                    </a>
+                </li>
+                <!-- <li routerLink="/admin/post">
+                    <a class="waves-effect" [class.active]="isActive('/admin/post')">
+                        <i class="ri-dashboard-line"></i>
+                        <span>Quản lý bài viết</span>
+                    </a>
+                </li> -->
+                <!-- them -->
+                <li class="{{ currentUrl === '/admin/post' ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ currentUrl === '/admin/post' ? 'active' : '' }}">
+                        <div class="navigation-label">
+                            <i class="fa-regular fa-circle-question pb-0"></i>
+                            <span>Quản lý bài viết</span>
+                        </div>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </a>
+                
+                    <ul class="sub-menu {{ currentUrl === '/admin/post' ? 'mm-show' : '' }}">
+                        <li class="cursor-pointer" routerLink="/admin/post">
+                            <a class="{{ currentUrl === '/admin/post' ? 'active' : '' }}">Danh sách bài viết</a>
+                        </li>
+                        <li class="cursor-pointer" routerLink="/admin/post/approve">
+                            <a class="{{ currentUrl === '/admin/post/approve' ? 'active' : '' }}">Kiểm duyệt bài viết</a>
+                        </li>
+                        <li class="cursor-pointer" routerLink="/admin/post/comment-approve">
+                            <a class="{{ currentUrl === '/admin/post/comment-approve' ? 'active' : '' }}">Kiểm duyệt bình luận</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <!--  -->
                 <li routerLink="/admin/course">
                     <a class="waves-effect {{ currentUrl === '/admin/course' ? 'active' : '' }}">
                         <i class="ri-dashboard-line"></i>
                         <span>Quản lý khoá học</span>
                     </a>
                 </li>
-
                 <li class="{{ currentUrl === '/admin/question' ? 'mm-active' : '' }}">
-                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ currentUrl === '/admin/question' ? 'active' : '' }}">
+                    <a
+                        class="waves-effect navigation-menu-main d-flex justify-content-between {{ currentUrl === '/admin/question' ? 'active' : '' }}">
                         <div class="navigation-label">
                             <i class="fa-regular fa-circle-question pb-0"></i>
                             <span>Ngân hàng câu hỏi</span>
@@ -36,7 +71,8 @@
                     </a>
 
                     <ul class="sub-menu {{ currentUrl === '/admin/question' ? 'mm-show' : '' }}">
-                        <li class="cursor-pointer" routerLink="/admin/question"><a class="{{ currentUrl === '/admin/question' ? 'active' : '' }}">Quản lý câu hỏi</a></li>
+                        <li class="cursor-pointer" routerLink="/admin/question"><a
+                                class="{{ currentUrl === '/admin/question' ? 'active' : '' }}">Quản lý câu hỏi</a></li>
                     </ul>
                 </li>
             </ul>

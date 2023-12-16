@@ -19,9 +19,18 @@ const routes: Routes = [
     loadChildren: () => import('./components/teacher/teacher.module').then((m) => m.TeacherModule),
   },
   {
+    path: 'student',
+    loadChildren: () => import('./components/student/student.module').then((m) => m.StudentModule),
+  },
+  {
+    path: 'post',
+    loadChildren: () => import('./components/post/post.module').then((m) => m.PostModule),
+  },
+  {
     path: 'question',
     loadChildren: () => import('./components/question/question.module').then((m) => m.QuestionModule),
   },
+
   {
     path: '',
     redirectTo: 'dashboard',

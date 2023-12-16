@@ -33,3 +33,4 @@ export class TeacherService {
     return this.http.post('teacher/delete-multiple', request);
   }
 }
+
