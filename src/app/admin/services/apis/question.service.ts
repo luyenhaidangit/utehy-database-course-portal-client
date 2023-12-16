@@ -11,4 +11,8 @@ export class QuestionService {
   getQuestions(): Observable<any> {
     return this.http.get('question/get', {});
   }
+
+  createQuestion(request: any): Observable<any> {
+    return this.http.post('question/create', request);
+  }
 }

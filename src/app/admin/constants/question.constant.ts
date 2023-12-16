@@ -23,28 +23,32 @@ const questionConstant = {
             title: "",
             order: 4,
             isCorrect: true,
-            score: 1
+            score: 1,
+            content: ""
         },
         {
             charIndex: "B",
             title: "",
             order: 3,
             isCorrect: false,
-            score: 1
+            score: 1,
+            content: ""
         },
         {
             charIndex: "C",
             title: "",
             order: 2,
             isCorrect: false,
-            score: 1
+            score: 1,
+            content: ""
         },
         {
             charIndex: "D",
             title: "",
             order: 1,
             isCorrect: false,
-            score: 1
+            score: 1,
+            content: ""
         }
     ],
     typeScores: [
@@ -57,6 +61,11 @@ const questionConstant = {
             value: 2
         }
     ],
+    typeCkeditor: {
+        questionTitle: 1,
+        questionAnswerContent: 2,
+        questionFeedback: 3
+    }
 };
     
 export default questionConstant;

@@ -46,7 +46,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12 col-lg-8">
-                            <ckeditor (ready)="onReady($event)" id="editor" [config]="config.classicEditorConfig" [editor]="classicEditor" [data]="question.title" class="title-editor"></ckeditor>
+                            <ckeditor (ready)="onReady($event)" id="editor" [config]="config.classicEditorConfig" [editor]="classicEditor" [data]="question.title" class="title-editor" (change)="handleChangeQuestionAnswer($event,question,questionContant.typeCkeditor.questionTitle)"></ckeditor>
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                                     <div class="font-weight-bold mb-1">({{ question.charIndex }})</div>
                                     <div class="d-flex gap-2">
                                         <div class="question-answer-item-left">
-                                            <ckeditor [config]="config.classicEditorConfig" [editor]="classicEditor" [data]="question.title"></ckeditor>
+                                            <ckeditor [config]="config.classicEditorConfig" [editor]="classicEditor" [data]="question.content" (change)="handleChangeQuestionAnswer($event,question,questionContant.typeCkeditor.questionAnswerContent)"></ckeditor>
                                         </div>  
                                         <div class="question-answer-item-right">
                                             <i class="fa-solid fa-trash text-danger cursor-pointer" (click)="handleOnDeleteAnswerQuesion(index)"></i>
@@ -104,6 +104,17 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Ghi chú</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-8">
+                            <ckeditor (ready)="onReady($event)" id="editor" [config]="config.classicEditorConfig" [editor]="classicEditor" [data]="question.feedback" class="title-editor" (change)="handleChangeQuestionAnswer($event,question,questionContant.typeCkeditor.questionFeedback)"></ckeditor>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="form-group">
                     <div class="d-flex gap-3">
                         <div class="custom-control custom-radio" *ngFor="let typeScore of questionContant.typeScores; let index = index">
@@ -189,7 +200,7 @@
                     <div class="d-flex">
                         <div class="ml-auto">
                             <button routerLink="/admin/question" type="button" class="btn btn-secondary waves-effect waves-light">Quay lại</button>
-                            <button [disabled]="form.invalid || validVerificationType() !== 1" type="submit" class="btn btn-success waves-effect waves-light ml-2">Xác nhận</button>
+                            <button [disabled]="isInvalidForm()" type="submit" class="btn btn-success waves-effect waves-light ml-2">Xác nhận</button>
                         </div>
                     </div>
                 </div>

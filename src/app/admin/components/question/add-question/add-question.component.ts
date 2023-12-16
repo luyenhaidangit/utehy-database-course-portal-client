@@ -13,6 +13,7 @@ import { QuestionCategoryService } from 'src/app/admin/services/apis/question-ca
 import { AddQuestionCategoryTreeService } from 'src/app/admin/services/components/add-question-category-tree.service';
 import { TagService } from 'src/app/admin/services/apis/tag.service';
 import tagConstant from 'src/app/admin/constants/tag.constant';
+import { QuestionService } from 'src/app/admin/services/apis/question.service';
 
 @Component({
   selector: 'app-add-question',
@@ -42,7 +43,8 @@ export class AddQuestionComponent implements OnInit {
     private router:Router,private modalService: BsModalService, 
     private questionCategoryService: QuestionCategoryService,
     private tagService: TagService,
-    public addQuestionCategoryTreeService: AddQuestionCategoryTreeService
+    public addQuestionCategoryTreeService: AddQuestionCategoryTreeService,
+    private questionService: QuestionService
   ) { }
 
   ngOnInit() {
@@ -91,7 +93,58 @@ export class AddQuestionComponent implements OnInit {
     return Math.max(...this.question.questionAnswers.map((item: any)=> item.score));
   }
 
-  //Modal question category tree
+  isInvalidForm(){
+    if(!this.question.title.length){
+      return true;
+    }
+
+    if(!this.question.title.length){
+      return true;
+    }
+
+    const hasEmptyContent = this.question.questionAnswers.some((answer: any) => (!answer.content));
+
+    if(hasEmptyContent){
+      return true;
+    }
+
+    return false;
+  }
+
+  handleChangeQuestionAnswer(event: any,question: any,type: number) {
+    const data = event.editor.getData();
+
+    if(type === 1){
+      question.title = data;
+    }else if(type === 2){
+      question.content = data;
+    }else{
+      question.feedback = data;
+    }
+  }
+
+  onSubmit(){
+    const selectedCategoryIds = this.question.questionTags.filter((category: any) => category.selected)
+    .map((selectedCategory: any) => selectedCategory.id);
+
+    const request = {...this.question, questionTags: selectedCategoryIds, score: this.getMaxScoreQuestionAnswers()};
+
+    this.questionService.createQuestion(request).subscribe((result: any) => {
+      if(result.status){
+        this.ngxToastr.success('Tạo câu hỏi thành công!','',{
+          progressBar: true
+        });
+
+        this.router.navigate(['/admin/question']);
+      }
+    },
+    (error) => {
+      this.ngxToastr.error(error.error.message,'',{
+        progressBar: true
+      });
+    });
+  }
+  //Question category
   questionCategoryTree: any[] = [];
   questionCategory: any = {
     id: "",
@@ -267,22 +320,6 @@ export class AddQuestionComponent implements OnInit {
     verificationType: 2,
     status: true,
   };
-
-  onSubmit(){
-    this.teacherService.createTeachers(this.teacher).subscribe((result: any) => {
-      if(result.status){
-        this.ngxToastr.success(result.message,'',{
-          progressBar: true
-        });
-        this.router.navigate(['/admin/teacher']);
-      }
-    },error => {
-      console.log(error);
-      this.ngxToastr.error(error.error.message,'',{
-        progressBar: true
-      });
-    });
-  }
 
   validVerificationType(): number {
     if (this.teacher.verificationType === 2) {
