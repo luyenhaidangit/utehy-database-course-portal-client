@@ -3,6 +3,8 @@ const questionCategoryConstant = {
 
   questionCategorySelectTreeType: 2,
 
+  questionCategoryEditSelectTreeType: 3,
+
   addAction: 1,
 
   editAction: 2,

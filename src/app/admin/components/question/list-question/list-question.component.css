@@ -25,3 +25,25 @@
 span.active{
     font-weight: 700;
 }
+
+.pt-12{
+    padding-top: 12px;
+}
+
+.fs-17{
+    font-size: 17px !important;
+}
+
+.border-gray-search{
+    border: 1px solid #ced4da !important;
+}
+
+.input-type-select{
+    border: 1px solid #ced4da;
+}
+
+.input-form-space{
+    /* margin-left: 12px; */
+    /* width: calc(100% - 12px) !important; */
+    width: 100%;
+}

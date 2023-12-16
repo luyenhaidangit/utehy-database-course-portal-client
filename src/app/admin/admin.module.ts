@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { LayoutComponent } from './shared/components/layout/layout.component';
@@ -15,7 +16,8 @@ import { RightSideBarComponent } from './shared/components/right-side-bar/right-
   imports: [
     CommonModule,
     AdminRoutingModule,
-    FormsModule
+    FormsModule,
+    CKEditorModule
   ],
 })
 export class AdminModule { }
