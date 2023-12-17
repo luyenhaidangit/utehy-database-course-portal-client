@@ -185,5 +185,9 @@ button[type="submit"] {
     flex-basis: unset !important;
 }
 
+#sidebar-menu ul li ul.sub-menu li a:hover{
+    color: #d7e4ec;
+}
+
 /* input modal */
 

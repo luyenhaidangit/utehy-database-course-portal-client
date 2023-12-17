@@ -23,16 +23,18 @@
                 <div class="group-action">
                     <div class="row">
 
-                        <div class="group-action__right col-xl-2 col-md-4 col-sm-12">
+                        <div class="group-action__right col-xl-12 col-md-12 col-sm-12">
                             <button [@fadeInOut]="selectedItems.length > 0 ? 'visible' : 'hidden'" type="button"
-                                class="btn btn-danger waves-effect waves-light align-items-center"
+                                class="btn btn-primary gap-2 waves-effect waves-light align-items-center"
+                                style="line-height: 24px; text-align: center;"
                                 (click)="handleApproveMultiple(true)">
-                                <i class="fa-solid fa-check"></i> Approve {{ selectedItems.length}} bản ghi
+                                <i class="fa-solid fa-check"></i> Phê duyệt {{ selectedItems.length}} bản ghi
                             </button>
                             <button [@fadeInOut]="selectedItems.length > 0 ? 'visible' : 'hidden'" type="button"
-                                class="btn btn-danger waves-effect waves-light align-items-center"
+                                class="btn btn-danger gap-2 waves-effect waves-light align-items-center ml-2"
+                                style="line-height: 24px; text-align: center;"
                                 (click)="handleApproveMultiple(false)">
-                                <i class="fa-brands fa-x-twitter"></i> DisApprove {{ selectedItems.length}} bản ghi
+                                <i class="fa-brands fa-x-twitter"></i> Không phê duyệt {{ selectedItems.length}} bản ghi
                             </button>
                         </div>
                     </div>

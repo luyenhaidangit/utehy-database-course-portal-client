@@ -31,8 +31,8 @@
                     </a>
                 </li> -->
                 <!-- them -->
-                <li class="{{ currentUrl === '/admin/post' ? 'mm-active' : '' }}">
-                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ currentUrl === '/admin/post' ? 'active' : '' }}">
+                <li class="{{ isActive('/admin/post') ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/admin/post') ? 'active' : '' }}">
                         <div class="navigation-label">
                             <i class="fa-regular fa-circle-question pb-0"></i>
                             <span>Quản lý bài viết</span>
@@ -40,15 +40,12 @@
                         <i class="fa-solid fa-angle-down"></i>
                     </a>
                 
-                    <ul class="sub-menu {{ currentUrl === '/admin/post' ? 'mm-show' : '' }}">
+                    <ul class="sub-menu {{ isActive('/admin/post') ? 'mm-show' : '' }}">
                         <li class="cursor-pointer" routerLink="/admin/post">
                             <a class="{{ currentUrl === '/admin/post' ? 'active' : '' }}">Danh sách bài viết</a>
                         </li>
                         <li class="cursor-pointer" routerLink="/admin/post/approve">
                             <a class="{{ currentUrl === '/admin/post/approve' ? 'active' : '' }}">Kiểm duyệt bài viết</a>
-                        </li>
-                        <li class="cursor-pointer" routerLink="/admin/post/comment-approve">
-                            <a class="{{ currentUrl === '/admin/post/comment-approve' ? 'active' : '' }}">Kiểm duyệt bình luận</a>
                         </li>
                     </ul>
                 </li>
