@@ -30,10 +30,13 @@ const routes: Routes = [
     path: 'question',
     loadChildren: () => import('./components/question/question.module').then((m) => m.QuestionModule),
   },
-
   {
     path: 'question-category',
     loadChildren: () => import('./components/question-category/question-category.module').then((m) => m.QuestionCategoryModule),
+  },
+  {
+    path: 'question-tag',
+    loadChildren: () => import('./components/question-tag/question-tag.module').then((m) => m.QuestionTagModule),
   },
   {
     path: '',
