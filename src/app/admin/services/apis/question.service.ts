@@ -15,4 +15,10 @@ export class QuestionService {
   createQuestion(request: any): Observable<any> {
     return this.http.post('question/create', request);
   }
+  getQuestionById(request: any): Observable<any> {
+    return this.http.get(`question/get-by-id?id=${request.id}`,{});
+  }
+  deleteQuestion(request: any): Observable<any> {
+    return this.http.post('question/delete', request);
+  }
 }

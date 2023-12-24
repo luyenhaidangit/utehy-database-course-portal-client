@@ -12,6 +12,7 @@ import { DEFAULT_PER_PAGE_OPTIONS, DEFAULT_PAGE_INDEX, DEFAULT_PAGE_SIZE } from 
 import questionConstant from 'src/app/admin/constants/question.constant';
 import questionHelper from 'src/app/admin/helpers/question.helper';
 import { AddQuestionCategoryTreeService } from 'src/app/admin/services/components/add-question-category-tree.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-question',
@@ -350,6 +351,52 @@ export class ListQuestionComponent implements OnInit {
   }
 
   handleDelete(id: number){
-    
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        cancelButton: "btn btn-danger ml-2",
+        confirmButton: "btn btn-success",
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: `Bạn có chắc muốn xoá câu hỏi có Id ${id}?`,
+      text: "Sau khi xoá bản sẽ không thể khôi phục dữ liệu!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xác nhận",
+      cancelButtonText: "Bỏ qua",
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const request = {
+          id: id
+        }
+
+        this.questionService.deleteQuestion(request).subscribe((result: any) => {
+          if (result.status) {
+            swalWithBootstrapButtons.fire({
+              title: "Xoá thành công!",
+              text: `Bản ghi câu hỏi có Id ${id} đã bị xoá!`,
+              icon: "success"
+            });
+
+            this.route.queryParams.subscribe(params => {
+              const request = {
+                ...params,
+                pageIndex: params['pageIndex'] ? params['pageIndex'] : DEFAULT_PAGE_INDEX,
+                pageSize: params['pageSize'] ? params['pageSize'] : DEFAULT_PAGE_SIZE,
+              };
+
+              this.getQuestions(request);
+            });
+          }
+        }, error => {
+          console.log(error);
+          this.ngxToastr.error(error.error.message, '', {
+            progressBar: true
+          });
+        });
+      }
+    });
   }
 }

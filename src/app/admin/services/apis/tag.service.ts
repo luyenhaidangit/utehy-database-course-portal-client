@@ -15,4 +15,13 @@ export class TagService {
   createTag(request: any): Observable<any> {
     return this.http.post('tag/create', request);
   }
+
+  editTag(request: any): Observable<any> {
+    return this.http.post('tag/edit', request);
+  }
+
+  deleteMultipleTag(request: any): Observable<any> {
+    return this.http.post('tag/delete-multiple', request);
+  }
+  
 }

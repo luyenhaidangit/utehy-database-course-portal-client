@@ -94,7 +94,7 @@ export class ListPostComponent implements OnInit {
         this.totalRecords = result.data.totalRecords;
         this.pageSize = result.data.pageSize;
         this.selectedItems = [];
-        
+        console.log(this.posts)
         if(this.posts.length === 0){
           this.pageIndex = 1;
         }
