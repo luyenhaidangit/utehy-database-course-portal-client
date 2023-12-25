@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListCourseComponent } from './list-course/list-course.component';
 import { InfoCourseComponent } from './info-course/info-course.component';
-import { ContentCourseComponent } from './content-course/content-course.component';
+import { ListLessonComponent } from './list-lesson/list-lesson.component';
 import { ContentLessonComponent } from './content-lesson/content-lesson.component';
 
 const routes: Routes = [
@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'lesson',
-    component: ContentCourseComponent
+    component: ListLessonComponent
   },
   {
     path: 'lesson/content/:id',

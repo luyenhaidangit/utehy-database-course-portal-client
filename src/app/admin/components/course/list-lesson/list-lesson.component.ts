@@ -6,10 +6,10 @@ import { DEFAULT_PER_PAGE_OPTIONS, DEFAULT_PAGE_INDEX, DEFAULT_PAGE_SIZE } from 
 
 @Component({
   selector: 'app-content-course',
-  templateUrl: './content-course.component.html',
-  styleUrls: ['./content-course.component.css']
+  templateUrl: './list-lesson.component.html',
+  styleUrls: ['./list-lesson.component.css']
 })
-export class ContentCourseComponent {
+export class ListLessonComponent {
   //Init
   constructor(
       private route: ActivatedRoute, private router: Router, 

@@ -35,7 +35,8 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "can-use-dom",
-              "sweetalert2"
+              "sweetalert2",
+              "@ckeditor/ckeditor5-build-classic"
             ]
           },
           "configurations": {
