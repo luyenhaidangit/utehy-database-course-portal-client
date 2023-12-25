@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
 import { classicEditorConfig } from 'src/app/admin/configs/ckeditor.config';
+import systemConfig from 'src/app/admin/configs/system.config';
 import { CkeditorUploadAdapter } from 'src/app/admin/adapters/ckeditor-upload.adapter';
 import { CourseService } from 'src/app/admin/services/apis/course.service';
 
@@ -53,7 +54,10 @@ export class InfoCourseComponent implements AfterViewChecked {
   }
 
   //Ckeditor
-  config: { [key: string]: any, classicEditorConfig: any } = { classicEditorConfig: classicEditorConfig };
+  config: any = {
+    classicEditorConfig: classicEditorConfig,
+    system: systemConfig
+  };
   classicEditor = ClassicEditor;
 
   onReady(editor: ClassicEditor): void {

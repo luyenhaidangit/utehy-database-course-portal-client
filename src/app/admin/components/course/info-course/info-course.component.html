@@ -71,7 +71,7 @@
                             </div>
                             <div *ngIf="course.base64Image || course.imageUrl" class="img-preview mt-2">
                                 <img *ngIf="course.base64Image" [src]="course.base64Image" class="rounded img-preview-small"/>
-                                <img *ngIf="course.imageUrl" [src]="course.imageUrl" class="rounded img-preview-small"/>
+                                <img *ngIf="course.imageUrl" [src]="config.system.baseUrl + course.imageUrl" class="rounded img-preview-small"/>
                             </div>
                         </div>
                     </div>
