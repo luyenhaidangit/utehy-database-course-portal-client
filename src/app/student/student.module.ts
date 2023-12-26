@@ -19,6 +19,7 @@ import { CourseComponent } from './components/course/course.component';
 import { LearningComponent } from './components/learning/learning.component';
 
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { TimeSpanPipe } from './pipes/time-span.pipe';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     NewsFeedComponent,
     CourseComponent,
     LearningComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    TimeSpanPipe
   ],
   imports: [CommonModule, StudentRoutingModule, FormsModule, CountdownModule],
 })

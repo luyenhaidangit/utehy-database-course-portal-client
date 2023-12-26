@@ -21,62 +21,43 @@
             <div class="CurriculumOfCourse_subHeadWrapper__Hkcns my-2">
                 <ul class="content-course-left ps-0">
                     <li class="CurriculumOfCourse_hiddenMobile__iP-4s">
-                        <strong>4 </strong> chương
+                        <strong>{{ course.lessons.length }} </strong> chương
                     </li>
                     <li class="content-course-dot">
                         •
                     </li>
                     <li>
-                        <strong>12 </strong> bài học
+                        <strong>{{ course.numberLessonContent }} </strong> bài học
                     </li>
                     <li class="content-course-dot">
                         •
                     </li>
                     <li>
-                        <span>Thời lượng <strong>03 giờ 26 phút</strong></span>
+                        <span>Thời lượng <strong>{{ course.totalEstimatedStudyTime }}</strong></span>
                     </li>
                 </ul>
                 <div class="content-course-right">Mở rộng tất cả</div>
             </div>
             <div class="main-content">
-                <div class="main-content-item mb-2">
-                    <span class="main-content-item__title">
-                        <i class="fa-solid fa-plus me-2"></i>
-                        <strong>1. Khái niệm kỹ thuật cần biết</strong>
-                    </span>
-                    <span class="main-content-item__title-number">3 bài học</span>
-                </div>
-                <div class="main-content-item-sub mb-2">
-                    <span class="main-content-item__title">
-                        <i class="fa-solid fa-circle-play me-2"></i>
-                        <span>1. Khái niệm kỹ thuật cần biết</span>
-                    </span>
-                    <span class="main-content-item__title-number">11:35</span>
-                </div>
-                <!-- <div class="main-content-item mb-2">
-                    <span class="main-content-item__title">
-                        <i class="fa-solid fa-plus me-2"></i>
-                        <strong>1. Khái niệm kỹ thuật cần biết</strong>
-                    </span>
-                    <span class="main-content-item__title-number">3 bài học</span>
-                </div>
-                <div class="main-content-item mb-2">
-                    <span class="main-content-item__title">
-                        <i class="fa-solid fa-plus me-2"></i>
-                        <strong>1. Khái niệm kỹ thuật cần biết</strong>
-                    </span>
-                    <span class="main-content-item__title-number">3 bài học</span>
-                </div>
-                <div class="main-content-item mb-2">
-                    <span class="main-content-item__title">
-                        <i class="fa-solid fa-plus me-2"></i>
-                        <strong>1. Khái niệm kỹ thuật cần biết</strong>
-                    </span>
-                    <span class="main-content-item__title-number">3 bài học</span>
-                </div> -->
+                <ng-container *ngFor="let lesson of course.lessons; let i = index;">
+                    <div class="main-content-item mb-2">
+                        <span class="main-content-item__title">
+                            <i class="fa-solid fa-plus me-2"></i>
+                            <strong>{{ i + 1 }}. {{ lesson.title }}</strong>
+                        </span>
+                        <span class="main-content-item__title-number">{{ lesson.lessonContents.length }} bài học</span>
+                    </div>
+                    <div class="main-content-item-sub mb-2" *ngFor="let lessonContent of lesson.lessonContents; let lessonContentIndex = index;">
+                        <span class="main-content-item__title">
+                            <i class="fa-solid fa-circle-play me-2"></i>
+                            <span>{{ lessonContentIndex + 1 }}. {{ lessonContent.title }}</span>
+                        </span>
+                        <span class="main-content-item__title-number">{{ lessonContent.estimatedStudyTime | timeSpan }}</span>
+                    </div>
+                </ng-container>
             </div>
 
-            <div class="MarkdownParser_wrapper DefaultLayout_desc" [innerHTML]="course.description">
+            <div class="MarkdownParser_wrapper DefaultLayout_desc" [innerHTML]="course.content">
             </div>
           </div>
           </section>
@@ -102,8 +83,8 @@
             </div>
             <div class="d-flex justify-content-center mt-2">
                 <ul class="description-course-page ps-0">
-                    <li>Tổng số <strong>12</strong> bài học</li>
-                    <li>Thời lượng <strong>03 giờ 26 phút</strong></li>
+                    <li>Tổng số <strong>{{ course.lessons.length }}</strong> bài học</li>
+                    <li>Thời lượng <strong> {{ course.totalEstimatedStudyTime }} </strong></li>
                 </ul>
             </div>
           </div>
