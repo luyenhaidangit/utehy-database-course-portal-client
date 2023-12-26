@@ -36,24 +36,26 @@
                         <span>Thời lượng <strong>{{ course.totalEstimatedStudyTime }}</strong></span>
                     </li>
                 </ul>
-                <div class="content-course-right">Mở rộng tất cả</div>
+                <div (click)="handleOnCollapseAllLesson()" class="content-course-right">Mở rộng tất cả</div>
             </div>
             <div class="main-content">
                 <ng-container *ngFor="let lesson of course.lessons; let i = index;">
-                    <div class="main-content-item mb-2">
+                    <div class="main-content-item mb-2" (click)="lesson.collapse = !lesson.collapse">
                         <span class="main-content-item__title">
                             <i class="fa-solid fa-plus me-2"></i>
                             <strong>{{ i + 1 }}. {{ lesson.title }}</strong>
                         </span>
                         <span class="main-content-item__title-number">{{ lesson.lessonContents.length }} bài học</span>
                     </div>
-                    <div class="main-content-item-sub mb-2" *ngFor="let lessonContent of lesson.lessonContents; let lessonContentIndex = index;">
-                        <span class="main-content-item__title">
-                            <i class="fa-solid fa-circle-play me-2"></i>
-                            <span>{{ lessonContentIndex + 1 }}. {{ lessonContent.title }}</span>
-                        </span>
-                        <span class="main-content-item__title-number">{{ lessonContent.estimatedStudyTime | timeSpan }}</span>
-                    </div>
+                    <ng-container *ngIf="lesson.collapse === true">
+                        <div class="main-content-item-sub mb-2" *ngFor="let lessonContent of lesson.lessonContents; let lessonContentIndex = index;">
+                            <span class="main-content-item__title">
+                                <i class="fa-solid fa-circle-play me-2"></i>
+                                <span>{{ lessonContentIndex + 1 }}. {{ lessonContent.title }}</span>
+                            </span>
+                            <span class="main-content-item__title-number">{{ lessonContent.estimatedStudyTime | timeSpan }}</span>
+                        </div>
+                    </ng-container>
                 </ng-container>
             </div>
 
@@ -67,11 +69,11 @@
           <div class="course-pro__item col p-0">
             <div class="course-pro__item-wrapper">
               <div class="course-pro__item-link cursor-pointer">
-                <button type="button">Xem bài viết</button>
+                <button type="button">Xem video giới thiệu</button>
                 <div class="course-pro__item-link__img position-relative">
                   <img
                     class="img-fluid"
-                    src="https://localhost:7038/Page/Page-1.png"
+                    [src]="config.system.baseUrl + course.imageUrl"
                     alt="HTML CSS Pro"
                   />
                   <div class="position-absolute overley"></div>

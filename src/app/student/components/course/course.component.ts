@@ -3,6 +3,7 @@ import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../../services/api/course.service';
 import { InitService } from '../../services/utilities/init.service';
+import systemConfig from 'src/app/admin/configs/system.config';
 
 @Component({
   selector: 'app-course',
@@ -12,6 +13,10 @@ import { InitService } from '../../services/utilities/init.service';
 export class CourseComponent {
   //Init
   public isInitialized: boolean = false;
+  
+  public config: any = {
+    system: systemConfig
+  };
 
   constructor(
     private route: ActivatedRoute, private router: Router, 
@@ -37,6 +42,10 @@ export class CourseComponent {
         this.isInitialized = true;
 
         this.course = result.data;
+
+        if(this.course.lessons.length > 0){
+          this.course.lessons[0].collapse = true;
+        }
 
         this.course.numberLessonContent = this.getTotalNumberOfContents(this.course);
 
@@ -96,5 +105,9 @@ export class CourseComponent {
     } else {
       return `${minutes} phút`;
     }
+  }
+
+  handleOnCollapseAllLesson() {
+    this.course.lessons.forEach((lesson: any) => (lesson.collapse = true));
   }
 }
