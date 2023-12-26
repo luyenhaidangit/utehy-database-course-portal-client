@@ -1,4 +1,4 @@
-<div class="App_withSidebarContent">
+<div *ngIf="isInitialized" class="App_withSidebarContent">
   <section
     class="index-module_grid index-module_fullWidth"
     style="max-width: 1920px"
@@ -11,40 +11,9 @@
           >
           <div class="DefaultLayout_container-top">
             <h1 class="DefaultLayout_heading student-header__default-title my-4">
-              Kiến thức nhập môn IT
+              {{ course.title }}
             </h1>
-            <div class="MarkdownParser_wrapper DefaultLayout_desc">
-              <p>
-                Để có cái nhìn tổng quan về ngành IT - Lập trình web các bạn nên xem
-                các videos tại khóa này trước nhé.
-              </p>
-              <div class="CourseDetail_topicList__vLbNG">
-                <h2 class="CourseDetail_topicHeading__xbkxm">
-                  Bạn sẽ học được gì?
-                </h2>
-                <section class="index-module_row__-AHgh">
-                  <section
-                    class="index-module_col__2EQm9 index-module_c-12__u7UXF index-module_m-12__2CxUL index-module_l-12__340Ve"
-                  >
-                    <ul class="CourseDetail_list__pdfCp">
-                        <div class="row">
-                            <li class="col-6">
-                                <i class="fa-solid fa-check"></i><span>Các kiến thức cơ bản, nền móng của ngành IT</span>
-                            </li>
-                              <li class="col-6">
-                                <i class="fa-solid fa-check"></i><span>Các kiến thức cơ bản, nền móng của ngành IT</span>
-                              </li>
-                              <li class="col-6">
-                                <i class="fa-solid fa-check"></i><span>Các kiến thức cơ bản, nền móng của ngành IT</span>
-                              </li>
-                              <li class="col-6">
-                                <i class="fa-solid fa-check"></i><span>Các kiến thức cơ bản, nền móng của ngành IT</span>
-                              </li>
-                        </div>
-                    </ul>
-                  </section>
-                </section>
-              </div>
+            <div class="MarkdownParser_wrapper DefaultLayout_desc" [innerHTML]="course.description">
             </div>
             <h1 class="content-title student-header__default-title mt-4 mb-0">
                 Nội dung khoá học
@@ -105,6 +74,9 @@
                     </span>
                     <span class="main-content-item__title-number">3 bài học</span>
                 </div> -->
+            </div>
+
+            <div class="MarkdownParser_wrapper DefaultLayout_desc" [innerHTML]="course.description">
             </div>
           </div>
           </section>

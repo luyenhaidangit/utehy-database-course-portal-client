@@ -18,6 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CourseComponent } from './components/course/course.component';
 import { LearningComponent } from './components/learning/learning.component';
 
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -33,6 +35,7 @@ import { LearningComponent } from './components/learning/learning.component';
     NewsFeedComponent,
     CourseComponent,
     LearningComponent,
+    SafeHtmlPipe
   ],
   imports: [CommonModule, StudentRoutingModule, FormsModule, CountdownModule],
 })

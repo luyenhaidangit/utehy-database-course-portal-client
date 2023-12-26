@@ -1,6 +1,7 @@
 @import url("~bootstrap/dist/css/bootstrap.min.css");
 @import url("~bootstrap-icons/font/bootstrap-icons.min.css");
 @import url('~ngx-toastr/toastr');
+@import url('./assets/css/index.css');
 
 :root {
   --primary-color: #f05123;
