@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 // import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { HttpGuesLoadingService } from 'src/app/shared/services/https/http-guest-loading.service';
+import { HttpGuestNotLoadingService } from 'src/app/shared/services/https/http-guest-not-loading.service';
 import { HttpStudentLoadingService } from 'src/app/shared/services/https/http-student-loading.service';
 import { HttpStudentNotLoadingService } from 'src/app/shared/services/https/http-student-not-loading.service';
 
@@ -11,7 +13,7 @@ export class AuthService {
   public isAuthenticated: any = null;
   public userData: any = null;
 
-  constructor(private httpLoading: HttpStudentLoadingService, private http: HttpStudentNotLoadingService) {
+  constructor(private httpLoading: HttpGuesLoadingService, private http: HttpGuestNotLoadingService) {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if(user?.token){
       this.getUserInfo().subscribe(res => {
@@ -40,7 +42,7 @@ export class AuthService {
   }
 
   getUserInfo(): Observable<any> {
-    return this.http.get('user/user-info');
+    return this.http.get('user/user-info',{});
   }
 
   getOtpLoginPhone(phone: string): Observable<any> {

@@ -1,4 +1,4 @@
-<div *ngIf="isInitialized" class="App_withSidebarContent">
+<div *ngIf="isInitialized && !authService.isAuthenticated" class="App_withSidebarContent">
   <section
     class="index-module_grid index-module_fullWidth"
     style="max-width: 1920px"
@@ -36,7 +36,8 @@
                         <span>Thời lượng <strong>{{ course.totalEstimatedStudyTime }}</strong></span>
                     </li>
                 </ul>
-                <div (click)="handleOnCollapseAllLesson()" class="content-course-right">Mở rộng tất cả</div>
+                <div *ngIf="!areAllLessonsCollapsed()" (click)="handleOnCollapseAllLesson(true)" class="content-course-right">Mở rộng tất cả</div>
+                <div *ngIf="areAllLessonsCollapsed()" (click)="handleOnCollapseAllLesson(false)" class="content-course-right">Thu gọn tất cả</div>
             </div>
             <div class="main-content">
                 <ng-container *ngFor="let lesson of course.lessons; let i = index;">
@@ -80,7 +81,7 @@
                 </div>
               </div>
             </div>
-            <div class="text-center mt-2">
+            <div class="text-center mt-2" (click)="handleOnRegisterCourse()">
                 <a class="navbar-actions__login-btn">Tham gia khoá học</a>
             </div>
             <div class="d-flex justify-content-center mt-2">
@@ -96,3 +97,7 @@
     </div>
   </section>
 </div>
+
+<div *ngIf="isInitialized && authService.isAuthenticated" class="App_withSidebarContent"></div>
+
+<app-auth></app-auth>

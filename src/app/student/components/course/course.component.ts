@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CourseService } from '../../services/api/course.service';
-import { InitService } from '../../services/utilities/init.service';
 import systemConfig from 'src/app/admin/configs/system.config';
+import { AuthComponent } from '../auth/auth.component';
+import { AuthService } from '../../services/api/auth.service';
 
 @Component({
   selector: 'app-course',
@@ -22,14 +24,17 @@ export class CourseComponent {
     private route: ActivatedRoute, private router: Router, 
     private ngxToastr: NgxToastrService,
     private courseService: CourseService,
-    private initService: InitService
+    private modalService: BsModalService, 
+    public authService: AuthService
   ) 
   { }
 
   public ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.getCourse();
-    });
+    if(!this.authService.isAuthenticated){
+      this.route.queryParams.subscribe(params => {
+        this.getCourse();
+      });
+    }
   }
 
   //Course
@@ -107,7 +112,27 @@ export class CourseComponent {
     }
   }
 
-  handleOnCollapseAllLesson() {
-    this.course.lessons.forEach((lesson: any) => (lesson.collapse = true));
+  public areAllLessonsCollapsed(): boolean {
+    return this.course.lessons.every((lesson: any) => lesson.collapse);
+  }
+
+  public handleOnCollapseAllLesson(type: boolean) {
+    this.course.lessons.forEach((lesson: any) => (lesson.collapse = type));
+  }
+
+  //Register course
+  @ViewChild(AuthComponent) authComponent!: AuthComponent;
+
+  handleOnRegisterCourse(){
+    this.authService.getUserInfo().subscribe((result: any) => {
+      if(result.status){
+        
+      }else{
+        this.authComponent.openModal();
+      }
+    },
+    (error) => {
+      this.authComponent.openModal();
+    });
   }
 }
