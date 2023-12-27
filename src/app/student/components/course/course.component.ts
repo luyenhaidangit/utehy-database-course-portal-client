@@ -6,6 +6,7 @@ import { CourseService } from '../../services/api/course.service';
 import systemConfig from 'src/app/admin/configs/system.config';
 import { AuthComponent } from '../auth/auth.component';
 import { AuthService } from '../../services/api/auth.service';
+import { SharedComponentService } from '../../services/components/shared-component.service';
 
 @Component({
   selector: 'app-course',
@@ -25,7 +26,8 @@ export class CourseComponent {
     private ngxToastr: NgxToastrService,
     private courseService: CourseService,
     private modalService: BsModalService, 
-    public authService: AuthService
+    public authService: AuthService,
+    public sharedComponentService: SharedComponentService
   ) 
   { }
 
@@ -34,6 +36,9 @@ export class CourseComponent {
       this.route.queryParams.subscribe(params => {
         this.getCourse();
       });
+    } else{
+      alert("test")
+      this.sharedComponentService.setIsShowHeader(false);
     }
   }
 
@@ -124,15 +129,6 @@ export class CourseComponent {
   @ViewChild(AuthComponent) authComponent!: AuthComponent;
 
   handleOnRegisterCourse(){
-    this.authService.getUserInfo().subscribe((result: any) => {
-      if(result.status){
-        
-      }else{
-        this.authComponent.openModal();
-      }
-    },
-    (error) => {
-      this.authComponent.openModal();
-    });
+    this.authComponent.openModal();
   }
 }

@@ -1,4 +1,4 @@
-<div *ngIf="isInitialized && !authService.isAuthenticated" class="App_withSidebarContent">
+<!-- <div *ngIf="isInitialized && !authService.isAuthenticated" class="App_withSidebarContent">
   <section
     class="index-module_grid index-module_fullWidth"
     style="max-width: 1920px"
@@ -96,8 +96,108 @@
       </div>
     </div>
   </section>
-</div>
+</div> -->
 
-<div *ngIf="isInitialized && authService.isAuthenticated" class="App_withSidebarContent"></div>
+<div class="course-learing">
+    <div class="LearningContainer_top">
+        <span>0%</span>
+       <span>Ghi chú</span>
+       <span>Hướng dẫn</span>
+      </div>
+      <div class="LearningContainer">
+        <div class="LearningContainer_left">
+            <div style="padding: 50px 100px; background-color: black;">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/TmwgIcCU0GE?si=XLV6AcT7_HwGsjjE"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+            </div>
+            <div class="LearningContainer_left_bottom">
+                <div>
+                    <h4>Bạn sẽ làm được gì sau khóa học?</h4>
+                    <p>Cập nhật tháng 11 năm 2022</p>
+                    <p>Tham gia các cộng đồng để cùng học hỏi, chia sẻ và "thám thính" xem F8 sắp có gì mới nhé!</p>
+                    <ul>
+                        <li>Fanpage: <a href="https://www.facebook.com/f8vnofficial" target="_blank"
+                                rel="noreferrer">https://www.facebook.com/f8vnofficial</a></li>
+                        <li>Group: <a href="https://www.facebook.com/groups/649972919142215" target="_blank"
+                                rel="noreferrer">https://www.facebook.com/groups/649972919142215</a></li>
+                        <li>Youtube: <a href="/external-url?continue=https%3A%2F%2Fwww.youtube.com%2FF8VNOfficial"
+                                target="_blank" rel="noreferrer">https://www.youtube.com/F8VNOfficial</a></li>
+                        <li>Sơn Đặng: <a href="/external-url?continue=https%3A%2F%2Fwww.facebook.com%2Fsondnf8"
+                                target="_blank" rel="noreferrer">https://www.facebook.com/sondnf8</a></li>
+                    </ul>
+                </div>
+      
+            </div>
+        </div>
+        <div class="LearningContainer_right">
+            <div class="ContainerTitle">
+                <h4>Nội dung khóa học</h4>
+                <div class="LearingFollow">
+                    <div class="Detail_item">
+                        <div class="Detail_chapter">
+                            <h4 class="Detail_chapter_title">
+                                <div class="Detail_title_period">
+                                    <div class="Detail_title">
+                                        <span class="title_headline_icon">+</span><strong>1.
+                                            Bắt đầu học</strong>
+                                        <br>
+                                        <span class="TrackItem_Time">0/7 | 20:39</span>
+                                    </div>
+                                    <span class="title_countCourse"><i class="fa-solid fa-caret-down"></i></span>
+                                    <!-- <i class="fa-solid fa-caret-up"></i> -->
+                                </div>
+                            </h4>
+                        </div>
+                        <div class="Detail_plus">
+                            <div class="Detail_chapter_plus">
+                                <div class="Detail_chapter_lessonItem">
+                                    <span class="lessonItem_hasIcon">
+                                        <div class="title_lessonName">1. Bạn sẽ họ được gì sau khóa học</div>
+                                    </span>
+                                    <span class="title_lessonName_countTime">
+                                        <i class="fa-regular fa-file"></i>11:23</span>
+                                </div>
+                            </div>
+                            <div class="Detail_chapter_plus">
+                                <div class="Detail_chapter_lessonItem">
+                                    <span class="lessonItem_hasIcon">
+                                        <div class="title_lessonName">1. Bạn sẽ họ được gì sau khóa học</div>
+                                    </span>
+                                    <span class="title_lessonName_countTime">
+                                        <i class="fa-regular fa-file"></i>11:23</span>
+                                </div>
+                            </div>
+                            <div class="Detail_chapter_plus">
+                                <div class="Detail_chapter_lessonItem">
+                                    <span class="lessonItem_hasIcon">
+                                        <div class="title_lessonName">1. Bạn sẽ họ được gì sau khóa học</div>
+                                    </span>
+                                    <span class="title_lessonName_countTime">
+                                        <i class="fa-regular fa-file"></i>11:23</span>
+                                </div>
+                            </div>
+                            <div class="Detail_chapter_plus">
+                                <div class="Detail_chapter_lessonItem">
+                                    <span class="lessonItem_hasIcon">
+                                        <div class="title_lessonName">1. Bạn sẽ họ được gì sau khóa học</div>
+                                    </span>
+                                    <span class="title_lessonName_countTime">
+                                        <i class="fa-regular fa-file"></i>11:23</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      
+      <div class="LearningContainer_bottom">
+        <button>Quay lại</button>
+        <button>Câu tiếp theo</button>
+      </div>
+</div>
 
 <app-auth></app-auth>
