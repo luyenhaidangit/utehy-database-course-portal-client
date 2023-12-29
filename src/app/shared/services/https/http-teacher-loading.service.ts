@@ -12,14 +12,14 @@ import loadingUiConstant from '../../components/loading-ui/loading-ui.constant';
   providedIn: 'root',
 })
 export class HttpTeacherLoadingService {
-//   private baseUrl: string = environment.apiStudentBaseUrl;
-    private baseUrl: string = environment.host.apiTeacherBaseUrl;
+  //   private baseUrl: string = environment.apiStudentBaseUrl;
+  private baseUrl: string = environment.host.apiTeacherBaseUrl;
 
 
   constructor(
     private http: HttpClient,
     private loadingUi: LoadingUiService,
-  ) {}
+  ) { }
 
   setBaseUrl(baseUrl: string) {
     this.baseUrl = baseUrl;
@@ -30,15 +30,15 @@ export class HttpTeacherLoadingService {
     return user.token || '';
   }
 
-//   get(endpoint: string): Observable<any> {
-//     const headers = this.createHeaders();
-//     return this.http.get(`${this.baseUrl}/${endpoint}`, { headers }).pipe(
-//       catchError((error: HttpErrorResponse) => {
-//         this.handleErrorResponse(error);
-//         return throwError(error);
-//       })
-//     );
-//   }
+  //   get(endpoint: string): Observable<any> {
+  //     const headers = this.createHeaders();
+  //     return this.http.get(`${this.baseUrl}/${endpoint}`, { headers }).pipe(
+  //       catchError((error: HttpErrorResponse) => {
+  //         this.handleErrorResponse(error);
+  //         return throwError(error);
+  //       })
+  //     );
+  //   }
 
   get(endpoint: string, data: any): Observable<any> {
     const headers = this.createHeaders();

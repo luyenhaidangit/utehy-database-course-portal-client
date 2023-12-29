@@ -18,7 +18,7 @@
 
   <div class="course-pro__body">
     <div class="course-pro__body-wrapper row mt-2">
-      <div *ngFor="let course of courses;" class="course-pro__item col col-xl-3 col-lg-4 p-0">
+      <div *ngFor="let course of courses;" [routerLink]="['/course', course.slug]" class="course-pro__item col col-xl-3 col-lg-4 p-0">
         <div class="course-pro__item-wrapper">
           <div class="course-pro__item-link cursor-pointer">
             <button type="button">Xem khoá học</button>

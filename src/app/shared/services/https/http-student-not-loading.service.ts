@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class HttpStudentNotLoadingService {
-  private baseUrl: string = environment.apiStudentBaseUrl;
+  private baseUrl: string = environment.host.apiStudentBaseUrl;
 
   constructor(private http: HttpClient) {}
 

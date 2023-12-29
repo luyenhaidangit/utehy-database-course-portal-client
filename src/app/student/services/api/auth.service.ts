@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 // import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { HttpGuesLoadingService } from 'src/app/shared/services/https/http-guest-loading.service';
+import { HttpGuestNotLoadingService } from 'src/app/shared/services/https/http-guest-not-loading.service';
+import { HttpNotLoadingService } from 'src/app/shared/services/https/http-not-loading.service';
 import { HttpStudentLoadingService } from 'src/app/shared/services/https/http-student-loading.service';
 import { HttpStudentNotLoadingService } from 'src/app/shared/services/https/http-student-not-loading.service';
 
@@ -10,13 +13,28 @@ import { HttpStudentNotLoadingService } from 'src/app/shared/services/https/http
 export class AuthService {
   public isAuthenticated: any = null;
   public userData: any = null;
+  private changeAuthEvent = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpLoading: HttpStudentLoadingService, private http: HttpStudentNotLoadingService) {
+  constructor(private httpLoading: HttpGuesLoadingService, private http: HttpGuestNotLoadingService, private httpStudentNotLoading: HttpStudentNotLoadingService, private httpNotLoadingService: HttpNotLoadingService) {
+    // const user = JSON.parse(localStorage.getItem('user') || '{}');
+    // if(user?.token){
+    //   this.getUserInfo().subscribe(res => {
+    //     if(res.status){
+    //       this.setAuthData(res.data);
+    //     }
+    //   })
+    // }else{
+    //   this.removeAuthData();
+    // }
+  }
+
+  getAuth(): void{
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if(user?.token){
-      this.getUserInfo().subscribe(res => {
+      this.httpNotLoadingService.get('user/user-info', {}).subscribe(res => {
         if(res.status){
           this.setAuthData(res.data);
+          this.emitChangeAuthEvent(true);
         }
       })
     }else{
@@ -27,6 +45,7 @@ export class AuthService {
   setAuthData(data: any): void {
     this.isAuthenticated = true;
     this.userData = data;
+    this.emitChangeAuthEvent(true);
   }
 
   removeAuthData(): void {
@@ -40,12 +59,12 @@ export class AuthService {
   }
 
   getUserInfo(): Observable<any> {
-    return this.http.get('user/user-info');
+    return this.http.get('user/user-info',{});
   }
 
   getOtpLoginPhone(phone: string): Observable<any> {
     const encodedPhone = encodeURIComponent(phone);
-    return this.http.post(`auth/send-otp-login-numberphone?numberphone=${encodedPhone}`, {});
+    return this.httpNotLoadingService.post(`auth/send-otp-login-numberphone?numberphone=${encodedPhone}`, {});
   }
 
   getOtpRegisterPhone(request: any): Observable<any> {
@@ -66,5 +85,25 @@ export class AuthService {
 
   verifyOtpLoginEmail(request: any): Observable<any> {
     return this.httpLoading.post(`auth/login-by-verify-otp-email`, request);
+  }
+
+  public hasPermisson(permisson: string): boolean{
+    if(!this.userData){
+      return false;
+    }
+
+    if (this.userData.permissions.includes(permisson)) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  emitChangeAuthEvent(status: boolean): void {
+    this.changeAuthEvent.next(status);
+  }
+
+  getChangeAuthEvent(): Observable<boolean> {
+    return this.changeAuthEvent.asObservable();
   }
 }

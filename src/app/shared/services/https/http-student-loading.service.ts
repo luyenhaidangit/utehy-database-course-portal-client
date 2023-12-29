@@ -12,7 +12,7 @@ import loadingUiConstant from '../../components/loading-ui/loading-ui.constant';
   providedIn: 'root',
 })
 export class HttpStudentLoadingService {
-  private baseUrl: string = environment.apiStudentBaseUrl;
+  private baseUrl: string = environment.host.apiStudentBaseUrl;
 
   constructor(
     private http: HttpClient,
@@ -37,7 +37,33 @@ export class HttpStudentLoadingService {
       })
     );
   }
+  getN(endpoint: string, data: any): Observable<any> {
+    const headers = this.createHeaders();
+    const queryParams = this.buildQueryParams(data);
+    this.loadingUi.show(loadingUiConstant.type.dualRing);
 
+    return this.http.get(`${this.baseUrl}/${endpoint}${queryParams ? `?${queryParams}` : ''}`, { headers }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        this.handleErrorResponse(error);
+        return throwError(error);
+      }),
+      finalize(() => {
+        this.loadingUi.hide();
+      })
+    );
+  }
+  buildQueryParams(data: any): string {
+    if (data) {
+      const params = new URLSearchParams();
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          params.set(key, data[key]);
+        }
+      }
+      return params.toString();
+    }
+    return '';
+  }
   post(endpoint: string, data: any): Observable<any> {
     this.loadingUi.show(loadingUiConstant.type.dualRing);
     const headers = this.createHeaders();

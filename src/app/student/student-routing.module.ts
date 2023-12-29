@@ -22,7 +22,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'courses/:slug',
+    path: 'course/:slug',
     component: CourseComponent,
   },
   {

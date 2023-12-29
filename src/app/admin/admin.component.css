@@ -185,5 +185,18 @@ button[type="submit"] {
     flex-basis: unset !important;
 }
 
+#sidebar-menu ul li ul.sub-menu li a:hover{
+    color: #d7e4ec;
+}
+
 /* input modal */
+
+/* image */
+.img-preview-small{
+    max-height: 140px;
+}
+
+.img-preview-small{
+    max-height: 140px;
+}
 

@@ -47,7 +47,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     SocialLoginModule,
     NgxSpinnerModule,
     LoadingUiModule,
-    CollapseModule.forRoot()
+    CollapseModule.forRoot(),
   ],
   providers: [
     { provide: 'SocialAuthServiceConfig', useValue: SocialAuthConfig },
