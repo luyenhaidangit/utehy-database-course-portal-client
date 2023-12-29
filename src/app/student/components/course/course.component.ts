@@ -37,6 +37,8 @@ export class CourseComponent {
   { }
 
   public ngOnInit() {
+    console.log("auth",this.authService.isAuthenticated);
+    // alert(this.authService.isAuthenticated);
     if(!this.authService.isAuthenticated){
       this.getCourse();
     } else{
@@ -161,24 +163,24 @@ export class CourseComponent {
   public handleOnRegisterCourse(){
     if(!this.authService.isAuthenticated){
       this.authComponent.openModal();
-    }
-
-    if(!this.course.isRegister){
-      const slug = this.route.snapshot.paramMap.get('slug');
-
-      const request = {
-        slug: slug
-      };
-
-      this.courseService.registerCourseStudent(request).subscribe((result: any) => {
-        if(result.status){
-          this.getCourseLearningUser(request);
-        }
-      },
-      (error) => {
-        console.log("Xảy ra lỗi", error);
-        this.isInitialized = false;
-      });
+    }else{
+      if(!this.course.isRegister){
+        const slug = this.route.snapshot.paramMap.get('slug');
+  
+        const request = {
+          slug: slug
+        };
+  
+        this.courseService.registerCourseStudent(request).subscribe((result: any) => {
+          if(result.status){
+            this.getCourseLearningUser(request);
+          }
+        },
+        (error) => {
+          console.log("Xảy ra lỗi", error);
+          this.isInitialized = false;
+        });
+      }
     }
   }
 }

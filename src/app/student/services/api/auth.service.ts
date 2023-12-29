@@ -15,16 +15,16 @@ export class AuthService {
   public userData: any = null;
 
   constructor(private httpLoading: HttpGuesLoadingService, private http: HttpGuestNotLoadingService, private httpStudentNotLoading: HttpStudentNotLoadingService, private httpNotLoadingService: HttpNotLoadingService) {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if(user?.token){
-      this.getUserInfo().subscribe(res => {
-        if(res.status){
-          this.setAuthData(res.data);
-        }
-      })
-    }else{
-      this.removeAuthData();
-    }
+    // const user = JSON.parse(localStorage.getItem('user') || '{}');
+    // if(user?.token){
+    //   this.getUserInfo().subscribe(res => {
+    //     if(res.status){
+    //       this.setAuthData(res.data);
+    //     }
+    //   })
+    // }else{
+    //   this.removeAuthData();
+    // }
   }
 
   getAuth(): void{
