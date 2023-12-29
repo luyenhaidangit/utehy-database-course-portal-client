@@ -91,15 +91,32 @@ export class AddQuestionComponent implements OnInit {
     questionTags: []
   };
 
+  public validateForm: any = {
+    title: true,
+    questionAnswers: []
+  }
+
   getMaxScoreQuestionAnswers(){
     return Math.max(...this.question.questionAnswers.map((item: any)=> item.score));
   }
 
-  isInvalidForm(){
-    if(!this.question.title.length){
-      return true;
+  validateCkeditorField(type: string, value: any,index: any){
+    if(type === 'title'){
+      if(!this.question.title){
+        this.validateForm.title = false;
+      }else{
+        this.validateForm.title = true;
+      }
+    }else if(type === 'questionAnswer'){
+      if(!value.content){
+        this.validateForm.questionAnswers[index] = true;
+      }else{
+        this.validateForm.questionAnswers[index] = false;
+      }
     }
+  }
 
+  isInvalidForm(){
     if(!this.question.title.length){
       return true;
     }
@@ -113,13 +130,25 @@ export class AddQuestionComponent implements OnInit {
     return false;
   }
 
-  handleChangeQuestionAnswer(event: any,question: any,type: number) {
+  handleChangeQuestionAnswer(event: any,question: any,type: number,index: any = null) {
     const data = event.editor.getData();
 
     if(type === 1){
       question.title = data;
+
+      if(!this.question.title){
+        this.validateForm.title = false;
+      }else{
+        this.validateForm.title = true;
+      }
     }else if(type === 2){
       question.content = data;
+
+      if(!question.content){
+        this.validateForm.questionAnswers[index] = true;
+      }else{
+        this.validateForm.questionAnswers[index] = false;
+      }
     }else{
       question.feedback = data;
     }
