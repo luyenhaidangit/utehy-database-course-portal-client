@@ -167,3 +167,27 @@ li {
   opacity: 0.5 !important;
 }
 
+/* front-size */
+.fs-13{
+  font-size: 13px !important;
+}
+
+.fs-14{
+  font-size: 14px !important;
+}
+
+.fs-15{
+  font-size: 15px !important;
+}
+
+.fs-16{
+  font-size: 16px !important;
+}
+
+.fs-17{
+  font-size: 17px !important;
+}
+
+.fs-18{
+  font-size: 18px !important;
+}
