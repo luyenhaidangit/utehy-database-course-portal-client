@@ -158,7 +158,27 @@ export class CourseComponent {
   //Register course
   @ViewChild(AuthComponent) authComponent!: AuthComponent;
 
-  handleOnRegisterCourse(){
-    this.authComponent.openModal();
+  public handleOnRegisterCourse(){
+    if(!this.authService.isAuthenticated){
+      this.authComponent.openModal();
+    }
+
+    if(!this.course.isRegister){
+      const slug = this.route.snapshot.paramMap.get('slug');
+
+      const request = {
+        slug: slug
+      };
+
+      this.courseService.registerCourseStudent(request).subscribe((result: any) => {
+        if(result.status){
+          this.getCourseLearningUser(request);
+        }
+      },
+      (error) => {
+        console.log("Xảy ra lỗi", error);
+        this.isInitialized = false;
+      });
+    }
   }
 }

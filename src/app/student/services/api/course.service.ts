@@ -19,4 +19,8 @@ export class CourseService {
   getCourseLearningUser(request: any): Observable<any> {
     return this.httpStudentService.get('course/get-course-learning-user', request);
   }
+
+  registerCourseStudent(request: any): Observable<any> {
+    return this.httpStudentService.post('course/register-course-student', request);
+  }
 }
