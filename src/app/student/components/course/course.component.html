@@ -1,4 +1,4 @@
-<!-- <div *ngIf="isInitialized && !authService.isAuthenticated" class="App_withSidebarContent">
+<div *ngIf="isInitialized && !authService.hasPermisson(constant.permisson.student)" class="App_withSidebarContent">
   <section
     class="index-module_grid index-module_fullWidth"
     style="max-width: 1920px"
@@ -96,9 +96,9 @@
       </div>
     </div>
   </section>
-</div> -->
+</div>
 
-<div class="course-learing">
+<div class="course-learing d-none">
       <div class="LearningContainer pt-4">
         <div class="LearningContainer_left">
             <div style="padding-right: 40px;padding-left: 40px;background-color: black;">

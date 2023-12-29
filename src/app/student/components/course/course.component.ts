@@ -7,6 +7,7 @@ import systemConfig from 'src/app/admin/configs/system.config';
 import { AuthComponent } from '../auth/auth.component';
 import { AuthService } from '../../services/api/auth.service';
 import { SharedComponentService } from '../../services/components/shared-component.service';
+import permissionConstant from 'src/app/shared/constants/permisson.constant';
 
 @Component({
   selector: 'app-course',
@@ -19,6 +20,10 @@ export class CourseComponent {
   
   public config: any = {
     system: systemConfig
+  };
+
+  public constant: any = {
+    permisson: permissionConstant
   };
 
   constructor(
@@ -37,7 +42,6 @@ export class CourseComponent {
         this.getCourse();
       });
     } else{
-      alert("test")
       this.sharedComponentService.setIsShowHeader(false);
     }
   }

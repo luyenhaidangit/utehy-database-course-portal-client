@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpGuesLoadingService } from 'src/app/shared/services/https/http-guest-loading.service';
 import { HttpGuestNotLoadingService } from 'src/app/shared/services/https/http-guest-not-loading.service';
+import { HttpNotLoadingService } from 'src/app/shared/services/https/http-not-loading.service';
 import { HttpStudentLoadingService } from 'src/app/shared/services/https/http-student-loading.service';
 import { HttpStudentNotLoadingService } from 'src/app/shared/services/https/http-student-not-loading.service';
 
@@ -13,10 +14,23 @@ export class AuthService {
   public isAuthenticated: any = null;
   public userData: any = null;
 
-  constructor(private httpLoading: HttpGuesLoadingService, private http: HttpGuestNotLoadingService) {
+  constructor(private httpLoading: HttpGuesLoadingService, private http: HttpGuestNotLoadingService, private httpStudentNotLoading: HttpStudentNotLoadingService, private httpNotLoadingService: HttpNotLoadingService) {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if(user?.token){
       this.getUserInfo().subscribe(res => {
+        if(res.status){
+          this.setAuthData(res.data);
+        }
+      })
+    }else{
+      this.removeAuthData();
+    }
+  }
+
+  getAuth(): void{
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if(user?.token){
+      this.httpNotLoadingService.get('user/user-info', {}).subscribe(res => {
         if(res.status){
           this.setAuthData(res.data);
         }
@@ -47,7 +61,7 @@ export class AuthService {
 
   getOtpLoginPhone(phone: string): Observable<any> {
     const encodedPhone = encodeURIComponent(phone);
-    return this.http.post(`auth/send-otp-login-numberphone?numberphone=${encodedPhone}`, {});
+    return this.httpNotLoadingService.post(`auth/send-otp-login-numberphone?numberphone=${encodedPhone}`, {});
   }
 
   getOtpRegisterPhone(request: any): Observable<any> {
@@ -68,5 +82,17 @@ export class AuthService {
 
   verifyOtpLoginEmail(request: any): Observable<any> {
     return this.httpLoading.post(`auth/login-by-verify-otp-email`, request);
+  }
+
+  public hasPermisson(permisson: string): boolean{
+    if(!this.userData){
+      return false;
+    }
+
+    if (this.userData.permissions.includes(permisson)) {
+      return true;
+    }else{
+      return false;
+    }
   }
 }
