@@ -5,7 +5,7 @@ export const environment = {
         baseUrl: 'https://localhost:7038',
 
         apiGuestBaseUrl: 'https://localhost:7038/api',
-        apiStudentBaseUrl: 'https://localhost:7038/api/admin',
+        apiStudentBaseUrl: 'https://localhost:7038/api/student',
         apiTeacherBaseUrl: 'https://localhost:7038/api/admin',
         apiPostBaseUrl: 'https://localhost:7038/api/admin'
     }

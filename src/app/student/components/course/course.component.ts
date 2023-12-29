@@ -38,11 +38,15 @@ export class CourseComponent {
 
   public ngOnInit() {
     if(!this.authService.isAuthenticated){
-      this.route.queryParams.subscribe(params => {
-        this.getCourse();
-      });
+      this.getCourse();
     } else{
-      this.sharedComponentService.setIsShowHeader(false);
+      const slug = this.route.snapshot.paramMap.get('slug');
+
+      const request = {
+        slug: slug
+      };
+
+      this.getCourseLearningUser(request);
     }
   }
 
@@ -52,6 +56,28 @@ export class CourseComponent {
 
   private getCourse() {
     this.courseService.getCourseDatabase().subscribe((result: any) => {
+      if(result.status){
+        this.isInitialized = true;
+
+        this.course = result.data;
+
+        if(this.course.lessons.length > 0){
+          this.course.lessons[0].collapse = true;
+        }
+
+        this.course.numberLessonContent = this.getTotalNumberOfContents(this.course);
+
+        this.course.totalEstimatedStudyTime = this.getTotalEstimatedStudyTime(this.course);
+      }
+    },
+    (error) => {
+      console.log("Xảy ra lỗi", error);
+      this.isInitialized = false;
+    });
+  }
+
+  private getCourseLearningUser(request: any) {
+    this.courseService.getCourseLearningUser(request).subscribe((result: any) => {
       if(result.status){
         this.isInitialized = true;
 
