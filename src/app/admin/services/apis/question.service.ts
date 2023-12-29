@@ -21,4 +21,9 @@ export class QuestionService {
   deleteQuestion(request: any): Observable<any> {
     return this.http.post('question/delete', request);
   }
+
+  checkAnswer(request: any): Observable<any> {
+    return this.http.post('question/check-answers', request);
+  }
+
 }

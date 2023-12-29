@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CourseComponent } from './components/course/course.component';
 import { LearningComponent } from './components/learning/learning.component';
+import { CoursesQuestionComponent } from './components/courses-question/courses-question.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'course/:slug',
     component: CourseComponent,
+  },
+  {
+    path: 'question',
+    component: CoursesQuestionComponent,
   },
   {
     path: 'learning/:slug',
