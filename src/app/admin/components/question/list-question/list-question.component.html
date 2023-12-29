@@ -231,7 +231,7 @@
                         <div class="per-page">
                            Hiển thị 
                            <select class="mx-1" (change)="onPerPageChange($event)">
-                              <option *ngFor="let item of config.perPageOptions;" [ngValue]="item.value" [attr.selected]="item.value === pageSize ? true : null">{{ item.label }}</option>
+                              <option *ngFor="let item of config.perPageOptions;" [ngValue]="item.value" [attr.selected]="item.value === +search.pageSize ? true : null">{{ item.label }}</option>
                            </select>
                            bản ghi
                         </div>
