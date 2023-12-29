@@ -107,7 +107,7 @@
 
                                  <div class="form-group col-md-4">
                                     <select class="custom-select" [(ngModel)]="search.type">
-                                        <option selected="" [ngValue]="0">Loại câu hỏi</option>
+                                        <option [selected]="search.type === null || search.type === 0" [ngValue]="0">Loại câu hỏi</option>
                                         <option *ngFor="let questionType of questionContant.types;" value="{{ questionType.key }}">{{ questionType.value }}</option>
                                     </select>
                                  </div>

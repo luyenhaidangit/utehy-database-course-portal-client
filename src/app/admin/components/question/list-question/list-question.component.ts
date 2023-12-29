@@ -32,6 +32,56 @@ export class ListQuestionComponent implements OnInit {
     ) 
     { }
 
+    ngOnInit() {
+      this.addQuestionCategoryTreeService.resetState();
+  
+      this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
+        if(result.status){
+          this.questionCategoryTree = result.data;
+  
+          const defaultCategory = result.data.find((category: any) => category.isDefault === true);
+  
+          this.questionCategory = defaultCategory;
+  
+          this.addQuestionCategoryTreeService.questionCategories = result.data;
+  
+          this.addQuestionCategoryTreeService.id = defaultCategory.id;
+
+          this.route.queryParams.subscribe(params => {
+            const request = {
+              ...params,
+              pageIndex: params['pageIndex'] ? params['pageIndex'] : DEFAULT_PAGE_INDEX,
+              pageSize: params['pageSize'] ? params['pageSize'] : DEFAULT_PAGE_SIZE,
+            };
+    
+            this.search = {
+              ...params,
+              type: params['type'] ? params['type'] : 0,
+            }
+
+            if(this.search.questionCategoryId){
+              const defaultCategory = result.data.find((category: any) => category.id === +this.search.questionCategoryId);
+
+              this.questionCategory = defaultCategory;
+  
+              this.addQuestionCategoryTreeService.questionCategories = result.data;
+  
+              this.addQuestionCategoryTreeService.id = defaultCategory.id;
+
+              this.addQuestionCategoryTreeService.currentId = defaultCategory.id;
+            }
+      
+            this.getQuestions(request);
+          });
+        }
+      });
+  
+      this.questionCategoryTreeService.myValueChange.subscribe((newValue) => {
+        this.getQuestionCategoryTree(); 
+        this.questionCategoryTreeService.setActiveCategoryId(0);
+      });
+    }
+
   //Constant
   sortConstant: any = sortConstant;
   orderConstant: any = orderConstant;
@@ -142,40 +192,6 @@ export class ListQuestionComponent implements OnInit {
     }
 
     return null;
-  }
-
-  // Event
-  ngOnInit() {
-    this.addQuestionCategoryTreeService.resetState();
-
-    this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
-      if(result.status){
-        this.questionCategoryTree = result.data;
-
-        const defaultCategory = result.data.find((category: any) => category.isDefault === true);
-
-        this.questionCategory = defaultCategory;
-
-        this.addQuestionCategoryTreeService.questionCategories = result.data;
-
-        this.addQuestionCategoryTreeService.id = defaultCategory.id;
-      }
-    });
-
-    this.route.queryParams.subscribe(params => {
-      const request = {
-        ...params,
-        pageIndex: params['pageIndex'] ? params['pageIndex'] : DEFAULT_PAGE_INDEX,
-        pageSize: params['pageSize'] ? params['pageSize'] : DEFAULT_PAGE_SIZE,
-      };
-
-      this.getQuestions(request);
-    });
-
-    this.questionCategoryTreeService.myValueChange.subscribe((newValue) => {
-      this.getQuestionCategoryTree(); 
-      this.questionCategoryTreeService.setActiveCategoryId(0);
-    });
   }
 
   //Question category
