@@ -37,19 +37,19 @@ export class CourseComponent {
   { }
 
   public ngOnInit() {
-    console.log("auth",this.authService.isAuthenticated);
-    // alert(this.authService.isAuthenticated);
-    if(!this.authService.isAuthenticated){
-      this.getCourse();
-    } else{
-      const slug = this.route.snapshot.paramMap.get('slug');
-
-      const request = {
-        slug: slug
-      };
-
-      this.getCourseLearningUser(request);
-    }
+    this.authService.getChangeAuthEvent().subscribe((status) => {
+      if(!this.authService.isAuthenticated){
+        this.getCourse();
+      } else{
+        const slug = this.route.snapshot.paramMap.get('slug');
+  
+        const request = {
+          slug: slug
+        };
+  
+        this.getCourseLearningUser(request);
+      }
+    });
   }
 
   //Course
@@ -178,7 +178,6 @@ export class CourseComponent {
         },
         (error) => {
           console.log("Xảy ra lỗi", error);
-          this.isInitialized = false;
         });
       }
     }

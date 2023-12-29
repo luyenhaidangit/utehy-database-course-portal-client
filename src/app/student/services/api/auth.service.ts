@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 // import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpGuesLoadingService } from 'src/app/shared/services/https/http-guest-loading.service';
 import { HttpGuestNotLoadingService } from 'src/app/shared/services/https/http-guest-not-loading.service';
 import { HttpNotLoadingService } from 'src/app/shared/services/https/http-not-loading.service';
@@ -13,6 +13,7 @@ import { HttpStudentNotLoadingService } from 'src/app/shared/services/https/http
 export class AuthService {
   public isAuthenticated: any = null;
   public userData: any = null;
+  private changeAuthEvent = new BehaviorSubject<boolean>(false);
 
   constructor(private httpLoading: HttpGuesLoadingService, private http: HttpGuestNotLoadingService, private httpStudentNotLoading: HttpStudentNotLoadingService, private httpNotLoadingService: HttpNotLoadingService) {
     // const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -33,6 +34,7 @@ export class AuthService {
       this.httpNotLoadingService.get('user/user-info', {}).subscribe(res => {
         if(res.status){
           this.setAuthData(res.data);
+          this.emitChangeAuthEvent(true);
         }
       })
     }else{
@@ -43,6 +45,7 @@ export class AuthService {
   setAuthData(data: any): void {
     this.isAuthenticated = true;
     this.userData = data;
+    this.emitChangeAuthEvent(true);
   }
 
   removeAuthData(): void {
@@ -94,5 +97,13 @@ export class AuthService {
     }else{
       return false;
     }
+  }
+
+  emitChangeAuthEvent(status: boolean): void {
+    this.changeAuthEvent.next(status);
+  }
+
+  getChangeAuthEvent(): Observable<boolean> {
+    return this.changeAuthEvent.asObservable();
   }
 }
