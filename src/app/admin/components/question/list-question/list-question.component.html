@@ -4,6 +4,8 @@
           class="page-title-box d-flex align-items-center justify-content-between"
           >
           <h4 class="mb-0">Danh sách câu hỏi</h4>
+          <div>Import <input type="file" (change)="onTestChange($event)" /></div>
+          <button (click)="onTest()" class="btn btn-primary">Test</button>
           <div class="page-title-right">
              <ol class="breadcrumb m-0">
                 <li

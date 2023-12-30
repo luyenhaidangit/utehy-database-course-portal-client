@@ -98,6 +98,35 @@ export class ListQuestionComponent implements OnInit {
   questionCategories: any = [];
   questionCategoriesSelect: any = [];
   activeCategoryIdSelect: number = 0;
+  test: any = null;
+
+  onTestChange(event: any) {
+    this.test = event.target.files[0];
+  }
+
+  onTest(){
+    const formData = new FormData();
+
+    formData.append('FormFile', this.test);
+
+    this.questionService.importPosts(this.test).subscribe((result: any) => {
+      this.ngxToastr.success('Import thành công','',{
+        progressBar: true
+      });
+      // if(result.status){
+      //   this.ngxToastr.success('Import thành công','',{
+      //     progressBar: true
+      //   });
+      //   // this.router.navigate(['/admin/post']);
+      // }
+    },error => {
+      console.log(error);
+      this.ngxToastr.error(error.error.message,'',{
+        progressBar: true
+      });
+    });
+
+  }
 
   //Question
   questions: any = [];
