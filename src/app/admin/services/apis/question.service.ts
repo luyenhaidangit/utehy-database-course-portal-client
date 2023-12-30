@@ -18,6 +18,11 @@ export class QuestionService {
   getQuestionById(request: any): Observable<any> {
     return this.http.get(`question/get-by-id?id=${request.id}`,{});
   }
+
+  editQuestion(request: any): Observable<any> {
+    return this.http.post('question/edit', request);
+  }
+
   deleteQuestion(request: any): Observable<any> {
     return this.http.post('question/delete', request);
   }
