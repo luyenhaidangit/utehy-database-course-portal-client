@@ -92,6 +92,36 @@
                     </ul>
                 </li>
 
+                <li class="{{ isActive('/admin/course')  ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/admin/course') ? 'active' : '' }}">
+                        <div class="navigation-label">
+                            <i class="fa-brands fa-slideshare"></i>
+                            <span>Nội dung</span>
+                        </div>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </a>
+
+                    <ul class="sub-menu {{ isActive('/admin/course')? 'mm-show' : '' }}">
+                        <li class="cursor-pointer" routerLink="/admin/teacher"><a class="{{ isActive('/admin/course/info') ? 'active' : '' }}">Quản lý giáo viên</a></li>
+                        <li class="cursor-pointer" routerLink="/admin/student"><a class="{{ isActive('/admin/course/lesson')? 'active' : '' }}">Quản lý sinh viên</a></li>
+                    </ul>
+                </li>
+
+                <li class="{{ isActive('/admin/course')  ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/admin/course') ? 'active' : '' }}">
+                        <div class="navigation-label">
+                            <i class="fa-solid fa-gears"></i>
+                            <span>Cấu hình</span>
+                        </div>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </a>
+
+                    <ul class="sub-menu {{ isActive('/admin/course')? 'mm-show' : '' }}">
+                        <li class="cursor-pointer" routerLink="/admin/teacher"><a class="{{ isActive('/admin/course/info') ? 'active' : '' }}">Quản lý giáo viên</a></li>
+                        <li class="cursor-pointer" routerLink="/admin/student"><a class="{{ isActive('/admin/course/lesson')? 'active' : '' }}">Quản lý sinh viên</a></li>
+                    </ul>
+                </li>
+
                 <!-- <li routerLink="/admin/teacher">
                     <a class="waves-effect" [class.active]="isActive('/admin/teacher')">
                         <i class="ri-dashboard-line"></i>
