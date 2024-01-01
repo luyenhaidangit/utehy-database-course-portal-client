@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import pagingConfig, { DEFAULT_PER_PAGE_OPTIONS } from '../../configs/paging.config';
+import Swal from 'sweetalert2';
 import { BannerService } from '../../services/apis/banner.service';
+import pagingConfig, { DEFAULT_PER_PAGE_OPTIONS } from '../../configs/paging.config';
 import orderConstant from '../../constants/orderConstant';
 import sortConstant from '../../constants/sortConstant';
 import systemConfig from '../../configs/system.config';
@@ -144,12 +145,12 @@ export class BannerComponent {
     });
   }
 
-  public toggleSelection(teacherId: number): void {
-    // if (this.isSelected(teacherId)) {
-    //     this.selectedItems = this.selectedItems.filter((id) => id !== teacherId);
-    // } else {
-    //     this.selectedItems.push(teacherId);
-    // }
+  public handleSelectItem(id: number): void {
+    if (this.isSelected(id)) {
+        this.selectedBanners = this.selectedBanners.filter((id: any) => id !== id);
+    } else {
+        this.selectedBanners.push(id);
+    }
   }
 
   public isSelected(id: number): boolean {
@@ -173,54 +174,104 @@ export class BannerComponent {
     });
   }
 
+  handleDeleteItem(id: number){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        cancelButton: "btn btn-danger ml-2",
+        confirmButton: "btn btn-success",
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: `Bạn có chắc muốn xoá banner có Id ${id}?`,
+      text: "Sau khi xoá bản sẽ không thể khôi phục dữ liệu!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xác nhận",
+      cancelButtonText: "Bỏ qua",
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const request = {
+          id: id
+        }
+
+        // this.questionService.deleteQuestion(request).subscribe((result: any) => {
+        //   if (result.status) {
+        //     swalWithBootstrapButtons.fire({
+        //       title: "Xoá thành công!",
+        //       text: `Bản ghi câu hỏi có Id ${id} đã bị xoá!`,
+        //       icon: "success"
+        //     });
+
+        //     this.route.queryParams.subscribe(params => {
+        //       const request = {
+        //         ...params,
+        //         pageIndex: params['pageIndex'] ? params['pageIndex'] : DEFAULT_PAGE_INDEX,
+        //         pageSize: params['pageSize'] ? params['pageSize'] : DEFAULT_PAGE_SIZE,
+        //       };
+
+        //       this.getQuestions(request);
+        //     });
+        //   }
+        // }, error => {
+        //   console.log(error);
+        //   this.ngxToastr.error(error.error.message, '', {
+        //     progressBar: true
+        //   });
+        // });
+      }
+    });
+  }
+
   public handleOnDeleteMultiple(){
-    // const swalWithBootstrapButtons = Swal.mixin({
-    //   customClass: {
-    //     cancelButton: "btn btn-danger ml-2",
-    //     confirmButton: "btn btn-success",
-    //   },
-    //   buttonsStyling: false
-    // });
-    // swalWithBootstrapButtons.fire({
-    //   title: `Bạn có muốn xoá các bản ghi có Id: ${this.selectedItems.join(', ')} không?`,
-    //   text: "Sau khi xoá bản sẽ không thể khôi phục dữ liệu!",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonText: "Xác nhận",
-    //   cancelButtonText: "Bỏ qua",
-    //   reverseButtons: false
-    // }).then((result) => {
-    //   if (result.isConfirmed) {
-    //     const request = {
-    //       ids: this.selectedItems
-    //     }
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        cancelButton: "btn btn-danger ml-2",
+        confirmButton: "btn btn-success",
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: `Bạn có muốn xoá các bản ghi có Id: ${this.selectedBanners.join(', ')} không?`,
+      text: "Sau khi xoá bản sẽ không thể khôi phục dữ liệu!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xác nhận",
+      cancelButtonText: "Bỏ qua",
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const request = {
+          ids: this.selectedBanners
+        }
 
-    //     this.teacherService.deleteMultipleTeacher(request).subscribe((result: any) => {
-    //       if(result.status){
-    //         swalWithBootstrapButtons.fire({
-    //           title: "Xoá thành công!",
-    //           text: result.message,
-    //           icon: "success"
-    //         });
+        // this.teacherService.deleteMultipleTeacher(request).subscribe((result: any) => {
+        //   if(result.status){
+        //     swalWithBootstrapButtons.fire({
+        //       title: "Xoá thành công!",
+        //       text: result.message,
+        //       icon: "success"
+        //     });
 
-    //         this.route.queryParams.subscribe(params => {
-    //           const request = {
-    //             ...params,
-    //             pageIndex: params['pageIndex'] ? params['pageIndex'] : DEFAULT_PAGE_INDEX,
-    //             pageSize: params['pageSize'] ? params['pageSize'] : DEFAULT_PAGE_SIZE,
-    //           };
+        //     this.route.queryParams.subscribe(params => {
+        //       const request = {
+        //         ...params,
+        //         pageIndex: params['pageIndex'] ? params['pageIndex'] : DEFAULT_PAGE_INDEX,
+        //         pageSize: params['pageSize'] ? params['pageSize'] : DEFAULT_PAGE_SIZE,
+        //       };
         
-    //           this.getTeachers(request);
-    //         });
-    //       }
-    //     },error => {
-    //       console.log(error);
-    //       this.ngxToastr.error(error.error.message,'',{
-    //         progressBar: true
-    //       });
-    //     });
-    //   }
-    // });
+        //       this.getTeachers(request);
+        //     });
+        //   }
+        // },error => {
+        //   console.log(error);
+        //   this.ngxToastr.error(error.error.message,'',{
+        //     progressBar: true
+        //   });
+        // });
+      }
+    });
   }
 
   public handleOnChangePage(page: number) {
@@ -242,7 +293,7 @@ export class BannerComponent {
     }
   }
 
-  handleOnPerPageChange(event: any): void{
+  public handleOnPerPageChange(event: any): void{
     this.paging.pageSize = +event.target.value;
 
     this.route.queryParams.subscribe(params => {
