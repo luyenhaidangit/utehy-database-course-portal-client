@@ -7,27 +7,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import animationConstant from 'src/app/admin/constants/animation.constant';
 
 @Component({
   selector: 'app-list-teacher',
   templateUrl: './list-teacher.component.html',
   styleUrls: ['./list-teacher.component.css'],
-  animations: [
-    trigger('fadeInOut', [
-      state('hidden', style({
-        opacity: 0,
-        height: '0',
-        display: 'none'
-      })),
-      state('visible', style({
-        opacity: 1,
-        height: '100%',
-        display: 'flex'
-      })),
-      transition('hidden => visible', animate('300ms ease-out')),
-      transition('visible => hidden', animate('300ms ease-in'))
-    ]),
-  ],
+  animations: animationConstant.animations
 })
 export class ListTeacherComponent implements OnInit {
   //Constant

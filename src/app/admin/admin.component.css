@@ -200,3 +200,23 @@ button[type="submit"] {
     max-height: 140px;
 }
 
+/* table */
+.selected-col{
+    width: 20px !important;
+}
+
+.image-item-lg{
+    max-height: 60px;
+    max-width: 120px;
+}
+
+.ellipsis-content {
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    color: #292929;
+    display: -webkit-box;
+    overflow: hidden;
+    max-width: 100px;
+}
+

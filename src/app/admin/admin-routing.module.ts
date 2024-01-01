@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BannerComponent } from './components/banner/banner.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'question-tag',
     loadChildren: () => import('./components/question-tag/question-tag.module').then((m) => m.QuestionTagModule),
+  },
+  {
+    path: 'banner',
+    component: BannerComponent,
   },
   {
     path: '',
