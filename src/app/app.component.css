@@ -15,6 +15,10 @@
     font-size: 1rem !important;
 }
 
+.fs-12{
+    font-size: 12px;
+}
+
 /* border */
 .bb-0{
     border-bottom: 0 !important;
