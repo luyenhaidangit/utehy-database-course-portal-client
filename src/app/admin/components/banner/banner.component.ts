@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
 import { BannerService } from '../../services/apis/banner.service';
 import pagingConfig, { DEFAULT_PER_PAGE_OPTIONS } from '../../configs/paging.config';
@@ -21,6 +22,7 @@ export class BannerComponent {
     private route: ActivatedRoute,
     private router: Router,
     private bannerService: BannerService,
+    private modalService: BsModalService
   ) { }
 
   ngOnInit() {
@@ -174,7 +176,7 @@ export class BannerComponent {
     });
   }
 
-  handleDeleteItem(id: number){
+  public handleDeleteItem(id: number){
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         cancelButton: "btn btn-danger ml-2",
@@ -307,6 +309,26 @@ export class BannerComponent {
         queryParams: request,
         queryParamsHandling: 'merge',
       });
+    });
+  }
+
+  //Detail banner
+  public banner: any = {};
+  public detailBannerModalRef?: BsModalRef;
+  @ViewChild('detailBannerTemplate') detailBannerTemplate!: TemplateRef<any>;
+
+  public handleCloseQuestionTagModal(): void{
+
+  }
+
+  public handleOpenDetailBannerModal(banner: any): void{
+    this.banner = banner;
+
+    this.detailBannerModalRef = this.modalService.show(this.detailBannerTemplate,
+    Object.assign({}, { class: 'modal-dialog modal-lg modal-dialog-scrollable' }));
+
+    this.detailBannerModalRef.onHidden?.subscribe(() => {
+        this.banner = {};
     });
   }
 }

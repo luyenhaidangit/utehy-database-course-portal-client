@@ -135,7 +135,7 @@
                                <span class="badge {{ banner.status ? 'badge-success' : 'badge-danger' }}">{{ banner.status ? 'Hoạt động' : 'Hết bạn' }}</span>
                             </td>
                             <td>
-                               <span class="text-info cursor-pointer" [routerLink]="['/admin/teacher/detail', banner.id]"><i class="fa-solid fa-eye"></i></span>
+                               <span class="text-info cursor-pointer" (click)="handleOpenDetailBannerModal(banner)"><i class="fa-solid fa-eye"></i></span>
                                <span class="text-warning cursor-pointer ml-2" [routerLink]="['/admin/teacher/edit', banner.id]"><i class="fa-solid fa-pen"></i></span>
                                <span class="text-danger cursor-pointer ml-2" (click)="handleDeleteItem(banner.id)"><i class="fa-solid fa-trash"></i></span>
                             </td>
@@ -180,5 +180,107 @@
        </div>
     </div>
 </div>
+
+<ng-template #detailBannerTemplate>
+   <div class="modal-header">
+       <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Chi tiết banner</h5>
+       <button type="button" class="close" (click)="detailBannerModalRef?.hide()">
+           <span aria-hidden="true">&times;</span>
+       </button>
+   </div>
+   <div class="modal-body">
+      <div class="form-group">
+         <div class="row">
+             <label class="col-md-3 col-lg-3 col-form-label" for="email">Id</label>
+             <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                 <input disabled class="form-control" [(ngModel)]="banner.id" name="email" id="email" type="email" email/>
+             </div>
+         </div>
+      </div>
+      <div class="form-group">
+         <div class="row">
+             <label class="col-md-3 col-lg-3 col-form-label" for="email">Vị trí</label>
+             <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                 <input disabled class="form-control" [(ngModel)]="banner.placeName" name="email" id="email" type="text"/>
+             </div>
+         </div>
+      </div>
+      <div class="form-group">
+         <div class="row">
+             <label class="col-md-3 col-lg-3 col-form-label" for="email">Loại</label>
+             <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                 <input disabled class="form-control" [(ngModel)]="banner.typeName" name="email" id="email" type="text"/>
+             </div>
+         </div>
+      </div>
+      <div class="form-group">
+         <div class="row">
+             <label class="col-md-3 col-lg-3 col-form-label" for="email">Tiêu đề</label>
+             <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                 <input disabled class="form-control" [(ngModel)]="banner.title" name="email" id="email" type="text"/>
+             </div>
+         </div>
+      </div>
+      <div class="form-group">
+         <div class="row">
+             <label class="col-md-3 col-lg-3 col-form-label" for="email">Ảnh</label>
+             <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+               <img src="{{ config.baseUrl + banner.image }}" alt="Header Avatar" class="rounded border image-item-lg">
+             </div>
+         </div>
+      </div>
+      <div class="form-group">
+         <div class="row">
+             <label class="col-md-3 col-lg-3 col-form-label" for="email">Mô tả</label>
+             <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+               <input disabled class="form-control" [(ngModel)]="banner.description" name="email" id="email" type="text"/>
+             </div>
+         </div>
+      </div>
+      <div class="form-group">
+         <div class="row">
+             <label class="col-md-3 col-lg-3 col-form-label" for="email">Tiêu đề hành động</label>
+             <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+               <input disabled class="form-control" [(ngModel)]="banner.ctaTitle" name="email" id="email" type="text"/>
+             </div>
+         </div>
+      </div>
+      <div class="form-group">
+         <div class="row">
+             <label class="col-md-3 col-lg-3 col-form-label" for="email">Liên kết</label>
+             <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+               <input disabled class="form-control" [(ngModel)]="banner.linkTo" name="email" id="email" type="text"/>
+             </div>
+         </div>
+      </div>
+      <div class="form-group">
+         <div class="row">
+             <label class="col-md-3 col-lg-3 col-form-label" for="email">Độ ưu tiên</label>
+             <div class="col-md-9 col-lg-8 col-table-reponsive d-flex align-items-center p-0">
+               <input disabled class="form-control" [(ngModel)]="banner.priority" name="email" id="email" type="text"/>
+             </div>
+         </div>
+      </div>
+      <div class="form-group">
+         <div class="row">
+             <label class="col-md-3 col-lg-3 col-form-label" for="email">Trang blank</label>
+             <div class="col-md-9 col-lg-8 col-table-reponsive d-flex align-items-center p-0">
+               <span class="badge {{ banner.isBlank ? 'badge-success' : 'badge-danger' }}">{{ banner.isBlank ? 'Đúng' : 'Sai' }}</span>
+             </div>
+         </div>
+      </div>
+      <div class="form-group">
+         <div class="row">
+             <label class="col-md-3 col-lg-3 col-form-label" for="email">Thời hạn</label>
+             <div class="col-md-9 col-lg-8 col-table-reponsive d-flex align-items-center p-0">
+               <input disabled class="form-control" value="{{banner.expired | date:'dd/MM/yyyy'}}" name="email" id="email" type="text"/>
+             </div>
+         </div>
+      </div>
+   </div>
+   <div class="modal-footer">
+       <button type="button" class="btn btn-light waves-effect" (click)="detailBannerModalRef?.hide()">Đóng</button>
+   </div>
+</ng-template>
 
 
