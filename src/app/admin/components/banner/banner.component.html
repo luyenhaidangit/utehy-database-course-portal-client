@@ -103,7 +103,7 @@
                            <th>Tiêu đề</th>
                            <th>Vị trí</th>
                            <th>Loại</th>
-                           <th>Trạng thái</th>
+                           <th>Thời hạn</th>
                            <th>Hành động</th>
                       </tr>
                    </thead>
@@ -194,27 +194,33 @@
             <div class="row">
                 <label class="col-md-3 col-lg-3 col-form-label" for="place">Vị trí</label>
                 <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
-                  <select class="custom-select" [(ngModel)]="banner.place" id="place" name="place">
+                  <select (blur)="validateBanner.touchPlace = true" class="custom-select" [(ngModel)]="banner.place" id="place" name="place">
                      <option [selected]="banner.place === null || banner.place === 0" [ngValue]="0">Vị trí</option>
                      <option *ngFor="let place of constant.banner.places;" value="{{ place.key }}">{{ place.value }}</option>
-                 </select>
+                  </select>
+                  <div *ngIf="banner.place === 0 && banner.place !== null && validateBanner.touchPlace" class="danger-notice">
+                     <div *ngIf="banner.place === 0 && banner.place !== null && validateBanner.touchPlace">Vị trí không được để trống</div>
+                  </div>
                 </div>
             </div>
          </div>
          <div class="form-group">
             <div class="row">
-                <label class="col-md-3 col-lg-3 col-form-label" for="type">Loại</label>
+                <label class="col-md-3 col-lg-3 col-form-label" for="type">Loại <span class="text-danger">*</span></label>
                 <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
-                  <select class="custom-select" [(ngModel)]="queryParameters.type" id="type" name="type">
+                  <select (blur)="validateBanner.touchType = true" class="custom-select" [(ngModel)]="banner.type" id="type" name="type">
                      <option [selected]="queryParameters.type === null || queryParameters.type === 0" [ngValue]="0">Loại</option>
                      <option *ngFor="let place of constant.banner.types;" value="{{ place.key }}">{{ place.value }}</option>
                  </select>
+                 <div *ngIf="banner.type === 0 && banner.type !== null && validateBanner.touchType" class="danger-notice">
+                     <div *ngIf="banner.type === 0 && banner.type !== null && validateBanner.touchType">Loại không được để trống</div>
+                  </div>
                 </div>
             </div>
          </div>
          <div class="form-group">
             <div class="row">
-                <label class="col-md-3 col-lg-3 col-form-label" for="title">Tiêu đề</label>
+                <label class="col-md-3 col-lg-3 col-form-label" for="title">Tiêu đề <span class="text-danger">*</span></label>
                 <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
                      <input class="form-control" [(ngModel)]="banner.title" id="title" name="title" type="text" required placeholder="Tiêu đề"/>
                      <div *ngIf="createForm.controls['title']?.invalid && (createForm.controls['title']?.dirty || createForm.controls['title'].touched)" class="danger-notice">
@@ -225,7 +231,7 @@
          </div>
          <div class="form-group">
             <div class="row">
-                <label class="col-md-3 col-lg-3 col-form-label" for="image">Ảnh</label>
+                <label class="col-md-3 col-lg-3 col-form-label" for="image">Ảnh <span class="text-danger">*</span></label>
                 <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
                   <div class="custom-file">
                      <input (change)="handleChangeImage($event)" type="file" name="image" id="image" class="custom-file-input" id="customFile" accept="image/*" multiple="false">
@@ -263,9 +269,9 @@
          </div>
          <div class="form-group">
             <div class="row">
-                <label class="col-md-3 col-lg-3 col-form-label" for="priority">Độ ưu tiên</label>
-                <div class="col-md-9 col-lg-8 col-table-reponsive d-flex align-items-center p-0">
-                  <input class="form-control" name="priority" [(ngModel)]="banner.priority" placeholder="Độ ưu tiên" id="priority" type="number"/>
+                <label class="col-md-3 col-lg-3 col-form-label" for="priority">Độ ưu tiên <span class="text-danger">*</span></label>
+                <div class="col-md-9 col-lg-8 col-table-reponsive d-flex flex-column justify-content-center p-0">
+                  <input class="form-control" name="priority" [(ngModel)]="banner.priority" placeholder="Độ ưu tiên" id="priority" type="number" required/>
                   <div *ngIf="createForm.controls['priority']?.invalid && (createForm.controls['priority']?.dirty || createForm.controls['priority'].touched)" class="danger-notice">
                      <div *ngIf="createForm.controls['priority'].errors?.['required']">Tiêu đề không được để trống</div>
                   </div>
@@ -285,11 +291,13 @@
          </div>
          <div class="form-group">
             <div class="row">
-                <label class="col-md-3 col-lg-3 col-form-label" for="expired">Thời hạn</label>
+                <label class="col-md-3 col-lg-3 col-form-label" for="expired">Thời hạn <span class="text-danger">*</span></label>
                 <div class="col-md-9 col-lg-8 col-table-reponsive d-flex flex-column justify-content-center p-0">
                   <input class="form-control" name="expired" [(ngModel)]="banner.expired" id="expired" type="date" required/>
                   <div *ngIf="createForm.controls['expired']?.invalid && (createForm.controls['expired']?.dirty || createForm.controls['expired'].touched)" class="danger-notice">
                      <div *ngIf="createForm.controls['expired'].errors?.['required']">Thời hạn không được để trống</div>
+                  </div>
+                  <div *ngIf="!isExpiredValid()" class="danger-notice">
                      <div *ngIf="!isExpiredValid()">Thời hạn phải lớn hơn thời gian hiện tại</div>
                   </div>
                 </div>
@@ -307,7 +315,7 @@
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-light waves-effect" (click)="createBannerModalRef?.hide()">Đóng</button>
-          <button [disabled]="createForm.invalid" type="submit" (click)="handleOnSubmitCreateBanner()" class="btn btn-primary waves-effect waves-light ml-2">Xác nhận</button>
+          <button [disabled]="createForm.invalid && validateForm()" type="submit" (click)="handleOnSubmitCreateBanner()" class="btn btn-primary waves-effect waves-light ml-2">Xác nhận</button>
       </div>
    </ng-template>
 </form>

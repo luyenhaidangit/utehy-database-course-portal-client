@@ -320,6 +320,17 @@ export class BannerComponent {
     type: 0,
     isBlank: true
   };
+
+  public validateBanner: any = {
+    touchPlace: false,
+    touchType: false,
+    touchPriority: false
+  }
+
+  public validateForm(): boolean {
+    return Object.values(this.validateBanner).some(value => value === false || value === null || value === undefined);
+  }
+
   public createBannerModalRef?: BsModalRef;
   @ViewChild('createBannerTemplate') createBannerTemplate!: TemplateRef<any>;
 
@@ -400,11 +411,14 @@ export class BannerComponent {
   }
 
   public isExpiredValid(): boolean {
-    if(!this.banner.expired){
-      return true;
+    if (!this.banner.expired) {
+      return true; 
     }
+  
     const currentDate = new Date();
-    return this.banner.expired > currentDate;
+    const expiredDate = new Date(this.banner.expired);
+  
+    return expiredDate > currentDate;
   }
 
   //Detail banner

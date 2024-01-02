@@ -18,7 +18,7 @@ import { BannerComponent } from './components/banner/banner.component';
     CommonModule,
     AdminRoutingModule,
     FormsModule,
-    CKEditorModule
+    CKEditorModule,
   ],
 })
 export class AdminModule { }
