@@ -64,7 +64,7 @@
                       <button
                          type="button"
                          class="btn btn-success waves-effect waves-light"
-                         routerLink="/admin/teacher/create"
+                         (click)="handleOpenCreateBannerModal()"
                          >
                       <i class="fa-solid fa-plus mr-1"></i> Thêm mới
                       </button>
@@ -180,6 +180,138 @@
        </div>
     </div>
 </div>
+
+<form (ngSubmit)="handleOnSubmitCreateBanner()" #createForm="ngForm">
+   <ng-template #createBannerTemplate>
+      <div class="modal-header">
+          <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Tạo mới banner</h5>
+          <button type="button" class="close" (click)="createBannerModalRef?.hide()">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+         <div class="form-group">
+            <div class="row">
+                <label class="col-md-3 col-lg-3 col-form-label" for="place">Vị trí</label>
+                <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                  <select class="custom-select" [(ngModel)]="banner.place" id="place" name="place">
+                     <option [selected]="banner.place === null || banner.place === 0" [ngValue]="0">Vị trí</option>
+                     <option *ngFor="let place of constant.banner.places;" value="{{ place.key }}">{{ place.value }}</option>
+                 </select>
+                </div>
+            </div>
+         </div>
+         <div class="form-group">
+            <div class="row">
+                <label class="col-md-3 col-lg-3 col-form-label" for="type">Loại</label>
+                <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                  <select class="custom-select" [(ngModel)]="queryParameters.type" id="type" name="type">
+                     <option [selected]="queryParameters.type === null || queryParameters.type === 0" [ngValue]="0">Loại</option>
+                     <option *ngFor="let place of constant.banner.types;" value="{{ place.key }}">{{ place.value }}</option>
+                 </select>
+                </div>
+            </div>
+         </div>
+         <div class="form-group">
+            <div class="row">
+                <label class="col-md-3 col-lg-3 col-form-label" for="title">Tiêu đề</label>
+                <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                     <input class="form-control" [(ngModel)]="banner.title" id="title" name="title" type="text" required placeholder="Tiêu đề"/>
+                     <div *ngIf="createForm.controls['title']?.invalid && (createForm.controls['title']?.dirty || createForm.controls['title'].touched)" class="danger-notice">
+                        <div *ngIf="createForm.controls['title'].errors?.['required']">Tiêu đề không được để trống</div>
+                     </div>
+                </div>
+            </div>
+         </div>
+         <div class="form-group">
+            <div class="row">
+                <label class="col-md-3 col-lg-3 col-form-label" for="image">Ảnh</label>
+                <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                  <div class="custom-file">
+                     <input (change)="handleChangeImage($event)" type="file" name="image" id="image" class="custom-file-input" id="customFile" accept="image/*" multiple="false">
+                     <label class="custom-file-label" for="customFile">Chọn file</label>
+                 </div>
+                 <div *ngIf="banner.base64Image || banner.image" class="img-preview mt-2">
+                     <img *ngIf="banner.base64Image" [src]="banner.base64Image" class="rounded img-preview-small"/>
+                 </div>
+                </div>
+            </div>
+         </div>
+         <div class="form-group">
+            <div class="row">
+                <label class="col-md-3 col-lg-3 col-form-label" for="description">Mô tả</label>
+                <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                  <input class="form-control" placeholder="Mô tả" name="description" [(ngModel)]="banner.description" id="description" type="text"/>
+                </div>
+            </div>
+         </div>
+         <div class="form-group">
+            <div class="row">
+                <label class="col-md-3 col-lg-3 col-form-label" for="ctaTitle">Tiêu đề hành động</label>
+                <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                  <input class="form-control" name="ctaTitle" [(ngModel)]="banner.ctaTitle" placeholder="Tiêu đề hành động" id="ctaTitle" type="text"/>
+                </div>
+            </div>
+         </div>
+         <div class="form-group">
+            <div class="row">
+                <label class="col-md-3 col-lg-3 col-form-label" for="linkTo">Liên kết</label>
+                <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                  <input class="form-control" name="linkTo" [(ngModel)]="banner.linkTo" placeholder="Liên kết" id="linkTo" type="text"/>
+                </div>
+            </div>
+         </div>
+         <div class="form-group">
+            <div class="row">
+                <label class="col-md-3 col-lg-3 col-form-label" for="priority">Độ ưu tiên</label>
+                <div class="col-md-9 col-lg-8 col-table-reponsive d-flex align-items-center p-0">
+                  <input class="form-control" name="priority" [(ngModel)]="banner.priority" placeholder="Độ ưu tiên" id="priority" type="number"/>
+                  <div *ngIf="createForm.controls['priority']?.invalid && (createForm.controls['priority']?.dirty || createForm.controls['priority'].touched)" class="danger-notice">
+                     <div *ngIf="createForm.controls['priority'].errors?.['required']">Tiêu đề không được để trống</div>
+                  </div>
+                </div>
+            </div>
+         </div>
+         <div class="form-group">
+            <div class="row">
+                <label class="col-md-3 col-lg-3 col-form-label" for="isBlank">Trang blank</label>
+                <div class="col-md-9 col-lg-8 col-table-reponsive d-flex align-items-center p-0">
+                  <div class="custom-control custom-switch" dir="ltr">
+                     <input type="checkbox" class="custom-control-input" name="isBlank" id="isBlank" [(ngModel)]="banner.isBlank" [checked]="true">
+                     <label class="custom-control-label" for="isBlank"></label>
+                 </div>
+                </div>
+            </div>
+         </div>
+         <div class="form-group">
+            <div class="row">
+                <label class="col-md-3 col-lg-3 col-form-label" for="expired">Thời hạn</label>
+                <div class="col-md-9 col-lg-8 col-table-reponsive d-flex flex-column justify-content-center p-0">
+                  <input class="form-control" name="expired" [(ngModel)]="banner.expired" id="expired" type="date" required/>
+                  <div *ngIf="createForm.controls['expired']?.invalid && (createForm.controls['expired']?.dirty || createForm.controls['expired'].touched)" class="danger-notice">
+                     <div *ngIf="createForm.controls['expired'].errors?.['required']">Thời hạn không được để trống</div>
+                     <div *ngIf="!isExpiredValid()">Thời hạn phải lớn hơn thời gian hiện tại</div>
+                  </div>
+                </div>
+            </div>
+         </div>
+         <div class="form-group">
+            <div class="row">
+                <label class="col-md-3 col-lg-3 col-form-label" for="properties">Thuộc tính</label>
+                <div class="col-md-9 col-lg-8 col-table-reponsive d-flex flex-column justify-content-center p-0">
+                  <input class="form-control" name="properties" [(ngModel)]="banner.properties" placeholder="Thuộc tính" name="properties" id="email" type="text"/>
+                  <div class="fs-12 mt-1">Thuộc tính dạng json</div>
+                </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-light waves-effect" (click)="createBannerModalRef?.hide()">Đóng</button>
+          <button [disabled]="createForm.invalid" type="submit" (click)="handleOnSubmitCreateBanner()" class="btn btn-primary waves-effect waves-light ml-2">Xác nhận</button>
+      </div>
+   </ng-template>
+</form>
+
 
 <ng-template #detailBannerTemplate>
    <div class="modal-header">

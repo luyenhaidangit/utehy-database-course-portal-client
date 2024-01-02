@@ -97,4 +97,25 @@ export class HttpAdminLoadingService {
       })
     );
   }
+
+  public postFormData(endpoint: string, formData: FormData): Observable<any> {
+    this.loadingUi.show(loadingUiConstant.type.dualRing);
+    const headers = this.createHeadersForFormData();
+    
+    return this.http.post(`${this.baseUrl}/${endpoint}`, formData, { headers }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        this.handleErrorResponse(error);
+        return throwError(error);
+      }),
+      finalize(() => {
+        this.loadingUi.hide();
+      })
+    );
+  }
+
+  private createHeadersForFormData() {
+    return new HttpHeaders({
+      Authorization: `Bearer ${this.getToken()}`,
+    });
+  }
 }

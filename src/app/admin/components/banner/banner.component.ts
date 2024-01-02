@@ -1,6 +1,7 @@
 import { Component, ViewChild, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { BannerService } from '../../services/apis/banner.service';
 import pagingConfig, { DEFAULT_PER_PAGE_OPTIONS } from '../../configs/paging.config';
@@ -22,7 +23,8 @@ export class BannerComponent {
     private route: ActivatedRoute,
     private router: Router,
     private bannerService: BannerService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private ngxToastr: NgxToastrService
   ) { }
 
   ngOnInit() {
@@ -312,14 +314,102 @@ export class BannerComponent {
     });
   }
 
+  //Add banner
+  public banner: any = {
+    place: 0,
+    type: 0,
+    isBlank: true
+  };
+  public createBannerModalRef?: BsModalRef;
+  @ViewChild('createBannerTemplate') createBannerTemplate!: TemplateRef<any>;
+
+  public handleOpenCreateBannerModal(): void{
+    this.createBannerModalRef = this.modalService.show(this.createBannerTemplate,
+    Object.assign({}, { class: 'modal-dialog modal-lg modal-dialog-scrollable' }));
+
+    this.createBannerModalRef.onHidden?.subscribe(() => {
+        this.banner = {
+          place: 0,
+          type: 0,
+          isBlank: true
+        };
+    });
+  }
+
+  public handleChangeImage(event: any): void {
+    const file = event.target.files[0];
+  
+    if (file) {
+      const reader = new FileReader();
+  
+      reader.onload = (e: any) => {
+        this.banner.base64Image = e.target.result;
+      };
+  
+      reader.readAsDataURL(file);
+  
+      this.banner.imageFile = file;
+    }
+  }
+
+  public handleOnSubmitCreateBanner(): void{
+    const formData = new FormData();
+
+    formData.append('place', this.banner.place);
+    formData.append('type', this.banner.type);
+    formData.append('imageFile', this.banner.imageFile);
+    formData.append('title', this.banner.title);
+    formData.append('description', this.banner.description);
+    formData.append('alt', this.banner.alt);
+    formData.append('ctaTitle', this.banner.ctaTitle);
+    formData.append('linkTo', this.banner.linkTo);
+    formData.append('properties', this.banner.properties);
+    formData.append('isBlank', this.banner.isBlank);
+    formData.append('expired', this.banner.expired);
+    formData.append('priority', this.banner.priority);
+
+    this.bannerService.createBanner(formData).subscribe((result: any) => {
+      if(result.status){
+        this.ngxToastr.success(result.message,'',{
+          progressBar: true
+        });
+        this.route.queryParams.subscribe(params => {
+          const request = {
+            ...params,
+            pageIndex: params['pageIndex'] ? params['pageIndex'] : this.config.paging.pageIndex,
+            pageSize: params['pageSize'] ? params['pageSize'] : this.config.paging.pageSize,
+          };
+    
+          this.queryParameters = {
+            ...params,
+            type: params['type'] ? params['type'] : 0,
+            place: params['place'] ? params['place'] : 0,
+          };
+    
+          this.getBanners(request);
+          this.createBannerModalRef?.hide();
+        });
+        // this.router.navigate(['/admin/banner']);
+      }
+    },error => {
+      console.log(error);
+      this.ngxToastr.error(error.error.message,'',{
+        progressBar: true
+      });
+    });
+  }
+
+  public isExpiredValid(): boolean {
+    if(!this.banner.expired){
+      return true;
+    }
+    const currentDate = new Date();
+    return this.banner.expired > currentDate;
+  }
+
   //Detail banner
-  public banner: any = {};
   public detailBannerModalRef?: BsModalRef;
   @ViewChild('detailBannerTemplate') detailBannerTemplate!: TemplateRef<any>;
-
-  public handleCloseQuestionTagModal(): void{
-
-  }
 
   public handleOpenDetailBannerModal(banner: any): void{
     this.banner = banner;
@@ -328,7 +418,11 @@ export class BannerComponent {
     Object.assign({}, { class: 'modal-dialog modal-lg modal-dialog-scrollable' }));
 
     this.detailBannerModalRef.onHidden?.subscribe(() => {
-        this.banner = {};
+        this.banner = {
+          place: 0,
+          type: 0,
+          isBlank: true
+        };
     });
   }
 }

@@ -11,4 +11,8 @@ export class BannerService {
   getBanners(request: any): Observable<any> {
     return this.httpAdminLoading.get('banner/get', request);
   }
+
+  createBanner(request: any): Observable<any> {
+    return this.httpAdminLoading.postFormData('banner/create', request);
+  }
 }
