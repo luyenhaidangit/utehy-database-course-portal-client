@@ -2,8 +2,9 @@
 
 ## Features
 - [ ] Authentication trang quản trị
-  - [ ] Xây dựng tính năng redirect khi không permission
-  - [ ] Xây dựng chức năng đăng nhập
+  - [x] Xây dựng tính năng redirect khi không permission
+  - [x] Xây dựng chức năng đăng nhập
+  - [x] Xây dựng chức năng đăng xuất
 - [ ] Trang quản lý banner
   - [x] Xây dựng chức năng thêm banner
   - [x] Xây dựng chức năng cập nhật banner
@@ -33,6 +34,8 @@
   - [ ] Xây dựng chức năng xoá đề thi
 
 ## Bugs
+- [ ] Authentication trang quản trị
+  - [ ] Handle thêm trường RememberMe màn login admin http://localhost:4200/admin/auth/login
 - [ ] Validate form nhập và update bắt buộc phải upload image
 
 ## Enhancements

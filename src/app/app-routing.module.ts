@@ -7,6 +7,7 @@ import { Error404Component } from './student/shared/components/error/error404/er
 import { Error400Component } from './student/shared/components/error/error400/error400.component';
 import { Error500Component } from './student/shared/components/error/error500/error500.component';
 import { Error503Component } from './student/shared/components/error/error503/error503.component';
+import { AdminGuard } from './shared/guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -26,6 +27,13 @@ const routes: Routes = [
     component: AdminComponent,
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
+    canActivate: [AdminGuard],
+  },
+  {
+    path: 'admin/auth',
+    component: AdminComponent,
+    loadChildren: () =>
+      import('./admin/components/auth/auth.module').then((m) => m.AuthModule),
   },
 ];
 
