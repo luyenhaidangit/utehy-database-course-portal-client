@@ -46,6 +46,10 @@ const routes: Routes = [
     component: GroupComponent,
   },
   {
+    path: 'config',
+    loadChildren: () => import('./components/config/config.module').then((m) => m.ConfigModule),
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
