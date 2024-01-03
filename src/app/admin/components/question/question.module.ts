@@ -13,6 +13,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { QuestionCategoryTreeComponent } from './question-category-tree/question-category-tree.component';
 import { AddQuestionCategoryTreeComponent } from './add-question-category-tree/add-question-category-tree.component';
+import { AdminModule } from '../../admin.module';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { AddQuestionCategoryTreeComponent } from './add-question-category-tree/a
     EditQuestionComponent,
     DetailQuestionComponent,
     QuestionCategoryTreeComponent,
-    AddQuestionCategoryTreeComponent,
+    // AddQuestionCategoryTreeComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +32,7 @@ import { AddQuestionCategoryTreeComponent } from './add-question-category-tree/a
     FormsModule,
     CKEditorModule,
     NgSelectModule,
+    AdminModule
   ]
 })
 export class QuestionModule { }

@@ -12,14 +12,21 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { RightSideBarComponent } from './shared/components/right-side-bar/right-side-bar.component';
 import { BannerComponent } from './components/banner/banner.component';
 import { GroupComponent } from './components/group/group.component';
+import { QuestionCategoryComponent } from './components/question-category/question-category.component';
+import { AddQuestionCategoryTreeComponent } from './components/question/add-question-category-tree/add-question-category-tree.component';
 
 @NgModule({
-  declarations: [LayoutComponent, AdminComponent, HeaderComponent, VerticalMenuComponent, FooterComponent, RightSideBarComponent, BannerComponent, GroupComponent],
+  declarations: [LayoutComponent, AdminComponent, HeaderComponent, VerticalMenuComponent, FooterComponent, RightSideBarComponent, BannerComponent, GroupComponent, QuestionCategoryComponent, 
+    AddQuestionCategoryTreeComponent
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     FormsModule,
     CKEditorModule,
+  ],
+  exports: [
+    AddQuestionCategoryTreeComponent
   ],
 })
 export class AdminModule { }

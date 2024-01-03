@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BannerComponent } from './components/banner/banner.component';
 import { GroupComponent } from './components/group/group.component';
+import { QuestionCategoryComponent } from './components/question-category/question-category.component';
 
 const routes: Routes = [
   {
@@ -30,7 +31,7 @@ const routes: Routes = [
   },
   {
     path: 'question-category',
-    loadChildren: () => import('./components/question-category/question-category.module').then((m) => m.QuestionCategoryModule),
+    component: QuestionCategoryComponent
   },
   {
     path: 'question-tag',
