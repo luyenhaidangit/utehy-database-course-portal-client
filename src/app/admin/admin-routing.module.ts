@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BannerComponent } from './components/banner/banner.component';
+import { GroupComponent } from './components/group/group.component';
 
 const routes: Routes = [
-  // {
-  //   path: 'auth',
-  //   loadChildren: () => import('./components/auth/auth.module').then((m) => m.AuthModule),
-  // },
   {
     path: 'dashboard',
     loadChildren: () => import('./components/dashboard/dashboard.module').then((m) => m.DashboardModule),
@@ -42,6 +39,10 @@ const routes: Routes = [
   {
     path: 'banner',
     component: BannerComponent,
+  },
+  {
+    path: 'group',
+    component: GroupComponent,
   },
   {
     path: '',

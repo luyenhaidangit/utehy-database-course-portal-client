@@ -11,9 +11,10 @@ import { VerticalMenuComponent } from './shared/components/vertical-menu/vertica
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { RightSideBarComponent } from './shared/components/right-side-bar/right-side-bar.component';
 import { BannerComponent } from './components/banner/banner.component';
+import { GroupComponent } from './components/group/group.component';
 
 @NgModule({
-  declarations: [LayoutComponent, AdminComponent, HeaderComponent, VerticalMenuComponent, FooterComponent, RightSideBarComponent, BannerComponent],
+  declarations: [LayoutComponent, AdminComponent, HeaderComponent, VerticalMenuComponent, FooterComponent, RightSideBarComponent, BannerComponent, GroupComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
