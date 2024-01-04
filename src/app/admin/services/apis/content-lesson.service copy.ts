@@ -5,13 +5,13 @@ import { HttpTeacherLoadingService } from 'src/app/shared/services/https/http-te
 @Injectable({
   providedIn: 'root', 
 })
-export class LessonService {
+export class ContentLessonService {
   constructor(private http: HttpTeacherLoadingService) { }
 
-  getLessons(request: any = null): Observable<any> {
-    return this.http.get('lesson/get', request);
+  getContentLessons(request: any = null): Observable<any> {
+    return this.http.get('lessoncontent/get', request);
   }
-  createLesson(request: any): Observable<any> {
-    return this.http.postFormData('lesson/create', request);
+  createContentLesson(request: any): Observable<any> {
+    return this.http.postFormData('lessoncontent/create', request);
   }
 }

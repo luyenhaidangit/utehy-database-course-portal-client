@@ -92,6 +92,7 @@ export class CourseComponent {
         this.getCourseLearningUser(request);
       }
     });
+
   }
 
   //Course
@@ -104,6 +105,7 @@ export class CourseComponent {
         this.isInitialized = true;
 
         this.course = result.data;
+        console.log('hay'+result.data);
 
         if (this.course.lessons.length > 0) {
           this.course.lessons[0].collapse = true;

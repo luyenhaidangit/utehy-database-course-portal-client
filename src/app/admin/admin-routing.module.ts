@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BannerComponent } from './components/banner/banner.component';
 import { GroupComponent } from './components/group/group.component';
 import { QuestionCategoryComponent } from './components/question-category/question-category.component';
+import { ExamComponent } from './components/exam/exam.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
   {
     path: 'banner',
     component: BannerComponent,
+  },
+  {
+    path: 'exam',
+    component: ExamComponent,
   },
   {
     path: 'group',
