@@ -124,6 +124,20 @@
                     </ul>
                 </li>
 
+                <li class="{{ isActive('/admin/account/update')  ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/admin/account/update') ? 'active' : '' }}">
+                        <div class="navigation-label">
+                            <i class="fa-solid fa-user"></i>
+                            <span>Người dùng</span>
+                        </div>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </a>
+
+                    <ul class="sub-menu {{ isActive('/admin/account/update') ? 'mm-show' : '' }}">
+                        <li class="cursor-pointer" routerLink="/admin/account/update"><a class="{{ isActive('/admin/account/update') ? 'active' : '' }}">Thông tin người dùng</a></li>
+                    </ul>
+                </li>
+
                 <!-- <li routerLink="/admin/teacher">
                     <a class="waves-effect" [class.active]="isActive('/admin/teacher')">
                         <i class="ri-dashboard-line"></i>

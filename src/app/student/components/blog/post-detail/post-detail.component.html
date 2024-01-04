@@ -1,5 +1,9 @@
 <!-- <p>post-detail works {{ slug }}!</p> -->
 
-Vì sao vai trò của tham vấn tâm lý học đường lại đặc biệt quan trọng? Trong quá trình lớn lên của trẻ em, có thể có những tổn thương về thể xác và tinh thần. Sự tổn thương đó có thể đến từ gia đình, trường học hoặc ngoài xã hội.
+<h2 class="my-3">{{ post.title }}</h2>
 
-Tổn thương về thể xác đã có bác sĩ ở bệnh viện. Tổn thương về tinh thần ở mức độ nặng cũng được điều trị ở một số bệnh viện chuyên khoa. Nhưng tổn thương về tinh thần ở mức độ nhẹ, khá nhiều, thì làm sao?
+<img src="{{ post.image }}" />
+
+<div class="content" [innerHTML]="post.content">
+
+</div>

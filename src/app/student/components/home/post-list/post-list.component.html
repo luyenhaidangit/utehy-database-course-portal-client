@@ -13,7 +13,7 @@
 
   <div class="course-pro__body">
     <div class="course-pro__body-wrapper row mt-2">
-      <div *ngFor="let post of posts;" class="course-pro__item col col-xl-3 col-lg-4 p-0">
+      <div *ngFor="let post of posts;" class="course-pro__item col col-xl-3 col-lg-4 p-0" routerLink="/blog/{{post.id}}">
         <div class="course-pro__item-wrapper">
           <div class="course-pro__item-link cursor-pointer">
             <button type="button">Xem bài viết</button>
@@ -31,7 +31,7 @@
                 <img class="img-fluid" src="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/64f9a2fd4e064.jpg"
                   alt="Avatar User" />
               </div>
-              <span class="course-pro__item-author__name d-flex align-items-center ms-2">{{ post.user.name }} <i
+              <span class="course-pro__item-author__name d-flex align-items-center ms-2">{{ post?.user?.name }} <i
                   class="fa-solid fa-check ms-1"></i></span>
             </div>
             <span class="course-pro__item-author__reading-time"><i class="fa-solid fa-circle"></i>{{ post.readingTime }}

@@ -13,4 +13,8 @@ export class UserService {
   getUserInfo(): Observable<any> {
     return this.http.get('user/user-info', {});
   }
+
+  editUserInfo(request: any): Observable<any> {
+    return this.http.post('user/edit-user-info', request);
+  }
 }

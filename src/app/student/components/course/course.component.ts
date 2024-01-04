@@ -28,7 +28,7 @@ export class CourseComponent {
   };
 
   // chọn bài học và thay đổi video
-  currentVideoUrl: string =this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/TmwgIcCU0GE?si=XLV6AcT7_HwGsjjE') as string ;
+  currentVideoUrl: string =this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/XppBnms3aAk?si=H0PILoA-hYcbZ0wf') as string ;
   selectedLessonContent: { lessonIndex: number, contentIndex: number } = { lessonIndex: -1, contentIndex: -1 };
   selectLesson(lessonIndex: number, contentIndex: number,videoUrl:string): void {
 
