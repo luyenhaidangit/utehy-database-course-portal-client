@@ -96,7 +96,7 @@
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block user-dropdown-item"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right {{ isShowDropdownUser ? 'd-block' : 'd-none' }}">
-                    <span class="dropdown-item cursor-pointer"><i class="ri-user-line align-middle mr-1"></i>Cập nhật thông tin</span>
+                    <span routerLink="/admin/account/update" class="dropdown-item cursor-pointer"><i class="ri-user-line align-middle mr-1"></i>Cập nhật thông tin</span>
                     <div class="dropdown-divider"></div>
                     <span class="dropdown-item text-danger cursor-pointer logout-button" (click)="handleOnLogout()"><i class="ri-shut-down-line align-middle mr-1 text-danger"></i>Đăng xuất</span>
                 </div>

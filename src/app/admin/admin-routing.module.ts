@@ -50,6 +50,10 @@ const routes: Routes = [
     loadChildren: () => import('./components/config/config.module').then((m) => m.ConfigModule),
   },
   {
+    path: 'account',
+    loadChildren: () => import('./components/account/account.module').then((m) => m.AccountModule),
+  },
+  {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
