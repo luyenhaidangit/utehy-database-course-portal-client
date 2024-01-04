@@ -36,7 +36,6 @@ export class LoginComponent {
         localStorage.setItem('user', JSON.stringify({ token: response.data }));
 
         this.userService.getUserInfo().subscribe(responseUser => {
-          console.log(responseUser);
           if(response.status){
             this.authService.setAuthData(responseUser.data);
             this.router.navigate(['/admin/dashboard']);
