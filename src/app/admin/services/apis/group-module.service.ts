@@ -11,4 +11,8 @@ export class GroupModuleService {
   getGroupModules(request: any): Observable<any> {
     return this.httpAdminLoading.get('group-module/get', request);
   }
+
+  createGroupModules(request: any): Observable<any> {
+    return this.httpAdminLoading.post('group-module/create', request);
+  }
 }

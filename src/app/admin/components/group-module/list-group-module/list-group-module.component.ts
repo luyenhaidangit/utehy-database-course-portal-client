@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, TemplateRef } from '@angular/core';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import groupModuleConstant from 'src/app/admin/constants/group-module.constant';
 import { GroupModuleService } from 'src/app/admin/services/apis/group-module.service';
@@ -15,6 +17,8 @@ export class ListGroupModuleComponent {
     private groupModuleService: GroupModuleService,
     private route: ActivatedRoute,
     private router: Router,
+    private modalService: BsModalService,
+    private ngxToastr: NgxToastrService
   ) { }
 
   ngOnInit(){
@@ -108,4 +112,75 @@ export class ListGroupModuleComponent {
       });
     });
   }
+
+  //Add group module
+  public groupModule: any = {
+    semester: 0,
+    teacherId: 0,
+    status: true
+  };
+
+  public validateGroupModule: any = {
+    touchSemester: false,
+  }
+
+  public createGroupModuleModalRef?: BsModalRef;
+  @ViewChild('createGroupModuleTemplate') createGroupModuleTemplate!: TemplateRef<any>;
+
+  public handleOpenCreateGroupModuleModal(): void{
+    this.createGroupModuleModalRef = this.modalService.show(this.createGroupModuleTemplate,
+    Object.assign({}, { class: 'modal-dialog modal-lg modal-dialog-scrollable' }));
+
+    this.createGroupModuleModalRef.onHidden?.subscribe(() => {
+        this.groupModule = {
+          semester: 0,
+          teacherId: 0,
+          status: true
+        };
+    });
+  }
+
+  public validateForm(): boolean {
+    return Object.values(this.validateGroupModule).some(value => value === false || value === null || value === undefined);
+  }
+
+  public handleOnSubmitCreateGroupModule(): void{
+    const request = {
+      ...this.groupModule,
+      semester: +this.groupModule.semester,
+      teacherId: +this.groupModule.teacherId,
+      year: +this.groupModule.year
+    }
+
+    this.groupModuleService.createGroupModules(request).subscribe((result: any) => {
+      if(result.status){
+        this.ngxToastr.success(result.message,'',{
+          progressBar: true
+        });
+        this.createGroupModuleModalRef?.hide();
+
+        this.route.queryParams.subscribe(params => {
+          const request = {
+            ...params,
+          };
+    
+          this.queryParameters = {
+            ...params,
+            teacherId: params['teacherId'] ? params['teacherId'] : 0,
+            semester: params['semester'] ? params['semester'] :  0,
+            status: params['status'] ? params['status'] : 0,
+            year: params['year'] ? params['year'] : null,
+          };
+    
+          this.getGroupModules(request);
+        });
+      }
+    },error => {
+      console.log(error);
+      this.ngxToastr.error(error.error.message,'',{
+        progressBar: true
+      });
+    });
+  }
+
 }
