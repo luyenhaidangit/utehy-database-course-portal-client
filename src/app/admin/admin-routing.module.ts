@@ -63,6 +63,10 @@ const routes: Routes = [
     redirectTo: 'dashboard',
     pathMatch: 'full',
   },
+  {
+    path: 'group-module',
+    loadChildren: () => import('./components/group-module/group-module.module').then((m) => m.GroupModuleModule),
+  },
 ];
 
 @NgModule({

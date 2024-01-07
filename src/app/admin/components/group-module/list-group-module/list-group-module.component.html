@@ -1,0 +1,130 @@
+<div class="row">
+    <div class="col-12">
+       <div
+          class="page-title-box d-flex align-items-center justify-content-between"
+          >
+          <h4 class="mb-0">Quản lý nhóm học phần</h4>
+          <div class="page-title-right">
+             <ol class="breadcrumb m-0">
+                <li
+                   routerLink="/admin/dashboard"
+                   class="breadcrumb-item d-flex align-items-center"
+                   >
+                   <span>Trang chủ</span>
+                   <i class="breadcrumb-item-arrow fa-solid fa-angle-right"></i>
+                </li>
+                <li class="breadcrumb-item active">
+                    <span>Quản lý nhóm học phần</span>
+                 </li>
+             </ol>
+          </div>
+       </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="group-action__left col-xl-10 col-md-9 col-sm-12">
+        <div class="row">
+            <div class="form-group col-md-2">
+                <input
+                   class="form-control"
+                   type="text"
+                   placeholder="Tên nhóm"
+                   [(ngModel)]="queryParameters.name"
+                   />
+            </div>
+            <div class="form-group col-md-2">
+                <input
+                   class="form-control"
+                   type="number"
+                   placeholder="Năm học"
+                   [(ngModel)]="queryParameters.year"
+                   />
+            </div>
+            <div class="form-group col-md-3">
+                <select class="custom-select"  [(ngModel)]="queryParameters.teacherId">
+                    <option [selected]="queryParameters.teacherId === null || queryParameters.semester === 0" [ngValue]="0">Giáo viên</option>
+                    <option *ngFor="let teacher of teachers;" value="{{ teacher.id }}">{{ teacher.teacherId }}-{{ teacher.name }}</option>
+                </select>
+             </div>
+            <div class="form-group col-md-2">
+                <select class="custom-select"  [(ngModel)]="queryParameters.semester">
+                    <option [selected]="queryParameters.semester === null || queryParameters.semester === 0" [ngValue]="0">Kỳ học</option>
+                    <option *ngFor="let semester of constant.groupModule.semesters;" value="{{ semester.key }}">{{ semester.value }}</option>
+                </select>
+             </div>
+             <div class="form-group col-md-2">
+                <select class="custom-select"  [(ngModel)]="queryParameters.status">
+                    <option [selected]="queryParameters.status === null || queryParameters.status === 0" [ngValue]="0">Trạng thái</option>
+                    <option *ngFor="let status of constant.groupModule.status;" value="{{ status.key }}">{{ status.value }}</option>
+                </select>
+             </div>
+             <div class="form-group col-md-1">
+                <button (click)="handleSearchGroupModule()"
+                   type="button"
+                   class="btn btn-primary waves-effect waves-light"
+                   >
+                <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+             </div>
+        </div>
+    </div>
+     <div class="group-action__right col-xl-2 col-md-3 col-sm-12">
+        <button
+           type="button"
+           class="btn btn-success waves-effect waves-light"
+           >
+        <i class="fa-solid fa-plus mr-1"></i> Thêm mới
+        </button>
+     </div>
+</div>
+
+<div class="row">
+    <ng-container *ngIf="groupModules.length > 0">
+        <div *ngFor="let groupModule of groupModules;" class="col-sm-6 col-lg-6 col-xl-4 mb-4">
+            <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title block-class-name">{{ groupModule.name }}</h3>
+                <div class="block-options">
+                    <div class="dropdown">
+                    <button type="button" class="btn btn-light module__dropdown" id="dropdown-default-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-id="2">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
+                    <div class="dropdown-menu fs-sm" aria-labelledby="dropdown-default-light" style="">
+                        <a class="nav-main-link dropdown-item manhom" href="module/detail/2">
+                            <i class="nav-main-link-icon si si-info me-2 text-dark"></i>
+                            <span class="nav-main-link-name fw-normal">Danh sách sinh viên</span>
+                        </a>
+                        <a class="nav-main-link dropdown-item btn-update-group show" href="javascript:void(0)" data-id="2" data-role="hocphan" data-action="update">
+                            <i class="nav-main-link-icon si si-pencil me-2 text-dark"></i>
+                            <span class="nav-main-link-name fw-normal">Sửa thông tin</span>
+                        </a>
+                        <a class="nav-main-link dropdown-item btn-hide-group" href="javascript:void(0)" data-id="2">
+                            <i class="nav-main-link-icon si si-eye me-2 text-dark"></i>
+                            <span class="nav-main-link-name fw-normal">Ẩn nhóm</span>
+                        </a>
+                        <a class="nav-main-link dropdown-item btn-delete-group show" href="javascript:void(0)" data-id="2" data-role="hocphan" data-action="delete">
+                            <i class="nav-main-link-icon si si-trash me-2 text-danger"></i>
+                            <span class="nav-main-link-name fw-normal text-danger">Xoá nhóm</span>
+                        </a>
+                    </div>
+                    </div>
+                </div>
+        </div>
+        <div class="block-content">
+            <p class="block-class-note">
+                {{ groupModule.description }}
+                <span class="ms-3 badge {{ groupModule.status ? 'badge-success' : 'badge-danger' }}">{{ groupModule.status ? 'Hoạt động' : 'Không hoạt động' }}</span>
+            </p>
+            <p>Học kỳ {{ groupModule.semester }} - Năm học {{ groupModule.year}}</p>
+            <p *ngIf="groupModule.teacher" class="Si-So">Giáo viên: <span>{{ groupModule.teacher.user.name }}</span></p>
+            <p class="Si-So">Sĩ số: <span>{{ groupModule.studentGroupModules.length }}</span></p>
+        </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="!(groupModules.length > 0)">
+        <div class="d-flex justify-content-center my-4">Không có bản ghi nào!</div>
+    </ng-container>
+</div>

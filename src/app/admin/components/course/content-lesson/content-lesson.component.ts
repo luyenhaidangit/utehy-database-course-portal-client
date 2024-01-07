@@ -10,7 +10,7 @@ import orderConstant from '../../../constants/orderConstant';
 import sortConstant from '../../../constants/sortConstant';
 import systemConfig from '../../../configs/system.config';
 import animationConstant from '../../../constants/animation.constant';
-import { ContentLessonService } from 'src/app/admin/services/apis/content-lesson.service copy';
+import { ContentLessonService } from 'src/app/admin/services/apis/content-lesson.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
