@@ -19,6 +19,9 @@ const groupModuleConstant = {
             value: 'Kỳ 2'
         },
     ],
+    file:{
+        studentsExport: 'DanhSachSinhVien.xlsx'
+    }
 };
 
 export default groupModuleConstant;

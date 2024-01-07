@@ -6,6 +6,8 @@ import orderConstant from 'src/app/admin/constants/orderConstant';
 import { GroupModuleService } from 'src/app/admin/services/apis/group-module.service';
 import systemConfig from 'src/app/admin/configs/system.config';
 import sortConstant from 'src/app/admin/constants/sortConstant';
+import fileConstant from 'src/app/admin/constants/file.constant';
+import groupModuleConstant from 'src/app/admin/constants/group-module.constant';
 
 @Component({
   selector: 'app-student-group-module',
@@ -77,7 +79,9 @@ export class StudentGroupModuleComponent {
 
   public constant: any = {
     order: orderConstant,
-    sort: sortConstant
+    sort: sortConstant,
+    file: fileConstant,
+    groupModule: groupModuleConstant
   }
 
   public getStudentsGroupModule(request: any): void{
@@ -234,5 +238,22 @@ export class StudentGroupModuleComponent {
     }
 
     return phoneNumber;
-}
+  }
+
+  public exportStudents(): void{
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      
+      this.groupModuleService.exportExcelStudents({id: id}).subscribe((result: Blob) => {
+        console.log(result)
+        const blob = new Blob([result], { type: this.constant.file.mimes.spreadsheetml });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = this.constant.groupModule.file.studentsExport;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    });
+  }
 }

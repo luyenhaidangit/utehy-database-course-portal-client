@@ -35,9 +35,9 @@
           <div class="card-body">
              <div class="group-action">
                 <div class="row">
-                   <div class="group-action__left col-xl-10 col-md-9 col-sm-12">
+                   <div class="group-action__left col-xl-6 col-md-9 col-sm-12">
                       <div class="row">
-                         <div class="form-group col-md-4">
+                         <div class="form-group col-md-8">
                             <input
                                class="form-control"
                                type="text"
@@ -55,14 +55,22 @@
                          </div>
                       </div>
                    </div>
-                   <div class="group-action__right col-xl-2 col-md-3 col-sm-12">
-                      <button
-                         type="button"
-                         class="btn btn-success waves-effect waves-light"
-                         >
-                      <i class="fa-solid fa-plus mr-1"></i> Thêm mới
+                   <div class="group-action__right col-xl-6 col-md-3 col-sm-12">
+                        <button (click)="exportStudents()" type="button" class="btn btn-success waves-effect waves-light">
+                            <i class="fa-solid fa-file-arrow-down mr-1"></i> Xuất DSSV
+                        </button>
+                        <button type="button" class="btn btn-success waves-effect waves-light ml-2">
+                            <i class="fa-solid fa-file-arrow-down mr-1"></i> Xuất bảng điểm
+                        </button>
+                        <button type="button" class="btn btn-success waves-effect waves-light ml-2">
+                            <i class="fa-solid fa-plus mr-1"></i> Thêm mới
+                        </button>
+                    </div>
+                   <!-- <div class="group-action__right col-xl-2 col-md-3 col-sm-12">
+                      <button type="button" class="btn btn-success waves-effect waves-light">
+                        <i class="fa-solid fa-plus mr-1"></i> Thêm mới
                       </button>
-                   </div>
+                   </div> -->
                    <div class="group-action__right col-xl-2 col-md-4 col-sm-12">
                      <button
                         [@fadeInOut]="selectedBanners.length > 0 ? 'visible' : 'hidden'"
@@ -75,9 +83,12 @@
                 </div>
              </div>
              
-            <div class="alert alert-primary mb-0" role="alert">
-                <i class="fa-solid fa-graduation-cap"></i>
-                {{ groupModule.name }} - Năm học {{ groupModule.year }} - Học kỳ {{ groupModule.semester }}
+            <div class="alert alert-primary mb-0 d-flex justify-content-between" role="alert">
+                <div> 
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    {{ groupModule.name }} - Năm học {{ groupModule.year }} - Học kỳ {{ groupModule.semester }}
+                </div>
+                <div>Sĩ số: {{ groupModule?.studentGroupModules?.length }}</div>
             </div>
 
              <div class="table-data overflow-auto">

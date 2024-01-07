@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpAdminLoadingService } from 'src/app/shared/services/https/http-admin-loading.service';
@@ -6,7 +7,7 @@ import { HttpAdminLoadingService } from 'src/app/shared/services/https/http-admi
   providedIn: 'root', 
 })
 export class GroupModuleService {
-  constructor(private httpAdminLoading: HttpAdminLoadingService) { }
+  constructor(private httpAdminLoading: HttpAdminLoadingService, private http: HttpClient) { }
 
   getGroupModules(request: any): Observable<any> {
     return this.httpAdminLoading.get('group-module/get', request);
@@ -34,5 +35,13 @@ export class GroupModuleService {
 
   getGroupModule(request: any): Observable<any> {
     return this.httpAdminLoading.get('group-module/get-by-id', request);
+  }
+
+  exportExcelStudents(request: any): Observable<any> {
+    return this.httpAdminLoading.getBlob('group-module/export-excel-students', request);
+    // return this.http.get(`https://localhost:7038/api/admin/group-module/export-excel-students`, {
+    //   responseType: 'blob', // Set responseType to 'blob' to handle binary data
+    //   params: request,      // Pass any query parameters if needed
+    // });
   }
 }
