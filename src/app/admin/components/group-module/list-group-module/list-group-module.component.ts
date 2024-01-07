@@ -33,8 +33,6 @@ export class ListGroupModuleComponent {
         year: params['year'] ? params['year'] : null,
       };
 
-      console.log(this.queryParameters)
-
       this.getGroupModules(request);
     });
   }
@@ -93,7 +91,6 @@ export class ListGroupModuleComponent {
 
   public handleSearchGroupModule(): void{
     this.route.queryParams.subscribe(params => {
-      console.log(params,'f',this.queryParameters)
 
       const request = {
         ...params,
