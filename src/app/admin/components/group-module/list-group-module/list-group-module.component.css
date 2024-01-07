@@ -33,8 +33,6 @@
     overflow-x: visible;
 }
 
-/* .module__dropdown{
-    color: #1c1f23;
-    background-color: #d5d8de;
-    border-color: #d5d8de
-} */
+.dropdown-group-module-icon{
+    min-width: 22px;
+}

@@ -85,29 +85,33 @@
             <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title block-class-name">{{ groupModule.name }}</h3>
-                <div class="block-options">
-                    <div class="dropdown">
-                    <button type="button" class="btn btn-light module__dropdown" id="dropdown-default-light" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-id="2">
-                        <i class="fa-solid fa-gear"></i>
+                <!-- <div class="btn-group" dropdown>
+                    <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                            aria-controls="dropdown-basic">
+                      Button dropdown <span class="caret"></span>
                     </button>
-                    <div class="dropdown-menu fs-sm" aria-labelledby="dropdown-default-light" style="">
-                        <a class="nav-main-link dropdown-item manhom" href="module/detail/2">
-                            <i class="nav-main-link-icon si si-info me-2 text-dark"></i>
-                            <span class="nav-main-link-name fw-normal">Danh sách sinh viên</span>
-                        </a>
-                        <a class="nav-main-link dropdown-item btn-update-group show" href="javascript:void(0)" data-id="2" data-role="hocphan" data-action="update">
-                            <i class="nav-main-link-icon si si-pencil me-2 text-dark"></i>
-                            <span class="nav-main-link-name fw-normal">Sửa thông tin</span>
-                        </a>
-                        <a class="nav-main-link dropdown-item btn-hide-group" href="javascript:void(0)" data-id="2">
-                            <i class="nav-main-link-icon si si-eye me-2 text-dark"></i>
-                            <span class="nav-main-link-name fw-normal">Ẩn nhóm</span>
-                        </a>
-                        <a class="nav-main-link dropdown-item btn-delete-group show" href="javascript:void(0)" data-id="2" data-role="hocphan" data-action="delete">
-                            <i class="nav-main-link-icon si si-trash me-2 text-danger"></i>
-                            <span class="nav-main-link-name fw-normal text-danger">Xoá nhóm</span>
-                        </a>
-                    </div>
+                    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                        role="menu" aria-labelledby="button-basic">
+                      <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+                      <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
+                      <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
+                      <li class="divider dropdown-divider"></li>
+                      <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+                      </li>
+                    </ul>
+                </div> -->
+                <div class="block-options" dropdown>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-light module__dropdown" id="button-basic" dropdownToggle aria-controls="dropdown-basic">
+                        <i class="fa-solid fa-gear"></i>
+                        </button>
+                        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                        role="menu" aria-labelledby="button-basic">
+                            <li role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-circle-info dropdown-group-module-icon"></i> Danh sách sinh viên</span></li>
+                            <li role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-pen dropdown-group-module-icon"></i> Sửa thông tin</span></li>
+                            <li role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-eye-slash dropdown-group-module-icon"></i> Ẩn nhóm</span></li>
+                            <li role="menuitem"><span class="dropdown-item cursor-pointer text-danger"><i class="fa-solid fa-trash dropdown-group-module-icon"></i> Xoá nhóm</span></li>
+                        </ul>
                     </div>
                 </div>
         </div>
