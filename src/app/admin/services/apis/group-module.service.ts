@@ -27,4 +27,12 @@ export class GroupModuleService {
   deleteGroupModule(request: any): Observable<any> {
     return this.httpAdminLoading.post('group-module/delete', request);
   }
+
+  getStudentsGroupModule(request: any): Observable<any> {
+    return this.httpAdminLoading.get('group-module/get-students', request);
+  }
+
+  getGroupModule(request: any): Observable<any> {
+    return this.httpAdminLoading.get('group-module/get-by-id', request);
+  }
 }

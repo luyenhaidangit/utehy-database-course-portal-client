@@ -5,11 +5,13 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { GroupModuleRoutingModule } from './group-module-routing.module';
 import { ListGroupModuleComponent } from './list-group-module/list-group-module.component';
+import { StudentGroupModuleComponent } from './student-group-module/student-group-module.component';
 
 
 @NgModule({
   declarations: [
-    ListGroupModuleComponent
+    ListGroupModuleComponent,
+    StudentGroupModuleComponent
   ],
   imports: [
     CommonModule,
