@@ -183,4 +183,77 @@ export class ListGroupModuleComponent {
     });
   }
 
+  //Edit group module
+  public editGroupModuleModalRef?: BsModalRef;
+  @ViewChild('editGroupModuleTemplate') editGroupModuleTemplate!: TemplateRef<any>;
+
+  public validateFormEdit(): boolean{
+    if(!this.groupModule.semester){
+      return false;
+    }
+
+    if(!this.groupModule.year){
+      return false;
+    }
+
+    if(!this.groupModule.name){
+      return false;
+    }
+
+    return true;
+  }
+
+  public handleOpenEditGroupModuleModal(groupModule: any): void{
+    this.groupModule = groupModule;
+
+    this.editGroupModuleModalRef = this.modalService.show(this.editGroupModuleTemplate,
+      Object.assign({}, { class: 'modal-dialog modal-lg modal-dialog-scrollable' }));
+  
+      this.editGroupModuleModalRef.onHidden?.subscribe(() => {
+          this.groupModule = {
+            semester: 0,
+            teacherId: 0,
+            status: true
+          };
+      });
+  }
+
+  public handleOnSubmitEditGroupModule(): void{
+    const request = {
+      ...this.groupModule,
+      semester: +this.groupModule.semester,
+      teacherId: +this.groupModule.teacherId,
+      year: +this.groupModule.year
+    }
+
+    this.groupModuleService.editGroupModules(request).subscribe((result: any) => {
+      if(result.status){
+        this.ngxToastr.success(result.message,'',{
+          progressBar: true
+        });
+        this.editGroupModuleModalRef?.hide();
+
+        this.route.queryParams.subscribe(params => {
+          const request = {
+            ...params,
+          };
+    
+          this.queryParameters = {
+            ...params,
+            teacherId: params['teacherId'] ? params['teacherId'] : 0,
+            semester: params['semester'] ? params['semester'] :  0,
+            status: params['status'] ? params['status'] : 0,
+            year: params['year'] ? params['year'] : null,
+          };
+    
+          this.getGroupModules(request);
+        });
+      }
+    },error => {
+      console.log(error);
+      this.ngxToastr.error(error.error.message,'',{
+        progressBar: true
+      });
+    });
+  }
 }

@@ -15,4 +15,8 @@ export class GroupModuleService {
   createGroupModules(request: any): Observable<any> {
     return this.httpAdminLoading.post('group-module/create', request);
   }
+
+  editGroupModules(request: any): Observable<any> {
+    return this.httpAdminLoading.post('group-module/edit', request);
+  }
 }
