@@ -19,4 +19,12 @@ export class GroupModuleService {
   editGroupModules(request: any): Observable<any> {
     return this.httpAdminLoading.post('group-module/edit', request);
   }
+
+  hideGroupModules(request: any): Observable<any> {
+    return this.httpAdminLoading.post('group-module/hide', request);
+  }
+  
+  deleteGroupModule(request: any): Observable<any> {
+    return this.httpAdminLoading.post('group-module/delete', request);
+  }
 }
