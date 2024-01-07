@@ -1,5 +1,6 @@
 const permissionConstant = {
-    student : "Student"
+    student : "Student",
+    admin : "Admin"
 };
     
 export default permissionConstant;

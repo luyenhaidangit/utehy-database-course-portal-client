@@ -10,8 +10,8 @@ const routes: Routes = [
     component: PostListComponent
   },
   {
-    path: ':slug',
-    canActivate: [EndsWithHtmlGuard],
+    path: ':id',
+    // canActivate: [EndsWithHtmlGuard],
     component: PostDetailComponent
   },
 ];

@@ -54,6 +54,10 @@ export class AuthService {
   }
 
   logout(): void {
+    //Chưa xong, handle call api huỷ token
+    // this.httpLoading.post(`auth/logout`, {});
+
+    localStorage.removeItem('user');
     this.isAuthenticated = false;
     this.userData = null;
   }

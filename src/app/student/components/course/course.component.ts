@@ -8,6 +8,7 @@ import { AuthComponent } from '../auth/auth.component';
 import { AuthService } from '../../services/api/auth.service';
 import { SharedComponentService } from '../../services/components/shared-component.service';
 import permissionConstant from 'src/app/shared/constants/permisson.constant';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-course',
@@ -17,7 +18,7 @@ import permissionConstant from 'src/app/shared/constants/permisson.constant';
 export class CourseComponent {
   //Init
   public isInitialized: boolean = false;
-  
+
   public config: any = {
     system: systemConfig
   };
@@ -26,30 +27,72 @@ export class CourseComponent {
     permisson: permissionConstant
   };
 
+  // chọn bài học và thay đổi video
+  currentVideoUrl: string =this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/XppBnms3aAk?si=H0PILoA-hYcbZ0wf') as string ;
+  selectedLessonContent: { lessonIndex: number, contentIndex: number } = { lessonIndex: -1, contentIndex: -1 };
+  selectLesson(lessonIndex: number, contentIndex: number,videoUrl:string): void {
+
+    this.selectedLessonContent = { lessonIndex, contentIndex };
+    this.currentVideoUrl=this.sanitizer.bypassSecurityTrustResourceUrl(this.getEmbedUrl(videoUrl)) as string;
+
+  }
+  //thay đổi video
+  selectLessonContent(videoUrl: string): void {
+
+    this.currentVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(videoUrl) as string;
+
+  }
+
+  getEmbedUrl(url:string): string {
+
+    const videoId = this.extractVideoIdFromUrl(url);
+    return `https://www.youtube.com/embed/${videoId}?si=XLV6AcT7_HwGsjjE`;
+
+  }
+
+  private extractVideoIdFromUrl(url: string): string {
+
+    const urlParams = new URLSearchParams(new URL(url).search);
+    return urlParams.get('v') || '';
+    
+  }
+
+
+
+
+
+
+
+
+
+
+
+
   constructor(
-    private route: ActivatedRoute, private router: Router, 
+    private route: ActivatedRoute, private router: Router,
     private ngxToastr: NgxToastrService,
     private courseService: CourseService,
-    private modalService: BsModalService, 
+    private modalService: BsModalService,
     public authService: AuthService,
-    public sharedComponentService: SharedComponentService
-  ) 
-  { }
+    public sharedComponentService: SharedComponentService,
+    private sanitizer: DomSanitizer
+  ) { }
 
   public ngOnInit() {
     this.authService.getChangeAuthEvent().subscribe((status) => {
-      if(!this.authService.isAuthenticated){
+      if (!this.authService.isAuthenticated) {
         this.getCourse();
-      } else{
+      } else {
         const slug = this.route.snapshot.paramMap.get('slug');
-  
+
         const request = {
           slug: slug
         };
-  
+
         this.getCourseLearningUser(request);
       }
     });
+
   }
 
   //Course
@@ -58,12 +101,13 @@ export class CourseComponent {
 
   private getCourse() {
     this.courseService.getCourseDatabase().subscribe((result: any) => {
-      if(result.status){
+      if (result.status) {
         this.isInitialized = true;
 
         this.course = result.data;
+        console.log('hay'+result.data);
 
-        if(this.course.lessons.length > 0){
+        if (this.course.lessons.length > 0) {
           this.course.lessons[0].collapse = true;
         }
 
@@ -72,21 +116,21 @@ export class CourseComponent {
         this.course.totalEstimatedStudyTime = this.getTotalEstimatedStudyTime(this.course);
       }
     },
-    (error) => {
-      console.log("Xảy ra lỗi", error);
-      this.isInitialized = false;
-    });
+      (error) => {
+        console.log("Xảy ra lỗi", error);
+        this.isInitialized = false;
+      });
   }
 
   private getCourseLearningUser(request: any) {
     this.courseService.getCourseLearningUser(request).subscribe((result: any) => {
-      if(result.status){
+      if (result.status) {
         this.isInitialized = true;
 
         this.course = result.data;
 
-        if(this.course.lessons.length > 0){
-          this.course.lessons[0].collapse = true;
+        if (this.course.lessons.length > 0) {
+          this.course.lessons[0].collapse = false;
         }
 
         this.course.numberLessonContent = this.getTotalNumberOfContents(this.course);
@@ -94,10 +138,10 @@ export class CourseComponent {
         this.course.totalEstimatedStudyTime = this.getTotalEstimatedStudyTime(this.course);
       }
     },
-    (error) => {
-      console.log("Xảy ra lỗi", error);
-      this.isInitialized = false;
-    });
+      (error) => {
+        console.log("Xảy ra lỗi", error);
+        this.isInitialized = false;
+      });
   }
 
   private getTotalNumberOfContents(course: any): number {
@@ -115,7 +159,7 @@ export class CourseComponent {
   private getTotalEstimatedStudyTime(course: any): string {
     let totalHours = 0;
     let totalMinutes = 0;
-  
+
     if (course && course.lessons) {
       for (const lesson of course.lessons) {
         if (lesson.lessonContents) {
@@ -127,7 +171,7 @@ export class CourseComponent {
         }
       }
     }
-  
+
     const formattedTime = this.formatTime(totalHours, totalMinutes);
     return formattedTime;
   }
@@ -160,25 +204,25 @@ export class CourseComponent {
   //Register course
   @ViewChild(AuthComponent) authComponent!: AuthComponent;
 
-  public handleOnRegisterCourse(){
-    if(!this.authService.isAuthenticated){
+  public handleOnRegisterCourse() {
+    if (!this.authService.isAuthenticated) {
       this.authComponent.openModal();
-    }else{
-      if(!this.course.isRegister){
+    } else {
+      if (!this.course.isRegister) {
         const slug = this.route.snapshot.paramMap.get('slug');
-  
+
         const request = {
           slug: slug
         };
-  
+
         this.courseService.registerCourseStudent(request).subscribe((result: any) => {
-          if(result.status){
+          if (result.status) {
             this.getCourseLearningUser(request);
           }
         },
-        (error) => {
-          console.log("Xảy ra lỗi", error);
-        });
+          (error) => {
+            console.log("Xảy ra lỗi", error);
+          });
       }
     }
   }

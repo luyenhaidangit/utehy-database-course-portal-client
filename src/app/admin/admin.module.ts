@@ -10,14 +10,24 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { VerticalMenuComponent } from './shared/components/vertical-menu/vertical-menu.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { RightSideBarComponent } from './shared/components/right-side-bar/right-side-bar.component';
+import { BannerComponent } from './components/banner/banner.component';
+import { GroupComponent } from './components/group/group.component';
+import { QuestionCategoryComponent } from './components/question-category/question-category.component';
+import { AddQuestionCategoryTreeComponent } from './components/question/add-question-category-tree/add-question-category-tree.component';
+import { ExamComponent } from './components/exam/exam.component';
 
 @NgModule({
-  declarations: [LayoutComponent, AdminComponent, HeaderComponent, VerticalMenuComponent, FooterComponent, RightSideBarComponent],
+  declarations: [LayoutComponent, AdminComponent, HeaderComponent, VerticalMenuComponent, FooterComponent, RightSideBarComponent, BannerComponent, GroupComponent, QuestionCategoryComponent, 
+    AddQuestionCategoryTreeComponent, ExamComponent
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     FormsModule,
-    CKEditorModule
+    CKEditorModule,
+  ],
+  exports: [
+    AddQuestionCategoryTreeComponent
   ],
 })
 export class AdminModule { }

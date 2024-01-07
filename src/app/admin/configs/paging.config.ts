@@ -20,3 +20,12 @@ export const DEFAULT_PER_PAGE_OPTIONS = [
         value: 100
     }
 ]
+
+const pagingConfig = {
+    default : {
+        pageIndex: 1,
+        pageSize: 10
+    }
+};
+
+export default pagingConfig;

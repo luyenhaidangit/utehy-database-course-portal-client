@@ -11,4 +11,7 @@ export class LessonService {
   getLessons(request: any = null): Observable<any> {
     return this.http.get('lesson/get', request);
   }
+  createLesson(request: any): Observable<any> {
+    return this.http.postFormData('lesson/create', request);
+  }
 }

@@ -4,6 +4,8 @@
           class="page-title-box d-flex align-items-center justify-content-between"
           >
           <h4 class="mb-0">Danh sách câu hỏi</h4>
+          <!-- <div>Import <input type="file" (change)="onTestChange($event)" /></div>
+          <button (click)="onTest()" class="btn btn-primary">Test</button> -->
           <div class="page-title-right">
              <ol class="breadcrumb m-0">
                 <li
@@ -107,7 +109,7 @@
 
                                  <div class="form-group col-md-4">
                                     <select class="custom-select" [(ngModel)]="search.type">
-                                        <option selected="" [ngValue]="0">Loại câu hỏi</option>
+                                        <option [selected]="search.type === null || search.type === 0" [ngValue]="0">Loại câu hỏi</option>
                                         <option *ngFor="let questionType of questionContant.types;" value="{{ questionType.key }}">{{ questionType.value }}</option>
                                     </select>
                                  </div>
@@ -165,7 +167,7 @@
                                    <span *ngIf="!(search?.orderBy === orderConstant.id)"><img src="../../../../../assets/sort.png" height="14.41" width="14.41" style="margin-top: -3px;" alt="icon-sort"></span>
                                  </th>
                                  <th>Tiêu đề</th>
-                                 <th>Phản hồi</th>
+                                 <th>Ghi chú</th>
                                  <th>Loại câu hỏi</th>
                                  <th>Danh mục câu hỏi</th>
                                  <th class="order-sort" (click)="onSortAndOrderChange(orderConstant.score)" [ngClass]="{'order-sort-active': search?.orderBy === orderConstant.score }">
@@ -231,7 +233,7 @@
                         <div class="per-page">
                            Hiển thị 
                            <select class="mx-1" (change)="onPerPageChange($event)">
-                              <option *ngFor="let item of config.perPageOptions;" [ngValue]="item.value" [attr.selected]="item.value === pageSize ? true : null">{{ item.label }}</option>
+                              <option *ngFor="let item of config.perPageOptions;" [ngValue]="item.value" [attr.selected]="item.value === +search.pageSize ? true : null">{{ item.label }}</option>
                            </select>
                            bản ghi
                         </div>

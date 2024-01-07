@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/student/services/api/auth.service';
 
 @Component({
   selector: 'app-footer',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {
+  constructor(private authService: AuthService){
 
+  }
+
+  handleOnLogOut(){
+    this.authService.logout();
+
+    
+  }
 }
