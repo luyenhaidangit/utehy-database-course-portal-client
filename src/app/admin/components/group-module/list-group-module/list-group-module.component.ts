@@ -1,6 +1,7 @@
 import { Component, ViewChild, TemplateRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import groupModuleConstant from 'src/app/admin/constants/group-module.constant';
 import { GroupModuleService } from 'src/app/admin/services/apis/group-module.service';
@@ -183,4 +184,199 @@ export class ListGroupModuleComponent {
     });
   }
 
+  //Edit group module
+  public editGroupModuleModalRef?: BsModalRef;
+  @ViewChild('editGroupModuleTemplate') editGroupModuleTemplate!: TemplateRef<any>;
+
+  public validateFormEdit(): boolean{
+    if(!this.groupModule.semester){
+      return false;
+    }
+
+    if(!this.groupModule.year){
+      return false;
+    }
+
+    if(!this.groupModule.name){
+      return false;
+    }
+
+    return true;
+  }
+
+  public handleOpenEditGroupModuleModal(groupModule: any): void{
+    this.groupModule = groupModule;
+
+    this.editGroupModuleModalRef = this.modalService.show(this.editGroupModuleTemplate,
+      Object.assign({}, { class: 'modal-dialog modal-lg modal-dialog-scrollable' }));
+  
+      this.editGroupModuleModalRef.onHidden?.subscribe(() => {
+          this.groupModule = {
+            semester: 0,
+            teacherId: 0,
+            status: true
+          };
+      });
+  }
+
+  public handleOnSubmitEditGroupModule(): void{
+    const request = {
+      ...this.groupModule,
+      semester: +this.groupModule.semester,
+      teacherId: +this.groupModule.teacherId,
+      year: +this.groupModule.year
+    }
+
+    this.groupModuleService.editGroupModules(request).subscribe((result: any) => {
+      if(result.status){
+        this.ngxToastr.success(result.message,'',{
+          progressBar: true
+        });
+        this.editGroupModuleModalRef?.hide();
+
+        this.route.queryParams.subscribe(params => {
+          const request = {
+            ...params,
+          };
+    
+          this.queryParameters = {
+            ...params,
+            teacherId: params['teacherId'] ? params['teacherId'] : 0,
+            semester: params['semester'] ? params['semester'] :  0,
+            status: params['status'] ? params['status'] : 0,
+            year: params['year'] ? params['year'] : null,
+          };
+    
+          this.getGroupModules(request);
+        });
+      }
+    },error => {
+      console.log(error);
+      this.ngxToastr.error(error.error.message,'',{
+        progressBar: true
+      });
+    });
+  }
+
+  //Hide group module
+  public handleHideGroupModule(id: number){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        cancelButton: "btn btn-danger ml-2",
+        confirmButton: "btn btn-success",
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: `Bạn có chắc muốn ẩn nhóm có Id ${id}?`,
+      text: "Bản ghi sẽ được chuyển sang trạng thái ngừng hoạt động!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xác nhận",
+      cancelButtonText: "Bỏ qua",
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const request = {
+          id: +id
+        }
+
+        this.groupModuleService.hideGroupModules(request).subscribe((result: any) => {
+          if(result.status){
+            this.ngxToastr.success(result.message,'',{
+              progressBar: true
+            });
+           
+            swalWithBootstrapButtons.fire({
+              title: "Ẩn thành công!",
+              text: `Bản ghi nhóm học phần có Id ${id} đã bị ẩn!`,
+              icon: "success"
+            });
+    
+            this.route.queryParams.subscribe(params => {
+              const request = {
+                ...params,
+              };
+        
+              this.queryParameters = {
+                ...params,
+                teacherId: params['teacherId'] ? params['teacherId'] : 0,
+                semester: params['semester'] ? params['semester'] :  0,
+                status: params['status'] ? params['status'] : 0,
+                year: params['year'] ? params['year'] : null,
+              };
+        
+              this.getGroupModules(request);
+            });
+          }
+        },error => {
+          console.log(error);
+          this.ngxToastr.error(error.error.message,'',{
+            progressBar: true
+          });
+        });
+      }
+    });
+  }
+
+  //Delete group module
+  public handleDeleteGroupModule(id: number){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        cancelButton: "btn btn-danger ml-2",
+        confirmButton: "btn btn-success",
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: `Bạn có chắc muốn xoá nhóm có Id ${id}?`,
+      text: "Sau khi xoá bản sẽ không thể khôi phục dữ liệu!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xác nhận",
+      cancelButtonText: "Bỏ qua",
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const request = {
+          id: +id
+        }
+
+        this.groupModuleService.deleteGroupModule(request).subscribe((result: any) => {
+          if(result.status){
+            this.ngxToastr.success(result.message,'',{
+              progressBar: true
+            });
+           
+            swalWithBootstrapButtons.fire({
+              title: "Xoá thành công!",
+              text: `Bản ghi nhóm học phần có Id ${id} đã bị xoá!`,
+              icon: "success"
+            });
+    
+            this.route.queryParams.subscribe(params => {
+              const request = {
+                ...params,
+              };
+        
+              this.queryParameters = {
+                ...params,
+                teacherId: params['teacherId'] ? params['teacherId'] : 0,
+                semester: params['semester'] ? params['semester'] :  0,
+                status: params['status'] ? params['status'] : 0,
+                year: params['year'] ? params['year'] : null,
+              };
+        
+              this.getGroupModules(request);
+            });
+          }
+        },error => {
+          console.log(error);
+          this.ngxToastr.error(error.error.message,'',{
+            progressBar: true
+          });
+        });
+      }
+    });
+  }
 }

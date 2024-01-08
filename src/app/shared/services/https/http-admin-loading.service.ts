@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
@@ -54,6 +54,25 @@ export class HttpAdminLoadingService {
     this.loadingUi.show(loadingUiConstant.type.dualRing);
 
     return this.http.get(`${this.baseUrl}/${endpoint}${queryParams ? `?${queryParams}` : ''}`, { headers }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        this.handleErrorResponse(error);
+        return throwError(error);
+      }),
+      finalize(() => {
+        this.loadingUi.hide();
+      })
+    );
+  }
+
+  public getBlob(endpoint: string, data: any): Observable<Blob> {
+    const headers = this.createHeaders();
+    const queryParams = this.buildQueryParams(data);
+    this.loadingUi.show(loadingUiConstant.type.dualRing);
+
+    return this.http.get(`${this.baseUrl}/${endpoint}${queryParams ? `?${queryParams}` : ''}`, {
+      headers,
+      responseType: 'blob' 
+    }).pipe(
       catchError((error: HttpErrorResponse) => {
         this.handleErrorResponse(error);
         return throwError(error);

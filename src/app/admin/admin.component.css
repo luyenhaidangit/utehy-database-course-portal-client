@@ -220,3 +220,8 @@ button[type="submit"] {
     max-width: 100px;
 }
 
+/* button */
+.group-action__right button{
+    height: fit-content !important;
+}
+

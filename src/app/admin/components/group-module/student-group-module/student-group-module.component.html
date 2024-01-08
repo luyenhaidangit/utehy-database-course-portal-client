@@ -1,0 +1,231 @@
+<div class="row">
+    <div class="col-12">
+       <div
+          class="page-title-box d-flex align-items-center justify-content-between"
+          >
+          <h4 class="mb-0">Danh sách sinh viên nhóm học phần</h4>
+          <div class="page-title-right">
+             <ol class="breadcrumb m-0">
+                <li
+                   routerLink="/admin/dashboard"
+                   class="breadcrumb-item d-flex align-items-center"
+                   >
+                   <span>Trang chủ</span>
+                   <i class="breadcrumb-item-arrow fa-solid fa-angle-right"></i>
+                </li>
+                <li
+                    [routerLink]="['/admin/group-module']" [queryParams]="{ status: 'true' }"
+                    class="breadcrumb-item d-flex align-items-center"
+                   >
+                   <span>Quản lý nhóm học phần</span>
+                   <i class="breadcrumb-item-arrow fa-solid fa-angle-right"></i>
+                </li>
+                <li class="breadcrumb-item active">
+                   <span>Danh sách sinh viên</span>
+                </li>
+             </ol>
+          </div>
+       </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+       <div class="card">
+          <div class="card-body">
+             <div class="group-action">
+                <div class="row">
+                   <div class="group-action__left col-xl-6 col-md-9 col-sm-12">
+                      <div class="row">
+                         <div class="form-group col-md-8">
+                            <input
+                               class="form-control"
+                               type="text"
+                               placeholder="Tên hoặc email"
+                               [(ngModel)]="queryParameters.nameOrEmail"
+                               />
+                         </div>
+                         <div class="form-group col-md-1">
+                            <button (click)="handleSearchStudents()"
+                               type="button"
+                               class="btn btn-primary waves-effect waves-light"
+                               >
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                         </div>
+                      </div>
+                   </div>
+                   <div class="group-action__right col-xl-6 col-md-3 col-sm-12 d-flex justify-content-end">
+                        <button (click)="exportStudents()" type="button" class="btn btn-success waves-effect waves-light">
+                            <i class="fa-solid fa-file-arrow-down mr-1"></i> Xuất DSSV
+                        </button>
+                        <button (click)="exportScoreStudents()" type="button" class="btn btn-success waves-effect waves-light ml-2">
+                            <i class="fa-solid fa-file-arrow-down mr-1"></i> Xuất bảng điểm
+                        </button>
+                        <button (click)="handleOpenAddStudentModal()" type="button" class="btn btn-success waves-effect waves-light ml-2">
+                            <i class="fa-solid fa-plus mr-1"></i> Thêm mới
+                        </button>
+                    </div>
+                   <div class="group-action__right col-xl-2 col-md-4 col-sm-12">
+                     <button
+                        [@fadeInOut]="selectedBanners.length > 0 ? 'visible' : 'hidden'"
+                        type="button"
+                        class="btn btn-danger waves-effect waves-light align-items-center"
+                        >
+                        <i class="fa-solid fa-trash mr-1"></i> Xoá {{ selectedBanners.length}} bản ghi
+                     </button>
+                  </div>
+                </div>
+             </div>
+             
+            <div class="alert alert-primary mb-0 d-flex justify-content-between" role="alert">
+                <div> 
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    {{ groupModule.name }} - Năm học {{ groupModule.year }} - Học kỳ {{ groupModule.semester }}
+                </div>
+                <div>Sĩ số: {{ groupModule?.studentGroupModules?.length }}</div>
+            </div>
+
+             <div class="table-data overflow-auto">
+                <table id="datatable" class="table table-bordered dt-responsive nowrap mt-3" style="border-collapse: collapse; border-spacing: 0; width: 100%">
+                   <thead class="thead-light">
+                      <tr>
+                            <th class="selected-col">
+                                <div class="custom-control custom-checkbox">
+                                    <input (change)="selectAllStudents($event)" [checked]="selectedBanners.length === students.length && selectedBanners.length > 0" type="checkbox" class="custom-control-input" id="select-box" title="select-box" placeholder="select-box">
+                                    <label class="custom-control-label" for="select-box">&nbsp;</label>
+                                </div>
+                            </th>
+                           <th class="order-sort" (click)="handleOnSortAndOrderChange(constant.order.id)" [ngClass]="{'order-sort-active': paging?.orderBy === constant.order.id }">
+                              Id
+                              <span *ngIf="paging?.orderBy === constant.order.id" class="order-sort-group test-{{paging?.orderBy}}">
+                                 <i *ngIf="paging?.sortBy === constant.sort.desc" class="bi bi-sort-down"></i>
+                                 <i *ngIf="paging?.sortBy === constant.sort.asc" class="bi bi-sort-up"></i>
+                              </span>
+                              <span *ngIf="!(paging?.orderBy === constant.order.id)" class="test-{{paging?.orderBy}}"><img src="../../../../../assets/sort.png" height="14.41" width="14.41" style="margin-top: -3px;" alt="icon-sort"></span>
+                           </th>
+                           <th>Mã sinh viên</th>
+                           <th>Họ tên / Email</th>
+                            <th>Số diện thoại</th>
+                            <th>Hành động</th>
+                      </tr>
+                   </thead>
+                   <tbody>
+                     <ng-container *ngIf="students.length > 0">
+                        <tr *ngFor="let student of students;">
+                           <td>
+                              <div class="custom-control custom-checkbox">
+                                  <input (change)="handleSelectItem(student?.id)" id="select-box-{{ student?.id }}" [checked]="isSelected(student?.id)" type="checkbox" class="custom-control-input">
+                                  <label class="custom-control-label" for="select-box-{{ student?.id }}">&nbsp;</label>
+                              </div>
+                           </td>
+                            <td>{{ student?.id }}</td>
+                            <td>{{ student?.studentId }}</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div>
+                                        <img src="{{ config.baseUrl + student?.user.avatarUrl }}" alt="Header Avatar" class="rounded-circle header-profile-user">
+                                    </div>
+                                    <div>
+                                        <span>{{ student?.user.name }}</span>
+                                        <br/>
+                                        <span class="text-muted">{{ student?.user.email }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                {{ formatPhoneNumber(student?.user.phoneNumber) }}
+                            </td>
+                            <td>
+                               <span class="text-info cursor-pointer"><i class="fa-solid fa-eye"></i></span>
+                               <span class="text-warning cursor-pointer ml-2"><i class="fa-solid fa-book"></i></span>
+                               <span class="text-danger cursor-pointer ml-2"><i class="fa-solid fa-ban"></i></span>
+                            </td>
+                         </tr>
+                    </ng-container>
+                    <ng-container *ngIf="!(students.length > 0)">
+                        <tr>
+                           <td class="text-center" colspan="8">Không có bản ghi nào</td>
+                        </tr>
+                    </ng-container>
+                   </tbody>
+                </table>
+             </div>
+
+             <div class="table-filter d-flex justify-content-between align-items-center mt-2">
+               <div class="page-index">
+                  <ul class="pagination pagination-rounded">
+                     <li class="page-item" (click)="handleOnChangePage(paging.pageIndex - 1)" [class.disabled]="paging.pageIndex === 1 || students.length === 0">
+                       <span class="page-link"><i class="fa-solid fa-angle-left"></i></span>
+                     </li>
+                   
+                     <ng-container *ngIf="students.length > 0">
+                       <li *ngFor="let page of [].constructor(paging.totalPages); let i = index" class="page-item" (click)="handleOnChangePage(i + 1)" [class.active]="paging.pageIndex === i + 1">
+                         <span class="page-link">{{ i + 1 }}</span>
+                       </li>
+                     </ng-container>
+                   
+                     <li class="page-item" (click)="handleOnChangePage(paging.pageIndex + 1)" [class.disabled]="paging.pageIndex === paging.totalPages || students.length === 0">
+                       <span class="page-link"><i class="fa-solid fa-angle-right"></i></span>
+                     </li>
+                   </ul>
+               </div>
+               <div class="per-page">
+                  Hiển thị 
+                  <select class="mx-1" (change)="handleOnPerPageChange($event)">
+                     <option *ngFor="let item of config.perPageOptions;" [ngValue]="item.value" [attr.selected]="item.value === paging.pageSize ? true : null">{{ item.label }}</option>
+                  </select>
+                  / {{ paging.totalRecords }} tổng số bản ghi
+               </div>
+             </div>
+          </div>
+       </div>
+    </div>
+</div>
+
+<ng-template #addStudentModalTemplate>
+   <div class="modal-header border-bottom-0">
+      <ul class="nav nav-tabs nav-tabs-custom nav-justified d-inline-flex" role="tablist">
+         <li class="nav-item cursor-pointer">
+             <a class="nav-link {{ statusAddStudent === 1 ? 'active' : ''}}">
+                 <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                 <span class="d-none d-sm-block">Thêm thủ công</span> 
+             </a>
+         </li>
+         <li class="nav-item cursor-pointer">
+            <a class="nav-link">
+                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                <span class="d-none d-sm-block">Tham gia bằng mã mời</span> 
+            </a>
+        </li>
+        <li class="nav-item cursor-pointer">
+            <a class="nav-link">
+               <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+               <span class="d-none d-sm-block">Thêm từ file excel</span> 
+            </a>
+         </li>
+     </ul>
+
+       <!-- <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Thêm nhóm học phần</h5> -->
+       <button type="button" class="close" (click)="addStudentModalRef?.hide()">
+           <span aria-hidden="true">&times;</span>
+       </button>
+   </div>
+
+   <div class="modal-body pt-1">
+       <ng-container>
+         <div id="addSvThuCong">
+            <div class="mb-3">
+                <label for="mssv" class="form-label">Mã sinh viên</label>
+                <input [(ngModel)]="idStudent" type="text" class="form-control" name="mssv" id="mssv"
+                    placeholder="Mã sinh viên" required>
+            </div>
+         </div>
+       </ng-container>
+   </div>
+
+   <div class="modal-footer">
+       <button type="button" class="btn btn-light waves-effect" (click)="addStudentModalRef?.hide()">Đóng</button>
+       <button [disabled]="handleValidateForm()" (click)="handleSubmitAddStudentForm()" type="button" class="btn btn-primary waves-effect waves-light ml-2">Xác nhận</button>
+   </div>
+</ng-template>
