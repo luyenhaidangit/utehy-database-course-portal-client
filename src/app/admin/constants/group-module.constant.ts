@@ -20,7 +20,8 @@ const groupModuleConstant = {
         },
     ],
     file:{
-        studentsExport: 'DanhSachSinhVien.xlsx'
+        studentsExport: 'DanhSachSinhVien.xlsx',
+        scoreStudentsExport: 'BangDiemSinhVien.xlsx'
     }
 };
 

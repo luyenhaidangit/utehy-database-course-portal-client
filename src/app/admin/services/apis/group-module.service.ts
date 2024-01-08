@@ -39,9 +39,9 @@ export class GroupModuleService {
 
   exportExcelStudents(request: any): Observable<any> {
     return this.httpAdminLoading.getBlob('group-module/export-excel-students', request);
-    // return this.http.get(`https://localhost:7038/api/admin/group-module/export-excel-students`, {
-    //   responseType: 'blob', // Set responseType to 'blob' to handle binary data
-    //   params: request,      // Pass any query parameters if needed
-    // });
+  }
+
+  exportExcelScoreStudents(request: any): Observable<any> {
+    return this.httpAdminLoading.getBlob('group-module/export-excel-score-students', request);
   }
 }

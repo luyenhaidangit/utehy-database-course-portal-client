@@ -256,4 +256,21 @@ export class StudentGroupModuleComponent {
       });
     });
   }
+
+  public exportScoreStudents(): void{
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      
+      this.groupModuleService.exportExcelScoreStudents({id: id}).subscribe((result: Blob) => {
+        console.log(result)
+        const blob = new Blob([result], { type: this.constant.file.mimes.spreadsheetml });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = this.constant.groupModule.file.scoreStudentsExport;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    });
+  }
 }
