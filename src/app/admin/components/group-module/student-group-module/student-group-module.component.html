@@ -104,6 +104,7 @@
                               </span>
                               <span *ngIf="!(paging?.orderBy === constant.order.id)" class="test-{{paging?.orderBy}}"><img src="../../../../../assets/sort.png" height="14.41" width="14.41" style="margin-top: -3px;" alt="icon-sort"></span>
                            </th>
+                           <th>Mã sinh viên</th>
                            <th>Họ tên / Email</th>
                             <th>Số diện thoại</th>
                             <th>Hành động</th>
@@ -119,6 +120,7 @@
                               </div>
                            </td>
                             <td>{{ student?.id }}</td>
+                            <td>{{ student?.studentId }}</td>
                             <td>
                                 <div class="d-flex align-items-center gap-2">
                                     <div>
