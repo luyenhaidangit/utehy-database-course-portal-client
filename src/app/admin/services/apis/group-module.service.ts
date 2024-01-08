@@ -44,4 +44,8 @@ export class GroupModuleService {
   exportExcelScoreStudents(request: any): Observable<any> {
     return this.httpAdminLoading.getBlob('group-module/export-excel-score-students', request);
   }
+
+  addStudentGroupModule(request: any): Observable<any> {
+    return this.httpAdminLoading.post('group-module/add-student', request);
+  }
 }

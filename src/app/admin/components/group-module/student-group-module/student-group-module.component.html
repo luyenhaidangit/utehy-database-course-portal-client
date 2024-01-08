@@ -55,22 +55,17 @@
                          </div>
                       </div>
                    </div>
-                   <div class="group-action__right col-xl-6 col-md-3 col-sm-12">
+                   <div class="group-action__right col-xl-6 col-md-3 col-sm-12 d-flex justify-content-end">
                         <button (click)="exportStudents()" type="button" class="btn btn-success waves-effect waves-light">
                             <i class="fa-solid fa-file-arrow-down mr-1"></i> Xuất DSSV
                         </button>
                         <button (click)="exportScoreStudents()" type="button" class="btn btn-success waves-effect waves-light ml-2">
                             <i class="fa-solid fa-file-arrow-down mr-1"></i> Xuất bảng điểm
                         </button>
-                        <button type="button" class="btn btn-success waves-effect waves-light ml-2">
+                        <button (click)="handleOpenAddStudentModal()" type="button" class="btn btn-success waves-effect waves-light ml-2">
                             <i class="fa-solid fa-plus mr-1"></i> Thêm mới
                         </button>
                     </div>
-                   <!-- <div class="group-action__right col-xl-2 col-md-3 col-sm-12">
-                      <button type="button" class="btn btn-success waves-effect waves-light">
-                        <i class="fa-solid fa-plus mr-1"></i> Thêm mới
-                      </button>
-                   </div> -->
                    <div class="group-action__right col-xl-2 col-md-4 col-sm-12">
                      <button
                         [@fadeInOut]="selectedBanners.length > 0 ? 'visible' : 'hidden'"
@@ -185,3 +180,50 @@
        </div>
     </div>
 </div>
+
+<ng-template #addStudentModalTemplate>
+   <div class="modal-header border-bottom-0">
+      <ul class="nav nav-tabs nav-tabs-custom nav-justified d-inline-flex" role="tablist">
+         <li class="nav-item cursor-pointer">
+             <a class="nav-link {{ statusAddStudent === 1 ? 'active' : ''}}">
+                 <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                 <span class="d-none d-sm-block">Thêm thủ công</span> 
+             </a>
+         </li>
+         <li class="nav-item cursor-pointer">
+            <a class="nav-link">
+                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                <span class="d-none d-sm-block">Tham gia bằng mã mời</span> 
+            </a>
+        </li>
+        <li class="nav-item cursor-pointer">
+            <a class="nav-link">
+               <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+               <span class="d-none d-sm-block">Thêm từ file excel</span> 
+            </a>
+         </li>
+     </ul>
+
+       <!-- <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Thêm nhóm học phần</h5> -->
+       <button type="button" class="close" (click)="addStudentModalRef?.hide()">
+           <span aria-hidden="true">&times;</span>
+       </button>
+   </div>
+
+   <div class="modal-body pt-1">
+       <ng-container>
+         <div id="addSvThuCong">
+            <div class="mb-3">
+                <label for="mssv" class="form-label">Mã sinh viên</label>
+                <input [(ngModel)]="idStudent" type="text" class="form-control" name="mssv" id="mssv"
+                    placeholder="Mã sinh viên" required>
+            </div>
+         </div>
+       </ng-container>
+   </div>
+
+   <div class="modal-footer">
+       <button type="button" class="btn btn-light waves-effect" (click)="addStudentModalRef?.hide()">Đóng</button>
+       <button [disabled]="handleValidateForm()" (click)="handleSubmitAddStudentForm()" type="button" class="btn btn-primary waves-effect waves-light ml-2">Xác nhận</button>
+   </div>
+</ng-template>

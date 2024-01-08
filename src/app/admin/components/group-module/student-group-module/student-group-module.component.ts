@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import pagingConfig, { DEFAULT_PER_PAGE_OPTIONS } from '../../../configs/paging.config';
 import animationConstant from '../../../constants/animation.constant';
 import orderConstant from 'src/app/admin/constants/orderConstant';
@@ -20,7 +22,9 @@ export class StudentGroupModuleComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private groupModuleService: GroupModuleService
+    private groupModuleService: GroupModuleService,
+    private modalService: BsModalService,
+    private ngxToastr: NgxToastrService
   ) { }
 
   ngOnInit() {
@@ -240,6 +244,8 @@ export class StudentGroupModuleComponent {
     return phoneNumber;
   }
 
+  //Export
+
   public exportStudents(): void{
     this.route.params.subscribe(params => {
       const id = params['id'];
@@ -272,5 +278,75 @@ export class StudentGroupModuleComponent {
         document.body.removeChild(link);
       });
     });
+  }
+
+  //Add student
+  public addStudentModalRef?: BsModalRef;
+  @ViewChild('addStudentModalTemplate') addStudentModalTemplate!: TemplateRef<any>;
+
+  public handleOpenAddStudentModal(): void{
+    this.addStudentModalRef = this.modalService.show(this.addStudentModalTemplate,
+    Object.assign({}, { class: 'modal-dialog modal-lg' }));
+
+    this.addStudentModalRef.onHidden?.subscribe(() => {
+    });
+  }
+
+  public idStudent: any = '';
+
+  public statusAddStudent: any = 1;
+
+  public handleValidateForm(): boolean{
+    if(this.statusAddStudent === 1 && !this.idStudent){
+      return true;
+    }
+
+    return false;
+  }
+
+  public handleSubmitAddStudentForm(): void{
+    if(this.handleValidateForm()){
+      return;
+    }
+
+    if(this.statusAddStudent === 1){
+      this.route.params.subscribe(params => {
+        const id = params['id'];
+        const request = {
+          studentId: this.idStudent,
+          groupModuleId: id
+        };
+        
+        this.groupModuleService.addStudentGroupModule(request).subscribe((result: any) => {
+          if(result.status){
+            this.ngxToastr.success(result.message,'',{
+              progressBar: true
+            });
+            this.addStudentModalRef?.hide();
+
+            this.route.queryParams.subscribe(params => {
+              let request = {
+                ...params,
+                pageIndex: params['pageIndex'] ? params['pageIndex'] : 1
+              };
+
+              this.route.params.subscribe(params => {
+                const id = params['id'];
+                request = Object.assign({}, request, { groupModuleId: id });
+          
+                this.getStudentGroupModule({id: id});
+
+                this.getStudentsGroupModule(request);
+              });
+            });
+          }
+        },error => {
+          console.log(error);
+          this.ngxToastr.error(error.error.message,'',{
+            progressBar: true
+          });
+        });
+      });
+    }
   }
 }
