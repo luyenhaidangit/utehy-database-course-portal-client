@@ -186,20 +186,20 @@
 <ng-template #addStudentModalTemplate>
    <div class="modal-header border-bottom-0">
       <ul class="nav nav-tabs nav-tabs-custom nav-justified d-inline-flex" role="tablist">
-         <li class="nav-item cursor-pointer">
+         <li class="nav-item cursor-pointer" (click)="statusAddStudent = 1">
              <a class="nav-link {{ statusAddStudent === 1 ? 'active' : ''}}">
                  <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
                  <span class="d-none d-sm-block">Thêm thủ công</span> 
              </a>
          </li>
-         <li class="nav-item cursor-pointer">
-            <a class="nav-link">
+         <li class="nav-item cursor-pointer" (click)="handleGenerateInvitationCode(1)">
+            <a class="nav-link {{ statusAddStudent === 2 ? 'active' : ''}}">
                 <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
                 <span class="d-none d-sm-block">Tham gia bằng mã mời</span> 
             </a>
         </li>
-        <li class="nav-item cursor-pointer">
-            <a class="nav-link">
+        <li class="nav-item cursor-pointer" (click)="statusAddStudent = 3">
+            <a class="nav-link {{ statusAddStudent === 3 ? 'active' : ''}}">
                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
                <span class="d-none d-sm-block">Thêm từ file excel</span> 
             </a>
@@ -213,7 +213,7 @@
    </div>
 
    <div class="modal-body pt-1">
-       <ng-container>
+       <ng-container *ngIf="statusAddStudent === 1">
          <div id="addSvThuCong">
             <div class="mb-3">
                 <label for="mssv" class="form-label">Mã sinh viên</label>
@@ -222,9 +222,26 @@
             </div>
          </div>
        </ng-container>
+
+       <ng-container *ngIf="statusAddStudent === 2">
+         <h6 class="display-6 text-center py-4" id="show-ma-moi">{{ groupModule.invitationCode }}</h6>
+
+         <div class="d-flex align-items-center justify-content-between">
+            <p class="text-center mb-0">
+               {{ groupModule.name }} - Năm học {{ groupModule.year }} - Học kỳ {{ groupModule.semester }}                       
+            </p>
+            <span class="badge badge-primary">
+               <countdown #cd [config]="countdownConfig" (event)="handleCountdownEvent($event)"></countdown>
+            </span>
+            <div>
+               <button (click)="copyInvitationCode()" type="button" class="btn btn-primary btn-sm btn-copy-code js-bs-tooltip-enabled" tooltip="Sao chép mã mời" placement="bottom"><i class="fa fa-clipboard"></i></button>
+               <button (click)="handleGenerateInvitationCode(2)" type="button" class="btn btn-primary btn-sm btn-reset-invited-code ml-2"><i class="fa fa-arrows-rotate me-1"></i>Tạo mã mới</button>
+            </div>
+         </div>
+       </ng-container>
    </div>
 
-   <div class="modal-footer">
+   <div class="modal-footer" *ngIf="statusAddStudent !== 2">
        <button type="button" class="btn btn-light waves-effect" (click)="addStudentModalRef?.hide()">Đóng</button>
        <button [disabled]="handleValidateForm()" (click)="handleSubmitAddStudentForm()" type="button" class="btn btn-primary waves-effect waves-light ml-2">Xác nhận</button>
    </div>
