@@ -282,6 +282,10 @@ export class StudentGroupModuleComponent {
 
   //Add student
   public addStudentModalRef?: BsModalRef;
+  public countdownConfig: any = {
+    leftTime: 0,
+    format: 'mm:ss'
+  };
   @ViewChild('addStudentModalTemplate') addStudentModalTemplate!: TemplateRef<any>;
 
   public handleOpenAddStudentModal(): void{
@@ -347,6 +351,175 @@ export class StudentGroupModuleComponent {
           });
         });
       });
+    }
+  }
+
+  public handleGenerateInvitationCode(type: any): void{
+    //Reset 
+    this.importExcelForm = {
+      file: null,
+      passwordStudent: ''
+    }
+    this.idStudent = '';
+    //Reset
+
+    this.statusAddStudent = 2;
+
+    if(type === 1){
+      const now = new Date();
+    if (!this.groupModule.invitationCode || new Date(this.groupModule.expiryTimeInvitation) <= now) {
+      this.route.params.subscribe(params => {
+      const id = params['id'];
+      
+      this.groupModuleService.generateInvitationCode({id:id,type: type}).subscribe((result: any) => {
+        if (result.status) {
+          this.groupModule.invitationCode = result.data.invitationCode;
+          this.groupModule.expiryTimeInvitation = result.data.expiryTimeInvitation;
+
+          const expiryTime = new Date(this.groupModule.expiryTimeInvitation);
+          const leftTime = Math.round((expiryTime.getTime() - now.getTime()) / 1000);
+          this.countdownConfig = {
+            leftTime: leftTime,
+            format: 'mm:ss'
+          };
+        } else {
+          this.ngxToastr.error("Lỗi khi tạo mã mời mới.");
+        }
+      },error => {
+        console.log(error);
+        this.ngxToastr.error(error.error.message,'',{
+          progressBar: true
+        });
+      });
+    });
+    }else{
+      const expiryTime = new Date(this.groupModule.expiryTimeInvitation);
+      const leftTime = Math.round((expiryTime.getTime() - now.getTime()) / 1000);
+      this.countdownConfig = {
+        leftTime: leftTime,
+        format: 'mm:ss'
+      };
+    }
+    }else{
+      const now = new Date();
+      this.route.params.subscribe(params => {
+        const id = params['id'];
+        
+        this.groupModuleService.generateInvitationCode({id:id,type: type}).subscribe((result: any) => {
+          if (result.status) {
+            this.groupModule.invitationCode = result.data.invitationCode;
+            this.groupModule.expiryTimeInvitation = result.data.expiryTimeInvitation;
+  
+            const expiryTime = new Date(this.groupModule.expiryTimeInvitation);
+            const leftTime = Math.round((expiryTime.getTime() - now.getTime()) / 1000);
+            this.countdownConfig = {
+              leftTime: leftTime,
+              format: 'mm:ss'
+            };
+          } else {
+            this.ngxToastr.error("Lỗi khi tạo mã mời mới.");
+          }
+        },error => {
+          console.log(error);
+          this.ngxToastr.error(error.error.message,'',{
+            progressBar: true
+          });
+        });
+      });
+    }
+  }
+
+  public handleCountdownEvent(event: any) {
+    const now = new Date();
+    const type = 1;
+
+    if (event.action === 'done') {
+      this.route.params.subscribe(params => {
+        const id = params['id'];
+        
+        this.groupModuleService.generateInvitationCode({id:id,type: type}).subscribe((result: any) => {
+          if (result.status) {
+            this.groupModule.invitationCode = result.data.invitationCode;
+            this.groupModule.expiryTimeInvitation = result.data.expiryTimeInvitation;
+  
+            const expiryTime = new Date(this.groupModule.expiryTimeInvitation);
+            const leftTime = Math.round((expiryTime.getTime() - now.getTime()) / 1000);
+            this.countdownConfig = {
+              leftTime: leftTime,
+              format: 'mm:ss'
+            };
+          } else {
+            this.ngxToastr.error("Lỗi khi tạo mã mời mới.");
+          }
+        },error => {
+          console.log(error);
+          this.ngxToastr.error(error.error.message,'',{
+            progressBar: true
+          });
+        });
+      });
+    }
+  }
+
+  public copyInvitationCode(): void {
+    const contentToCopy = this.groupModule.invitationCode;
+    navigator.clipboard.writeText(contentToCopy).then(() => {
+    }).catch(err => {
+      console.error('Lỗi khi sao chép: ', err);
+    });
+  }
+  
+  //Import excel
+  public importExcelForm: any = {
+    file: null,
+    passwordStudent: ''
+  }
+  
+  public onFileSelected(event: any):void{
+    this.importExcelForm.file = event.target.files[0];
+  }
+
+  public handleImportStudentGroupModule(): void{
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+
+      const formData = new FormData();
+
+      formData.append('file', this.importExcelForm.file);
+      formData.append('groupModuleId', id);
+      formData.append('passwordStudent', this.importExcelForm.passwordStudent);
+
+    this.groupModuleService.importStudentsExcel(formData).subscribe((result: any) => {
+      if (result.status) {
+        this.ngxToastr.success(result.message,'',{
+          progressBar: true
+        });
+
+        this.addStudentModalRef?.hide()
+      } 
+    },error => {
+      console.log(error);
+      this.ngxToastr.error(error.error.message,'',{
+        progressBar: true
+      });
+    });
+    });
+  }
+
+  public handleChangeTabAddStudent(type: any){
+    if(type === 1){
+      this.importExcelForm = {
+        file: null,
+        passwordStudent: ''
+      }
+
+      this.statusAddStudent = 1;
+    }
+
+    if(type === 3){
+      this.idStudent = '';
+
+      this.statusAddStudent = 3;
     }
   }
 }
