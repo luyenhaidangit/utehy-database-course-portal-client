@@ -355,6 +355,14 @@ export class StudentGroupModuleComponent {
   }
 
   public handleGenerateInvitationCode(type: any): void{
+    //Reset 
+    this.importExcelForm = {
+      file: null,
+      passwordStudent: ''
+    }
+    this.idStudent = '';
+    //Reset
+
     this.statusAddStudent = 2;
 
     if(type === 1){
@@ -459,5 +467,59 @@ export class StudentGroupModuleComponent {
     }).catch(err => {
       console.error('Lỗi khi sao chép: ', err);
     });
-  }  
+  }
+  
+  //Import excel
+  public importExcelForm: any = {
+    file: null,
+    passwordStudent: ''
+  }
+  
+  public onFileSelected(event: any):void{
+    this.importExcelForm.file = event.target.files[0];
+  }
+
+  public handleImportStudentGroupModule(): void{
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+
+      const formData = new FormData();
+
+      formData.append('file', this.importExcelForm.file);
+      formData.append('groupModuleId', id);
+      formData.append('passwordStudent', this.importExcelForm.passwordStudent);
+
+    this.groupModuleService.importStudentsExcel(formData).subscribe((result: any) => {
+      if (result.status) {
+        this.ngxToastr.success(result.message,'',{
+          progressBar: true
+        });
+
+        this.addStudentModalRef?.hide()
+      } 
+    },error => {
+      console.log(error);
+      this.ngxToastr.error(error.error.message,'',{
+        progressBar: true
+      });
+    });
+    });
+  }
+
+  public handleChangeTabAddStudent(type: any){
+    if(type === 1){
+      this.importExcelForm = {
+        file: null,
+        passwordStudent: ''
+      }
+
+      this.statusAddStudent = 1;
+    }
+
+    if(type === 3){
+      this.idStudent = '';
+
+      this.statusAddStudent = 3;
+    }
+  }
 }

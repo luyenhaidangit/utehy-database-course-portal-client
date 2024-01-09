@@ -52,4 +52,8 @@ export class GroupModuleService {
   generateInvitationCode(request: any): Observable<any> {
     return this.httpAdminLoading.post('group-module/generate-invitation-code', request);
   }
+
+  importStudentsExcel(request: any): Observable<any> {
+    return this.httpAdminLoading.postFormData('group-module/import-students-excel', request);
+  }
 }

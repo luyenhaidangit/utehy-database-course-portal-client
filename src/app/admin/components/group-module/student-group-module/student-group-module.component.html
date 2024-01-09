@@ -186,7 +186,7 @@
 <ng-template #addStudentModalTemplate>
    <div class="modal-header border-bottom-0">
       <ul class="nav nav-tabs nav-tabs-custom nav-justified d-inline-flex" role="tablist">
-         <li class="nav-item cursor-pointer" (click)="statusAddStudent = 1">
+         <li class="nav-item cursor-pointer" (click)="handleChangeTabAddStudent(1)">
              <a class="nav-link {{ statusAddStudent === 1 ? 'active' : ''}}">
                  <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
                  <span class="d-none d-sm-block">Thêm thủ công</span> 
@@ -198,7 +198,7 @@
                 <span class="d-none d-sm-block">Tham gia bằng mã mời</span> 
             </a>
         </li>
-        <li class="nav-item cursor-pointer" (click)="statusAddStudent = 3">
+        <li class="nav-item cursor-pointer" (click)="handleChangeTabAddStudent(3)">
             <a class="nav-link {{ statusAddStudent === 3 ? 'active' : ''}}">
                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
                <span class="d-none d-sm-block">Thêm từ file excel</span> 
@@ -239,9 +239,30 @@
             </div>
          </div>
        </ng-container>
+
+       <ng-container *ngIf="statusAddStudent === 3">
+         <div class="block-content tab-content">
+            <div id="form-upload" method="POST" enctype="multipart/form-data">
+               <div class="mb-4">
+                   <label for="user_password" class="form-label">Mật khẩu</label>
+                   <input [(ngModel)]="importExcelForm.passwordStudent" type="password" class="form-control form-control-alt" name="user_password" id="ps_user_group" placeholder="Nhập mật khẩu cho sinh viên!">
+               </div>
+               <div class="mb-4">
+                   <label class="form-label" for="js-ckeditor">Nội dung</label>
+                   <input (change)="onFileSelected($event)" class="form-control" type="file" id="file-cau-hoi" accept=".xlsx, .xls, .csv" required="">
+               </div>
+               <div class="mb-4">
+                   <em>Vui lòng soạn người dùng theo đúng định dạng. <a href="../../../../../assets/files/DanhSachSinhVien.xlsx">Tải về file mẫu Excel</a></em>
+               </div>
+               <div class="mb-4 d-flex justify-content-between">
+                   <button (click)="handleImportStudentGroupModule()" type="submit" class="btn btn-hero btn-primary" id="nhap-file"><i class="fa fa-cloud-arrow-up"></i> Thêm vào hệ thống</button>
+               </div>
+            </div>
+         </div>
+       </ng-container>
    </div>
 
-   <div class="modal-footer" *ngIf="statusAddStudent !== 2">
+   <div class="modal-footer" *ngIf="statusAddStudent !== 2 && statusAddStudent != 3">
        <button type="button" class="btn btn-light waves-effect" (click)="addStudentModalRef?.hide()">Đóng</button>
        <button [disabled]="handleValidateForm()" (click)="handleSubmitAddStudentForm()" type="button" class="btn btn-primary waves-effect waves-light ml-2">Xác nhận</button>
    </div>
