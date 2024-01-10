@@ -662,4 +662,18 @@ export class StudentGroupModuleComponent {
       }
     });
   }
+
+  //Offcanva
+
+  public offcanvasVisible = false;
+
+  public toggleOffcanvas(): void {
+    this.offcanvasVisible = !this.offcanvasVisible;
+  }
+
+  public closeOffcanvas(): void {
+    this.offcanvasVisible = false;
+  }
+
+  public statusPageOption = 1;
 }

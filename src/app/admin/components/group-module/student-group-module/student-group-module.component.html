@@ -65,6 +65,9 @@
                         <button (click)="handleOpenAddStudentModal()" type="button" class="btn btn-success waves-effect waves-light ml-2">
                             <i class="fa-solid fa-plus mr-1"></i> Thêm mới
                         </button>
+                        <button (click)="toggleOffcanvas()" type="button" class="btn btn-success waves-effect waves-light ml-2">
+                           <i class="fa-solid fa-bullhorn"></i>
+                       </button>
                     </div>
                    <div class="group-action__right col-xl-2 col-md-4 col-sm-12 mb-2">
                      <button
@@ -268,3 +271,117 @@
        <button [disabled]="handleValidateForm()" (click)="handleSubmitAddStudentForm()" type="button" class="btn btn-primary waves-effect waves-light ml-2">Xác nhận</button>
    </div>
 </ng-template>
+
+<div *ngIf="offcanvasVisible" class="overlay" (click)="closeOffcanvas()"></div>
+
+<div *ngIf="offcanvasVisible" class="offcanvas main-offcanvas offcanvas-end show" tabindex="-1" id="offcanvasSetting" aria-labelledby="offcanvasExampleLabel" aria-modal="true" role="dialog">
+   <div class="offcanvas-header pb-0 d-fled align-items-center">
+       <h5 class="offcanvas-title" id="offcanvasExampleLabel">
+         {{ groupModule.name }} - Năm học {{ groupModule.year }} - Học kỳ {{ groupModule.semester }} 
+      </h5>
+       <button (click)="closeOffcanvas()" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+   </div>
+   <div class="offcanvas-body px-0 content-side">
+       <div class="block block-transparent pull-x pull-t mb-0">
+         <ul class="nav nav-tabs nav-tabs-custom nav-justified d-inline-flex" role="tablist">
+            <li class="nav-item cursor-pointer" (click)="handleChangeTabAddStudent(1)">
+                <a class="nav-link {{ statusAddStudent === 1 ? 'active' : ''}}">
+                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                    <span class="d-none d-sm-block">Đề kiểm tra</span> 
+                </a>
+            </li>
+            <li class="nav-item cursor-pointer" (click)="handleGenerateInvitationCode(1)">
+               <a class="nav-link {{ statusAddStudent === 2 ? 'active' : ''}}">
+                   <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                   <span class="d-none d-sm-block">Thông báo</span> 
+               </a>
+            </li>
+         </ul>
+           <div class="block-content tab-content overflow-hidden pt-3">
+               <div class="tab-pane pull-x fade fade-up show active" id="so-settings" role="tabpanel" aria-labelledby="so-settings-tab" tabindex="0">
+                   <div class="list-test"><div class="block block-rounded block-fx-pop mb-2">
+               <div class="block-content block-content-full border-start border-3 border-primary">
+                   <div class="d-md-flex justify-content-md-between align-items-md-center">
+                       <div class="p-1 p-md-2">
+                           <h3 class="h4 fw-bold mb-3">
+                               <a href="./test/detail/13" class="text-dark link-fx">Đề tạo thủ công</a>
+                           </h3>
+                           <p class="fs-sm text-muted mb-0">
+                               <i class="fa fa-clock me-1"></i> Diễn ra từ <span>12:00 08/05/2023</span> đến <span>12:00 09/05/2023</span>
+                           </p>
+                       </div>
+                   </div>
+               </div>
+           </div><div class="block block-rounded block-fx-pop mb-2">
+               <div class="block-content block-content-full border-start border-3 border-primary">
+                   <div class="d-md-flex justify-content-md-between align-items-md-center">
+                       <div class="p-1 p-md-2">
+                           <h3 class="h4 fw-bold mb-3">
+                               <a href="./test/detail/4" class="text-dark link-fx">Đề kiểm tra tuần 11</a>
+                           </h3>
+                           <p class="fs-sm text-muted mb-0">
+                               <i class="fa fa-clock me-1"></i> Diễn ra từ <span>12:00 22/04/2023</span> đến <span>12:00 30/04/2023</span>
+                           </p>
+                       </div>
+                   </div>
+               </div>
+           </div><div class="block block-rounded block-fx-pop mb-2">
+               <div class="block-content block-content-full border-start border-3 border-primary">
+                   <div class="d-md-flex justify-content-md-between align-items-md-center">
+                       <div class="p-1 p-md-2">
+                           <h3 class="h4 fw-bold mb-3">
+                               <a href="./test/detail/3" class="text-dark link-fx">Đề kiểm tra mới mới</a>
+                           </h3>
+                           <p class="fs-sm text-muted mb-0">
+                               <i class="fa fa-clock me-1"></i> Diễn ra từ <span>12:00 03/04/2023</span> đến <span>18:00 07/05/2023</span>
+                           </p>
+                       </div>
+                   </div>
+               </div>
+           </div><div class="block block-rounded block-fx-pop mb-2">
+               <div class="block-content block-content-full border-start border-3 border-primary">
+                   <div class="d-md-flex justify-content-md-between align-items-md-center">
+                       <div class="p-1 p-md-2">
+                           <h3 class="h4 fw-bold mb-3">
+                               <a href="./test/detail/2" class="text-dark link-fx">Đề kiểm tra mới</a>
+                           </h3>
+                           <p class="fs-sm text-muted mb-0">
+                               <i class="fa fa-clock me-1"></i> Diễn ra từ <span>14:00 03/04/2023</span> đến <span>17:00 03/04/2023</span>
+                           </p>
+                       </div>
+                   </div>
+               </div>
+           </div><div class="block block-rounded block-fx-pop mb-2">
+               <div class="block-content block-content-full border-start border-3 border-primary">
+                   <div class="d-md-flex justify-content-md-between align-items-md-center">
+                       <div class="p-1 p-md-2">
+                           <h3 class="h4 fw-bold mb-3">
+                               <a href="./test/detail/1" class="text-dark link-fx">Đề kiểm tra giữa kì LTHDT</a>
+                           </h3>
+                           <p class="fs-sm text-muted mb-0">
+                               <i class="fa fa-clock me-1"></i> Diễn ra từ <span>12:00 03/04/2023</span> đến <span>12:00 04/04/2023</span>
+                           </p>
+                       </div>
+                   </div>
+               </div>
+           </div></div>
+               </div>
+               <div class="tab-pane pull-x fade fade-up" id="so-profile" role="tabpanel" aria-labelledby="so-profile-tab" tabindex="0">
+                   <ul class="list-announce nav-items my-2">
+           <li>
+           <a class="d-flex text-dark py-2" href="./teacher_announcement/update/5">
+               <div class="flex-shrink-0 mx-3">
+                   <img class="img-avatar img-avatar48" src="./public/media/avatars/avt-642a79bfbf4dd.jpg" alt="">
+               </div>
+               <div class="flex-grow-1 fs-sm pe-2">
+                   <div class="fw-semibold">Nay báo cáo đồ án</div>
+                   <div class="text-muted">08:53 08/05/2023</div>
+               </div>
+           </a>
+       </li>
+           </ul>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
