@@ -495,7 +495,23 @@ export class StudentGroupModuleComponent {
           progressBar: true
         });
 
-        this.addStudentModalRef?.hide()
+        this.addStudentModalRef?.hide();
+
+        this.route.queryParams.subscribe(params => {
+          let request = {
+            ...params,
+            pageIndex: params['pageIndex'] ? params['pageIndex'] : 1
+          };
+
+          this.route.params.subscribe(params => {
+            const id = params['id'];
+            request = Object.assign({}, request, { groupModuleId: id });
+      
+            this.getStudentGroupModule({id: id});
+
+            this.getStudentsGroupModule(request);
+          });
+        });
       } 
     },error => {
       console.log(error);
