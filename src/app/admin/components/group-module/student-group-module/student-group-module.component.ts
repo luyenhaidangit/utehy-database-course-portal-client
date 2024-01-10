@@ -1,4 +1,5 @@
 import { Component, ViewChild, TemplateRef } from '@angular/core';
+import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
@@ -537,5 +538,128 @@ export class StudentGroupModuleComponent {
 
       this.statusAddStudent = 3;
     }
+  }
+  
+  //Delete student
+  public handleRemoveStudentGroupModule(id: number){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        cancelButton: "btn btn-danger ml-2",
+        confirmButton: "btn btn-success",
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: `Bạn có chắc muốn xoá sinh viên có mã sinh viên ${id} khỏi nhóm?`,
+      text: "Sinh viên sẽ bị xoá thông tin khỏi nhóm!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xác nhận",
+      cancelButtonText: "Bỏ qua",
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const request = {
+          groupModuleId: this.groupModule.id,
+          studentId: id
+        }
+
+        this.groupModuleService.removeStudentGroupModule(request).subscribe((result: any) => {
+          if(result.status){
+            this.ngxToastr.success(result.message,'',{
+              progressBar: true
+            });
+           
+            swalWithBootstrapButtons.fire({
+              title: "Xoá thành công!",
+              text: `Sinh viên có mã sinh viên ${id} đã bị xoá khỏi nhóm!`,
+              icon: "success"
+            });
+    
+            this.route.queryParams.subscribe(params => {
+              let request = {
+                ...params,
+                pageIndex: params['pageIndex'] ? params['pageIndex'] : 1
+              };
+    
+              this.route.params.subscribe(params => {
+                const id = params['id'];
+                request = Object.assign({}, request, { groupModuleId: id });
+          
+                this.getStudentGroupModule({id: id});
+    
+                this.getStudentsGroupModule(request);
+              });
+            });
+          }
+        },error => {
+          console.log(error);
+          this.ngxToastr.error(error.error.message,'',{
+            progressBar: true
+          });
+        });
+      }
+    });
+  }
+
+  public handleRemoveStudentsGroupModule(){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        cancelButton: "btn btn-danger ml-2",
+        confirmButton: "btn btn-success",
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: `Bạn có chắc muốn xoá sinh viên có mã sinh viên khỏi nhóm?`,
+      text: "Sinh viên sẽ bị xoá thông tin khỏi nhóm!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xác nhận",
+      cancelButtonText: "Bỏ qua",
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const request = {
+          groupModuleId: this.groupModule.id,
+          studentIds: this.selectedBanners
+        }
+
+        this.groupModuleService.removeStudentsGroupModule(request).subscribe((result: any) => {
+          if(result.status){
+            this.ngxToastr.success(result.message,'',{
+              progressBar: true
+            });
+           
+            swalWithBootstrapButtons.fire({
+              title: "Xoá thành công!",
+              text: `Sinh viên có mã sinh viên đã bị xoá khỏi nhóm!`,
+              icon: "success"
+            });
+    
+            this.route.queryParams.subscribe(params => {
+              let request = {
+                ...params,
+                pageIndex: params['pageIndex'] ? params['pageIndex'] : 1
+              };
+    
+              this.route.params.subscribe(params => {
+                const id = params['id'];
+                request = Object.assign({}, request, { groupModuleId: id });
+          
+                this.getStudentGroupModule({id: id});
+    
+                this.getStudentsGroupModule(request);
+              });
+            });
+          }
+        },error => {
+          console.log(error);
+          this.ngxToastr.error(error.error.message,'',{
+            progressBar: true
+          });
+        });
+      }
+    });
   }
 }

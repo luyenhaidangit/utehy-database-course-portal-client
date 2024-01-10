@@ -56,4 +56,12 @@ export class GroupModuleService {
   importStudentsExcel(request: any): Observable<any> {
     return this.httpAdminLoading.postFormData('group-module/import-students-excel', request);
   }
+
+  removeStudentGroupModule(request: any): Observable<any> {
+    return this.httpAdminLoading.post('group-module/remove-student', request);
+  }
+
+  removeStudentsGroupModule(request: any): Observable<any> {
+    return this.httpAdminLoading.post('group-module/remove-students', request);
+  }
 }
