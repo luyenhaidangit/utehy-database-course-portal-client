@@ -664,11 +664,36 @@ export class StudentGroupModuleComponent {
   }
 
   //Offcanva
-
+  public exams: any = [];
+  public notifications: any = [];
   public offcanvasVisible = false;
 
   public toggleOffcanvas(): void {
     this.offcanvasVisible = !this.offcanvasVisible;
+
+    if(this.offcanvasVisible){
+      this.groupModuleService.getExamsByGroupModule({id: this.groupModule.id}).subscribe((result: any) => {
+        if (result.status) {
+          this.exams = result.data;  
+        } 
+      },error => {
+        console.log(error);
+        this.ngxToastr.error(error.error.message,'',{
+          progressBar: true
+        });
+      });
+
+      this.groupModuleService.getNotificationsByGroupModule({id: this.groupModule.id}).subscribe((result: any) => {
+        if (result.status) {
+          this.notifications = result.data;  
+        } 
+      },error => {
+        console.log(error);
+        this.ngxToastr.error(error.error.message,'',{
+          progressBar: true
+        });
+      });
+    }
   }
 
   public closeOffcanvas(): void {
@@ -676,4 +701,32 @@ export class StudentGroupModuleComponent {
   }
 
   public statusPageOption = 1;
+
+  public formatAMPM(date: any) {
+    date = new Date(date);
+
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
+
+  public formatDate(date: any) {
+    date = new Date(date);
+
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+    day = day < 10 ? '0' + day : day;
+    month = month < 10 ? '0' + month : month;
+    return day + '/' + month + '/' + year;
+  }
+
+  public handleChangePageOption(type: any): void{
+    this.statusPageOption = type;
+  }
 }
