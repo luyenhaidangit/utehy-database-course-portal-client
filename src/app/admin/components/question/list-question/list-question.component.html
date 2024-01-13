@@ -115,9 +115,13 @@
                                  </div>
 
                                  <div class="form-group col-md-3">
-                                    <button (click)="handleOpenQuestionCategoryTreeModal()" type="button" class="btn input-type-select dropdown-toggle input-form-space d-flex justify-content-between align-items-center">
+                                    <!-- <button (click)="handleOpenQuestionCategoryTreeModal()" type="button" class="btn input-type-select dropdown-toggle input-form-space d-flex justify-content-between align-items-center">
                                         <span>{{ questionCategory.name }}</span> <i class="mdi mdi-chevron-down"></i>
-                                    </button>
+                                    </button> -->
+                                    <select class="custom-select"  [(ngModel)]="search.sectionId">
+                                        <option [selected]="search.sectionId === null || search.sectionId === 0" [ngValue]="0">Chương</option>
+                                        <option *ngFor="let section of sections;" value="{{ section.id }}">{{ section.title }}</option>
+                                    </select>
                                  </div>
 
                                  <div class="form-group col-md-1">
@@ -166,10 +170,10 @@
                                    </span>
                                    <span *ngIf="!(search?.orderBy === orderConstant.id)"><img src="../../../../../assets/sort.png" height="14.41" width="14.41" style="margin-top: -3px;" alt="icon-sort"></span>
                                  </th>
-                                 <th>Tiêu đề</th>
-                                 <th>Ghi chú</th>
+                                 <th class="title-column">Tiêu đề</th>
+                                 <!-- <th>Ghi chú</th> -->
                                  <th>Loại câu hỏi</th>
-                                 <th>Danh mục câu hỏi</th>
+                                 <th>Chương</th>
                                  <th class="order-sort" (click)="onSortAndOrderChange(orderConstant.score)" [ngClass]="{'order-sort-active': search?.orderBy === orderConstant.score }">
                                     Số điểm
                                     <span *ngIf="search?.orderBy === orderConstant.score" class="order-sort-group">
@@ -192,9 +196,10 @@
                                     </td>
                                     <td>{{ question.id }}</td>
                                     <td [innerHTML]="question.title"></td>
-                                    <td [innerHTML]="question.feedback"></td>
+                                    <!-- <td [innerHTML]="question.feedback"></td> -->
                                     <td>{{ questionHelper.getTypeQuestion(question.type) }}</td>
-                                    <td>{{ question.questionCategoryName }}</td>
+                                    <td>{{ question.section.title }}</td>
+                                    <!-- <td>{{ question.questionCategoryName }}</td> -->
                                     <td>{{ question.score }}</td>
                                      <td>
                                         <span class="text-info cursor-pointer" [routerLink]="['/admin/question/detail', question.id]"><i class="fa-solid fa-eye"></i></span>

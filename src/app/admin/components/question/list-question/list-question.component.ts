@@ -13,6 +13,7 @@ import questionConstant from 'src/app/admin/constants/question.constant';
 import questionHelper from 'src/app/admin/helpers/question.helper';
 import { AddQuestionCategoryTreeService } from 'src/app/admin/services/components/add-question-category-tree.service';
 import Swal from 'sweetalert2';
+import { SectionService } from 'src/app/admin/services/apis/section.service';
 
 @Component({
   selector: 'app-list-question',
@@ -28,12 +29,15 @@ export class ListQuestionComponent implements OnInit {
     public questionCategoryTreeService: QuestionCategoryTreeService, 
     private questionService: QuestionService,private router: Router, 
     private route: ActivatedRoute,
-    public addQuestionCategoryTreeService: AddQuestionCategoryTreeService
+    public addQuestionCategoryTreeService: AddQuestionCategoryTreeService,
+    private sectionService: SectionService
     ) 
     { }
 
     ngOnInit() {
       this.addQuestionCategoryTreeService.resetState();
+
+      this.getSections({sortBy: 'asc'});
   
       this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
         if(result.status){
@@ -57,6 +61,7 @@ export class ListQuestionComponent implements OnInit {
             this.search = {
               ...params,
               type: params['type'] ? params['type'] : 0,
+              sectionId: params['sectionId'] ? params['sectionId'] : 0,
             }
 
             if(this.search.questionCategoryId){
@@ -130,12 +135,14 @@ export class ListQuestionComponent implements OnInit {
 
   //Question
   questions: any = [];
+  sections: any = [];
   search: any = {
     orderBy: '',
     sortBy: '',
     questionCategoryId: 0,
     type: 0,
-    title: ''
+    title: '',
+    sectionId: 0
   };
   selectedItems: number[] = [];
   pageSize: any = 10;
@@ -143,6 +150,14 @@ export class ListQuestionComponent implements OnInit {
   totalPages: any;
 
   questionHelper: any = questionHelper;
+
+  public getSections(request: any): void{
+    this.sectionService.getSections(request).subscribe((result: any) => {
+      if(result.status){
+        this.sections = result.data.items;
+      }
+    });
+  }
 
   //Question category search
   questionCategoryTree: any[] = [];
@@ -309,7 +324,8 @@ export class ListQuestionComponent implements OnInit {
         ...params,
         title: this.search.title ? this.search.title : null,
         questionCategoryId: this.search.questionCategoryId ? this.search.questionCategoryId : null,
-        type: this.search.type ? this.search.type : null
+        type: this.search.type ? this.search.type : null,
+        sectionId: this.search.sectionId ? this.search.sectionId : null
       };
 
       this.router.navigate([], {
