@@ -93,8 +93,18 @@ export class AddQuestionComponent implements OnInit {
     questionAnswers: [...questionConstant.defaultQuestionAnswerMultipleAnswers],
     questionCategoryId: 1,
     questionTags: [],
-    sectionId: 0
+    sectionId: 0,
+    difficulty: 0
   };
+
+  public validateFormSuccess: any = {
+    touchSection: false,
+    touchDiff: false
+  }
+
+  // public validateFormSuccess(): boolean{
+  //   return true;
+  // }
 
   public sections: any = [];
 
@@ -173,7 +183,7 @@ export class AddQuestionComponent implements OnInit {
     const selectedCategoryIds = this.question.questionTags.filter((category: any) => category.selected)
     .map((selectedCategory: any) => selectedCategory.id);
 
-    const request = {...this.question, questionTags: selectedCategoryIds, score: this.getMaxScoreQuestionAnswers()};
+    const request = {...this.question, questionTags: selectedCategoryIds, score: this.getMaxScoreQuestionAnswers(), difficulty: +this.question.difficulty};
 
     this.questionService.createQuestion(request).subscribe((result: any) => {
       if(result.status){
