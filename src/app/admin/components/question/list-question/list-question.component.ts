@@ -62,6 +62,7 @@ export class ListQuestionComponent implements OnInit {
               ...params,
               type: params['type'] ? params['type'] : 0,
               sectionId: params['sectionId'] ? params['sectionId'] : 0,
+              difficulty: params['difficulty'] ? params['difficulty'] : 0,
             }
 
             if(this.search.questionCategoryId){
@@ -142,7 +143,8 @@ export class ListQuestionComponent implements OnInit {
     questionCategoryId: 0,
     type: 0,
     title: '',
-    sectionId: 0
+    sectionId: 0,
+    difficulty: 0
   };
   selectedItems: number[] = [];
   pageSize: any = 10;
@@ -325,7 +327,8 @@ export class ListQuestionComponent implements OnInit {
         title: this.search.title ? this.search.title : null,
         questionCategoryId: this.search.questionCategoryId ? this.search.questionCategoryId : null,
         type: this.search.type ? this.search.type : null,
-        sectionId: this.search.sectionId ? this.search.sectionId : null
+        sectionId: this.search.sectionId ? this.search.sectionId : null,
+        difficulty: this.search.difficulty ? this.search.difficulty : null
       };
 
       this.router.navigate([], {

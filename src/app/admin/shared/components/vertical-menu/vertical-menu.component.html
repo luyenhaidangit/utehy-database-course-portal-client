@@ -23,8 +23,8 @@
 
                     <ul class="sub-menu {{ isActive('/admin/course')? 'mm-show' : '' }}">
                         <li class="cursor-pointer" routerLink="/admin/course/info"><a class="{{ isActive('/admin/course/info') ? 'active' : '' }}">Thông tin khoá học</a></li>
-                        <li class="cursor-pointer" routerLink="/admin/course/lesson"><a class="{{ isActive('/admin/course/lesson')? 'active' : '' }}">Quản lý bài giảng</a></li>
                         <li class="cursor-pointer" routerLink="/admin/course/section"><a class="{{ isActive('/admin/course/section')? 'active' : '' }}">Quản lý chương</a></li>
+                        <li class="cursor-pointer" routerLink="/admin/course/lesson"><a class="{{ isActive('/admin/course/lesson')? 'active' : '' }}">Quản lý bài giảng</a></li>
                     </ul>
                 </li>
 
@@ -67,7 +67,7 @@
                     </a>
 
                     <ul class="sub-menu {{ isActive('/admin/question') || isActive('/admin/question-category') ? 'mm-show' : '' }}">
-                        <li class="cursor-pointer" routerLink="/admin/question-category"><a class="{{ isActive('/admin/question-category') && (currentUrl != '/admin/question-tag') ? 'active' : '' }}">Quản lý loại câu hỏi</a></li>
+                        <!-- <li class="cursor-pointer" routerLink="/admin/question-category"><a class="{{ isActive('/admin/question-category') && (currentUrl != '/admin/question-tag') ? 'active' : '' }}">Quản lý loại câu hỏi</a></li> -->
                         <li class="cursor-pointer" routerLink="/admin/question"><a class="{{ isActive('/admin/question') && (currentUrl != '/admin/question-category') && (currentUrl != '/admin/question-tag') ? 'active' : '' }}">Quản lý câu hỏi</a></li>
                         <li class="cursor-pointer" routerLink="/admin/question-tag"><a class="{{ isActive('/admin/question-tag') && (currentUrl != '/admin/question-category') ? 'active' : '' }}">Quản lý thẻ tag câu hỏi</a></li>
                         <li class="cursor-pointer" routerLink="/admin/exam"><a class="{{ isActive('/admin/exam') && (currentUrl != '/admin/question-category') ? 'active' : '' }}">Quản lý bộ đề thi</a></li>

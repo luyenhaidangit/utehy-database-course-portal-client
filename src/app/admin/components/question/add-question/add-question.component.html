@@ -103,7 +103,7 @@
 
                     <div class="row">
                         <div class="col-12 col-lg-8 mt-2">
-                            <div class="alert alert-danger" role="alert">
+                            <div class="alert alert-danger mb-0" role="alert">
                                 Sau khi kỳ thi kết thúc, nếu sửa đổi câu trả lời cho các câu hỏi, điểm số sẽ không thay đổi tương ứng theo câu trả lời mới!
                             </div>
                         </div>
@@ -112,11 +112,13 @@
 
                 <div class="form-group">
                     <div class="row">
-                        <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Ghi chú</label>
+                        <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Điểm khả dụng</label>
                     </div>
                     <div class="row">
-                        <div class="col-12 col-lg-8">
-                            <ckeditor (ready)="onReady($event)" id="editor" [config]="config.classicEditorConfig" [editor]="classicEditor" class="title-editor" (change)="handleChangeQuestionAnswer($event,question,questionContant.typeCkeditor.questionFeedback)"></ckeditor>
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <input [value]="getMaxScoreQuestionAnswers()" type="number" placeholder="Điểm" class="form-control input-form-space" disabled>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -156,14 +158,22 @@
 
                 <div class="form-group">
                     <div class="row">
-                        <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Danh mục câu hỏi</label>
+                        <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Chương</label>
                     </div>
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="row">
-                                <button (click)="handleOpenQuestionCategoryTreeModal()" type="button" class="btn input-type-select dropdown-toggle input-form-space d-flex justify-content-between align-items-center">
+                                <!-- <button (click)="handleOpenQuestionCategoryTreeModal()" type="button" class="btn input-type-select dropdown-toggle input-form-space d-flex justify-content-between align-items-center">
                                     <span>{{ questionCategory.name }}</span> <i class="mdi mdi-chevron-down"></i>
-                                </button>
+                                </button> -->
+                                <select (blur)="validateFormSuccess.touchSection = true" name="sectionId" class="custom-select input-type-select input-form-space"  [(ngModel)]="question.sectionId">
+                                    <option [selected]="question.sectionId === null || question.sectionId === 0" [ngValue]="0">Chương</option>
+                                    <option *ngFor="let section of sections;" value="{{ section.id }}">{{ section.title }}</option>
+                                </select>
+
+                                <div *ngIf="question.sectionId === 0 && question.sectionId !== null && validateFormSuccess.touchSection" class="danger-notice">
+                                    <div *ngIf="question.sectionId === 0 && question.sectionId !== null && validateFormSuccess.touchSection">Chương câu hỏi không được để trống!</div>
+                                 </div>
                             </div>
                         </div>
                     </div>
@@ -171,12 +181,19 @@
 
                 <div class="form-group">
                     <div class="row">
-                        <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Điểm khả dụng</label>
+                        <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Độ khó</label>
                     </div>
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="row">
-                                <input [value]="getMaxScoreQuestionAnswers()" type="number" placeholder="Điểm" class="form-control input-form-space" disabled>
+                                <select (blur)="validateFormSuccess.touchDiff = true" name="touchDiff" class="custom-select input-type-select input-form-space"  [(ngModel)]="question.difficulty">
+                                    <option [selected]="question.difficulty === null || question.difficulty === 0" [ngValue]="0">Độ khó</option>
+                                    <option *ngFor="let section of questionContant.difficulties;" value="{{ section.key }}">{{ section.value }}</option>
+                                </select>
+
+                                <div *ngIf="question.difficulty === 0 && question.difficulty !== null && validateFormSuccess.touchDiff" class="danger-notice">
+                                    <div *ngIf="question.difficulty === 0 && question.difficulty !== null && validateFormSuccess.touchDiff">Độ khó câu hỏi không được để trống!</div>
+                                 </div>
                             </div>
                         </div>
                     </div>
@@ -206,10 +223,21 @@
                 </div>
 
                 <div class="form-group">
+                    <div class="row">
+                        <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Ghi chú</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-8">
+                            <ckeditor (ready)="onReady($event)" id="editor" [config]="config.classicEditorConfig" [editor]="classicEditor" class="title-editor" (change)="handleChangeQuestionAnswer($event,question,questionContant.typeCkeditor.questionFeedback)"></ckeditor>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <div class="d-flex">
                         <div class="ml-auto">
                             <button routerLink="/admin/question" type="button" class="btn btn-secondary waves-effect waves-light">Quay lại</button>
-                            <button [disabled]="isInvalidForm()" type="submit" class="btn btn-success waves-effect waves-light ml-2">Xác nhận</button>
+                            <button [disabled]="isInvalidForm() || question.sectionId === 0 || question.sectionId === null || question.difficulty === 0 || question.difficulty === null" type="submit" class="btn btn-success waves-effect waves-light ml-2">Xác nhận</button>
                         </div>
                     </div>
                 </div>
