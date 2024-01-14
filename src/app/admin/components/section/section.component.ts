@@ -9,7 +9,7 @@ import orderConstant from '../../constants/orderConstant';
 import sortConstant from '../../constants/sortConstant';
 import systemConfig from '../../configs/system.config';
 import animationConstant from '../../constants/animation.constant';
-import { SectionService } from 'src/app/admin/services/apis/section.service';
+import { SectionService } from '../../services/apis/section.service';
 
 @Component({
   selector: 'app-section',
@@ -352,9 +352,10 @@ export class SectionComponent  {
 
     this.createSectionModalRef.onHidden?.subscribe(() => {
       this.section = {
-        place: 0,
-        type: 0,
-        isBlank: true
+        title: '',
+        description: '',
+        priority: 1,
+        status: true
       };
     });
   }
@@ -412,9 +413,10 @@ export class SectionComponent  {
 
     this.editSectionModalRef.onHidden?.subscribe(() => {
       this.section = {
-        place: 0,
-        type: 0,
-        isBlank: true
+        title: '',
+        description: '',
+        priority: 1,
+        status: true
       };
     });
   }
@@ -484,9 +486,10 @@ export class SectionComponent  {
 
     this.detailSectionModalRef.onHidden?.subscribe(() => {
       this.section = {
-        place: 0,
-        type: 0,
-        isBlank: true
+        title: '',
+        description: '',
+        priority: 1,
+        status: true
       };
     });
   }

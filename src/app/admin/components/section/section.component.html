@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0">Quản lý section</h4>
+            <h4 class="mb-0">Quản lý chương</h4>
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li routerLink="/admin/dashboard" class="breadcrumb-item d-flex align-items-center">
@@ -9,7 +9,7 @@
                         <i class="breadcrumb-item-arrow fa-solid fa-angle-right"></i>
                     </li>
                     <li class="breadcrumb-item active">
-                        <span>Quản lý section</span>
+                        <span>Quản lý chương</span>
                     </li>
                 </ol>
             </div>
@@ -29,10 +29,10 @@
                                     <input class="form-control" type="text" placeholder="Tiêu đề"
                                         [(ngModel)]="queryParameters.title" />
                                 </div>
-                                <div class="form-group col-md-4">
+                                <!-- <div class="form-group col-md-4">
                                     <input class="form-control" type="text" placeholder="Mô tả"
                                         [(ngModel)]="queryParameters.description" />
-                                </div>
+                                </div> -->
 
                                 <div class="form-group col-md-1">
                                     <button (click)="handleSearchSections()" type="button"
@@ -84,22 +84,21 @@
                                             height="14.41" width="14.41" style="margin-top: -3px;"
                                             alt="icon-sort"></span>
                                 </th>
-                                <th class="order-sort" (click)="handleOnSortAndOrderChange(constant.order.id)"
+                                <th>Tên chương</th>
+                                <th>Trạng thái</th>
+                                <th class="order-sort" (click)="handleOnSortAndOrderChange(constant.order.priority)"
                                     [ngClass]="{'order-sort-active': paging?.orderBy === constant.order.priority }">
-                                    Priority
-                                    <span *ngIf="paging?.orderBy === constant.order.id"
+                                    Độ ưu tiên
+                                    <span *ngIf="paging?.orderBy === constant.order.priority"
                                         class="order-sort-group test-{{paging?.orderBy}}">
                                         <i *ngIf="paging?.sortBy === constant.sort.desc" class="bi bi-sort-down"></i>
                                         <i *ngIf="paging?.sortBy === constant.sort.asc" class="bi bi-sort-up"></i>
                                     </span>
-                                    <span *ngIf="!(paging?.orderBy === constant.order.id)"
+                                    <span *ngIf="!(paging?.orderBy === constant.order.priority)"
                                         class="test-{{paging?.orderBy}}"><img src="../../../../../assets/sort.png"
                                             height="14.41" width="14.41" style="margin-top: -3px;"
                                             alt="icon-sort"></span>
                                 </th>
-                                <th>Tên chương</th>
-                                <th>Mô tả </th>
-                                <th>Trạng thái</th>
                                 <th>Hành động</th>
                             </tr>
                         </thead>
@@ -113,15 +112,14 @@
                                         </div>
                                      </td>
                                     <td>{{ section.id }}</td>
-                                    <td>{{ section.priority }}</td>
                                     <td>{{ section.title }}</td>
-                                    <td>{{ section.description }}</td>
                                     <td>
                                         <span
                                             class="badge {{ section.status ? 'badge-success' : 'badge-warning' }}">{{
-                                            section.status ? 'Đã được duyệt' : 'Chưa được duyệt' }}</span>
+                                            section.status ? 'Hoạt động' : 'Ngừng hoạt động' }}</span>
                                     </td>
-
+                                    <td>{{ section.priority }}</td>
+                                   
                                     <td>
                                         <span class="text-info cursor-pointer"
                                             (click)="handleOpenDetailsectionModal(section)"><i
@@ -184,12 +182,12 @@
 <form (ngSubmit)="handleOnSubmitCreateSection()" #createForm="ngForm">
     <ng-template #createSectionTemplate>
         <div class="modal-header">
-            <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Tạo mới section</h5>
+            <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Tạo mới chương</h5>
             <button type="button" class="close" (click)="createSectionModalRef?.hide()">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body overflow-hidden px-4">
             <div class="form-group">
                 <div class="row">
                     <label class="col-md-3 col-lg-3 col-form-label" for="title">Tiêu đề <span
@@ -259,7 +257,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body overflow-hidden px-4">
         <div class="form-group">
             <div class="row">
                 <label class="col-md-3 col-lg-3 col-form-label" for="email">Id</label>
@@ -322,7 +320,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body overflow-hidden px-4">
             <div class="form-group">
                 <div class="row">
                     <label class="col-md-3 col-lg-3 col-form-label" for="id">ID<span
