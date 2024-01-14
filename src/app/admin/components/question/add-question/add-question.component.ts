@@ -14,6 +14,7 @@ import { AddQuestionCategoryTreeService } from 'src/app/admin/services/component
 import { TagService } from 'src/app/admin/services/apis/tag.service';
 import tagConstant from 'src/app/admin/constants/tag.constant';
 import { QuestionService } from 'src/app/admin/services/apis/question.service';
+import { SectionService } from 'src/app/admin/services/apis/section.service';
 
 @Component({
   selector: 'app-add-question',
@@ -44,11 +45,14 @@ export class AddQuestionComponent implements OnInit {
     private questionCategoryService: QuestionCategoryService,
     private tagService: TagService,
     public addQuestionCategoryTreeService: AddQuestionCategoryTreeService,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private sectionService: SectionService
   ) { }
 
   ngOnInit() {
     this.addQuestionCategoryTreeService.resetState();
+
+    this.getSections({sortBy: 'asc'});
 
     this.questionCategoryService.getQuestionCategoryTree().subscribe((result: any) => {
       if(result.status){
@@ -88,12 +92,23 @@ export class AddQuestionComponent implements OnInit {
     title: '',
     questionAnswers: [...questionConstant.defaultQuestionAnswerMultipleAnswers],
     questionCategoryId: 1,
-    questionTags: []
+    questionTags: [],
+    sectionId: 0
   };
+
+  public sections: any = [];
 
   public validateForm: any = {
     title: true,
     questionAnswers: []
+  }
+
+  public getSections(request: any): void{
+    this.sectionService.getSections(request).subscribe((result: any) => {
+      if(result.status){
+        this.sections = result.data.items;
+      }
+    });
   }
 
   getMaxScoreQuestionAnswers(){

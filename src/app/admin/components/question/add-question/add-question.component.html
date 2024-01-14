@@ -161,9 +161,13 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="row">
-                                <button (click)="handleOpenQuestionCategoryTreeModal()" type="button" class="btn input-type-select dropdown-toggle input-form-space d-flex justify-content-between align-items-center">
+                                <!-- <button (click)="handleOpenQuestionCategoryTreeModal()" type="button" class="btn input-type-select dropdown-toggle input-form-space d-flex justify-content-between align-items-center">
                                     <span>{{ questionCategory.name }}</span> <i class="mdi mdi-chevron-down"></i>
-                                </button>
+                                </button> -->
+                                <select name="sectionId" class="custom-select input-type-select input-form-space"  [(ngModel)]="question.sectionId">
+                                    <option [selected]="question.sectionId === null || question.sectionId === 0" [ngValue]="0">Chương</option>
+                                    <option *ngFor="let section of sections;" value="{{ section.id }}">{{ section.title }}</option>
+                                </select>
                             </div>
                         </div>
                     </div>
