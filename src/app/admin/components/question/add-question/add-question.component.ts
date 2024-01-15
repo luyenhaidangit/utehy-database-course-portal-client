@@ -180,10 +180,14 @@ export class AddQuestionComponent implements OnInit {
   }
 
   onSubmit(){
+    console.log('nice',this.question.questionTags)
+
     const selectedCategoryIds = this.question.questionTags.filter((category: any) => category.selected)
     .map((selectedCategory: any) => selectedCategory.id);
 
-    const request = {...this.question, questionTags: selectedCategoryIds, score: this.getMaxScoreQuestionAnswers(), difficulty: +this.question.difficulty};
+    console.log('nice',selectedCategoryIds)
+
+    const request = {...this.question, tagIds: this.question.questionTags, score: this.getMaxScoreQuestionAnswers(), difficulty: +this.question.difficulty};
 
     this.questionService.createQuestion(request).subscribe((result: any) => {
       if(result.status){

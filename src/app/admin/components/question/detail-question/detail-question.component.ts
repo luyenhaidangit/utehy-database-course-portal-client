@@ -40,7 +40,9 @@ export class DetailQuestionComponent  implements OnInit{
       this.questionService.getQuestionById(request).subscribe((result: any) => {
         this.question = result.data;
 
-        console.log( this.question)
+        this.question.difficultyName = questionConstant.difficulties.find(item => item.key === this.question.difficulty)?.value;
+
+        this.question.tags = result.data.questionTags.map((tagInfo: any) => tagInfo.tag);
       });
     });
 
@@ -50,7 +52,8 @@ export class DetailQuestionComponent  implements OnInit{
     return String.fromCharCode(65+index);
   }
 
-
-
+  getMaxScoreQuestionAnswers(){
+    return Math.max(...this.question.questionAnswers.map((item: any)=> item.score));
+  }
 }
 
