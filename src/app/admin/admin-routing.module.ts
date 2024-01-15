@@ -4,7 +4,7 @@ import { BannerComponent } from './components/banner/banner.component';
 import { GroupComponent } from './components/group/group.component';
 import { QuestionCategoryComponent } from './components/question-category/question-category.component';
 import { ExamComponent } from './components/exam/exam.component';
-import { SectionComponent } from './components/section/section.component';
+import { RoleComponent } from './components/role/role.component';
 
 const routes: Routes = [
   {
@@ -22,6 +22,11 @@ const routes: Routes = [
   {
     path: 'student',
     loadChildren: () => import('./components/student/student.module').then((m) => m.StudentModule),
+  },
+  {
+    path: 'role',
+    component: RoleComponent
+
   },
   {
     path: 'post',
