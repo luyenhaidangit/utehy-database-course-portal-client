@@ -42,6 +42,46 @@
             <form (ngSubmit)="handleOnSubmitForm()" #form="ngForm" class="mt-3">
                 <div class="form-group">
                     <div class="row">
+                        <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Chương</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <select (blur)="validateFormSuccess.touchSection = true" name="sectionId" class="custom-select input-type-select input-form-space"  [(ngModel)]="question.sectionId">
+                                    <option [selected]="question.sectionId === null || question.sectionId === 0" [ngValue]="0">Chương</option>
+                                    <option *ngFor="let section of sections;" value="{{ section.id }}">{{ section.title }}</option>
+                                </select>
+
+                                <div *ngIf="question.sectionId === 0 && question.sectionId !== null && validateFormSuccess.touchSection" class="danger-notice">
+                                    <div *ngIf="question.sectionId === 0 && question.sectionId !== null && validateFormSuccess.touchSection">Chương câu hỏi không được để trống!</div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Độ khó</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <select (blur)="validateFormSuccess.touchDiff = true" name="touchDiff" class="custom-select input-type-select input-form-space"  [(ngModel)]="question.difficulty">
+                                    <option [selected]="question.difficulty === null || question.difficulty === 0" [ngValue]="0">Độ khó</option>
+                                    <option *ngFor="let section of constant.questionContant.difficulties;" value="{{ section.key }}">{{ section.value }}</option>
+                                </select>
+
+                                <div *ngIf="question.difficulty === 0 && question.difficulty !== null && validateFormSuccess.touchDiff" class="danger-notice">
+                                    <div *ngIf="question.difficulty === 0 && question.difficulty !== null && validateFormSuccess.touchDiff">Độ khó câu hỏi không được để trống!</div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
                         <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Nội dung câu hỏi</label>
                     </div>
                     <div class="row">

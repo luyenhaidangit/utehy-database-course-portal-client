@@ -11,6 +11,7 @@ import questionConstant from 'src/app/admin/constants/question.constant';
 import { QuestionService } from 'src/app/admin/services/apis/question.service';
 import { QuestionCategoryService } from 'src/app/admin/services/apis/question-category.service';
 import { AddQuestionCategoryTreeService } from 'src/app/admin/services/components/add-question-category-tree.service';
+import { SectionService } from 'src/app/admin/services/apis/section.service';
 
 @Component({
   selector: 'app-edit-question',
@@ -42,11 +43,14 @@ export class EditQuestionComponent {
     private addQuestionCategoryTreeService: AddQuestionCategoryTreeService,
     private modalService: BsModalService,
     private ngxToastr: NgxToastrService,
-    private router:Router
+    private router:Router,
+    private sectionService: SectionService
   ) { }
 
   ngOnInit() {
     this.addQuestionCategoryTreeService.resetState();
+
+    this.getSections({sortBy: 'asc'});
 
     this.route.paramMap.subscribe(params => {
       const request = {
@@ -90,8 +94,23 @@ export class EditQuestionComponent {
     questionContant: questionConstant
   }
 
+  public validateFormSuccess: any = {
+    touchSection: false,
+    touchDiff: false
+  }
+
   public config: any = {
     classicEditorConfig: classicEditorConfig
+  }
+
+  public sections: any = [];
+
+  public getSections(request: any): void{
+    this.sectionService.getSections(request).subscribe((result: any) => {
+      if(result.status){
+        this.sections = result.data.items;
+      }
+    });
   }
 
   //Question
