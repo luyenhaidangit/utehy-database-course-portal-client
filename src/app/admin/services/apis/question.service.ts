@@ -27,7 +27,9 @@ export class QuestionService {
   deleteQuestion(request: any): Observable<any> {
     return this.http.post('question/delete', request);
   }
-
+  deleteMultipleQuestion(request: any): Observable<any> {
+    return this.http.post('question/delete-multiple', request);
+  }
   checkAnswer(request: any): Observable<any> {
     return this.http.post('question/check-answers', request);
   }

@@ -14,11 +14,14 @@ import questionHelper from 'src/app/admin/helpers/question.helper';
 import { AddQuestionCategoryTreeService } from 'src/app/admin/services/components/add-question-category-tree.service';
 import Swal from 'sweetalert2';
 import { SectionService } from 'src/app/admin/services/apis/section.service';
+import animationConstant from '../../../constants/animation.constant';
 
 @Component({
   selector: 'app-list-question',
   templateUrl: './list-question.component.html',
-  styleUrls: ['./list-question.component.css']
+  styleUrls: ['./list-question.component.css'],
+  animations: animationConstant.animations
+
 })
 export class ListQuestionComponent implements OnInit {
   // Constructor
@@ -31,6 +34,7 @@ export class ListQuestionComponent implements OnInit {
     private route: ActivatedRoute,
     public addQuestionCategoryTreeService: AddQuestionCategoryTreeService,
     private sectionService: SectionService
+    
     ) 
     { }
 
@@ -457,6 +461,56 @@ export class ListQuestionComponent implements OnInit {
         }, error => {
           console.log(error);
           this.ngxToastr.error(error.error.message, '', {
+            progressBar: true
+          });
+        });
+      }
+    });
+  }
+
+  public handleOnDeleteMultiple() {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        cancelButton: "btn btn-danger ml-2",
+        confirmButton: "btn btn-success",
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: `Bạn có muốn xoá các bản ghi có Id: ${this.selectedItems.join(', ')} không?`,
+      text: "Sau khi xoá bản sẽ không thể khôi phục dữ liệu!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xác nhận",
+      cancelButtonText: "Bỏ qua",
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const request = {
+          ids: this.selectedItems
+        }
+
+        this.questionService.deleteMultipleQuestion(request).subscribe((result: any) => {
+          if(result.status){
+            swalWithBootstrapButtons.fire({
+              title: "Xoá thành công!",
+              text: result.message,
+              icon: "success"
+            });
+
+            this.route.queryParams.subscribe(params => {
+              const request = {
+                ...params,
+                pageIndex: params['pageIndex'] ? params['pageIndex'] :DEFAULT_PAGE_INDEX,
+                pageSize: params['pageSize'] ? params['pageSize'] : DEFAULT_PAGE_SIZE,
+              };
+
+              this.getQuestions(request);
+            });
+          }
+        },error => {
+          console.log(error);
+          this.ngxToastr.error(error.error.message,'',{
             progressBar: true
           });
         });
