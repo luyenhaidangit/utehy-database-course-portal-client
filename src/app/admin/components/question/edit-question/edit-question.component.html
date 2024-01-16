@@ -158,15 +158,13 @@
 
                     <div class="row">
                         <div class="col-12 col-lg-8 mt-2">
-                            <div class="alert alert-danger" role="alert">
+                            <div class="alert alert-danger mb-0" role="alert">
                                 Sau khi kỳ thi kết thúc, nếu sửa đổi câu trả lời cho các câu hỏi, điểm số sẽ không thay đổi tương ứng theo câu trả lời mới!
                             </div>
                         </div>
                     </div>
                 </div>
 
-               
-                
                 <div class="form-group">
                     <div class="row">
                         <label class="col-md-12 col-lg-6 col-form-label" for="idTeacher">Điểm khả dụng</label>
@@ -202,7 +200,7 @@
                                 <div class="col-3 mt-2" *ngFor="let answer of question.questionAnswers; let index = index">
                                     <div class="mb-1">Điểm lựa chọn ({{answer.charIndex}})</div>
                                     <div>
-                                        <input [(ngModel)]="question.questionAnswers[index].score" name="phone" id="phone" type="number" placeholder="Điểm" class="form-control">
+                                        <input [(ngModel)]="question.questionAnswers[index].score" name="phone-{{index}}" id="phone" type="number" placeholder="Điểm" class="form-control">
                                         <div *ngIf="!question.questionAnswers[index].score || question.questionAnswers[index].score < 0" class="danger-notice">
                                             <div *ngIf="!question.questionAnswers[index].score || question.questionAnswers[index].score < 0">Điểm không được để trống</div>
                                         </div>
