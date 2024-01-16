@@ -192,7 +192,12 @@ export class EditQuestionComponent {
   public classicEditor = ClassicEditor;
 
   public handleOnSubmitForm(): void {
-    this.question.tagIds = this.question.questionTags;
+    const isArrayOfNumbers = this.question.questionTags.every((item: any) => typeof item === 'number');
+    if(isArrayOfNumbers){
+      this.question.tagIds = this.question.questionTags;
+    }else{
+      this.question.tagIds = this.question.questionTags.map((item: any) => item.tagId);
+    }
     this.questionService.editQuestion(this.question).subscribe((result: any) => {
       if (result.status) {
         this.ngxToastr.success('Cập nhật câu hỏi thành công!', '', {
