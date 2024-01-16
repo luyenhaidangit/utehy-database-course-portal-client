@@ -506,6 +506,8 @@ export class ListQuestionComponent implements OnInit {
               };
 
               this.getQuestions(request);
+
+              this.selectedItems = [];
             });
           }
         },error => {
