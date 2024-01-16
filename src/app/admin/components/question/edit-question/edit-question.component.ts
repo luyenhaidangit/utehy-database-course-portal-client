@@ -192,6 +192,7 @@ export class EditQuestionComponent {
   public classicEditor = ClassicEditor;
 
   public handleOnSubmitForm(): void {
+    this.question.tagIds = this.question.questionTags;
     this.questionService.editQuestion(this.question).subscribe((result: any) => {
       if (result.status) {
         this.ngxToastr.success('Cập nhật câu hỏi thành công!', '', {
