@@ -42,6 +42,20 @@
                     </ul>
                 </li>
 
+                <li class="{{ isActive('/admin/exam')  ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/admin/exam') ? 'active' : '' }}">
+                        <div class="navigation-label">
+                            <i class="fa-solid fa-user-group pb-0"></i>
+                            <span>Kỳ thi</span>
+                        </div>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </a>
+
+                    <ul class="sub-menu {{ isActive('/admin/exam') ? 'mm-show' : '' }}">
+                        <li class="cursor-pointer" [routerLink]="['/admin/exam']" [queryParams]="{ status: 'true' }"><a class="{{ isActive('/admin/exam') ? 'active' : '' }}">Quản lý đề thi</a></li>
+                    </ul>
+                </li>
+
                 <!-- <li class="{{ isActive('/admin/course')  ? 'mm-active' : '' }}">
                     <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/admin/course') ? 'active' : '' }}">
                         <div class="navigation-label">
