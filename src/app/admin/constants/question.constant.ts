@@ -65,7 +65,21 @@ const questionConstant = {
         questionTitle: 1,
         questionAnswerContent: 2,
         questionFeedback: 3
-    }
+    },
+    difficulties: [
+        {
+            key: 1,
+            value: "Dễ" 
+        },
+        {
+            key: 2,
+            value: "Trung bình" 
+        },
+        {
+            key: 3,
+            value: "Khó" 
+        },
+    ]
 };
     
 export default questionConstant;

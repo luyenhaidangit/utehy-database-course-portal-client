@@ -4,6 +4,7 @@ import { BannerComponent } from './components/banner/banner.component';
 import { GroupComponent } from './components/group/group.component';
 import { QuestionCategoryComponent } from './components/question-category/question-category.component';
 import { ExamComponent } from './components/exam/exam.component';
+import { RoleComponent } from './components/role/role.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,11 @@ const routes: Routes = [
   {
     path: 'student',
     loadChildren: () => import('./components/student/student.module').then((m) => m.StudentModule),
+  },
+  {
+    path: 'role',
+    component: RoleComponent
+
   },
   {
     path: 'post',
@@ -66,7 +72,7 @@ const routes: Routes = [
   {
     path: 'group-module',
     loadChildren: () => import('./components/group-module/group-module.module').then((m) => m.GroupModuleModule),
-  },
+  }
 ];
 
 @NgModule({
@@ -74,3 +80,8 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AdminRoutingModule { }
+
+  // {
+  //   path: 'section',
+  //   component: SectionComponent,
+  // }

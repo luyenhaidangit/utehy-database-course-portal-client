@@ -15,10 +15,12 @@ import { GroupComponent } from './components/group/group.component';
 import { QuestionCategoryComponent } from './components/question-category/question-category.component';
 import { AddQuestionCategoryTreeComponent } from './components/question/add-question-category-tree/add-question-category-tree.component';
 import { ExamComponent } from './components/exam/exam.component';
+import { SectionComponent } from './components/section/section.component';
+import { RoleComponent } from './components/role/role.component';
 
 @NgModule({
   declarations: [LayoutComponent, AdminComponent, HeaderComponent, VerticalMenuComponent, FooterComponent, RightSideBarComponent, BannerComponent, GroupComponent, QuestionCategoryComponent, 
-    AddQuestionCategoryTreeComponent, ExamComponent
+    AddQuestionCategoryTreeComponent, ExamComponent, SectionComponent, RoleComponent
   ],
   imports: [
     CommonModule,

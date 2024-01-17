@@ -23,6 +23,7 @@
 
                     <ul class="sub-menu {{ isActive('/admin/course')? 'mm-show' : '' }}">
                         <li class="cursor-pointer" routerLink="/admin/course/info"><a class="{{ isActive('/admin/course/info') ? 'active' : '' }}">Thông tin khoá học</a></li>
+                        <li class="cursor-pointer" routerLink="/admin/course/section"><a class="{{ isActive('/admin/course/section')? 'active' : '' }}">Quản lý chương</a></li>
                         <li class="cursor-pointer" routerLink="/admin/course/lesson"><a class="{{ isActive('/admin/course/lesson')? 'active' : '' }}">Quản lý bài giảng</a></li>
                     </ul>
                 </li>
@@ -38,6 +39,20 @@
 
                     <ul class="sub-menu {{ isActive('/admin/group-module') ? 'mm-show' : '' }}">
                         <li class="cursor-pointer" [routerLink]="['/admin/group-module']" [queryParams]="{ status: 'true' }"><a class="{{ isActive('/admin/group-module') ? 'active' : '' }}">Nhóm học phần</a></li>
+                    </ul>
+                </li>
+
+                <li class="{{ isActive('/admin/exam')  ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/admin/exam') ? 'active' : '' }}">
+                        <div class="navigation-label">
+                            <i class="fa-solid fa-user-group pb-0"></i>
+                            <span>Kỳ thi</span>
+                        </div>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </a>
+
+                    <ul class="sub-menu {{ isActive('/admin/exam') ? 'mm-show' : '' }}">
+                        <li class="cursor-pointer" [routerLink]="['/admin/exam']" [queryParams]="{ status: 'true' }"><a class="{{ isActive('/admin/exam') ? 'active' : '' }}">Quản lý đề thi</a></li>
                     </ul>
                 </li>
 
@@ -66,7 +81,7 @@
                     </a>
 
                     <ul class="sub-menu {{ isActive('/admin/question') || isActive('/admin/question-category') ? 'mm-show' : '' }}">
-                        <li class="cursor-pointer" routerLink="/admin/question-category"><a class="{{ isActive('/admin/question-category') && (currentUrl != '/admin/question-tag') ? 'active' : '' }}">Quản lý loại câu hỏi</a></li>
+                        <!-- <li class="cursor-pointer" routerLink="/admin/question-category"><a class="{{ isActive('/admin/question-category') && (currentUrl != '/admin/question-tag') ? 'active' : '' }}">Quản lý loại câu hỏi</a></li> -->
                         <li class="cursor-pointer" routerLink="/admin/question"><a class="{{ isActive('/admin/question') && (currentUrl != '/admin/question-category') && (currentUrl != '/admin/question-tag') ? 'active' : '' }}">Quản lý câu hỏi</a></li>
                         <li class="cursor-pointer" routerLink="/admin/question-tag"><a class="{{ isActive('/admin/question-tag') && (currentUrl != '/admin/question-category') ? 'active' : '' }}">Quản lý thẻ tag câu hỏi</a></li>
                         <li class="cursor-pointer" routerLink="/admin/exam"><a class="{{ isActive('/admin/exam') && (currentUrl != '/admin/question-category') ? 'active' : '' }}">Quản lý bộ đề thi</a></li>
@@ -106,6 +121,8 @@
                         <!-- <li class="cursor-pointer" routerLink="/admin/group"><a class="{{ isActive('/admin/group') ? 'active' : '' }}">Quản lý nhóm người</a></li> -->
                         <li class="cursor-pointer" routerLink="/admin/teacher"><a class="{{ isActive('/admin/teacher') ? 'active' : '' }}">Quản lý giáo viên</a></li>
                         <li class="cursor-pointer" routerLink="/admin/student"><a class="{{ isActive('/admin/student') ? 'active' : '' }}">Quản lý sinh viên</a></li>
+                        <li class="cursor-pointer" routerLink="/admin/role"><a class="{{ isActive('/admin/role') ? 'active' : '' }}">Quản lý vai trò </a></li>
+
                     </ul>
                 </li>
 

@@ -47,3 +47,15 @@ span.active{
     /* width: calc(100% - 12px) !important; */
     width: 100%;
 }
+
+.title-column{
+    width: 30% !important;
+}
+
+/* .section-column{
+    width: 15%;
+} */
+
+/* .type-column{
+    width: 15%;
+} */
