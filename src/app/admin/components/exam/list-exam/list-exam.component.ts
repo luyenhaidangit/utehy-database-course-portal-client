@@ -208,7 +208,7 @@ export class ListExamComponent {
       buttonsStyling: false
     });
     swalWithBootstrapButtons.fire({
-      title: `Bạn có chắc muốn xoá Exam có Id ${id}?`,
+      title: `Bạn có chắc muốn xoá đề thi có Id ${id}?`,
       text: "Sau khi xoá bản sẽ không thể khôi phục dữ liệu!",
       icon: "warning",
       showCancelButton: true,
@@ -429,6 +429,42 @@ export class ListExamComponent {
         isBlank: true
       };
     });
+  }
+
+  public formatAMPM(date: any) {
+    date = new Date(date);
+
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
+
+  public formatDate(date: any) {
+    date = new Date(date);
+
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+    day = day < 10 ? '0' + day : day;
+    month = month < 10 ? '0' + month : month;
+    return day + '/' + month + '/' + year;
+  }
+
+  //Status button
+  public statusButton(exam: any): number {
+    const currentTime = new Date();
+    if(exam.endTime && new Date(exam.endTime) < currentTime){
+      return 1;
+    } else if(currentTime >= new Date(exam.startTime) && currentTime <= new Date(exam.endTime)){
+      return 2;
+    }else{
+      return 3;
+    }
   }
 }
 

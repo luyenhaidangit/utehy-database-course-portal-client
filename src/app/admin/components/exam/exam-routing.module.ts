@@ -7,7 +7,7 @@ import { DetailExamComponent } from './detail-exam/detail-exam.component';
 
 const routes: Routes = [
   {
-    path: 'list',
+    path: '',
     component: ListExamComponent
   },
   {
