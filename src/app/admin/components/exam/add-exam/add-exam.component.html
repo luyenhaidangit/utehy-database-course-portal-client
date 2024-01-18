@@ -1,32 +1,145 @@
+
+
+
 <div class="container">
-    <h2>Create New Exam</h2>
-    <form>
-      <label for="examName">Exam Name</label>
-      <input type="text" id="examName" name="examName">
-  
-      <label for="startTime">Start Time</label>
-      <input type="time" id="startTime" name="startTime">
-  
-      <label for="endTime">End Time</label>
-      <input type="time" id="endTime" name="endTime">
-  
-      <label for="examDuration">Exam Duration</label>
-      <input type="number" id="examDuration" name="examDuration" min="0">
-  
-      <label for="assignedTo">Assigned To</label>
-      <select id="assignedTo" name="assignedTo">
-        <option value="">Select a group...</option>
-      </select>
-  
-  
-      <div class="toggle-switch">
-        <label>
-          <input type="checkbox" name="autoFetch">
-          Automatically fetch from question bank
-        </label>
+  <div class="form-section">
+    <h2>Tạo mới đề thi</h2>
+    <form class="add-exam" #createForm="ngForm">
+
+
+      <div class="modal-body overflow-hidden px-4">
+        <div class="form-group">
+          <div class="row">
+            <label class="col-md-3 col-lg-3 col-form-label" for="title">Tên đề kiểm tra <span
+                class="text-danger">*</span></label>
+            <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+              <input class="form-control" id="title" name="title" type="text" required placeholder="Tiêu đề" />
+              <div
+                *ngIf="createForm.controls['title']?.invalid && (createForm.controls['title']?.dirty || createForm.controls['title'].touched)"
+                class="danger-notice">
+                <div *ngIf="createForm.controls['title'].errors?.['required']">Tiêu đề không được để trống
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label class="col-md-3 col-lg-3 col-form-label" for="description">Mô tả</label>
+            <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+              <input class="form-control" placeholder="Mô tả" name="description" id="description" type="text" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label class="col-md-3 col-lg-3 col-form-label" for="start">Thời gian bắt đầu</label>
+            <div style="display: flex;">
+              <div class=" width-50p">
+                <input class="form-control width-50" placeholder="Từ" name="start" id="start" type="text" />
+              </div>
+              <div class=" width-50p">
+                <input class="form-control" placeholder="Đến" name="end" id="end" type="text" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label class="col-md-3 col-lg-3 col-form-label" for="duration">Thời gian làm bài</label>
+            <div class="col-md-9 col-lg-8 col-table-reponsive p-0 relative">
+              <input class="form-control" placeholder="Thời gian làm bài" name="duration" id="duration" type="text" />
+              <p class="minutes">phút</p>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row border-collapse">
+
+            <label class="col-md-3 col-lg-3 col-form-label" for="description">Chương</label>
+            <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+              <select (blur)="validateFormSuccess.touchSection = true" name="sectionId"
+                class="custom-select input-type-select input-form-space" [(ngModel)]="exam.sectionId">
+                <option [selected]="" [ngValue]="0">Chương</option>
+                <option *ngFor="let section of sections;" value="{{ section.id }}">{{ section.title }}</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row border-collapse">
+
+            <label class="col-md-3 col-lg-3 col-form-label" for="description">Giao cho </label>
+            <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+              <select (blur)="validateFormSuccess.touchSection = true" name="sectionId"
+                class="custom-select input-type-select input-form-space" [(ngModel)]="exam.sectionId">
+                <option [selected]="" [ngValue]="0">Nhóm</option>
+                <option *ngFor="let groupmodule of groupmodules;" value="{{ groupmodule.id }}">{{ groupmodule.name }}</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label class="col-md-3 col-lg-3 col-form-label" for="description">Số câu dễ</label>
+            <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+              <input class="form-control" placeholder="Số câu dễ" name="description" id="description" type="text" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label class="col-md-3 col-lg-3 col-form-label" for="description">Số câu trung bình</label>
+            <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+              <input class="form-control" placeholder="Số câu trung bình" name="description" id="description" type="text" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label class="col-md-3 col-lg-3 col-form-label" for="description">Số câu khó</label>
+            <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+              <input class="form-control" placeholder="Số câu khó" name="description" id="description" type="text" />
+            </div>
+          </div>
+        </div>
+        
+
       </div>
-  
-  
+
       <button type="submit" class="create-btn">+ CREATE EXAM</button>
+
     </form>
   </div>
+
+  <div class="config-section">
+    <h2>CẤU HÌNH</h2>
+    <div class="custom-control custom-switch ml-3" dir="ltr">
+      <input type="checkbox" class="custom-control-input" id="status" name="status" [checked]="true">
+      <label class="custom-control-label" for="status">Tự động lấy từ ngân hàng đề</label>
+    </div>
+    <div class="custom-control custom-switch ml-3" dir="ltr">
+      <input type="checkbox" class="custom-control-input" id="status" name="status" [checked]="true">
+      <label class="custom-control-label" for="status">Xem điểm sau khi thi</label>
+    </div>
+    <div class="custom-control custom-switch ml-3" dir="ltr">
+      <input type="checkbox" class="custom-control-input" id="status" name="status" [checked]="true">
+      <label class="custom-control-label" for="status">Xem bài làm khi thi xong</label>
+    </div>
+    <div class="custom-control custom-switch ml-3" dir="ltr">
+      <input type="checkbox" class="custom-control-input" id="status" name="status" [checked]="true">
+      <label class="custom-control-label" for="status">Đảo câu hỏi</label>
+    </div>
+    <div class="custom-control custom-switch ml-3" dir="ltr">
+      <input type="checkbox" class="custom-control-input" id="status" name="status" [checked]="true">
+      <label class="custom-control-label" for="status">Đảo đáp án</label>
+    </div>
+    <div class="custom-control custom-switch ml-3" dir="ltr">
+      <input type="checkbox" class="custom-control-input" id="status" name="status" [checked]="true">
+      <label class="custom-control-label" for="status">Tự động nộp bài khi chuyển tab</label>
+    </div>
+  </div>
+</div>
