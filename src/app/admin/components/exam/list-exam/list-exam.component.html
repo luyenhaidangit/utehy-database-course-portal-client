@@ -32,6 +32,7 @@
                 <button
                    type="button"
                    class="btn btn-primary waves-effect waves-light"
+                   (click)="handleSearchExams()"
                    >
                 <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
@@ -42,6 +43,7 @@
         <button
            type="button"
            class="btn btn-success waves-effect waves-light"
+           routerLink="/admin/exam/create"
            >
         <i class="fa-solid fa-plus mr-1"></i> Thêm mới
         </button>
@@ -49,29 +51,29 @@
 </div>
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-12" *ngFor="let exam of exams;">
         <div class="block-content bg-white box-shadow-exam block-content-full border-start border-3 border-danger py-3">
             <div class="d-md-flex justify-content-md-between align-items-md-center">
                 <div class="p-1 p-md-3">
                     <h3 class="h4 fw-bold mb-3">
-                        <a href="./test/detail/21" class="text-dark link-fx">Đề thi 100 câu</a>
+                        <a href="./test/detail/21" class="text-dark link-fx">{{exam.title}}</a>
                     </h3>
                     <p class="fs-sm text-muted mb-2">
                         <i class="fa fa-layer-group me-1"></i> Giao cho học phần <strong data-bs-toggle="tooltip" data-bs-animation="true" data-bs-placement="top" style="cursor:pointer" data-bs-original-title="Nhóm 4">Lập trình web và ứng dụng nâng cao - NH2022 - HK2</strong>
                     </p>
                     <p class="fs-sm text-muted mb-0">
-                        <i class="fa fa-clock me-1"></i> Diễn ra từ <span>17:05 08/05/2023</span> đến <span>17:35 08/05/2023</span> 
+                        <i class="fa fa-clock me-1"></i> Diễn ra từ <span>{{exam.startTime}}</span> đến <span>{{exam.endTime}}</span> 
                     </p>
                 </div>
                 <div class="p-1 p-md-3">
                     <button class="btn btn-sm btn-alt-danger rounded-pill px-3 me-1 my-1" disabled="">Đã đóng</button>
-                    <a class="btn btn-sm btn-alt-success rounded-pill px-3 me-1 my-1" href="./test/detail/21">
+                    <a class="btn btn-sm btn-alt-success rounded-pill px-3 me-1 my-1" [routerLink]="['/admin/exam/detail', exam.id]" >
                         <i class="fa fa-eye opacity-50 me-1"></i> Xem chi tiết
                     </a>
-                    <a data-role="dethi" data-action="update" class="btn btn-sm btn-alt-primary rounded-pill px-3 me-1 my-1 show" href="./test/update/21">
+                    <a data-role="dethi" data-action="update" class="btn btn-sm btn-alt-primary rounded-pill px-3 me-1 my-1 show" [routerLink]="['/admin/exam/edit', exam.id]">
                         <i class="fa fa-wrench opacity-50 me-1"></i> Chỉnh sửa
                     </a>
-                    <a data-role="dethi" data-action="delete" class="btn btn-sm btn-alt-danger rounded-pill px-3 my-1 btn-delete show" href="javascript:void(0)" data-id="21">
+                    <a data-role="dethi" data-action="delete" class="btn btn-sm btn-alt-danger rounded-pill px-3 my-1 btn-delete show" href="javascript:void(0)" (click)="handleDeleteItem(exam.id)">
                         <i class="fa fa-times opacity-50 me-1"></i> Xoá đề
                     </a>
                 </div>

@@ -17,4 +17,11 @@ export class ExamService {
   getExamById(request: any = null): Observable<any> {
     return this.http.get('get-by-id/get', request);
   }
+  deleteExam(request: any): Observable<any> {
+    return this.http.post('exam/delete', request);
+  }
+
+  deleteMultipleExam(request: any): Observable<any> {
+    return this.http.post('exam/delete-multiple', request);
+  }
 }

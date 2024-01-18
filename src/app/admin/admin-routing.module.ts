@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BannerComponent } from './components/banner/banner.component';
 import { GroupComponent } from './components/group/group.component';
 import { QuestionCategoryComponent } from './components/question-category/question-category.component';
-import { ExamComponent } from './components/exam/exam.component';
+import { ListExamComponent } from './components/exam/list-exam/list-exam.component';
 import { RoleComponent } from './components/role/role.component';
 
 const routes: Routes = [
@@ -50,7 +50,9 @@ const routes: Routes = [
   },
   {
     path: 'exam',
-    component: ExamComponent,
+    // component: ListExamComponent,
+    loadChildren: () => import('./components/exam/exam.module').then((m) => m.ExamModule),
+
   },
   {
     path: 'group',
