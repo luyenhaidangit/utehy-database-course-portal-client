@@ -64,7 +64,18 @@
                         </p>
                     </div>
                     <div class="p-1 p-md-3">
-                        <span class="btn btn-secondary btn-sm rounded-pill px-3 me-1 my-1 d-inline-flex align-items-center justify-content-center gap-2" disabled>Đã đóng</span>
+                        <span *ngIf="statusButton(exam) === 1" class="btn btn-secondary btn-sm rounded-pill px-3 me-1 my-1 d-inline-flex align-items-center justify-content-center gap-2" disabled>
+                            Đã đóng
+                        </span>
+
+                        <span *ngIf="statusButton(exam) === 2" class="btn btn-success btn-sm rounded-pill px-3 me-1 my-1 d-inline-flex align-items-center justify-content-center gap-2" disabled>
+                            Đang mở
+                        </span>
+
+                        <span *ngIf="statusButton(exam) === 3" class="btn btn-info btn-sm rounded-pill px-3 me-1 my-1 d-inline-flex align-items-center justify-content-center gap-2" disabled>
+                            Chưa mở
+                        </span>
+
                         <span class="btn btn-primary btn-sm btn-alt-success rounded-pill px-3 me-1 my-1 d-inline-flex align-items-center justify-content-center" [routerLink]="['/admin/exam/detail', exam.id]" >
                             <i class="fa fa-eye opacity-50 me-2"></i>
                             <span>Xem chi tiết</span>

@@ -454,6 +454,18 @@ export class ListExamComponent {
     month = month < 10 ? '0' + month : month;
     return day + '/' + month + '/' + year;
   }
+
+  //Status button
+  public statusButton(exam: any): number {
+    const currentTime = new Date();
+    if(exam.endTime && new Date(exam.endTime) < currentTime){
+      return 1;
+    } else if(currentTime >= new Date(exam.startTime) && currentTime <= new Date(exam.endTime)){
+      return 2;
+    }else{
+      return 3;
+    }
+  }
 }
 
 
