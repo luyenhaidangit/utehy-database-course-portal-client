@@ -48,9 +48,9 @@ label {
     display: inline-block;
 }
 
-span {
+/* span {
     margin-left: 10px;
-}
+} */
 
 select {
     width: 100%;
@@ -86,6 +86,16 @@ select {
   padding: 5px;
   background-color: #ccc;
   border-radius:10px ;
+  margin-bottom: 0px !important;
+  height: 100%;
+  border-radius: 4px;
+  top: 19px;
+  right: -25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  font-size: 13px;
 }
 .border-collapse{
   width: 100%;
@@ -112,3 +122,54 @@ select {
 .create-btn:hover {
   background-color: #45a049; 
 }
+
+.exam-form label{
+  margin-top: 0 !important;
+}
+
+:host ::ng-deep .title-editor .ck-editor__editable_inline {
+  min-height: 100px;
+}
+
+.input-form-space{
+  margin-left: 12px;
+  width: calc(100% - 12px) !important;
+}
+
+.border-right-none{
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.border-left-none{
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.input-type-select{
+  border: 1px solid #ced4da;
+}
+
+.app-search .form-control {
+  border: 1px solid #ced4da !important;
+  height: 38px;
+  padding-left: 40px;
+  padding-right: 20px;
+  background-color: unset !important;
+  box-shadow: none;
+  border-radius: unset !important;
+}
+
+.input-type-select{
+  min-height: 38px !important;
+}
+
+.add-tag-btn{
+  border-radius: 100%;
+}
+
+.add-tag-input{
+  width: 160px;
+  font-size: 11px;
+}
+

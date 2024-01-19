@@ -44,16 +44,20 @@ export class AddExamComponent {
 
   }
 
-
-
-
-
-
-
-  public sections: any = [];
   public groupmodules: any = [];
 
-  public exam: any = [];
+  public exam: any = {
+    title: '',
+    groupModuleId: 0,
+    sections: [],
+    sectionIds: [],
+    type: true,
+    isShowContent: false,
+    isSeeScore: false,
+    isMixQuestion: false,
+    isMixQuestionAnswer: false,
+    isAllowChangeTab: false
+  };
 
 
   public validateFormSuccess: any = {
@@ -74,5 +78,46 @@ export class AddExamComponent {
         this.groupmodules = result.data.items;
       }
     });
+  }
+
+  //Section
+  public sections: any = []
+
+  sectionModalRef?: BsModalRef;
+  @ViewChild('sectionModalTemplate') sectionModalTemplate!: TemplateRef<any>;
+
+  public handleOpenSectionModal(): void{
+    this.sectionModalRef = this.modalService.show(this.sectionModalTemplate,
+      Object.assign({}, { class: 'modal-dialog modal-lg modal-dialog-scrollable' }));
+
+    this.sectionModalRef.onHidden?.subscribe(() => {
+      this.sections.forEach((category: any) => {
+        if (this.exam.sectionIds.includes(category.id)) {
+          category.selected = true;
+        }else{
+          category.selected = false;
+        }
+      });
+    });
+  }
+
+  public handleCloseSectionModal(): void{
+    const selectedSections = this.sections.filter((section: any) => section.selected === true);
+
+    this.exam.sectionIds = selectedSections.map((section: any) => section.id);
+
+    this.sectionModalRef?.hide();
+  }
+
+  public handleChooseSection(): void{
+    const selectedCategories = this.sections.filter((category: any) => category.selected === true);
+
+    this.exam.sectionIds = selectedCategories.map((category: any) => category.id);
+
+    this.sectionModalRef?.hide();
+  }
+
+  public handleSubmitCreateExam(){
+    console.log("moi",this.exam);
   }
 }
