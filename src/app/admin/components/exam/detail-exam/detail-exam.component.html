@@ -1,1 +1,153 @@
-<p>detail-exam works!</p>
+
+
+<div class="row">
+    <div class="col-12">
+       <div
+          class="page-title-box d-flex align-items-center justify-content-between"
+          >
+          <h4 class="mb-0">Quản lý đề thi</h4>
+          <div class="page-title-right">
+             <ol class="breadcrumb m-0">
+                <li
+                   routerLink="/admin/dashboard"
+                   class="breadcrumb-item d-flex align-items-center"
+                   >
+                   <span>Trang chủ</span>
+                   <i class="breadcrumb-item-arrow fa-solid fa-angle-right"></i>
+                </li>
+                <li class="breadcrumb-item active">
+                    <span>Chi tiết đề thi</span>
+                 </li>
+             </ol>
+          </div>
+       </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="form-section">
+      <h2>Chi tiết đề thi</h2>
+      <form class="add-exam" #createForm="ngForm">
+
+        <div class="modal-body overflow-hidden px-4">
+          <div class="form-group">
+            <div class="row">
+              <label class="col-md-3 col-lg-3 col-form-label" for="title" >Tên đề kiểm tra <span
+                  class="text-danger">*</span></label>
+              <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                <input class="form-control" id="title" name="title" type="text" required placeholder="Tiêu đề" [(ngModel)]="exam.title" disabled />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-md-3 col-lg-3 col-form-label" for="description" >Mô tả</label>
+              <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                <input class="form-control" placeholder="Mô tả" name="description" id="description" type="text"  [(ngModel)]="exam.description" disabled/>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-md-3 col-lg-3 col-form-label" for="start">Thời gian bắt đầu</label>
+              <div style="display: flex;">
+                <div class=" width-50p">
+                  <input class="form-control width-50" placeholder="Từ" name="start" id="start" type="text" [(ngModel)]="exam.startTime"disabled />
+                </div>
+                <div class=" width-50p">
+                  <input class="form-control" placeholder="Đến" name="end" id="end" type="text" [(ngModel)]="exam.endTime" disabled />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-md-3 col-lg-3 col-form-label" for="duration">Thời gian làm bài</label>
+              <div class="col-md-9 col-lg-8 col-table-reponsive p-0 relative">
+                <input class="form-control" placeholder="Thời gian làm bài" name="duration" id="duration" type="text" [(ngModel)]="exam.duration" disabled />
+                <p class="minutes">phút</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row border-collapse">
+  
+              <label class="col-md-3 col-lg-3 col-form-label" for="description">Chương</label>
+              <div class="col-md-9 col-lg-8 col-table-reponsive p-0" disabled>
+                <span *ngFor="let section of exam.sections;">{{ section.title }} </span>
+
+              </div>
+  
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <div class="row border-collapse">
+  
+              <label class="col-md-3 col-lg-3 col-form-label" for="description">Giao cho </label>
+              <div class="col-md-9 col-lg-8 col-table-reponsive p-0" disabled>
+                <span *ngFor="let groupmodule of exam.groupmodules;">{{ groupmodule.name }} </span>
+              </div>
+  
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-md-3 col-lg-3 col-form-label" for="description">Số câu dễ</label>
+              <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                <input class="form-control" placeholder="Số câu dễ" name="description" id="description" type="text"  [(ngModel)]="exam.numberQuestionEasy" disabled/>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-md-3 col-lg-3 col-form-label" for="description">Số câu trung bình</label>
+              <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                <input class="form-control" placeholder="Số câu trung bình" name="description" id="description" type="text" [(ngModel)]="exam.numberQuestionModerate" disabled />
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-md-3 col-lg-3 col-form-label" for="description">Số câu khó</label>
+              <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                <input class="form-control" placeholder="Số câu khó" name="description" id="description" type="text" [(ngModel)]="exam.numberQuestionDifficult" disabled />
+              </div>
+            </div>
+          </div>
+          
+  
+        </div>
+  
+  
+      </form>
+    </div>
+  
+    <div class="config-section">
+        <h2>CẤU HÌNH</h2>
+        <div class="custom-control custom-switch ml-3" dir="ltr">
+          <input type="checkbox" class="custom-control-input" id="status" name="status" [checked]="exam.status" disabled>
+          <label class="custom-control-label" for="status">Trạng thái</label>
+        </div>
+        <div class="custom-control custom-switch ml-3" dir="ltr">
+          <input type="checkbox" class="custom-control-input" id="isSeeScore" name="isSeeScore" [checked]="exam.isSeeScore" disabled>
+          <label class="custom-control-label" for="isSeeScore">Xem điểm sau khi thi</label>
+        </div>
+        <div class="custom-control custom-switch ml-3" dir="ltr">
+          <input type="checkbox" class="custom-control-input" id="isShowContent" name="isShowContent" [checked]="exam.isShowContent" disabled> 
+          <label class="custom-control-label" for="isShowContent">Xem bài làm khi thi xong</label>
+        </div>
+        <div class="custom-control custom-switch ml-3" dir="ltr">
+          <input type="checkbox" class="custom-control-input" id="isMixQuestion" name="isMixQuestion" [checked]="exam.isMixQuestion" disabled>
+          <label class="custom-control-label" for="isMixQuestion">Đảo câu hỏi</label>
+        </div>
+        <div class="custom-control custom-switch ml-3" dir="ltr">
+          <input type="checkbox" class="custom-control-input" id="isMixQuestionAnswer" name="isMixQuestionAnswer" [checked]="exam.isMixQuestionAnswer" disabled>
+          <label class="custom-control-label" for="isMixQuestionAnswer">Đảo đáp án</label>
+        </div>
+        <div class="custom-control custom-switch ml-3" dir="ltr">
+          <input type="checkbox" class="custom-control-input" id="isAllowChangeTab" name="isAllowChangeTab" [checked]="exam.isAllowChangeTab" disabled>
+          <label class="custom-control-label" for="isAllowChangeTab">Tự động nộp bài khi chuyển tab</label>
+        </div>
+      </div>
+  </div>
