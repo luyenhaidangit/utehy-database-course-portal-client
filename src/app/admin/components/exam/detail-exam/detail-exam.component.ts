@@ -14,6 +14,7 @@ import { TagService } from 'src/app/admin/services/apis/tag.service';
 import { QuestionService } from 'src/app/admin/services/apis/question.service';
 import { SectionService } from 'src/app/admin/services/apis/section.service';
 import { GroupModuleService } from 'src/app/admin/services/apis/group-module.service';
+import { ExamService } from 'src/app/admin/services/apis/exam.service';
 
 @Component({
   selector: 'app-detail-exam',
@@ -32,7 +33,8 @@ export class DetailExamComponent {
     private questionService: QuestionService,
     private sectionService: SectionService,
     private groupModuleService: GroupModuleService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private examService:ExamService
   ) { }
 
 
@@ -51,22 +53,31 @@ export class DetailExamComponent {
     touchSection: false,
     touchDiff: false
   }
-  // ngOnInit() {
-  //   this.route.paramMap.subscribe(params => {
-  //     const request = {
-  //       id: params.get('id')
-  //     }
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      const request = {
+        id: params.get('id')
+      }
       
-  //     this.questionService.getQuestionById(request).subscribe((result: any) => {
-  //       this.exam = result.data;
+      this.examService.getExamById(request).subscribe((result: any) => {
+        this.exam = result.data;
 
-  //       this.exam.questions = result.data.questions;
-  //       this.exam.groupmodules = result.data.groupmodules;
-  //       this.exam.sections = result.data.sections;
-  //     });
-  //   });
+        this.exam.questions = result.data.questions;
+        this.exam.groupmodules = result.data.groupmodules;
+        this.exam.sections = result.data.sections;
+      });
+    });
 
-  // }
+  }
+
+
+  handleConvert(index:any){
+    return String.fromCharCode(65+index);
+  }
+
+  getMaxScoreQuestionAnswers(){
+    return Math.max(...this.exam.question.questionAnswers.map((item: any)=> item.score));
+  }
 
  
 
