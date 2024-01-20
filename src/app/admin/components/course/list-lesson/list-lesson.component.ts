@@ -9,7 +9,6 @@ import pagingConfig, { DEFAULT_PER_PAGE_OPTIONS } from '../../../configs/paging.
 import orderConstant from '../../../constants/orderConstant';
 import sortConstant from '../../../constants/sortConstant';
 import systemConfig from '../../../configs/system.config';
-// import lessonConstant from '../../../constants/Lesson.constant';
 import animationConstant from '../../../constants/animation.constant';
 import { LessonService } from 'src/app/admin/services/apis/lesson.service';
 
