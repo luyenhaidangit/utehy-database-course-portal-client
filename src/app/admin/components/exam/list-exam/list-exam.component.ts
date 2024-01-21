@@ -17,21 +17,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import pagingConfig, { DEFAULT_PER_PAGE_OPTIONS } from '../../configs/paging.config';
-import orderConstant from '../../constants/orderConstant';
-import sortConstant from '../../constants/sortConstant';
-import systemConfig from '../../configs/system.config';
-import animationConstant from '../../constants/animation.constant';
+import pagingConfig, { DEFAULT_PER_PAGE_OPTIONS } from '../../../configs/paging.config';
+import orderConstant from '../../../constants/orderConstant';
+import sortConstant from '../../../constants/sortConstant';
+import systemConfig from '../../../configs/system.config';
+import animationConstant from '../../../constants/animation.constant';
 import { ExamService } from 'src/app/admin/services/apis/exam.service';
 import questionConstant from 'src/app/admin/constants/question.constant';
 import questionHelper from 'src/app/admin/helpers/question.helper';
 @Component({
   selector: 'app-exam',
-  templateUrl: './exam.component.html',
-  styleUrls: ['./exam.component.css'],
+  templateUrl: './list-exam.component.html',
+  styleUrls: ['./list-exam.component.css'],
   animations: animationConstant.animations
 })
-export class ExamComponent {
+export class ListExamComponent {
   //Init
   constructor(
     private route: ActivatedRoute,
@@ -208,7 +208,7 @@ export class ExamComponent {
       buttonsStyling: false
     });
     swalWithBootstrapButtons.fire({
-      title: `Bạn có chắc muốn xoá Exam có Id ${id}?`,
+      title: `Bạn có chắc muốn xoá đề thi có Id ${id}?`,
       text: "Sau khi xoá bản sẽ không thể khôi phục dữ liệu!",
       icon: "warning",
       showCancelButton: true,
@@ -221,7 +221,30 @@ export class ExamComponent {
           id: id
         }
 
-      
+        this.examService.deleteExam(request).subscribe((result: any) => {
+          if (result.status) {
+            swalWithBootstrapButtons.fire({
+              title: "Xoá thành công!",
+              text: `Bản ghi bài viết có Id ${id} đã bị xoá!`,
+              icon: "success"
+            });
+
+            this.route.queryParams.subscribe(params => {
+              const request = {
+                ...params,
+                pageIndex: params['pageIndex'] ? params['pageIndex'] : this.config.paging.pageIndex,
+                pageSize: params['pageSize'] ? params['pageSize'] : this.config.paging.pageSize,
+              };
+
+              this.getExams(request);
+            });
+          }
+        }, error => {
+          console.log(error);
+          this.ngxToastr.error(error.error.message, '', {
+            progressBar: true
+          });
+        });
       }
     });
   }
@@ -406,6 +429,42 @@ export class ExamComponent {
         isBlank: true
       };
     });
+  }
+
+  public formatAMPM(date: any) {
+    date = new Date(date);
+
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
+
+  public formatDate(date: any) {
+    date = new Date(date);
+
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+    day = day < 10 ? '0' + day : day;
+    month = month < 10 ? '0' + month : month;
+    return day + '/' + month + '/' + year;
+  }
+
+  //Status button
+  public statusButton(exam: any): number {
+    const currentTime = new Date();
+    if(exam.endTime && new Date(exam.endTime) < currentTime){
+      return 1;
+    } else if(currentTime >= new Date(exam.startTime) && currentTime <= new Date(exam.endTime)){
+      return 2;
+    }else{
+      return 3;
+    }
   }
 }
 

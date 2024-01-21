@@ -52,7 +52,7 @@
                     </a>
 
                     <ul class="sub-menu {{ isActive('/admin/exam') ? 'mm-show' : '' }}">
-                        <li class="cursor-pointer" [routerLink]="['/admin/exam']" [queryParams]="{ status: 'true' }"><a class="{{ isActive('/admin/exam') ? 'active' : '' }}">Quản lý đề thi</a></li>
+                        <li class="cursor-pointer" [routerLink]="['/admin/exam']"><a class="{{ isActive('/admin/exam') ? 'active' : '' }}">Quản lý đề thi</a></li>
                     </ul>
                 </li>
 
@@ -84,8 +84,7 @@
                         <!-- <li class="cursor-pointer" routerLink="/admin/question-category"><a class="{{ isActive('/admin/question-category') && (currentUrl != '/admin/question-tag') ? 'active' : '' }}">Quản lý loại câu hỏi</a></li> -->
                         <li class="cursor-pointer" routerLink="/admin/question"><a class="{{ isActive('/admin/question') && (currentUrl != '/admin/question-category') && (currentUrl != '/admin/question-tag') ? 'active' : '' }}">Quản lý câu hỏi</a></li>
                         <li class="cursor-pointer" routerLink="/admin/question-tag"><a class="{{ isActive('/admin/question-tag') && (currentUrl != '/admin/question-category') ? 'active' : '' }}">Quản lý thẻ tag câu hỏi</a></li>
-                        <li class="cursor-pointer" routerLink="/admin/exam"><a class="{{ isActive('/admin/exam') && (currentUrl != '/admin/question-category') ? 'active' : '' }}">Quản lý bộ đề thi</a></li>
-
+                        <!-- <li class="cursor-pointer" routerLink="/admin/exam"><a class="{{ isActive('/admin/exam') && (currentUrl != '/admin/question-category') ? 'active' : '' }}">Quản lý bộ đề thi</a></li> -->
                     </ul>
                 </li>
 
