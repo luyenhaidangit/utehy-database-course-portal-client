@@ -34,7 +34,7 @@ export class UpdateAccountComponent {
   }
 
   //Account
-  //Demo
+  //Update
   public account: any = {
     name: '',
     email: '',
