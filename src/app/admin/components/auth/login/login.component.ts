@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/student/services/api/auth.service';
 import { UserService } from 'src/app/student/services/api/user.service';
+import permissionConstant from '../../../../shared/constants/permisson.constant';
 
 @Component({
   selector: 'app-login',
@@ -38,9 +39,18 @@ export class LoginComponent {
         this.userService.getUserInfo().subscribe(responseUser => {
           if(response.status){
             this.authService.setAuthData(responseUser.data);
-            this.router.navigate(['/admin/dashboard']);
+
+            if(this.authService.hasPermisson(permissionConstant.teacher)){
+              this.router.navigate(['/teacher/dashboard']);
+            }
+            else{
+              this.router.navigate(['/admin/dashboard']);
+            }
+
           }
         })
+        // this.router.navigate(['/admin/dashboard']);
+
       }else{
         this.ngxToastr.error("Đăng nhập không hợp lệ",'',{
           progressBar: true

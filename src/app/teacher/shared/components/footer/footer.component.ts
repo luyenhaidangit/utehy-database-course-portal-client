@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class FooterComponent {
 
+  currentYear: string = '';
+
+  constructor(private datePipe: DatePipe) {
+    const currentDate = new Date();
+    this.currentYear = this.datePipe.transform(currentDate, 'yyyy') ?? '';
+  }
 }

@@ -8,6 +8,7 @@ import { Error400Component } from './student/shared/components/error/error400/er
 import { Error500Component } from './student/shared/components/error/error500/error500.component';
 import { Error503Component } from './student/shared/components/error/error503/error503.component';
 import { AdminGuard } from './shared/guards/admin.guard';
+import { teacherGuard } from './shared/guards/teacher.guard';
 
 const routes: Routes = [
   {
@@ -21,6 +22,8 @@ const routes: Routes = [
     component: TeacherComponent,
     loadChildren: () =>
       import('./teacher/teacher.module').then((m) => m.TeacherModule),
+    canActivate: [teacherGuard],
+
   },
   {
     path: 'admin',
