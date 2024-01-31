@@ -4,6 +4,7 @@ import { AddExamComponent } from './add-exam/add-exam.component';
 import { EditExamComponent } from './edit-exam/edit-exam.component';
 import { ListExamComponent } from './list-exam/list-exam.component';
 import { DetailExamComponent } from './detail-exam/detail-exam.component';
+import { TranscriptStudentComponent } from './transcript-student/transcript-student.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'detail/:id',
     component: DetailExamComponent
+  },
+  {
+    path: 'transcript/:id',
+    component: TranscriptStudentComponent
   },
 ];
 

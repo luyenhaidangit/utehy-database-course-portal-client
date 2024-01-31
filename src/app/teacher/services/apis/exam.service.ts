@@ -11,6 +11,10 @@ export class ExamService {
   getExams(request: any = null): Observable<any> {
     return this.http.get('exam/get', request);
   }
+
+  getExamResults(request: any = null): Observable<any> {
+    return this.http.get('exam/get-result', request);
+  } 
   createExam(request: any): Observable<any> {
     return this.http.postFormData('exam/create', request);
   }

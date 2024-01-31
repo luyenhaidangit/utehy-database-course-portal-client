@@ -80,6 +80,10 @@
                             <i class="fa fa-eye opacity-50 me-2"></i>
                             <span>Xem chi tiết</span>
                         </span>
+                        <span class="btn btn-primary btn-sm btn-alt-success rounded-pill px-3 me-1 my-1 d-inline-flex align-items-center justify-content-center" [routerLink]="['/teacher/exam/transcript', exam.id]" >
+                            <i class="fa fa-square-poll-vertical opacity-50 me-2"></i>
+                            <span>Bảng điểm</span>
+                        </span>
                         <span data-role="dethi" data-action="update" class="btn btn-sm btn-warning rounded-pill px-3 me-1 my-1 show d-inline-flex align-items-center justify-content-center" [routerLink]="['/teacher/exam/edit', exam.id]">
                             <i class="fa fa-wrench opacity-50 me-2"></i>
                             <span>Chỉnh sửa</span>
@@ -127,6 +131,19 @@
         </tr>
     </ng-container>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

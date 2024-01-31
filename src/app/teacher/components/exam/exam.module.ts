@@ -13,6 +13,7 @@ import { TeacherModule } from '../../teacher.module';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ListExamComponent } from './list-exam/list-exam.component';
+import { TranscriptStudentComponent } from './transcript-student/transcript-student.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ListExamComponent } from './list-exam/list-exam.component';
     AddExamComponent,
     EditExamComponent,
     DetailExamComponent,
+    TranscriptStudentComponent,
   ],
   imports: [
  

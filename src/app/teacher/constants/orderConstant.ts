@@ -1,7 +1,10 @@
 const orderConstant = {
     id: "id",
+    studentid: "studentid",
     score: 'score',
-    priority: 'priority'
+    priority: 'priority',
+    numberchangetab: 'numberchangetab'
+
 };
   
 export default orderConstant;

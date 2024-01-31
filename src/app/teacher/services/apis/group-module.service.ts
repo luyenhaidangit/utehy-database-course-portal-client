@@ -36,6 +36,10 @@ export class GroupModuleService {
   getGroupModule(request: any): Observable<any> {
     return this.httpAdminLoading.get('group-module/get-by-id', request);
   }
+  
+  getGroupModuleByExamId(request: any): Observable<any> {
+    return this.httpAdminLoading.get('group-module/get-by-exam-id', request);
+  }
 
   exportExcelStudents(request: any): Observable<any> {
     return this.httpAdminLoading.getBlob('group-module/export-excel-students', request);

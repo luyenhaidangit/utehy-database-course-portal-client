@@ -4,7 +4,7 @@ import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/student/services/api/auth.service';
 import { UserService } from 'src/app/student/services/api/user.service';
 import permissionConstant from '../../../../shared/constants/permisson.constant';
-
+import roleConstant from 'src/app/admin/constants/role.constant';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,20 +21,31 @@ export class LoginComponent {
   { }
 
   ngOnInit() {
+    this.loginForm.type = 1; 
 
   }
 
+  roleContant: any = roleConstant;
+
+  public validateFormSuccess: any = {
+    touchSection: false,
+    touchDiff: false
+  }
   //Login
   public loginForm: any = {
-    email: '',
+    // email: '',
     password: '',
-    rememberMe: false
+    rememberMe: false,
+
+    //new
+    username:'',
+    type:0,
   }
 
   public handleOnSubmitLogin(){
-    this.authService.loginEmail(this.loginForm).subscribe(response => {
+    this.authService.loginUserName(this.loginForm).subscribe(response => {
       if(response.status){
-        localStorage.setItem('user', JSON.stringify({ token: response.data }));
+        localStorage.setItem('user', JSON.stringify({ token: response.data.token }));
 
         this.userService.getUserInfo().subscribe(responseUser => {
           if(response.status){
