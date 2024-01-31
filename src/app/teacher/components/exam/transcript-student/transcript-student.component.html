@@ -1,3 +1,23 @@
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">Quản lý bảng điểm</h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li routerLink="/teacher/dashboard" class="breadcrumb-item d-flex align-items-center">
+                        <span>Trang chủ</span>
+                        <i class="breadcrumb-item-arrow fa-solid fa-angle-right"></i>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <span>Quản lý bảng điểm</span>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row g-0 flex-md-grow-1" id="chitietdethi">
     <div class="content content-full">
         <div class="block block-rounded">
@@ -112,7 +132,7 @@
                             <tbody>
                                 <ng-container *ngIf="examResults.length > 0">
                                     <tr *ngFor="let examResult of examResults;">
-                                        <td>{{ examResult.id }}</td>
+                                        <td>{{ examResult.studentId }}</td>
                                         <td [innerHTML]="examResult.studentName"></td>
                                         <td>{{ examResult.score ||"Chưa thi" }}</td>
                                         <td *ngIf="examResult.startTime">{{ formatAMPM(examResult.startTime) + ' ' +
