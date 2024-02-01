@@ -3,10 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { StudentComponent } from './student/student.component';
 import { TeacherComponent } from './teacher/teacher.component';
 import { AdminComponent } from './admin/admin.component';
-import { Error404Component } from './student/shared/components/error/error404/error404.component';
-import { Error400Component } from './student/shared/components/error/error400/error400.component';
-import { Error500Component } from './student/shared/components/error/error500/error500.component';
-import { Error503Component } from './student/shared/components/error/error503/error503.component';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { teacherGuard } from './shared/guards/teacher.guard';
 
