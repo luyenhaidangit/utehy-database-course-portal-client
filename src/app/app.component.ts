@@ -28,12 +28,4 @@ export class AppComponent {
   }
 
   public isInitialized: boolean = false;
-
-  title = 'Website hỗ trợ dạy và học môn Cơ sở dữ liệu - Database Course Portal';
-
-  loaders = this.loader.progress$.pipe(
-    delay(1000),
-    withLatestFrom(this.loader.progress$),
-    map(v => v[1]),
-  );
 }

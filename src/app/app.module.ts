@@ -24,7 +24,6 @@ import { SocialAuthConfig } from './student/configs/social-auth.config';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingUiModule } from './shared/components/loading-ui/loading-ui.module';
-import { LoadingUiComponent } from './shared/components/loading-ui/loading-ui.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 

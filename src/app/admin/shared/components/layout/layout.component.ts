@@ -17,7 +17,6 @@ export class LayoutComponent implements OnInit {
   ngOnInit() {
     const currentUrl = this.router.url;
     const pageKey = currentUrl.split('/')[2];
-
     if (pageKey === layoutConfig.authKeyLayout){
       this.isAuthPage = true;
     }

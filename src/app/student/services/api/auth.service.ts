@@ -83,6 +83,10 @@ export class AuthService {
     return this.httpLoading.post(`auth/login-by-email`, request);
   }
 
+  loginUserName(request: any): Observable<any> {
+    return this.httpLoading.post(`auth/login`, request);
+  }
+
   getOtpLoginEmail(request: any): Observable<any> {
     return this.httpLoading.post(`auth/send-otp-login-email`, request);
   }
