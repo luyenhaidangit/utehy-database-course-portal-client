@@ -6,12 +6,25 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from './shared/guards/admin.guard';
 import { teacherGuard } from './shared/guards/teacher.guard';
 
+import { RoleEnum } from './core/enums/role.enum';
+import { TitleEnum } from './core/enums/title.enum';
+import { AuthGuard } from './core/guards/auth.guard';
+
 const routes: Routes = [
   {
+    path: '**',
+    redirectTo: '',
+  },
+  {
     path: '',
+    canActivate: [AuthGuard],
     component: StudentComponent,
     loadChildren: () =>
       import('./student/student.module').then((m) => m.StudentModule),
+    data : { 
+      title: TitleEnum.Dashboard,
+      roles: [ RoleEnum.Admin, RoleEnum.Teacher, RoleEnum.Student ],
+    },
   },
   {
     path: 'teacher',
