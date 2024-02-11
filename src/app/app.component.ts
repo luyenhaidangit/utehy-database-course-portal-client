@@ -12,20 +12,20 @@ import { AuthService } from './student/services/api/auth.service';
 export class AppComponent {
   constructor(private loader: LoadingBarService, private authService: AuthService) {}
 
-  ngOnInit(): void {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if(user?.token){
-      this.authService.getUserInfo().subscribe(res => {
-        if(res.status){
-          this.authService.setAuthData(res.data);
-          this.isInitialized = true;
-        }
-      })
-    }else{
-      this.authService.removeAuthData();
-      this.isInitialized = true;
-    }
-  }
+  // ngOnInit(): void {
+  //   const user = JSON.parse(localStorage.getItem('user') || '{}');
+  //   if(user?.token){
+  //     this.authService.getUserInfo().subscribe(res => {
+  //       if(res.status){
+  //         this.authService.setAuthData(res.data);
+  //         this.isInitialized = true;
+  //       }
+  //     })
+  //   }else{
+  //     this.authService.removeAuthData();
+  //     this.isInitialized = true;
+  //   }
+  // }
 
-  public isInitialized: boolean = false;
+  public isInitialized: boolean = true;
 }

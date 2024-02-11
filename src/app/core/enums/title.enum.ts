@@ -1,3 +1,3 @@
-export enum TitleEnum {
+export enum Title {
   Dashboard = 'Trang điều khiển',
 }
