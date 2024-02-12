@@ -13,6 +13,7 @@ import { Page } from 'src/app/core/enums/page.enum';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  //Core
   Page = Page;
 
   //Init

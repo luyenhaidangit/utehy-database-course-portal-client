@@ -9,8 +9,8 @@ import { teacherGuard } from './shared/guards/teacher.guard';
 import { Role } from './core/enums/role.enum';
 import { Title } from './core/enums/title.enum';
 import { AuthGuard } from './core/guards/auth.guard';
-import { NotFoundComponent } from './features/error/not-found/not-found.component';
-import { LoginComponent } from './features/auth/login/login.component';
+import { NotFoundComponent } from './features/error/components/not-found/not-found.component';
+import { LoginComponent } from './features/auth/components/login/login.component';
 import { UpdateAccountComponent } from './teacher/components/account/update-account/update-account.component';
 
 const routes: Routes = [

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { Page } from '../enums/page.enum';
-// import { RouteData } from '../models/route.model';
+import { RouteData } from '../models/interfaces/common/route-data.interface';
 // import { User, UserCurrent } from '../models/user.model';
 
 /**

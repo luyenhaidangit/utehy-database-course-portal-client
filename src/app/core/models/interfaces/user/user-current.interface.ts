@@ -1,9 +1,5 @@
-//Entity
-export interface User {
-  name: string;
-}
+import { User } from './user.interface';
 
-//Result
 export interface UserCurrent extends User {
   roles: string[];
 }
