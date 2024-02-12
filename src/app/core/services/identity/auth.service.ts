@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { User } from '../models/user.model';
-import { UserCurrent } from '../models/interfaces/user/user-current.interface';
+import { User } from '../../models/user.model';
+import { UserCurrent } from '../../models/interfaces/user/user-current.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,18 +13,19 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(username: string, password: string): Observable<User> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    const body = {
-      username,
-      password,
-    };
-    return this.http.post<User>(`${this.apiUrl}/login`, body, { headers });
+  getData() {
+    this.http.get('https://api.example.com/data')
+      .subscribe((data: any) => {
+        // Xử lý dữ liệu trả về
+        console.log(data);
+      });
   }
 
   logout(): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/logout`, null);
+  }
+
+  refreshToken(): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/logout`, null);
   }
 

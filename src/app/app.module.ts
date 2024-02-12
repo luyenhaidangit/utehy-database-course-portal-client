@@ -5,7 +5,7 @@ import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
@@ -26,6 +26,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingUiModule } from './shared/components/loading-ui/loading-ui.module';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 
+import { HttpInterceptor } from './core/interceptors/http.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -50,7 +51,12 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
   ],
   providers: [
     { provide: 'SocialAuthServiceConfig', useValue: SocialAuthConfig },
-    DatePipe
+    DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptor,
+      multi: true
+    }
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],

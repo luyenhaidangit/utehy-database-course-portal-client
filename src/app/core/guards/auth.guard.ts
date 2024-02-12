@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/identity/auth.service';
 import { Page } from '../enums/page.enum';
 import { RouteData } from '../models/interfaces/common/route-data.interface';
 // import { User, UserCurrent } from '../models/user.model';
@@ -18,12 +18,9 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const user = this.authService.userCurrent;
 
-    alert("che")
-
     if(user){
       return true;
     }else{
-    alert("ko có");
 
       this.router.navigate([Page.Login]);
       return false;

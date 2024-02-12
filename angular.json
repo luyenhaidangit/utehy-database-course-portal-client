@@ -40,6 +40,20 @@
             ]
           },
           "configurations": {
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/app/core/environments/environment.ts",
+                  "with": "src/app/core/environments/environment.dev.ts"
+                }
+              ]
+            },
             "production": {
               "budgets": [
                 {
@@ -53,15 +67,13 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
-            },
-            "development": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -69,11 +81,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "browserTarget": "utehy-database-course-portal-client:build:production"
-            },
             "development": {
               "browserTarget": "utehy-database-course-portal-client:build:development"
+            },
+            "production": {
+              "browserTarget": "utehy-database-course-portal-client:build:production"
             }
           },
           "defaultConfiguration": "development"
