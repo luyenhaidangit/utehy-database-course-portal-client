@@ -26,7 +26,6 @@ export class LoginComponent {
   { }
 
   ngOnInit() {
-    alert("demo")
     this.handleOnSubmitLogin();
     this.loginForm.type = 1; 
 
@@ -80,7 +79,13 @@ export class LoginComponent {
     //   });
     // });
 
-    console.log("vào day")
-       this.authService.getData();
+    this.authService.getUserCurrent().subscribe(
+      (user: any) => {
+        console.log('Thông tin người dùng hiện tại:', user);
+      },
+      (error) => {
+        console.error('Đã xảy ra lỗi khi lấy thông tin người dùng:', error);
+      }
+    );
   }
 }

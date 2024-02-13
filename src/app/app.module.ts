@@ -10,10 +10,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 
-import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
-import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
-import { LoadingBarModule } from '@ngx-loading-bar/core';
-
 import { ToastrModule } from 'ngx-toastr';
 
 import { SocialLoginModule } from '@abacritt/angularx-social-login';
@@ -23,7 +19,8 @@ import { AppComponent } from './app.component';
 import { SocialAuthConfig } from './student/configs/social-auth.config';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { LoadingUiModule } from './shared/components/loading-ui/loading-ui.module';
+// import { LoadingUiModule } from './shared/components/loading-ui/loading-ui.module';
+import { LoadingUiModule } from './core/modules/loading-ui/loading-ui.module';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 import { HttpInterceptor } from './core/interceptors/http.interceptor';
@@ -40,9 +37,6 @@ import { HttpInterceptor } from './core/interceptors/http.interceptor';
     HttpClientModule,
     ModalModule.forRoot(),
     CarouselModule.forRoot(),
-    LoadingBarHttpClientModule,
-    LoadingBarRouterModule,
-    LoadingBarModule,
     ToastrModule.forRoot(),
     SocialLoginModule,
     NgxSpinnerModule,
