@@ -26,7 +26,7 @@ export class LoginComponent {
   { }
 
   ngOnInit() {
-    this.handleOnSubmitLogin();
+    // this.handleOnSubmitLogin();
     this.loginForm.type = 1; 
 
   }
