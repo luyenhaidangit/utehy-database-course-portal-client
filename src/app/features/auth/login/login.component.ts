@@ -20,6 +20,14 @@ export class LoginComponent {
 
   //State
   loginForm: FormGroup;
+  validationMessages = {
+    username: [
+      { type: 'required', message: 'Tên người dùng không được để trống' },
+    ],
+    password: [
+      { type: 'required', message: 'Mật khẩu không được để trống' },
+    ],
+  };
 
   //Init
   constructor(private fb: FormBuilder, private authService: AuthService, private userService: UserService, private ngxToastr: NgxToastrService, private router:Router) {
