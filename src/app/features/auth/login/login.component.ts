@@ -45,14 +45,24 @@ export class LoginComponent {
   public handleOnSubmitLogin(){
     const request: LoginRequest = this.loginForm.value;
     this.authService.loginByUsername(request).subscribe(
-      (response) => {
-        if(response.status){
-
+      (res) => {
+        if(res.status){
+          this.authService.setAuthTokenLocalStorage(res.data);
+          this.getAndSetUserCurrent();
+          this.router.navigate(['/']);
         }
       },
-      (error) => {
-            
+      (exception) => {
+        console.log(exception?.error.Message);
       }
     );
+  }
+
+  private getAndSetUserCurrent(){
+    this.authService.getUserCurrent().subscribe(responseUser => {
+      if(responseUser.status){
+        this.authService.setUserCurrent(responseUser.data);
+      }
+    })
   }
 }

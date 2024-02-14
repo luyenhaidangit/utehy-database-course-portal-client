@@ -17,18 +17,18 @@ export class AuthService {
 
   constructor(private http: HttpClient, private localStorageService: LocalStorageService) {}
 
+  //Auth token
   getAuthTokenLocalStorage(): AuthToken | null{
-    const authTokenString = this.localStorageService.getItem(LocalStorage.AuthToken);
+    const authToken: AuthToken | null = this.localStorageService.getItem(LocalStorage.AuthToken);
 
-    if(authTokenString){
-      const authToken: AuthToken = JSON.parse(authTokenString);
-
-      return authToken;
-    } else {
-      return null;
-    }
+    return authToken;
   }
 
+  setAuthTokenLocalStorage(authToken: AuthToken| null){
+    this.localStorageService.setItem(LocalStorage.AuthToken,authToken);
+  }
+
+  //User
   getUserCurrent(): Observable<ApiResult<UserCurrent>> {
     return this.http.get<ApiResult<UserCurrent>>('/auth/user-current');
   }
