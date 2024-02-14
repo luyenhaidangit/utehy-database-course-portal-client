@@ -10,6 +10,7 @@ import { Page } from 'src/app/core/enums/page.enum';
 import { AuthService } from 'src/app/core/services/identity/auth.service';
 import { RoleType } from 'src/app/core/constants/role-type.constant';
 import { LoginRequest } from 'src/app/core/models/interfaces/auth/login-request.interface';
+import { ToastrService } from 'src/app/core/modules/toastr/toastr.service';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,7 @@ export class LoginComponent {
   };
 
   //Init
-  constructor(private fb: FormBuilder, private authService: AuthService, private router:Router,private messageService: MessageService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router:Router,private toastrService: ToastrService) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.email]],
@@ -55,6 +56,7 @@ export class LoginComponent {
         }
       },
       (exception) => {
+        this.toastrService.error(exception.error.Message);
         console.log(exception?.error.Message);
       }
     );

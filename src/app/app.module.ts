@@ -15,18 +15,13 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 
-import { ToastrModule } from 'ngx-toastr';
-
-import { MessagesModule } from 'primeng/messages';
-import { MessageModule } from 'primeng/message';
-import { ToastModule } from 'primeng/toast';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingUiModule } from './core/modules/loading-ui/loading-ui.module';
 import { MessageService } from 'primeng/api';
+import { SharedModule } from './core/modules/shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,13 +35,10 @@ import { MessageService } from 'primeng/api';
     HttpClientModule,
     ModalModule.forRoot(),
     CarouselModule.forRoot(),
-    ToastrModule.forRoot(),
     CollapseModule.forRoot(),
-    ToastModule,
-    MessagesModule,
-    MessageModule,
     NgxSpinnerModule,
     LoadingUiModule,
+    SharedModule
   ],
   providers: [
     DatePipe,

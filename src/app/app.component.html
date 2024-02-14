@@ -1,9 +1,7 @@
 <router-outlet *ngIf="isInitialized"></router-outlet>
 
-<button (click)="test()">dsjkfjslk</button>
-
 <app-loading-ui></app-loading-ui>
 
-<p-toast severity="" position="bottom-center"></p-toast>
+<app-toastr></app-toastr>
 
 <ngx-spinner [bdColor]="DefaultSpinner.bdColor" [template]="DefaultSpinner.template"></ngx-spinner>
