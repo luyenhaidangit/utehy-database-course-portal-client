@@ -12,12 +12,13 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { NotFoundComponent } from './features/error/components/not-found/not-found.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { UpdateAccountComponent } from './teacher/components/account/update-account/update-account.component';
+import { DashboardComponent } from './teacher/components/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
-    component: UpdateAccountComponent,
+    component: DashboardComponent,
     loadChildren: () =>
       import('./student/student.module').then((m) => m.StudentModule),
     data : { 

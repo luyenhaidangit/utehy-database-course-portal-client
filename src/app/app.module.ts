@@ -20,11 +20,11 @@ import { AppComponent } from './app.component';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingUiModule } from './core/modules/loading-ui/loading-ui.module';
-import { MessageService } from 'primeng/api';
+import { SharedComponent } from './shared/constants/shared-component.constant';
 import { SharedModule } from './core/modules/shared/shared.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ...SharedComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
