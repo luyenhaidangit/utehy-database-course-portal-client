@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/student/services/api/user.service';
 import permissionConstant from 'src/app/shared/constants/permisson.constant';
@@ -16,20 +18,20 @@ export class LoginComponent {
   //Core
   Page = Page;
 
+  //State
+  loginForm: FormGroup;
+
   //Init
-  constructor(
-    private authService: AuthService,
-    private userService: UserService,
-    private ngxToastr: NgxToastrService,
-    private router:Router
-  ) 
-  { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private userService: UserService, private ngxToastr: NgxToastrService, private router:Router) {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.email]],
+      rememberMe: [true, Validators.required],
+      type: [1, [Validators.required, Validators.min(1), Validators.max(3)]]
+    });
+   }
 
-  ngOnInit() {
-    // this.handleOnSubmitLogin();
-    this.loginForm.type = 1; 
-
-  }
+  ngOnInit() {}
 
   roleContant: any = roleConstant;
 
@@ -38,15 +40,15 @@ export class LoginComponent {
     touchDiff: false
   }
   //Login
-  public loginForm: any = {
-    // email: '',
-    password: '',
-    rememberMe: false,
+  // public loginForm: any = {
+  //   // email: '',
+  //   password: '',
+  //   rememberMe: false,
 
-    //new
-    username:'',
-    type:0,
-  }
+  //   //new
+  //   username:'',
+  //   type:0,
+  // }
 
   public handleOnSubmitLogin(){
     // this.authService.loginUserName(this.loginForm).subscribe(response => {

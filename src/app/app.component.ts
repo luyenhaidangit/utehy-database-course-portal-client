@@ -13,9 +13,13 @@ import { defaultSpinner } from './core/configs/spinner.config';
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
-  public isInitialized: boolean = false;
-  public defaultSpinner = defaultSpinner;
+  //Core
+  public DefaultSpinner = defaultSpinner;
 
+  //State
+  public isInitialized: boolean = false;
+
+  //Init
   constructor(private authService: AuthService, private spinner: NgxSpinnerService) {}
 
   ngOnInit(){
