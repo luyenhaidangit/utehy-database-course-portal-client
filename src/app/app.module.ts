@@ -17,11 +17,16 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 import { ToastrModule } from 'ngx-toastr';
 
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingUiModule } from './core/modules/loading-ui/loading-ui.module';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,7 +42,10 @@ import { LoadingUiModule } from './core/modules/loading-ui/loading-ui.module';
     CarouselModule.forRoot(),
     ToastrModule.forRoot(),
     CollapseModule.forRoot(),
-    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
+    ToastModule,
+    MessagesModule,
+    MessageModule,
+    NgxSpinnerModule,
     LoadingUiModule,
   ],
   providers: [

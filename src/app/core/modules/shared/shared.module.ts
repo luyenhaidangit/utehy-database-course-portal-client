@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
 import { ValidationMessageModule } from '../validation-message/validation-message.module';
 
 @NgModule({
@@ -8,7 +9,8 @@ import { ValidationMessageModule } from '../validation-message/validation-messag
   exports: [
     FormsModule,
     ReactiveFormsModule,
-    ValidationMessageModule
+    ValidationMessageModule,
+    ToastModule
   ]
 })
 export class SharedModule { }

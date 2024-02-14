@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
+import { MessageService } from 'primeng/api';
+
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/student/services/api/user.service';
 import { Page } from 'src/app/core/enums/page.enum';
@@ -31,7 +33,7 @@ export class LoginComponent {
   };
 
   //Init
-  constructor(private fb: FormBuilder, private authService: AuthService, private userService: UserService, private ngxToastr: NgxToastrService, private router:Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router:Router,private messageService: MessageService) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.email]],

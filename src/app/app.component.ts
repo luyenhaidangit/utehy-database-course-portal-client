@@ -6,11 +6,14 @@ import { HttpStatus } from './core/enums/http-status.enum';
 import { NgxSpinnerService } from "ngx-spinner";
 import { defaultSpinner } from './core/configs/spinner.config';
 
+import { MessageService } from 'primeng/api';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   encapsulation: ViewEncapsulation.None,
+  providers: [MessageService],
 })
 export class AppComponent {
   //Core
@@ -20,7 +23,8 @@ export class AppComponent {
   public isInitialized: boolean = false;
 
   //Init
-  constructor(private authService: AuthService, private spinner: NgxSpinnerService) {}
+  constructor(private authService: AuthService, private spinner: NgxSpinnerService, private messageService: MessageService) {
+  }
 
   ngOnInit(){
     this.spinner.show();
@@ -52,5 +56,15 @@ export class AppComponent {
       this.isInitialized = true;
       this.spinner.hide();
     }
+  }
+
+  test(){
+    // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
+    // this.messageService.add({severity:'success', summary:'Service Message', detail:'Via MessageService'});
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Authentication Failed',
+      detail: 'API Key or URL is invalid.',
+  });
   }
 }

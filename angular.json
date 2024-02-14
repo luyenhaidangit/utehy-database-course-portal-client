@@ -26,6 +26,9 @@
               "src/app/admin/assets"
             ],
             "styles": [
+              "./node_modules/primeng/resources/primeng.css",
+              "./node_modules/primeng/resources/themes/lara-light-indigo/theme.css",
+              "./node_modules/primeng/resources/components/toast/toast.css",
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
