@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/student/services/api/user.service';
-import permissionConstant from 'src/app/shared/constants/permisson.constant';
-import roleConstant from 'src/app/admin/constants/role.constant';
 import { Page } from 'src/app/core/enums/page.enum';
 import { AuthService } from 'src/app/core/services/identity/auth.service';
+import { RoleType } from 'src/app/core/constants/role-type.constant';
+import { LoginRequest } from 'src/app/core/models/interfaces/auth/login-request.interface';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +17,7 @@ import { AuthService } from 'src/app/core/services/identity/auth.service';
 export class LoginComponent {
   //Core
   Page = Page;
+  RoleType = RoleType;
 
   //State
   loginForm: FormGroup;
@@ -37,64 +38,20 @@ export class LoginComponent {
       rememberMe: [true, Validators.required],
       type: [1, [Validators.required, Validators.min(1), Validators.max(3)]]
     });
-   }
+  }
 
   ngOnInit() {}
 
-  roleContant: any = roleConstant;
-
-  public validateFormSuccess: any = {
-    touchSection: false,
-    touchDiff: false
-  }
-  //Login
-  // public loginForm: any = {
-  //   // email: '',
-  //   password: '',
-  //   rememberMe: false,
-
-  //   //new
-  //   username:'',
-  //   type:0,
-  // }
-
   public handleOnSubmitLogin(){
-    // this.authService.loginUserName(this.loginForm).subscribe(response => {
-    //   if(response.status){
-    //     localStorage.setItem('user', JSON.stringify({ token: response.data.token }));
+    const request: LoginRequest = this.loginForm.value;
+    this.authService.loginByUsername(request).subscribe(
+      (response) => {
+        if(response.status){
 
-    //     this.userService.getUserInfo().subscribe(responseUser => {
-    //       if(response.status){
-    //         this.authService.setAuthData(responseUser.data);
-
-    //         if(this.authService.hasPermisson(permissionConstant.teacher)){
-    //           this.router.navigate(['/teacher/dashboard']);
-    //         }
-    //         else{
-    //           this.router.navigate(['/admin/dashboard']);
-    //         }
-
-    //       }
-    //     })
-    //     // this.router.navigate(['/admin/dashboard']);
-
-    //   }else{
-    //     this.ngxToastr.error("Đăng nhập không hợp lệ",'',{
-    //       progressBar: true
-    //     });
-    //   }
-    // },error => {
-    //   this.ngxToastr.error("Đăng nhập không hợp lệ",'',{
-    //     progressBar: true
-    //   });
-    // });
-
-    this.authService.getUserCurrent().subscribe(
-      (user: any) => {
-        console.log('Thông tin người dùng hiện tại:', user);
+        }
       },
       (error) => {
-        console.error('Đã xảy ra lỗi khi lấy thông tin người dùng:', error);
+            
       }
     );
   }

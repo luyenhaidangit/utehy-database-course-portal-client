@@ -20,7 +20,7 @@
                                         <form class="form-horizontal" [formGroup]="loginForm" (submit)="handleOnSubmitLogin()">
                                             <div  class="form-group auth-form-group-custom mb-4">
                                                 <select formControlName="type" name="touchDiff" class="custom-select input-type-select input-form-space">
-                                                    <option *ngFor="let role of roleContant.type" [value]="role.key">{{ role.value }}</option>
+                                                    <option *ngFor="let role of RoleType" [value]="role.key">{{ role.value }}</option>
                                                 </select>
                                             </div>
 

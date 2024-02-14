@@ -7,6 +7,7 @@ import { LocalStorageService } from '../utilities/local-storage.service';
 import { AuthToken } from '../../models/interfaces/common/auth-token.interface';
 import { LocalStorage } from '../../enums/local-storage.enum';
 import { ApiResult } from '../../models/interfaces/common/api-result.interface';
+import { LoginRequest } from '../../models/interfaces/auth/login-request.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,14 @@ export class AuthService {
   setUserCurrent(userCurrent: UserCurrent | null){
     this.userCurrent = userCurrent;
   }
+
+  loginByUsername(request: LoginRequest): Observable<ApiResult<AuthToken>> {
+    return this.http.post<ApiResult<AuthToken>>('/auth/login', request);
+  }
+
+  // loginByUsername(request: LoginRequest): Observable<ApiResult<UserCurrent>>{
+
+  // }
 
 //   logout(): Observable<void> {
 //     return this.http.post<void>(`${this.apiUrl}/logout`, null);
