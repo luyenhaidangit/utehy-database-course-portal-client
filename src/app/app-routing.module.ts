@@ -13,6 +13,7 @@ import { NotFoundComponent } from './features/error/components/not-found/not-fou
 import { LoginComponent } from './features/auth/login/login.component';
 import { LayoutComponent } from './shared/components/layout/layout.component';
 import { UnAuthGuard } from './core/guards/un-auth.guard';
+import { DashboardComponent } from './teacher/components/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
     component: LayoutComponent,
     canActivate: [AuthGuard],
     children: [
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./features/dashboard/dashboard.module').then((m) => m.DashboardModule),
+      },
     ]
   },
   {

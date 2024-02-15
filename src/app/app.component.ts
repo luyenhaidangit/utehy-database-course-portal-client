@@ -29,8 +29,9 @@ export class AppComponent {
     const authToken: AuthToken | null = this.authService.getAuthTokenLocalStorage();
 
     if(authToken?.accessToken){
-        this.authService.getUserCurrent().subscribe(res => {
+        this.authService.fetchUserCurrent().subscribe(res => {
           if(res.status){
+            console.log("set",res.data)
             this.authService.setUserCurrent(res.data);
             this.setStatusInitialized(true);
           }

@@ -47,7 +47,12 @@ export class LoginComponent {
       (res) => {
         if(res.status){
           this.authService.setAuthTokenLocalStorage(res.data);
-          this.getSetUserCurrentAndNavigateDashboard();
+          this.authService.fetchUserCurrent().subscribe(responseUser => {
+            if(responseUser.status){
+              this.authService.setUserCurrent(responseUser.data);
+              this.router.navigate([Page.Dashboard]);
+            }
+          })
         }
       },
       (exception) => {
@@ -55,14 +60,5 @@ export class LoginComponent {
         console.log(exception?.error.Message);
       }
     );
-  }
-
-  private getSetUserCurrentAndNavigateDashboard(){
-    this.authService.getUserCurrent().subscribe(responseUser => {
-      if(responseUser.status){
-        this.authService.setUserCurrent(responseUser.data);
-        this.router.navigate([Page.Dashboard]);
-      }
-    })
   }
 }

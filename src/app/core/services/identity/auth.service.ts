@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { User } from '../../models/user.model';
 import { UserCurrent } from '../../models/interfaces/user/user-current.interface';
 import { LocalStorageService } from '../utilities/local-storage.service';
@@ -13,7 +13,7 @@ import { LoginRequest } from '../../models/interfaces/auth/login-request.interfa
   providedIn: 'root',
 })
 export class AuthService {
-  userCurrent: UserCurrent | null | undefined;
+  private userCurrent: UserCurrent | null | undefined;
 
   constructor(private http: HttpClient, private localStorageService: LocalStorageService) {}
 
@@ -29,12 +29,16 @@ export class AuthService {
   }
 
   //User
-  getUserCurrent(): Observable<ApiResult<UserCurrent>> {
-    return this.http.get<ApiResult<UserCurrent>>('/auth/user-current');
-  }
-
   setUserCurrent(userCurrent: UserCurrent | null){
     this.userCurrent = userCurrent;
+  }
+
+  getUserCurrent(): UserCurrent | null | undefined{
+    return this.userCurrent;
+  }
+
+  fetchUserCurrent(): Observable<ApiResult<UserCurrent>> {
+    return this.http.get<ApiResult<UserCurrent>>('/auth/user-current');
   }
 
   loginByUsername(request: LoginRequest): Observable<ApiResult<AuthToken>> {

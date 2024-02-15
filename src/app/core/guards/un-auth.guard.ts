@@ -12,8 +12,8 @@ export class UnAuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const user: UserCurrent | null | undefined = this.authService.userCurrent;
-
+    const user: UserCurrent | null | undefined = this.authService.getUserCurrent();
+    
     if(!user){
       return true;
     }else{
