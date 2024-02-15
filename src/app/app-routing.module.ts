@@ -17,21 +17,31 @@ import { DashboardComponent } from './teacher/components/dashboard/dashboard.com
 
 const routes: Routes = [
   {
+    path: 'auth',
+    loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule),
+    canActivate: [UnAuthGuard]
+  },
+  {
     path: '',
     component: LayoutComponent,
     canActivate: [AuthGuard],
     children: [
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('./features/dashboard/dashboard.module').then((m) => m.DashboardModule),
-      },
+      }
     ]
   },
-  {
-    path: 'auth',
-    loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule),
-    canActivate: [UnAuthGuard],
-  },
+  // {
+  //   path: 'dashboard',
+  //   component: LayoutComponent,
+  //   loadChildren: () => import('./features/dashboard/dashboard.module').then((m) => m.DashboardModule),
+  // },
   {
     path: 'teacher',
     component: TeacherComponent,

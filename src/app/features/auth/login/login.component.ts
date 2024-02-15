@@ -47,6 +47,7 @@ export class LoginComponent {
       (res) => {
         if(res.status){
           this.authService.setAuthTokenLocalStorage(res.data);
+          this.router.navigate([Page.Dashboard]);
           this.authService.fetchUserCurrent().subscribe(responseUser => {
             if(responseUser.status){
               this.authService.setUserCurrent(responseUser.data);

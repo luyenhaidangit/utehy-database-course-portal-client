@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/core/services/identity/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,11 +6,10 @@ import { AuthService } from 'src/app/core/services/identity/auth.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
- constructor(private authService: AuthService){
+ constructor(){
 
  }
 
  ngOnInit() {
-  console.log("check",this.authService.getUserCurrent())
  }
 }
