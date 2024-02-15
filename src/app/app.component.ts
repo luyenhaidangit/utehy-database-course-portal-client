@@ -26,26 +26,29 @@ export class AppComponent {
   ngOnInit(){
     this.spinner.show();
 
-    const authToken: AuthToken | null = this.authService.getAuthTokenLocalStorage();
+    // const authToken: AuthToken | null = this.authService.getAuthTokenLocalStorage();
 
-    if(authToken?.accessToken){
-        this.authService.fetchUserCurrent().subscribe(res => {
-          if(res.status){
-            this.authService.setUserCurrent(res.data);
-            this.setStatusInitialized(true);
-          }
-        },
-        error => {
-          if (error.status === HttpStatus.Unauthorized) {
-            
-          }
+    // if(authToken?.accessToken){
+    //     this.authService.fetchUserCurrent().subscribe(res => {
+    //       if(res.status){
+    //         console.log()
+    //         this.authService.setUserCurrent(res.data);
+    //         this.setStatusInitialized(true);
+    //       }
+    //     },
+    //     error => {
+    //       if (error.status === HttpStatus.Unauthorized) {
+    //       }
 
-          this.setStatusInitialized(true);
-        });
-    } else {
-      this.authService.setUserCurrent(null);
-      this.setStatusInitialized(true);
-    }
+    //       this.setStatusInitialized(true);
+    //     });
+    // } else {
+    //   this.authService.setUserCurrent(null);
+    //   this.setStatusInitialized(true);
+    // }
+
+    this.authService.initAuth();
+    this.setStatusInitialized(true);
   }
 
   private setStatusInitialized(status: boolean){

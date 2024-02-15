@@ -30,7 +30,7 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule),
-    canActivate: [UnAuthGuard]
+    canActivate: [UnAuthGuard],
   },
   {
     path: 'teacher',

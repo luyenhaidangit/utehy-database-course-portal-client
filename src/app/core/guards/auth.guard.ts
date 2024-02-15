@@ -3,6 +3,7 @@ import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { AuthService } from '../services/identity/auth.service';
 import { Page } from '../enums/page.enum';
 import { UserCurrent } from '../models/interfaces/user/user-current.interface';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,14 +12,29 @@ import { UserCurrent } from '../models/interfaces/user/user-current.interface';
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const user: UserCurrent | null | undefined = this.authService.getUserCurrent();
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    // const user: UserCurrent | null | undefined = this.authService.getUserCurrent();
 
-    if(user){
-      return true;
-    }else{
-      this.router.navigate([Page.Login]);
-      return false;
-    }
+    // if(user){
+    //   return true;
+    // }else{
+    //   this.router.navigate([Page.Login]);
+    //   return false;
+    // }
+    return this.authService.isInitAuth$.pipe(
+      map(isInit => {
+        if(isInit){
+          if(this.authService.getUserCurrent()){
+            return true;
+          }else{
+            this.router.navigate([Page.Login]);
+            return false;
+          }
+        }else{
+          this.router.navigate([Page.Login]);
+          return false;
+        }
+      })
+    )
   }
 }

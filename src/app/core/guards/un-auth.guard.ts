@@ -13,6 +13,7 @@ export class UnAuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const user: UserCurrent | null | undefined = this.authService.getUserCurrent();
+    console.log("log2")
     
     if(!user){
       return true;

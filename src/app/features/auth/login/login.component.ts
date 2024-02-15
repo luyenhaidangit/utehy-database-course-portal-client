@@ -50,6 +50,7 @@ export class LoginComponent {
           this.authService.fetchUserCurrent().subscribe(responseUser => {
             if(responseUser.status){
               this.authService.setUserCurrent(responseUser.data);
+              console.log("1",this.authService.getUserCurrent())
               this.router.navigate([Page.Dashboard]);
             }
           })

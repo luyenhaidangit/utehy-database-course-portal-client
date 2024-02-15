@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { User } from '../../models/user.model';
 import { UserCurrent } from '../../models/interfaces/user/user-current.interface';
 import { LocalStorageService } from '../utilities/local-storage.service';
@@ -8,12 +8,15 @@ import { AuthToken } from '../../models/interfaces/common/auth-token.interface';
 import { LocalStorage } from '../../enums/local-storage.enum';
 import { ApiResult } from '../../models/interfaces/common/api-result.interface';
 import { LoginRequest } from '../../models/interfaces/auth/login-request.interface';
+import { HttpStatus } from '../../enums/http-status.enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private userCurrent: UserCurrent | null | undefined;
+  private isInitAuthSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isInitAuth$: Observable<boolean> = this.isInitAuthSubject.asObservable();
 
   constructor(private http: HttpClient, private localStorageService: LocalStorageService) {}
 
@@ -43,6 +46,27 @@ export class AuthService {
 
   loginByUsername(request: LoginRequest): Observable<ApiResult<AuthToken>> {
     return this.http.post<ApiResult<AuthToken>>('/auth/login', request);
+  }
+
+  initAuth(){
+    const authToken: AuthToken | null = this.getAuthTokenLocalStorage();
+
+    if(authToken?.accessToken){
+        this.fetchUserCurrent().subscribe(res => {
+          if(res.status){
+            this.setUserCurrent(res.data);
+            this.isInitAuthSubject.next(true);
+          }
+        },
+        error => {
+          if (error.status === HttpStatus.Unauthorized) {
+            this.isInitAuthSubject.next(true);
+          }
+        });
+    } else {
+      this.setUserCurrent(null);
+      this.isInitAuthSubject.next(true);
+    }
   }
 
   // loginByUsername(request: LoginRequest): Observable<ApiResult<UserCurrent>>{
