@@ -31,7 +31,6 @@ export class AppComponent {
     if(authToken?.accessToken){
         this.authService.fetchUserCurrent().subscribe(res => {
           if(res.status){
-            console.log("set",res.data)
             this.authService.setUserCurrent(res.data);
             this.setStatusInitialized(true);
           }
