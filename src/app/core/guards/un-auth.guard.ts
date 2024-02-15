@@ -8,17 +8,16 @@ import { UserCurrent } from '../models/interfaces/user/user-current.interface';
   providedIn: 'root',
 })
 
-export class AuthGuard implements CanActivate {
+export class UnAuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const user: UserCurrent | null | undefined = this.authService.userCurrent;
 
-    if(user){
+    if(!user){
       return true;
     }else{
-
-      this.router.navigate([Page.Login]);
+      this.router.navigate([Page.Dashboard]);
       return false;
     }
   }

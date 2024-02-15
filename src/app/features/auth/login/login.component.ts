@@ -47,8 +47,7 @@ export class LoginComponent {
       (res) => {
         if(res.status){
           this.authService.setAuthTokenLocalStorage(res.data);
-          this.getAndSetUserCurrent();
-          this.router.navigate([Page.Dashboard]);
+          this.getSetUserCurrentAndNavigateDashboard();
         }
       },
       (exception) => {
@@ -58,10 +57,11 @@ export class LoginComponent {
     );
   }
 
-  private getAndSetUserCurrent(){
+  private getSetUserCurrentAndNavigateDashboard(){
     this.authService.getUserCurrent().subscribe(responseUser => {
       if(responseUser.status){
         this.authService.setUserCurrent(responseUser.data);
+        this.router.navigate([Page.Dashboard]);
       }
     })
   }

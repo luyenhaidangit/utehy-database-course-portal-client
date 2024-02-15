@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { StudentComponent } from './student/student.component';
+
 import { TeacherComponent } from './teacher/teacher.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from './shared/guards/admin.guard';
@@ -11,28 +11,21 @@ import { Title } from './core/enums/title.enum';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NotFoundComponent } from './features/error/components/not-found/not-found.component';
 import { LoginComponent } from './features/auth/login/login.component';
-import { UpdateAccountComponent } from './teacher/components/account/update-account/update-account.component';
-import { DashboardComponent } from './teacher/components/dashboard/dashboard.component';
+import { LayoutComponent } from './shared/components/layout/layout.component';
+import { UnAuthGuard } from './core/guards/un-auth.guard';
 
 const routes: Routes = [
   {
     path: '',
+    component: LayoutComponent,
     canActivate: [AuthGuard],
-    component: DashboardComponent,
-    loadChildren: () =>
-      import('./student/student.module').then((m) => m.StudentModule),
-    data : { 
-      title: Title.Dashboard,
-      roles: [ Role.Admin, Role.Teacher, Role.Student ],
-    },
+    children: [
+    ]
   },
   {
     path: 'auth',
     loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule),
-  }, 
-  {
-    path: 'test',
-    component: LoginComponent,
+    canActivate: [UnAuthGuard]
   },
   {
     path: 'teacher',
