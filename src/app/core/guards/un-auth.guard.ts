@@ -35,14 +35,12 @@ export class UnAuthGuard implements CanActivate {
         catchError(() => {
           this.authService.setUserCurrent(null);
           this.loadingService.hide();
-          this.router.navigate([Page.Login]);
           return of(true);
         })
       );
     } else {
       this.authService.setUserCurrent(null);
       this.loadingService.hide();
-      this.router.navigate([Page.Login]);
       return of(true);
     }
   }

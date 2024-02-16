@@ -10,6 +10,7 @@ import { ApiResult } from '../../models/interfaces/common/api-result.interface';
 import { LoginRequest } from '../../models/interfaces/auth/login-request.interface';
 import { HttpStatus } from '../../enums/http-status.enum';
 import { HttpService } from '../utilities/http.service';
+import { RefreshTokenRequest } from '../../models/interfaces/auth/refresh-token-request.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -51,25 +52,8 @@ export class AuthService {
     return this.http.post<ApiResult<AuthToken>>('/auth/login', request);
   }
 
-  initAuth(){
-    const authToken: AuthToken | null = this.getAuthTokenLocalStorage();
-
-    if(authToken?.accessToken){
-        this.fetchUserCurrent().subscribe(res => {
-          if(res.status){
-            this.setUserCurrent(res.data);
-            this.isInitAuthSubject.next(true);
-          }
-        },
-        error => {
-          if (error.status === HttpStatus.Unauthorized) {
-            this.isInitAuthSubject.next(true);
-          }
-        });
-    } else {
-      this.setUserCurrent(null);
-      this.isInitAuthSubject.next(true);
-    }
+  refreshToken(request: RefreshTokenRequest): Observable<ApiResult<AuthToken>>{
+    return this.http.post<ApiResult<AuthToken>>('/auth/refresh-token', request);
   }
 
   // loginByUsername(request: LoginRequest): Observable<ApiResult<UserCurrent>>{
