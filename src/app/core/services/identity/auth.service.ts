@@ -9,6 +9,7 @@ import { LocalStorage } from '../../enums/local-storage.enum';
 import { ApiResult } from '../../models/interfaces/common/api-result.interface';
 import { LoginRequest } from '../../models/interfaces/auth/login-request.interface';
 import { HttpStatus } from '../../enums/http-status.enum';
+import { HttpService } from '../utilities/http.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class AuthService {
   private isInitAuthSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isInitAuth$: Observable<boolean> = this.isInitAuthSubject.asObservable();
 
-  constructor(private http: HttpClient, private localStorageService: LocalStorageService) {}
+  constructor(private http: HttpClient, private localStorageService: LocalStorageService, private httpService: HttpService) {}
 
   //Auth token
   getAuthTokenLocalStorage(): AuthToken | null{
@@ -41,7 +42,9 @@ export class AuthService {
   }
 
   fetchUserCurrent(): Observable<ApiResult<UserCurrent>> {
-    return this.http.get<ApiResult<UserCurrent>>('/auth/user-current');
+    let headers = this.httpService.addSkipLoadingHeader();
+
+    return this.http.get<ApiResult<UserCurrent>>('/auth/user-current',{ headers });
   }
 
   loginByUsername(request: LoginRequest): Observable<ApiResult<AuthToken>> {

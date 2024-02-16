@@ -7,6 +7,7 @@ import { LocalStorage } from '../enums/local-storage.enum';
 import { AuthToken } from '../models/interfaces/common/auth-token.interface';
 import { LocalStorageService } from '../services/utilities/local-storage.service';
 import { LoadingUiService } from '../modules/loading-ui/loading-ui.service';
+import { Header } from '../enums/request.enum';
 
 @Injectable()
 export class HttpInterceptor implements HttpSystemInterceptor {
@@ -15,7 +16,13 @@ export class HttpInterceptor implements HttpSystemInterceptor {
   constructor(private localStorageService: LocalStorageService, private loadingService: LoadingUiService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.loadingService.show();
+    if (!request.headers.has(Header.SkipLoading)) {
+      this.loadingService.show();
+    } else {
+      request = request.clone({
+        headers: request.headers.delete(Header.SkipLoading)
+      });
+    }
 
     const authToken = this.localStorageService.getItem(LocalStorage.AuthToken) as AuthToken;
 
