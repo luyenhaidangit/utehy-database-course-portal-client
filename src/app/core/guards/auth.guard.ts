@@ -1,27 +1,48 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable, catchError, map, of } from 'rxjs';
+import { NgxSpinnerService } from "ngx-spinner";
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { AuthService } from '../services/identity/auth.service';
 import { Page } from '../enums/page.enum';
-import { HttpStatus } from '../enums/http-status.enum';
 import { AuthToken } from '../models/interfaces/common/auth-token.interface';
-import { UserCurrent } from '../models/interfaces/user/user-current.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private loadingService: NgxSpinnerService) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const user: UserCurrent | null | undefined = this.authService.getUserCurrent();
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    this.loadingService.show();
+    const authToken: AuthToken | null = this.authService.getAuthTokenLocalStorage();
 
-    if(user){
-      return true;
-    }else{
+    if (authToken?.accessToken) {
+      return this.authService.fetchUserCurrent().pipe(
+        map(res => {
+          if (res.status) {
+            this.authService.setUserCurrent(res.data);
+            this.loadingService.hide();
+            return true;
+          } else {
+            this.authService.setUserCurrent(null);
+            this.loadingService.hide();
+            this.router.navigate([Page.Login]);
+            return false;
+          }
+        }),
+        catchError(() => {
+          this.authService.setUserCurrent(null);
+          this.loadingService.hide();
+          this.router.navigate([Page.Login]);
+          return of(false);
+        })
+      );
+    } else {
+      this.authService.setUserCurrent(null);
+      this.loadingService.hide();
       this.router.navigate([Page.Login]);
-      return false;
+      return of(false);
     }
   }
 }
