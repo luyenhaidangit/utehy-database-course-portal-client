@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor as HttpSystemInterceptor, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 
 import { app } from '../configs/app.config';
 import { LocalStorage } from '../enums/local-storage.enum';
 import { AuthToken } from '../models/interfaces/common/auth-token.interface';
 import { LocalStorageService } from '../services/utilities/local-storage.service';
+import { LoadingUiService } from '../modules/loading-ui/loading-ui.service';
 
 @Injectable()
 export class HttpInterceptor implements HttpSystemInterceptor {
   private apiUrl: string = app.apiUrl;
 
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(private localStorageService: LocalStorageService, private loadingService: LoadingUiService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.loadingService.show();
+
     const authToken = this.localStorageService.getItem(LocalStorage.AuthToken) as AuthToken;
 
     request = request.clone({
@@ -28,6 +31,9 @@ export class HttpInterceptor implements HttpSystemInterceptor {
       });
     }
 
-    return next.handle(request);
+    return next.handle(request).pipe(finalize(() => {
+        this.loadingService.hide();
+      })
+    );;
   }
 }
