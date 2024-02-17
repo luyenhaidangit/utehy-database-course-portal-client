@@ -4,7 +4,7 @@ import { LayoutComponent } from "../components/layout/layout.component";
 import { LeftSideBarComponent } from "../components/left-side-bar/left-side-bar.component";
 import { RightSideBarComponent } from "../components/right-side-bar/right-side-bar.component";
 
-export const SharedComponent = [
+export const SharedLayoutComponent = [
     LayoutComponent,
     HeaderComponent,
     FooterComponent,
