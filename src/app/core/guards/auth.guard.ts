@@ -14,35 +14,39 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router, private loadingService: NgxSpinnerService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    this.loadingService.show();
-    const authToken: AuthToken | null = this.authService.getAuthTokenLocalStorage();
-
-    if (authToken?.accessToken) {
-      return this.authService.fetchUserCurrent().pipe(
-        map(res => {
-          if (res.status) {
-            this.authService.setUserCurrent(res.data);
-            this.loadingService.hide();
-            return true;
-          } else {
+    if(this.authService.getUserCurrent()){
+      return of(true);
+    } else{
+      this.loadingService.show();
+      const authToken: AuthToken | null = this.authService.getAuthTokenLocalStorage();
+  
+      if (authToken?.accessToken) {
+        return this.authService.fetchUserCurrent().pipe(
+          map(res => {
+            if (res.status) {
+              this.authService.setUserCurrent(res.data);
+              this.loadingService.hide();
+              return true;
+            } else {
+              this.authService.setUserCurrent(null);
+              this.loadingService.hide();
+              this.router.navigate([Page.Login]);
+              return false;
+            }
+          }),
+          catchError(() => {
             this.authService.setUserCurrent(null);
             this.loadingService.hide();
             this.router.navigate([Page.Login]);
-            return false;
-          }
-        }),
-        catchError(() => {
-          this.authService.setUserCurrent(null);
-          this.loadingService.hide();
-          this.router.navigate([Page.Login]);
-          return of(false);
-        })
-      );
-    } else {
-      this.authService.setUserCurrent(null);
-      this.loadingService.hide();
-      this.router.navigate([Page.Login]);
-      return of(false);
+            return of(false);
+          })
+        );
+      } else {
+        this.authService.setUserCurrent(null);
+        this.loadingService.hide();
+        this.router.navigate([Page.Login]);
+        return of(false);
+      }
     }
   }
 }
