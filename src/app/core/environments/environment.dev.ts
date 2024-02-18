@@ -1,5 +1,6 @@
 export const environment = {
     production: false,
+    baseApiUrl: 'https://localhost:7038',
     apiUrl: 'https://localhost:7038/api',
     apiStudentBaseUrl: 'https://localhost:7038/api',
     host: {

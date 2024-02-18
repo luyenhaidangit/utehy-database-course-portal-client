@@ -1,6 +1,9 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import systemConfig from 'src/app/admin/configs/system.config';
+import { app } from 'src/app/core/configs/app.config';
+import { Page } from 'src/app/core/enums/page.enum';
+import { UserCurrent } from 'src/app/core/models/interfaces/user/user-current.interface';
 import { AuthService } from 'src/app/core/services/identity/auth.service';
 
 @Component({
@@ -9,14 +12,19 @@ import { AuthService } from 'src/app/core/services/identity/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  //Init
-  constructor(
-    public authService: AuthService,
-    private router: Router
-  ) { }
+  //Core
+  App = app;
+  Page = Page;
 
-  ngOnInit() {
+  //State
+  userCurrent: UserCurrent;
+
+  //Init
+  constructor(public authService: AuthService,private router: Router) {
+    this.userCurrent = this.authService.getUserCurrent() as UserCurrent;
   }
+
+  ngOnInit() {}
 
   public config: any = {
     baseUrl: systemConfig.baseUrl
