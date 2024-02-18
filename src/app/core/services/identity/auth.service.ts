@@ -56,6 +56,10 @@ export class AuthService {
     return this.http.post<ApiResult<AuthToken>>('/auth/refresh-token', request);
   }
 
+  logout(): Observable<ApiResult<boolean>> {
+    return this.http.post<ApiResult<boolean>>('/auth/logout',null);
+  }
+
   // loginByUsername(request: LoginRequest): Observable<ApiResult<UserCurrent>>{
 
   // }

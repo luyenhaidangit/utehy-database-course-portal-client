@@ -4,6 +4,7 @@ import systemConfig from 'src/app/admin/configs/system.config';
 import { app } from 'src/app/core/configs/app.config';
 import { Page } from 'src/app/core/enums/page.enum';
 import { UserCurrent } from 'src/app/core/models/interfaces/user/user-current.interface';
+import { ToastrService } from 'src/app/core/modules/toastr/toastr.service';
 import { AuthService } from 'src/app/core/services/identity/auth.service';
 
 @Component({
@@ -20,38 +21,24 @@ export class HeaderComponent {
   userCurrent: UserCurrent;
 
   //Init
-  constructor(public authService: AuthService,private router: Router) {
+  constructor(public authService: AuthService,private router: Router, private toastrService: ToastrService) {
     this.userCurrent = this.authService.getUserCurrent() as UserCurrent;
   }
 
   ngOnInit() {}
-
-  public config: any = {
-    baseUrl: systemConfig.baseUrl
-  }
-
-  //User
-  public isShowDropdownUser: boolean = false;
-
-  @HostListener('document:click', ['$event'])
-  public toggleDropdownUser(event: any): void{
-    const targetElement = event.target as HTMLElement;
-
-    if (targetElement.classList.contains('logout-button')) {
-      this.handleOnLogout();
-      return;
-    }
-
-    if (targetElement.classList.contains('user-dropdown-item')) {
-      this.isShowDropdownUser = true;
-    } else {
-      this.isShowDropdownUser = false;
-    }
-  }
   
-  public handleOnLogout(){
-    // this.authService.logout();
-
-    this.router.navigate(['/admin/auth/login']);
+  public logout(){
+    this.authService.logout().subscribe(
+      (res) => {
+        if(res.status){
+          this.authService.setUserCurrent(null);
+          this.authService.setAuthTokenLocalStorage(null);
+          this.router.navigate([Page.Login]);
+        }
+      },
+      (exception) => {
+        this.toastrService.error(exception.error.Message);
+      }
+    );
   }
 }
