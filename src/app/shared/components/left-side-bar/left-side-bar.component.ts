@@ -27,6 +27,9 @@ export class LeftSideBarComponent {
   }
 
   isActive(url: string): boolean {
+    if(!url){
+      return false;
+    }
     return this.router.url.startsWith(url);
   }
 }
