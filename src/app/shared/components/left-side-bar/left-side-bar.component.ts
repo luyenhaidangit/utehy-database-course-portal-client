@@ -32,7 +32,7 @@ export class LeftSideBarComponent {
       children: [
         {
           title: 'Thông tin khoá học',
-          routerLink: '/course',
+          routerLink: '/course/info',
           className: 'menu-title',
           isArea: true
         },
@@ -44,15 +44,11 @@ export class LeftSideBarComponent {
 
   ngOnInit() {
     this.changeStatusCurrentMenu();
-    this.currentUrl = this.router.url;
-
-    // let currentMenu = this.findCurrentMenu(this.menus, this.router.url);
-    // currentMenu.isActive = true;
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      this.currentUrl = event.url;
+      this.changeStatusCurrentMenu();
     });
   }
 
@@ -63,13 +59,19 @@ export class LeftSideBarComponent {
 
   changeStatusCurrentMenu(){
     for (let menu of this.menus) {
+      menu.isActive = false;
+      menu.isChildActive = false;
+
       if (menu.routerLink && this.router.url.startsWith(menu.routerLink)) {
         menu.isActive = true;
       }
 
       if (menu.children) {
         for (let menuChild of menu.children) {
+          menuChild.isActive = false;
+
           if (menuChild.routerLink && this.router.url.startsWith(menuChild.routerLink)) {
+            menu.isChildActive = true;
             menuChild.isActive = true;
           }
         }

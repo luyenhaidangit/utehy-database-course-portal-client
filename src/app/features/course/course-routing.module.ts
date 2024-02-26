@@ -5,7 +5,7 @@ import { ManageListLessonComponent } from './manage-list-lesson/manage-list-less
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'info',
     component: ManageInfoCourseComponent,
   },
   {
