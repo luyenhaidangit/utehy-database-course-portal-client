@@ -3,6 +3,26 @@
     <div id="simplebar" data-simplebar class="h-100">
         <div id="sidebar-menu">
             <ul class="metismenu list-unstyled" id="side-menu">
+                <div>Tại đây</div>
+                <li *ngFor="let menuItem of menus;" [className]="menuItem.className ?? ''" [routerLink]="menuItem?.routerLink">
+                        <span *ngIf="menuItem?.isArea">{{ menuItem.title }}</span>
+                        <a *ngIf="!menuItem?.isArea" class="d-flex justify-content-between waves-effect navigation-menu-main {{menuItem?.isActive ? 'active' : ''}}">
+                            <div class="navigation-label">
+                                <i *ngIf="menuItem?.icon" class="{{ menuItem?.icon }} pb-0"></i>
+                                <span>{{ menuItem.title }}</span>
+                            </div>
+                            <i *ngIf="menuItem.children && menuItem.children.length" class="fa-solid fa-angle-down"></i>
+                        </a>
+
+                        <ng-container *ngIf="menuItem.children && menuItem.children.length">
+                            <ul class="sub-menu mm-collapse {{ isActive('/admin/course')? 'mm-show' : '' }}">
+                                <li *ngFor="let childItem of menuItem.children" [routerLink]="childItem.routerLink" class="cursor-pointer">
+                                    <a [class.active]="" class="{{ isActive('/admin/course/info') ? 'active' : '' }}">{{ childItem.title }}</a>
+                                </li>
+                            </ul>
+                        </ng-container>
+                </li>
+
                 <li class="menu-title">Menu</li>
 
                 <li routerLink="/admin/dashboard">

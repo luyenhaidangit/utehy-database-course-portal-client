@@ -11,8 +11,44 @@ import SimpleBar from 'simplebar';
 })
 export class LeftSideBarComponent {
   currentUrl: string = "";
+  currentMenu: any;
 
-  constructor(private router: Router) {
+  menus: any = [
+    {
+      title: 'Menu',
+      className: 'menu-title',
+      isArea: true,
+      isActive: false,
+    },
+    {
+      title: 'Trang điều khiển',
+      routerLink: '/dashboard',
+      icon: 'fa-solid fa-house'
+    },
+    {
+      title: 'Khoá học',
+      icon: 'fa-solid fa-school',
+      class: '',
+      children: [
+        {
+          title: 'Thông tin khoá học',
+          routerLink: '/course',
+          className: 'menu-title',
+          isArea: true
+        },
+      ]
+    }
+  ];
+
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    this.changeStatusCurrentMenu();
+    this.currentUrl = this.router.url;
+
+    // let currentMenu = this.findCurrentMenu(this.menus, this.router.url);
+    // currentMenu.isActive = true;
+
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
@@ -20,10 +56,41 @@ export class LeftSideBarComponent {
     });
   }
 
-  ngOnInit() {
+  ngAfterViewInit(){
     new MetisMenu("#side-menu");
     new SimpleBar(document.getElementById('simplebar') as HTMLElement);
-    this.currentUrl = this.router.url;
+  }
+
+  changeStatusCurrentMenu(){
+    for (let menu of this.menus) {
+      if (menu.routerLink && this.router.url.startsWith(menu.routerLink)) {
+        menu.isActive = true;
+      }
+
+      if (menu.children) {
+        for (let menuChild of menu.children) {
+          if (menuChild.routerLink && this.router.url.startsWith(menuChild.routerLink)) {
+            menuChild.isActive = true;
+          }
+        }
+      }
+    }
+  }
+
+  findCurrentMenu(menus: any[], url: string): any {
+    for (const menu of menus) {
+      if (menu.routerLink && url.startsWith(menu.routerLink)) {
+        return menu;
+      }
+      if (menu.children) {
+        const foundInChildren = this.findCurrentMenu(menu.children, url);
+        if (foundInChildren) {
+          menu.active = true;
+          return foundInChildren;
+        }
+      }
+    }
+    return null;
   }
 
   isActive(url: string): boolean {
