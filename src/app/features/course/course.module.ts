@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CourseRoutingModule } from './course-routing.module';
 import { ManageInfoCourseComponent } from './manage-info-course/manage-info-course.component';
 import { ManageListLessonComponent } from './manage-list-lesson/manage-list-lesson.component';
+import { SharedModule } from 'src/app/core/modules/shared/shared.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { ManageListLessonComponent } from './manage-list-lesson/manage-list-less
   ],
   imports: [
     CommonModule,
-    CourseRoutingModule
+    CourseRoutingModule,
+    SharedModule
   ]
 })
 export class CourseModule { }
