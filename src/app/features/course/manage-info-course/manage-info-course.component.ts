@@ -17,7 +17,8 @@ import { CourseService } from 'src/app/admin/services/apis/course.service';
 export class ManageInfoCourseComponent {
   //Prepare
   constructor(
-    private formBuilder: FormBuilder, private courseService: CourseService,
+    private formBuilder: FormBuilder, 
+    private courseService: CourseService,
     private cdref: ChangeDetectorRef,
     private router:Router
   ) 

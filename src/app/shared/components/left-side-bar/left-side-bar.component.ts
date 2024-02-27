@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { MetisMenu } from 'metismenujs';
 import SimpleBar from 'simplebar';
+import { Page } from 'src/app/core/enums/page.enum';
 
 @Component({
   selector: 'app-left-side-bar',
@@ -10,6 +11,9 @@ import SimpleBar from 'simplebar';
   styleUrls: ['./left-side-bar.component.css']
 })
 export class LeftSideBarComponent {
+  //Core
+  Page = Page;
+
   currentUrl: string = "";
 
   constructor(private router: Router) {
