@@ -7,7 +7,7 @@ import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
 import { classicEditorConfig } from 'src/app/admin/configs/ckeditor.config';
 import systemConfig from 'src/app/admin/configs/system.config';
 import { CkeditorUploadAdapter } from 'src/app/admin/adapters/ckeditor-upload.adapter';
-import { CourseService } from 'src/app/admin/services/apis/course.service';
+import { CourseService } from 'src/app/core/services/catalog/course.service';
 
 @Component({
   selector: 'app-manage-info-course',
@@ -29,12 +29,18 @@ export class ManageInfoCourseComponent {
   }
 
   ngOnInit() {
-    this.courseService.getCourseDatabase().subscribe((result: any) => {
+    this.courseService.getCourse().subscribe((result: any) => {
       if(result.status){
         this.course = {...result.data,base64Image: '', base64Video: ''};
       }
     });
   }
+
+  getInfoCourse(){
+    this.courseService.getCourse().subscribe((result: any) => {
+      console.log("log",result);
+    });
+  };
 
   ngAfterViewChecked() {
     this.cdref.detectChanges();
@@ -111,18 +117,18 @@ export class ManageInfoCourseComponent {
     reader.readAsDataURL(file);
   }
 
-  handleSubmitForm(){
-    this.courseService.editCourseDatabase(this.course).subscribe((result: any) => {
-      if(result.status){
-        // this.ngxToastr.success(result.message,'',{
-        //   progressBar: true
-        // });
-      }
-    },error => {
-      console.log(error);
-      // this.ngxToastr.error(error.error.message,'',{
-      //   progressBar: true
-      // });
-    });
-  }
+  // handleSubmitForm(){
+  //   this.courseService.editCourseDatabase(this.course).subscribe((result: any) => {
+  //     if(result.status){
+  //       // this.ngxToastr.success(result.message,'',{
+  //       //   progressBar: true
+  //       // });
+  //     }
+  //   },error => {
+  //     console.log(error);
+  //     // this.ngxToastr.error(error.error.message,'',{
+  //     //   progressBar: true
+  //     // });
+  //   });
+  // }
 }

@@ -22,8 +22,8 @@
     height: 36px;
     margin: 8px;
     border-radius: 50%;
-    border: 2px solid #f05123;
-    border-color: #f05123 transparent #f05123 transparent;
+    border: 2px solid #3848ca;
+    border-color: #3848ca transparent #3848ca transparent;
     animation: dual-ring 1.2s linear infinite;
 }
 @keyframes dual-ring {
