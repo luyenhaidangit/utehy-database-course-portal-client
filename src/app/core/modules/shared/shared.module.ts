@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ValidationMessageModule } from '../validation-message/validation-message.module';
 import { LoadingUiModule } from '../loading-ui/loading-ui.module';
 import { ToastrModule } from '../toastr/toastr.module';
+import { BreadcrumbModule } from '../../components/breadcrumb/breadcrumb.module';
 
 @NgModule({
   declarations: [],
@@ -13,7 +14,8 @@ import { ToastrModule } from '../toastr/toastr.module';
     ReactiveFormsModule,
     ValidationMessageModule,
     ToastrModule,
-    LoadingUiModule
+    LoadingUiModule,
+    BreadcrumbModule
   ],
 })
 export class SharedModule { }

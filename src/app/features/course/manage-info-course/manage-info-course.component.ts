@@ -8,6 +8,8 @@ import { classicEditorConfig } from 'src/app/admin/configs/ckeditor.config';
 import systemConfig from 'src/app/admin/configs/system.config';
 import { CkeditorUploadAdapter } from 'src/app/admin/adapters/ckeditor-upload.adapter';
 import { CourseService } from 'src/app/core/services/catalog/course.service';
+import { Breadcrumb } from 'src/app/core/components/breadcrumb/breadcrumb.interface';
+import { breadcrumbs } from './manage-info-course.config';
 
 @Component({
   selector: 'app-manage-info-course',
@@ -15,6 +17,9 @@ import { CourseService } from 'src/app/core/services/catalog/course.service';
   styleUrls: ['./manage-info-course.component.css']
 })
 export class ManageInfoCourseComponent {
+  //Config 
+  breadcrumb: Breadcrumb[] = breadcrumbs;
+
   //Prepare
   constructor(
     private formBuilder: FormBuilder, 
