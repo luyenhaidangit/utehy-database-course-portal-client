@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { CourseRoutingModule } from './course-routing.module';
 import { ManageInfoCourseComponent } from './manage-info-course/manage-info-course.component';
 import { ManageListLessonComponent } from './manage-list-lesson/manage-list-lesson.component';
+
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { SharedModule } from 'src/app/core/modules/shared/shared.module';
 
 
@@ -15,7 +17,8 @@ import { SharedModule } from 'src/app/core/modules/shared/shared.module';
   imports: [
     CommonModule,
     CourseRoutingModule,
-    SharedModule
+    SharedModule,
+    CKEditorModule,
   ]
 })
 export class CourseModule { }

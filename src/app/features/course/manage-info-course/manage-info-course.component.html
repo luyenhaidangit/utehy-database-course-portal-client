@@ -9,7 +9,7 @@
                     <div class="row">
                         <label class="col-md-3 col-lg-3 col-form-label" for="title">Tên khoá học <span class="text-danger">*</span></label>
                         <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
-                            <input class="form-control" [(ngModel)]="course.title" name="title" id="title" type="text" placeholder="Tên khoá học" required/>
+                            <input class="form-control" [(ngModel)]="course.title" name="title" type="text" placeholder="Tên khoá học" required/>
                             <div *ngIf="form.controls['title']?.invalid && (form.controls['title']?.dirty || form.controls['title'].touched)" class="danger-notice">
                                 <div *ngIf="form.controls['title'].errors?.['required']">Tên khoá học không được để trống</div>
                             </div>
@@ -21,7 +21,7 @@
                     <div class="row">
                         <label class="col-md-3 col-lg-3 col-form-label" for="shortDescription">Mô tả ngắn</label>
                         <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
-                            <textarea class="form-control" [(ngModel)]="course.shortDescription" name="shortDescription" id="shortDescription" placeholder="Mô tả ngắn"></textarea>
+                            <textarea class="form-control" [(ngModel)]="course.shortDescription" name="shortDescription" placeholder="Mô tả ngắn"></textarea>
                         </div>
                     </div>
                 </div>
@@ -29,9 +29,15 @@
                 <div class="form-group">
                     <div class="row">
                         <label class="col-md-3 col-lg-3 col-form-label" for="description">Mô tả</label>
-                        <!-- <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
-                            <ckeditor id="editor" [config]="config.classicEditorConfig" [editor]="classicEditor" [data]="course.description" class="title-editor" (change)="handleChangeQuestionAnswer($event,course,1)" (ready)="onReady($event)"></ckeditor>
-                        </div> -->
+                        <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                            <ckeditor
+                            [config]="classicEditorConfig" 
+                            [editor]="classicEditor"
+                            [disableTwoWayDataBinding]="true"
+                            (change)="handleChangeDataCkeditor($event,course,CourseField.Description)" 
+                            (ready)="initEditor($event)"
+                            data="{{course.description}}"></ckeditor>
+                        </div>
                     </div>
                 </div>
 

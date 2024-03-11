@@ -4,12 +4,14 @@ import { ToastrService as NgxToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
-import { classicEditorConfig } from 'src/app/admin/configs/ckeditor.config';
 import systemConfig from 'src/app/admin/configs/system.config';
 import { CkeditorUploadAdapter } from 'src/app/admin/adapters/ckeditor-upload.adapter';
 import { CourseService } from 'src/app/core/services/catalog/course.service';
 import { Breadcrumb } from 'src/app/core/components/breadcrumb/breadcrumb.interface';
 import { breadcrumbs } from './manage-info-course.config';
+import { Course } from 'src/app/core/models/course/course.model';
+import { classicEditorConfig } from 'src/app/core/configs/ckeditor.config';
+import { CourseField } from './manage-info-course.enum';
 
 @Component({
   selector: 'app-manage-info-course',
@@ -17,33 +19,27 @@ import { breadcrumbs } from './manage-info-course.config';
   styleUrls: ['./manage-info-course.component.css']
 })
 export class ManageInfoCourseComponent {
-  //Config 
+  //Identifier
+  CourseField = CourseField;
+
+  //Config
   breadcrumb: Breadcrumb[] = breadcrumbs;
+  classicEditor = ClassicEditor;
+  classicEditorConfig: any = classicEditorConfig;
+
+  //Course
+  course: Course = new Course();
 
   //Prepare
-  constructor(
-    private formBuilder: FormBuilder, 
-    private courseService: CourseService,
-    private cdref: ChangeDetectorRef,
-    private router:Router
-  ) 
-  {
-    this.form = this.formBuilder.group({
-      title: ['', Validators.required],
-    });
-  }
+  constructor(private fb: FormBuilder, private courseService: CourseService,private cdref: ChangeDetectorRef, private router:Router) {}
 
   ngOnInit() {
-    this.courseService.getCourse().subscribe((result: any) => {
-      if(result.status){
-        this.course = {...result.data,base64Image: '', base64Video: ''};
-      }
-    });
+    this.getInfoCourse();
   }
 
   getInfoCourse(){
-    this.courseService.getCourse().subscribe((result: any) => {
-      console.log("log",result);
+    this.courseService.getCourse().subscribe((result) => {
+      this.course = result.data as Course;
     });
   };
 
@@ -52,16 +48,23 @@ export class ManageInfoCourseComponent {
   }
 
   //Course info
-  form: FormGroup;
-  course: any = {
-    title: '',
-    content: '',
-    imageFile: null,
-    base64Image: '',
-    imageUrl: '',
-    typeVideo: 1,
-    videoUrl: '',
-    base64Video: '',
+  // form: FormGroup;
+  // course: any = {
+  //   title: '',
+  //   content: '',
+  //   imageFile: null,
+  //   base64Image: '',
+  //   imageUrl: '',
+  //   typeVideo: 1,
+  //   videoUrl: '',
+  //   base64Video: '',
+  // }
+  
+  //Ckeditor
+  initEditor(editor: ClassicEditor){
+    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+      return new CkeditorUploadAdapter( loader );
+    };
   }
 
   //Ckeditor
@@ -69,25 +72,18 @@ export class ManageInfoCourseComponent {
     classicEditorConfig: classicEditorConfig,
     system: systemConfig
   };
-  classicEditor = ClassicEditor;
 
-  onReady(editor: ClassicEditor): void {
-    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
-        return new CkeditorUploadAdapter( loader );
-    };
-  }
-
-  handleChangeQuestionAnswer(event: any,course: any,type: number) {
-    if(!course || !event || !type){
+  handleChangeDataCkeditor(event: any,object: any,type: number) {
+    if(!event || !object || !type){
       return;
     }
 
     const data = event.editor.getData();
 
-    if(type === 1){
-      course.description = data;
-    } else if(type === 2){
-      course.content = data;
+    if(type === CourseField.Description){
+      object.description = data;
+    } else if(type === CourseField.Content){
+      object.content = data;
     }
   }
 
@@ -104,6 +100,22 @@ export class ManageInfoCourseComponent {
       reader.readAsDataURL(file);
   
       this.course.imageFile = file;
+    }
+  }
+
+  handleChangeQuestionAnswer(event: any,question: any,type: number,index: any = null) {
+    const data = event.editor.getData();
+
+    if(type === 1){
+      question.description = data;
+
+     
+    }else if(type === 2){
+      question.content = data;
+
+      
+    }else{
+      question.feedback = data;
     }
   }
 

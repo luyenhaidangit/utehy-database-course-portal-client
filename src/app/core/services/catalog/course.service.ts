@@ -3,7 +3,8 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { PrefixApi } from '../../constants/prefix-api.constant';
 import { ApiResult } from '../../models/interfaces/common/api-result.interface';
-import { Course } from '../../models/interfaces/course/course.interface';
+import { Course as ICourse } from '../../models/interfaces/course/course.interface';
+import { Course } from '../../models/course/course.model';
 
 @Injectable({
   providedIn: 'root', 

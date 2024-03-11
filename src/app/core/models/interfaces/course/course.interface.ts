@@ -13,6 +13,10 @@ export interface Course {
     priority?: number;
     publishedAt?: Date;
     isPublished?: boolean;
-    isDefault: boolean;
+    isDefault?: boolean;
+
+    base64Image?: string;
+    base64Video?: string;
+    imageFile?: any;
 }
   
