@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { StudentComponent } from './student/student.component';
+
 import { TeacherComponent } from './teacher/teacher.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuard } from './shared/guards/admin.guard';
@@ -10,29 +10,46 @@ import { Role } from './core/enums/role.enum';
 import { Title } from './core/enums/title.enum';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NotFoundComponent } from './features/error/components/not-found/not-found.component';
-import { LoginComponent } from './features/auth/components/login/login.component';
-import { UpdateAccountComponent } from './teacher/components/account/update-account/update-account.component';
+import { LoginComponent } from './features/auth/login/login.component';
+import { LayoutComponent } from './shared/components/layout/layout.component';
+import { UnAuthGuard } from './core/guards/un-auth.guard';
+import { DashboardComponent } from './teacher/components/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
-    path: '',
-    canActivate: [AuthGuard],
-    component: UpdateAccountComponent,
-    loadChildren: () =>
-      import('./student/student.module').then((m) => m.StudentModule),
-    data : { 
-      title: Title.Dashboard,
-      roles: [ Role.Admin, Role.Teacher, Role.Student ],
-    },
-  },
-  {
     path: 'auth',
     loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule),
-  }, 
-  {
-    path: 'test',
-    component: LoginComponent,
+    canActivate: [UnAuthGuard]
   },
+  {
+    path: '',
+    component: LayoutComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./features/dashboard/dashboard.module').then((m) => m.DashboardModule),
+      },
+      {
+        path: 'course',
+        loadChildren: () => import('./features/course/course.module').then((m) => m.CourseModule),
+      },
+      {
+        path: 'test',
+        component: TeacherComponent
+      }
+    ]
+  },
+  // {
+  //   path: 'dashboard',
+  //   component: LayoutComponent,
+  //   loadChildren: () => import('./features/dashboard/dashboard.module').then((m) => m.DashboardModule),
+  // },
   {
     path: 'teacher',
     component: TeacherComponent,

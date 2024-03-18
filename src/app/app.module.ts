@@ -1,56 +1,45 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { DatePipe } from '@angular/common';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { HttpClientModule } from '@angular/common/http';
-
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { CarouselModule } from 'ngx-bootstrap/carousel';
-
-import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
-import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
-import { LoadingBarModule } from '@ngx-loading-bar/core';
-
-import { ToastrModule } from 'ngx-toastr';
-
-import { SocialLoginModule } from '@abacritt/angularx-social-login';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SocialAuthConfig } from './student/configs/social-auth.config';
+import { SharedModule } from './core/modules/shared/shared.module';
+import { SharedPipe } from './core/constants/shared-pipe.constant';
+import { SharedLayoutComponent } from './shared/constants/shared-layout-component.constant';
+import { HttpInterceptor } from './core/interceptors/http.interceptor';
+
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { LoadingUiModule } from './shared/components/loading-ui/loading-ui.module';
-import { CollapseModule } from 'ngx-bootstrap/collapse';
-
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ...SharedLayoutComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
     BrowserAnimationsModule,
     OverlayModule,
     HttpClientModule,
     ModalModule.forRoot(),
     CarouselModule.forRoot(),
-    LoadingBarHttpClientModule,
-    LoadingBarRouterModule,
-    LoadingBarModule,
-    ToastrModule.forRoot(),
-    SocialLoginModule,
-    NgxSpinnerModule,
-    LoadingUiModule,
     CollapseModule.forRoot(),
+    BsDropdownModule,
+    NgxSpinnerModule,
+    SharedModule
   ],
   providers: [
-    { provide: 'SocialAuthServiceConfig', useValue: SocialAuthConfig },
-    DatePipe
+    ...SharedPipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptor,
+      multi: true
+    }
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
