@@ -13,4 +13,5 @@ import { defaultSpinner } from './core/configs/spinner.config';
 export class AppComponent {
   //Core
   public DefaultSpinner = defaultSpinner;
+  public title = 'UTEHY Databacourse Portal';
 }
