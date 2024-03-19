@@ -40,6 +40,10 @@ const routes: Routes = [
         loadChildren: () => import('./features/course/course.module').then((m) => m.CourseModule),
       },
       {
+        path: 'group-module',
+        loadChildren: () => import('./features/group-module/group-module.module').then((m) => m.GroupModuleModule),
+      },
+      {
         path: 'test',
         component: TeacherComponent
       }
