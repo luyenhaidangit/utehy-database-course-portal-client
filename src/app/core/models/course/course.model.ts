@@ -5,8 +5,6 @@ export class Course implements ICourse {
         public id?: number,
         public certificateName?: string,
         public content?: string,
-        public videoUrl?: string,
-        public typeVideo?: number,
         public shortDescription?: string,
         public description?: string,
         public imageUrl?: string,
@@ -18,7 +16,6 @@ export class Course implements ICourse {
         public isPublished?: boolean,
         public isDefault?: boolean,
         public base64Image?: string,
-        public base64Video?: string,
         public imageFile?: any
     ) {}
 }

@@ -18,7 +18,7 @@ export class CourseService {
         return this.http.get<ApiResult<Course>>(`${this.adminApiPrefix}/course/get`);
     }
 
-    editCourse(request: any): Observable<any> {
-        return this.http.post(`${this.adminApiPrefix}/course/edit`, request);
+    editCourse(course: Course): Observable<ApiResult<Course>> {
+        return this.http.post<ApiResult<Course>>(`${this.adminApiPrefix}/course/edit`, course);
     }
 }
