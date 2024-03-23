@@ -7,9 +7,6 @@ export const breadcrumbs: Breadcrumb[] = [
     },
     {
         label: 'Quản lý thông tin khoá học',
-    },
-    {
-        label: 'Quản lý thông tin khoá học',
         link: '/course/info',
         isTitle: true
     }

@@ -6,4 +6,10 @@ export interface SectionDto
     description?: string;
     priority?: number;
     status?: boolean;
+    createdBy?: string;
+    updatedBy?: string;
+    deletedBy?: string;
+    createdAt?: any;
+    updatedAt?: any;
+    deletedAt?: any;
 }

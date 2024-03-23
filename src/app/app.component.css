@@ -3,6 +3,7 @@
 @import url('~sweetalert2/dist/sweetalert2.min.css');
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import url('~ngx-toastr/toastr');
+@import url('./core/styles/common.css');
 @import url('./core/styles/loading-ui.css');
 @import url('./core/styles/text.css');
 @import url('./core/styles/toastr.css');

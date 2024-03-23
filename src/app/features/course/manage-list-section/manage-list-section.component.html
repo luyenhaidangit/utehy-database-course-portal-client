@@ -1,1 +1,82 @@
-<p>manage-list-section works!</p>
+<app-breadcrumb [breadcrumbs]="breadcrumb"></app-breadcrumb>
+
+<div class="row">
+    <div class="group-action__left col-xl-10 col-md-9 col-sm-12">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <input
+                   class="form-control"
+                   type="text"
+                   placeholder="Tên chương"
+                   [(ngModel)]="filterTitle"
+                   />
+            </div>
+            <div class="form-group col-md-3">
+                <select class="custom-select" [(ngModel)]="filterStatus">
+                    <option [ngValue]="''">Trạng thái</option>
+                    <option *ngFor="let status of Status;" [ngValue]="status.key">{{ status.value }}</option>
+                </select>
+            </div>
+             <div class="form-group col-md-1">
+                <button (click)="handleSearchSection()"
+                   type="button"
+                   class="btn btn-primary waves-effect waves-light"
+                   >
+                <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+             </div>
+        </div>
+    </div>
+     <div class="group-action__right col-xl-2 col-md-3 col-sm-12 align-end">
+        <button
+           type="button"
+           class="btn btn-success waves-effect waves-light"
+           (click)="handleOpenCreateGroupModuleModal()"
+           >
+        <i class="fa-solid fa-plus mr-1"></i> Thêm mới
+        </button>
+     </div>
+</div>
+
+<div class="row">
+    <ng-container *ngIf="sections.length > 0">
+        <div *ngFor="let section of sections; let i = index" class="col-sm-6 col-lg-6 col-xl-4 mb-4">
+            <div class="block block-rounded">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title block-class-name">Chương {{ i + 1 }}: {{ section.title }}</h3>
+                    <div class="block-options" dropdown>
+                        <div class="dropdown ms-2">
+                            <button type="button" class="btn btn-light module__dropdown" id="button-basic" dropdownToggle aria-controls="dropdown-basic">
+                            <i class="fa-solid fa-gear"></i>
+                            </button>
+                            <!-- <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                                <li routerLink="/group-module/student/{{ groupModule.id }}" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-circle-info dropdown-group-module-icon"></i> Danh sách sinh viên</span></li>
+                                <li (click)="handleOpenEditGroupModuleModal(groupModule)" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-pen dropdown-group-module-icon"></i> Sửa thông tin</span></li>
+                                <li (click)="handleHideGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-eye-slash dropdown-group-module-icon"></i> Ẩn nhóm</span></li>
+                                <li (click)="handleDeleteGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer text-danger"><i class="fa-solid fa-trash dropdown-group-module-icon"></i> Xoá nhóm</span></li>
+                            </ul> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="block-content pt-1 pb-3">
+                    <div class="row">
+                        <div class="col-12">Người tạo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{section.createdBy}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">Ngày tạo  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{section.createdAt | date: 'dd/MM/yyyy'}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">Cập nhật &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{section.updatedBy}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">Ngày cập nhật : {{section.updatedAt| date: 'dd/MM/yyyy'}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="!(sections.length > 0)">
+        <div class="d-flex justify-content-center my-4">Không có bản ghi nào!</div>
+    </ng-container>
+</div>

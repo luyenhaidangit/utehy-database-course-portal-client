@@ -11,6 +11,7 @@ import { Course } from 'src/app/core/models/course/course.model';
 import { classicEditorConfig } from 'src/app/core/configs/ckeditor.config';
 import { TextService } from 'src/app/core/services/utilities/text.service';
 import { SectionDto } from 'src/app/core/models/interfaces/course/section-dto.interface';
+import { CommonStatus } from 'src/app/core/constants/status.constant';
 
 @Component({
   selector: 'app-manage-list-section',
@@ -18,6 +19,14 @@ import { SectionDto } from 'src/app/core/models/interfaces/course/section-dto.in
   styleUrls: ['./manage-list-section.component.css']
 })
 export class ManageListSectionComponent {
+  //Core
+  Status = CommonStatus;
+
+  //Filter
+  filterTitle: string = '';
+  filterStatus: string = '';
+  // selectedOption: any = 'true';
+
   //Config
   breadcrumb: Breadcrumb[] = breadcrumbs;
   classicEditor = ClassicEditor;
@@ -25,7 +34,10 @@ export class ManageListSectionComponent {
 
   //Course
   title: string = '';
+  sectionsState: SectionDto[] = [];
   sections: SectionDto[] = [];
+  queryParameters: any;
+  constant: any;
 
   //Constructor
   constructor(private courseService: CourseService, private toastrService: ToastrService,private textService:TextService) {}
@@ -33,14 +45,24 @@ export class ManageListSectionComponent {
   ngOnInit() {
     this.getCourseWithSection();
   }
-
+  
+  //Handle
   getCourseWithSection(){
     this.courseService.getCourseWithSection().subscribe((res) => {
       const result = res.data;
       this.title = result?.title as string;
       this.sections = result?.sections as SectionDto[];
+      this.sectionsState = result?.sections as SectionDto[];
     });
   };
+
+  handleOpenCreateGroupModuleModal(){
+    this.sections = this.sections.filter(section => section.title?.includes(this.filterTitle) || !this.title);
+  }
+
+  handleSearchSection(){
+    this.sections = this.sectionsState.filter(section => (section.title?.includes(this.filterTitle) || !this.title) && (section.status?.toString() === this.filterStatus || !this.filterStatus));
+  }
 
   //Ckeditor
   initEditor(editor: ClassicEditor){
