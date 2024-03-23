@@ -11,6 +11,7 @@ import { breadcrumbs } from './manage-info-course.config';
 import { Course } from 'src/app/core/models/course/course.model';
 import { classicEditorConfig } from 'src/app/core/configs/ckeditor.config';
 import { CourseField } from './manage-info-course.enum';
+import { TextService } from 'src/app/core/services/utilities/text.service';
 
 @Component({
   selector: 'app-manage-info-course',
@@ -30,7 +31,7 @@ export class ManageInfoCourseComponent {
   course: Course = new Course();
 
   //Constructor
-  constructor(private courseService: CourseService, private toastrService: ToastrService) {}
+  constructor(private courseService: CourseService, private toastrService: ToastrService,private textService:TextService) {}
 
   ngOnInit() {
     this.getInfoCourse();
@@ -99,5 +100,9 @@ export class ManageInfoCourseComponent {
         console.log(exception?.error.Message);
       }
     );
+  }
+
+  handleGetSlugFromTitle(event: any){
+    this.course.slug = this.textService.convertToSlug(event);
   }
 }
