@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { PrefixApi } from '../../constants/prefix-api.constant';
 import { ApiResult } from '../../models/interfaces/common/api-result.interface';
-import { Course as ICourse } from '../../models/interfaces/course/course.interface';
 import { Course } from '../../models/course/course.model';
+import { ManageListSectionViewModel } from '../../models/interfaces/course/manage-list-section-view-model.interface';
 
 @Injectable({
   providedIn: 'root', 
@@ -16,6 +16,10 @@ export class CourseService {
 
     getCourse(): Observable<ApiResult<Course>> {
         return this.http.get<ApiResult<Course>>(`${this.adminApiPrefix}/course/get`);
+    }
+
+    getCourseWithSection(): Observable<ApiResult<ManageListSectionViewModel>> {
+        return this.http.get<ApiResult<ManageListSectionViewModel>>(`${this.adminApiPrefix}/course/get-course-with-section`);
     }
 
     editCourse(course: Course): Observable<ApiResult<Course>> {

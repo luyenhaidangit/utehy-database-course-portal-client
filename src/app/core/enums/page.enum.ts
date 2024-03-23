@@ -4,4 +4,5 @@ export enum Page {
     Dashboard = '/dashboard',
 
     ManageInfoCourse = '/course/info',
+    ManageListSection = '/course/section',
 }

@@ -7,12 +7,14 @@ import { ManageListLessonComponent } from './manage-list-lesson/manage-list-less
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { SharedModule } from 'src/app/core/modules/shared/shared.module';
+import { ManageListSectionComponent } from './manage-list-section/manage-list-section.component';
 
 
 @NgModule({
   declarations: [
     ManageInfoCourseComponent,
-    ManageListLessonComponent
+    ManageListLessonComponent,
+    ManageListSectionComponent
   ],
   imports: [
     CommonModule,

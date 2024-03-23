@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { CourseService } from 'src/app/core/services/catalog/course.service';
 import { ToastrService } from 'src/app/core/modules/toastr/toastr.service';
-import { Router } from '@angular/router';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
 import systemConfig from 'src/app/admin/configs/system.config';
 import { CkeditorUploadAdapter } from 'src/app/admin/adapters/ckeditor-upload.adapter';
-import { CourseService } from 'src/app/core/services/catalog/course.service';
 import { Breadcrumb } from 'src/app/core/components/breadcrumb/breadcrumb.interface';
 import { breadcrumbs } from './manage-info-course.config';
 import { Course } from 'src/app/core/models/course/course.model';

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { MetisMenu } from 'metismenujs';
 import SimpleBar from 'simplebar';
 import { Page } from 'src/app/core/enums/page.enum';
+import { NavigateSideBar } from 'src/app/core/configs/navigate-side-bar.config';
 
 @Component({
   selector: 'app-left-side-bar',
@@ -13,8 +14,9 @@ import { Page } from 'src/app/core/enums/page.enum';
 export class LeftSideBarComponent {
   //Core
   Page = Page;
+  Menu = NavigateSideBar;
 
-  currentUrl: string = "";
+  currentUrl: any = "";
 
   constructor(private router: Router) {
     this.router.events.pipe(
