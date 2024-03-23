@@ -11,7 +11,7 @@ import loadingUiConstant from '../../components/loading-ui/loading-ui.constant';
 })
 export class HttpTeacherLoadingService {
   //   private baseUrl: string = environment.apiStudentBaseUrl;
-  private baseUrl: string = environment.host.apiTeacherBaseUrl;
+  private baseUrl: string = '';
 
 
   constructor(

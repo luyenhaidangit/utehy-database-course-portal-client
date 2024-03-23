@@ -43,8 +43,8 @@
                     </ul>
                 </li>
 
-                <li class="{{ isActive('/admin/exam')  ? 'mm-active' : '' }}">
-                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/admin/exam') ? 'active' : '' }}">
+                <li class="{{ isActive('/exam')  ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/exam') ? 'active' : '' }}">
                         <div class="navigation-label">
                             <i class="fa-solid fa-user-group pb-0"></i>
                             <span>Kỳ thi</span>
@@ -52,8 +52,8 @@
                         <i class="fa-solid fa-angle-down"></i>
                     </a>
 
-                    <ul class="sub-menu {{ isActive('/admin/exam') ? 'mm-show' : '' }}">
-                        <li class="cursor-pointer" [routerLink]="['/admin/exam']"><a class="{{ isActive('/admin/exam') ? 'active' : '' }}">Quản lý đề thi</a></li>
+                    <ul class="sub-menu {{ isActive('/exam') ? 'mm-show' : '' }}">
+                        <li class="cursor-pointer" [routerLink]="['/exam']"><a class="{{ isActive('/exam') ? 'active' : '' }}">Quản lý đề thi</a></li>
                     </ul>
                 </li>
 
@@ -72,8 +72,8 @@
                     </ul>
                 </li> -->
 
-                <li class="{{ isActive('/admin/question') || isActive('/admin/question-category')  ? 'mm-active' : '' }}">
-                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/admin/question') ? 'active' : '' }}">
+                <li class="{{ isActive('/question') || isActive('/question-category')  ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/question') ? 'active' : '' }}">
                         <div class="navigation-label">
                             <i class="fa-regular fa-circle-question pb-0"></i>
                             <span>Ngân hàng câu hỏi</span>
@@ -81,10 +81,10 @@
                         <i class="fa-solid fa-angle-down"></i>
                     </a>
 
-                    <ul class="sub-menu {{ isActive('/admin/question') || isActive('/admin/question-category') ? 'mm-show' : '' }}">
+                    <ul class="sub-menu {{ isActive('/question') || isActive('/question-category') ? 'mm-show' : '' }}">
                         <!-- <li class="cursor-pointer" routerLink="/admin/question-category"><a class="{{ isActive('/admin/question-category') && (currentUrl != '/admin/question-tag') ? 'active' : '' }}">Quản lý loại câu hỏi</a></li> -->
-                        <li class="cursor-pointer" routerLink="/admin/question"><a class="{{ isActive('/admin/question') && (currentUrl != '/admin/question-category') && (currentUrl != '/admin/question-tag') ? 'active' : '' }}">Quản lý câu hỏi</a></li>
-                        <li class="cursor-pointer" routerLink="/admin/question-tag"><a class="{{ isActive('/admin/question-tag') && (currentUrl != '/admin/question-category') ? 'active' : '' }}">Quản lý thẻ tag câu hỏi</a></li>
+                        <li class="cursor-pointer" routerLink="/question"><a class="{{ isActive('/question') && (currentUrl != '/question-category') && (currentUrl != '/question-tag') ? 'active' : '' }}">Quản lý câu hỏi</a></li>
+                        <li class="cursor-pointer" routerLink="/question-tag"><a class="{{ isActive('/question-tag') && (currentUrl != '/question-category') ? 'active' : '' }}">Quản lý thẻ tag câu hỏi</a></li>
                         <!-- <li class="cursor-pointer" routerLink="/admin/exam"><a class="{{ isActive('/admin/exam') && (currentUrl != '/admin/question-category') ? 'active' : '' }}">Quản lý bộ đề thi</a></li> -->
                     </ul>
                 </li>

@@ -17,3 +17,4 @@ import { SharedModule } from 'src/app/core/modules/shared/shared.module';
   ]
 })
 export class AuthModule { }
+
