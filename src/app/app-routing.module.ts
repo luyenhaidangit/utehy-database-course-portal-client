@@ -46,7 +46,15 @@ const routes: Routes = [
       {
         path: 'test',
         component: TeacherComponent
-      }
+      },
+      {
+        path: 'exam',
+        loadChildren: () => import('./features/exam/exam.module').then((m) => m.ExamModule),
+      },
+      {
+        path: 'question',
+        loadChildren: () => import('./features/question/question.module').then((m) => m.QuestionModule),
+      },
     ]
   },
   // {

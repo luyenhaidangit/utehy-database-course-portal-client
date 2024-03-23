@@ -9,7 +9,7 @@ export class QuestionCategoryService {
   constructor(private http: HttpTeacherLoadingService) { }
 
   getQuestionCategoryTree(): Observable<any> {
-    return this.http.get('question-category/get-tree', {});
+    return this.http.get('admin/question-category/get-tree', {});
   }
 
   createQuestionCategory(request: any): Observable<any> {
