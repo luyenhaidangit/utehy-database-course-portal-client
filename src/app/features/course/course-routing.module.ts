@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Page } from 'src/app/core/enums/page.enum';
 import { ManageInfoCourseComponent } from './manage-info-course/manage-info-course.component';
-import { ManageListLessonComponent } from './manage-list-lesson/manage-list-lesson.component';
 import { ManageListSectionComponent } from './manage-list-section/manage-list-section.component';
 
 const routes: Routes = [
@@ -18,10 +17,6 @@ const routes: Routes = [
   {
     path: 'section',
     component: ManageListSectionComponent,
-  },
-  {
-    path: 'lesson',
-    component: ManageListLessonComponent,
   },
 ];
 

@@ -31,7 +31,7 @@
         <button
            type="button"
            class="btn btn-success waves-effect waves-light"
-           (click)="handleOpenCreateGroupModuleModal()"
+           (click)="handleOpenCreateSectionModal()"
            >
         <i class="fa-solid fa-plus mr-1"></i> Thêm mới
         </button>
@@ -43,7 +43,9 @@
         <div *ngFor="let section of sections; let i = index" class="col-sm-6 col-lg-6 col-xl-4 mb-4">
             <div class="block block-rounded">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title block-class-name">Chương {{ i + 1 }}: {{ section.title }}</h3>
+                    <h3 class="block-title block-class-name">
+                        Chương {{ i + 1 }}: {{ section.title }}
+                    </h3>
                     <div class="block-options" dropdown>
                         <div class="dropdown ms-2">
                             <button type="button" class="btn btn-light module__dropdown" id="button-basic" dropdownToggle aria-controls="dropdown-basic">
@@ -58,19 +60,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="block-content pt-1 pb-3">
-                    <div class="row">
-                        <div class="col-12">Người tạo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{section.createdBy}}</div>
+                <div class="block-content pt-1 pb-2">
+                    <div class="row mb-2">
+                        <div class="col-12">
+                            <span class="badge {{ section.status ? 'badge-success' : 'badge-danger' }}">{{ section.status ? 'Hoạt động' : 'Không hoạt động' }}</span> 
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">Ngày tạo  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{section.createdAt | date: 'dd/MM/yyyy'}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">Cập nhật &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{section.updatedBy}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">Ngày cập nhật : {{section.updatedAt| date: 'dd/MM/yyyy'}}</div>
-                    </div>
+                    <ng-container *ngIf="section.createdBy">
+                        <div class="row">
+                            <div class="col-12">Người tạo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{section.createdBy}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">Ngày tạo  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{section.createdAt | date: 'dd/MM/yyyy'}}</div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="section.updatedBy">
+                        <div class="row">
+                            <div class="col-12">Cập nhật &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{section.updatedBy}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">Ngày cập nhật : {{section.updatedAt| date: 'dd/MM/yyyy'}}</div>
+                        </div>
+                    </ng-container>
                 </div>
             </div>
         </div>
@@ -80,3 +91,92 @@
         <div class="d-flex justify-content-center my-4">Không có bản ghi nào!</div>
     </ng-container>
 </div>
+
+<!-- <form (ngSubmit)="handleOnSubmitCreateGroupModule()" #createForm="ngForm">
+    <ng-template #createGroupModuleTemplate>
+        <div class="modal-header">
+            <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Thêm nhóm học phần</h5>
+            <button type="button" class="close" (click)="createGroupModuleModalRef?.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3 col-lg-3 col-form-label" for="name">Tên nhóm học phần</label>
+                  <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                    <input class="form-control" [(ngModel)]="groupModule.name" name="name" id="name" type="text" required/>
+                    <div *ngIf="createForm.controls['name']?.invalid && (createForm.controls['name']?.dirty || createForm.controls['name'].touched)" class="danger-notice">
+                        <div *ngIf="createForm.controls['name'].errors?.['required']">Tên nhóm học phần không được để trống</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3 col-lg-3 col-form-label" for="description">Mô tả</label>
+                  <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                    <textarea class="form-control" [(ngModel)]="groupModule.description" name="description" id="description"></textarea>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3 col-lg-3 col-form-label" for="year">Năm học</label>
+                  <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                    <input class="form-control" [(ngModel)]="groupModule.year" name="year" id="year" type="number" required/>
+                    <div *ngIf="createForm.controls['year']?.invalid && (createForm.controls['year']?.dirty || createForm.controls['year'].touched)" class="danger-notice">
+                        <div *ngIf="createForm.controls['year'].errors?.['required']">Năm học không được để trống</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3 col-lg-3 col-form-label" for="year">Học kỳ</label>
+                  <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                    <select (blur)="validateGroupModule.touchSemester = true" class="custom-select" name="semester" [(ngModel)]="groupModule.semester">
+                        <option [selected]="groupModule.semester === null || groupModule.semester === 0" [ngValue]="0">Kỳ học</option>
+                        <option *ngFor="let semester of constant.groupModule.semesters;" value="{{ semester.key }}">{{ semester.value }}</option>
+                    </select>
+                    <div *ngIf="groupModule.semester === 0 && groupModule.semester !== null && validateGroupModule.touchSemester" class="danger-notice">
+                        <div *ngIf="groupModule.semester === 0 && groupModule.semester !== null && validateGroupModule.touchSemester">Kỳ học không được để trống</div>
+                     </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3 col-lg-3 col-form-label" for="year">Giáo viên phụ trách</label>
+                  <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                    <select name="teacherId" class="custom-select"  [(ngModel)]="groupModule.teacherId">
+                        <option [selected]="groupModule.teacherId === null || groupModule.teacherId === 0" [ngValue]="0">Giáo viên</option>
+                        <option *ngFor="let teacher of teachers;" value="{{ teacher.id }}">{{ teacher.teacherId }}-{{ teacher.name }}</option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-md-3 col-lg-3 col-form-label" for="isBlank">Trạng thái</label>
+                    <div class="col-md-9 col-lg-8 col-table-reponsive d-flex align-items-center p-0">
+                      <div class="custom-control custom-switch" dir="ltr">
+                         <input type="checkbox" class="custom-control-input" name="isBlank" id="isBlank" [(ngModel)]="groupModule.status" [checked]="true">
+                         <label class="custom-control-label" for="isBlank"></label>
+                     </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light waves-effect" (click)="createGroupModuleModalRef?.hide()">Đóng</button>
+            <button [disabled]="createForm.invalid || validateForm()" (click)="handleOnSubmitCreateGroupModule()" type="submit" class="btn btn-primary waves-effect waves-light ml-2">Xác nhận</button>
+        </div>
+     </ng-template>
+</form> -->
