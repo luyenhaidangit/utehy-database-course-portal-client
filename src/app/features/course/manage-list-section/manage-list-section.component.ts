@@ -147,7 +147,9 @@ export class ManageListSectionComponent {
   }
 
   handleOpenEditSectionModal(section: any){
-    this.section = section;
+    const sectionCopy = { ...section };
+    
+    this.section = sectionCopy;
 
     this.editModalRef = this.modalService.show(this.editSectionTemplate,
       Object.assign({}, { class: 'modal-dialog modal-lg modal-dialog-scrollable' }));
