@@ -51,12 +51,16 @@
                             <button type="button" class="btn btn-light module__dropdown" id="button-basic" dropdownToggle aria-controls="dropdown-basic">
                             <i class="fa-solid fa-gear"></i>
                             </button>
-                            <!-- <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                                <li routerLink="/group-module/student/{{ groupModule.id }}" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-circle-info dropdown-group-module-icon"></i> Danh sách sinh viên</span></li>
+                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                                <!-- <li routerLink="/group-module/student/{{ groupModule.id }}" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-circle-info dropdown-group-module-icon"></i> Danh sách sinh viên</span></li>
                                 <li (click)="handleOpenEditGroupModuleModal(groupModule)" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-pen dropdown-group-module-icon"></i> Sửa thông tin</span></li>
                                 <li (click)="handleHideGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-eye-slash dropdown-group-module-icon"></i> Ẩn nhóm</span></li>
-                                <li (click)="handleDeleteGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer text-danger"><i class="fa-solid fa-trash dropdown-group-module-icon"></i> Xoá nhóm</span></li>
-                            </ul> -->
+                                <li (click)="handleDeleteGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer text-danger"><i class="fa-solid fa-trash dropdown-group-module-icon"></i> Xoá nhóm</span></li> -->
+                                <li role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-circle-info dropdown-group-module-icon"></i> Danh sách sinh viên</span></li>
+                                <li  role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-pen dropdown-group-module-icon"></i> Sửa thông tin</span></li>
+                                <li  role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-eye-slash dropdown-group-module-icon"></i> Ẩn nhóm</span></li>
+                                <li  role="menuitem"><span class="dropdown-item cursor-pointer text-danger"><i class="fa-solid fa-trash dropdown-group-module-icon"></i> Xoá nhóm</span></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -68,7 +72,7 @@
                     </div>
                     <ng-container *ngIf="section.createdBy">
                         <div class="row">
-                            <div class="col-12">Người tạo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{section.createdBy}}</div>
+                            <div class="col-12">Người tạo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{section?.userCreated?.userName}}</div>
                         </div>
                         <div class="row">
                             <div class="col-12">Ngày tạo  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{section.createdAt | date: 'dd/MM/yyyy'}}</div>
@@ -76,7 +80,7 @@
                     </ng-container>
                     <ng-container *ngIf="section.updatedBy">
                         <div class="row">
-                            <div class="col-12">Cập nhật &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{section.updatedBy}}</div>
+                            <div class="col-12">Cập nhật &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{section?.userUpdated?.userName}}</div>
                         </div>
                         <div class="row">
                             <div class="col-12">Ngày cập nhật : {{section.updatedAt| date: 'dd/MM/yyyy'}}</div>

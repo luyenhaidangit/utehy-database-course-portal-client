@@ -11,6 +11,10 @@ export class SectionService {
 
     constructor(private http: HttpClient) { }
 
+    getAllSection(): Observable<any> {
+      return this.http.get<any>(`${this.adminApiPrefix}/section/get-all`);
+    }
+
     createSection(request: any): Observable<any> {
         return this.http.post<any>(`${this.adminApiPrefix}/section/create`,request);
     }

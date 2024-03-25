@@ -38,7 +38,7 @@ export class ManageListSectionComponent {
   //Course
   title: string = '';
   sectionsState: SectionDto[] = [];
-  sections: SectionDto[] = [];
+  sections: any = [];
 
   //Section
   section: any = {
@@ -52,7 +52,6 @@ export class ManageListSectionComponent {
   constructor(
     private courseService: CourseService, 
     private toastrService: ToastrService,
-    private textService:TextService,
     private modalService: BsModalService,
     private sectionService: SectionService
     ) {}
@@ -63,11 +62,9 @@ export class ManageListSectionComponent {
   
   //Handle
   getCourseWithSection(){
-    this.courseService.getCourseWithSection().subscribe((res) => {
-      const result = res.data;
-      this.title = result?.title as string;
-      this.sections = result?.sections as SectionDto[];
-      this.sectionsState = result?.sections as SectionDto[];
+    this.sectionService.getAllSection().subscribe((res) => {
+      this.sections = res?.data;
+      this.sectionsState = res?.data;
     });
   };
 
