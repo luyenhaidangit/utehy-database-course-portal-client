@@ -18,4 +18,12 @@ export class SectionService {
     createSection(request: any): Observable<any> {
         return this.http.post<any>(`${this.adminApiPrefix}/section/create`,request);
     }
+
+    editSection(request: any): Observable<any> {
+      return this.http.post<any>(`${this.adminApiPrefix}/section/edit`,request);
+    }
+
+    deleteSection(request: any): Observable<any> {
+      return this.http.post<any>(`${this.adminApiPrefix}/section/delete`,request);
+    }
 }

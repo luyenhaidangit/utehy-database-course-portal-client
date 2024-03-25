@@ -57,9 +57,8 @@
                                 <li (click)="handleHideGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-eye-slash dropdown-group-module-icon"></i> Ẩn nhóm</span></li>
                                 <li (click)="handleDeleteGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer text-danger"><i class="fa-solid fa-trash dropdown-group-module-icon"></i> Xoá nhóm</span></li> -->
                                 <li role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-circle-info dropdown-group-module-icon"></i> Danh sách sinh viên</span></li>
-                                <li  role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-pen dropdown-group-module-icon"></i> Sửa thông tin</span></li>
-                                <li  role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-eye-slash dropdown-group-module-icon"></i> Ẩn nhóm</span></li>
-                                <li  role="menuitem"><span class="dropdown-item cursor-pointer text-danger"><i class="fa-solid fa-trash dropdown-group-module-icon"></i> Xoá nhóm</span></li>
+                                <li (click)="handleOpenEditSectionModal(section)"  role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-pen dropdown-group-module-icon"></i> Sửa thông tin</span></li>
+                                <li (click)="handleDeleteSection(section.id)" role="menuitem"><span class="dropdown-item cursor-pointer text-danger"><i class="fa-solid fa-trash dropdown-group-module-icon"></i> Xoá nhóm</span></li>
                             </ul>
                         </div>
                     </div>
@@ -162,6 +161,76 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-light waves-effect" (click)="createModalRef?.hide()">Đóng</button>
             <button [disabled]="createForm.invalid || validateCreateForm.priority.inValidNumber" (click)="handleOnSubmitCreateSection()" type="submit" class="btn btn-primary waves-effect waves-light ml-2">Xác nhận</button>
+        </div>
+     </ng-template>
+</form>
+
+<form (ngSubmit)="handleOpenCreateSectionModal()" #editForm="ngForm">
+    <ng-template #editTemplate>
+        <div class="modal-header">
+            <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Sửa chương</h5>
+            <button type="button" class="close" (click)="editModalRef?.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3 col-lg-3 col-form-label" for="name">Tên chương <span class="text-danger">*</span></label>
+                  <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                    <input class="form-control" [(ngModel)]="section.title" name="title" id="title" type="text" required/>
+                    <div *ngIf="editForm.controls['title']?.invalid && (createForm.controls['title']?.dirty || createForm.controls['title'].touched)" class="danger-notice">
+                        <div *ngIf="editForm.controls['title'].errors?.['required']">Tên chương không được để trống</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3 col-lg-3 col-form-label" for="name">Độ ưu tiên <span class="text-danger">*</span></label>
+                  <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                    <input class="form-control" [(ngModel)]="section.priority" (ngModelChange)="onPriorityChange($event)" name="priority" id="priority" type="number" required/>
+                    <div *ngIf="validateEditForm.priority.inValidNumber || editForm.controls['priority']?.invalid && (editForm.controls['priority']?.dirty || editForm.controls['title'].touched)" class="danger-notice">
+                        <div *ngIf="editForm.controls['priority'].errors?.['required']">Độ ưu tiên không được để trống</div>
+                        <div *ngIf="validateEditForm.priority.inValidNumber && !editForm.controls['priority'].errors?.['required']">Chương số phải là số lớn hơn 0</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3 col-lg-3 col-form-label" for="name">Mô tả</label>
+                  <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                    <ckeditor
+                        [config]="classicEditorConfig" 
+                        [editor]="classicEditor"
+                        [disableTwoWayDataBinding]="true"
+                        (change)="handleChangeDataCkeditor($event,section,SectionField.Description)" 
+                        (ready)="initEditor($event)"
+                        data="{{section.description}}">
+                    </ckeditor>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-md-3 col-lg-3 col-form-label" for="name">Mô tả</label>
+                    <div class="col-md-9 col-lg-8 col-table-reponsive p-0 d-flex align-items-center">
+                        <div class="custom-control custom-switch" dir="ltr">
+                            <input type="checkbox" class="custom-control-input" id="status" name="status" [(ngModel)]="section.status" [checked]="section.status">
+                            <label class="custom-control-label" for="status"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light waves-effect" (click)="editModalRef?.hide()">Đóng</button>
+            <button [disabled]="editForm.invalid || validateEditForm.priority.inValidNumber" (click)="handleOnSubmitEditSection()" type="submit" class="btn btn-primary waves-effect waves-light ml-2">Xác nhận</button>
         </div>
      </ng-template>
 </form>
