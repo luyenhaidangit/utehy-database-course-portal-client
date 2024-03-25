@@ -9,12 +9,14 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { SharedModule } from 'src/app/core/modules/shared/shared.module';
 import { ManageListSectionComponent } from './manage-list-section/manage-list-section.component';
+import { ManageListLessonComponent } from './manage-list-lesson/manage-list-lesson.component';
 
 
 @NgModule({
   declarations: [
     ManageInfoCourseComponent,
-    ManageListSectionComponent
+    ManageListSectionComponent,
+    ManageListLessonComponent
   ],
   imports: [
     CommonModule,

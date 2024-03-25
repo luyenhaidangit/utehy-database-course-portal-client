@@ -1,5 +1,4 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { CourseService } from 'src/app/core/services/catalog/course.service';
 import { ToastrService } from 'src/app/core/modules/toastr/toastr.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -148,7 +147,7 @@ export class ManageListSectionComponent {
 
   handleOpenEditSectionModal(section: any){
     const sectionCopy = { ...section };
-    
+
     this.section = sectionCopy;
 
     this.editModalRef = this.modalService.show(this.editSectionTemplate,
