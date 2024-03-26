@@ -15,6 +15,10 @@ export class SectionService {
       return this.http.get<any>(`${this.adminApiPrefix}/section/get-all`);
     }
 
+    getSectionWithLesson(id: any): Observable<any> {
+      return this.http.get<any>(`${this.adminApiPrefix}/section/get-section-with-lesson?id=${id}`);
+    }
+
     createSection(request: any): Observable<any> {
         return this.http.post<any>(`${this.adminApiPrefix}/section/create`,request);
     }

@@ -52,7 +52,7 @@
                             <i class="fa-solid fa-gear"></i>
                             </button>
                             <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                                <li routerLink="/course/section/{{section.id}}"  role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-circle-info dropdown-group-module-icon"></i> Danh sách bài học</span></li>
+                                <li [routerLink]="['/course/section/' + section.id]" [state]="{ data: { section: section } }" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-circle-info dropdown-group-module-icon"></i> Danh sách bài học</span></li>
                                 <li (click)="handleOpenEditSectionModal(section)"  role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-pen dropdown-group-module-icon"></i> Sửa thông tin</span></li>
                                 <li (click)="handleDeleteSection(section.id)" role="menuitem"><span class="dropdown-item cursor-pointer text-danger"><i class="fa-solid fa-trash dropdown-group-module-icon"></i> Xoá chương</span></li>
                             </ul>
