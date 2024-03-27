@@ -23,6 +23,10 @@ export class ManageListLessonComponent {
   }
 
   //Action
+  updateBreadcrumb(){
+    
+  }
+
   handleRouteParamsChange(){
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
