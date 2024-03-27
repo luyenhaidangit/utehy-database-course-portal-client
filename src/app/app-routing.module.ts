@@ -55,6 +55,27 @@ const routes: Routes = [
         path: 'question',
         loadChildren: () => import('./features/question/question.module').then((m) => m.QuestionModule),
       },
+      {
+        path: 'teacher',
+        loadChildren: () => import('./features/teacher/teacher.module').then((m) => m.TeacherModule),
+      },
+      {
+        path: 'student',
+        loadChildren: () => import('./features/student/student.module').then((m) => m.StudentModule),
+      },
+      {
+        path: 'post',
+        loadChildren: () => import('./features/post/post.module').then((m) => m.PostModule),
+      },
+      {
+        path: 'role',
+        component: TeacherComponent
+      }
+      ,
+      {
+        path: 'account',
+        loadChildren: () => import('./features/account/account.module').then((m) => m.AccountModule),
+      },
     ]
   },
   // {
@@ -98,4 +119,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

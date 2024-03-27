@@ -29,8 +29,8 @@
                     </ul>
                 </li>
 
-                <li class="{{ isActive('/admin/group-module')  ? 'mm-active' : '' }}">
-                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/admin/group-module') ? 'active' : '' }}">
+                <li class="{{ isActive('/group-module')  ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/group-module') ? 'active' : '' }}">
                         <div class="navigation-label">
                             <i class="fa-solid fa-user-group pb-0"></i>
                             <span>Học phần</span>
@@ -38,8 +38,8 @@
                         <i class="fa-solid fa-angle-down"></i>
                     </a>
 
-                    <ul class="sub-menu {{ isActive('/admin/group-module') ? 'mm-show' : '' }}">
-                        <li class="cursor-pointer" [routerLink]="['/admin/group-module']" [queryParams]="{ status: 'true' }"><a class="{{ isActive('/admin/group-module') ? 'active' : '' }}">Nhóm học phần</a></li>
+                    <ul class="sub-menu {{ isActive('/group-module') ? 'mm-show' : '' }}">
+                        <li class="cursor-pointer" [routerLink]="['/group-module']" [queryParams]="{ status: 'true' }"><a class="{{ isActive('/group-module') ? 'active' : '' }}">Nhóm học phần</a></li>
                     </ul>
                 </li>
 
@@ -89,8 +89,8 @@
                     </ul>
                 </li>
 
-                <li class="{{ isActive('/admin/post') ? 'mm-active' : '' }}">
-                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/admin/post') ? 'active' : '' }}">
+                <li class="{{ isActive('/post') ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/post') ? 'active' : '' }}">
                         <div class="navigation-label">
                             <i class="fa-regular fa-newspaper pb-0"></i>
                             <span>Bài viết</span>
@@ -98,18 +98,18 @@
                         <i class="fa-solid fa-angle-down"></i>
                     </a>
                 
-                    <ul class="sub-menu {{ isActive('/admin/post') ? 'mm-show' : '' }}">
-                        <li class="cursor-pointer" routerLink="/admin/post">
-                            <a class="{{ currentUrl === '/admin/post' ? 'active' : '' }}">Quản lý bài viết</a>
+                    <ul class="sub-menu {{ isActive('/post') ? 'mm-show' : '' }}">
+                        <li class="cursor-pointer" routerLink="/post">
+                            <a class="{{ currentUrl === '/post' ? 'active' : '' }}">Quản lý bài viết</a>
                         </li>
-                        <li class="cursor-pointer" routerLink="/admin/post/approve">
-                            <a class="{{ currentUrl === '/admin/post/approve' ? 'active' : '' }}">Kiểm duyệt bài viết</a>
+                        <li class="cursor-pointer" routerLink="/post/approve">
+                            <a class="{{ currentUrl === '/post/approve' ? 'active' : '' }}">Kiểm duyệt bài viết</a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="{{ isActive('/admin/group1') || isActive('/admin/teacher') || isActive('/admin/student')  ? 'mm-active' : '' }}">
-                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/admin/group1') || isActive('/admin/teacher') || isActive('/admin/student') ? 'active' : '' }}">
+                <li class="{{ isActive('/group1') || isActive('/teacher') || isActive('/student')  ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/group1') || isActive('/teacher') || isActive('/student') ? 'active' : '' }}">
                         <div class="navigation-label">
                             <i class="fa-solid fa-graduation-cap pb-0"></i>
                             <span>Người dùng</span>
@@ -117,11 +117,11 @@
                         <i class="fa-solid fa-angle-down"></i>
                     </a>
 
-                    <ul class="sub-menu {{ isActive('/admin/group1') || isActive('/admin/teacher') || isActive('/admin/student') ? 'mm-show' : '' }}">
-                        <!-- <li class="cursor-pointer" routerLink="/admin/group"><a class="{{ isActive('/admin/group') ? 'active' : '' }}">Quản lý nhóm người</a></li> -->
-                        <li class="cursor-pointer" routerLink="/admin/teacher"><a class="{{ isActive('/admin/teacher') ? 'active' : '' }}">Quản lý giáo viên</a></li>
-                        <li class="cursor-pointer" routerLink="/admin/student"><a class="{{ isActive('/admin/student') ? 'active' : '' }}">Quản lý sinh viên</a></li>
-                        <li class="cursor-pointer" routerLink="/admin/role"><a class="{{ isActive('/admin/role') ? 'active' : '' }}">Quản lý vai trò </a></li>
+                    <ul class="sub-menu {{ isActive('/group1') || isActive('/teacher') || isActive('/student') ? 'mm-show' : '' }}">
+                        <!-- <li class="cursor-pointer" routerLink="/group"><a class="{{ isActive('/group') ? 'active' : '' }}">Quản lý nhóm người</a></li> -->
+                        <li class="cursor-pointer" routerLink="/teacher"><a class="{{ isActive('/teacher') ? 'active' : '' }}">Quản lý giáo viên</a></li>
+                        <li class="cursor-pointer" routerLink="/student"><a class="{{ isActive('/student') ? 'active' : '' }}">Quản lý sinh viên</a></li>
+                        <li class="cursor-pointer" routerLink="/role"><a class="{{ isActive('/role') ? 'active' : '' }}">Quản lý vai trò </a></li>
 
                     </ul>
                 </li>
