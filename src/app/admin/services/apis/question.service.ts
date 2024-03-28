@@ -36,7 +36,7 @@ export class QuestionService {
     return this.http.post(`${this.adminApiPrefix}/question/delete-multiple`, request);
   }
   checkAnswer(request: any): Observable<any> {
-    return this.http.post(`${this.adminApiPrefix}/question/check-answers`, request);
+    return this.http.post(`admin/question/check-answers`, request);
   }
 
   import(request: any): Observable<any> {

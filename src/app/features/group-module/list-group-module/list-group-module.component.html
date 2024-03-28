@@ -81,7 +81,7 @@
 </div>
 
 <div class="row">
-    <ng-container *ngIf="groupModules.length > 0">
+    <ng-container *ngIf="groupModules?.length > 0">
         <div *ngFor="let groupModule of groupModules;" class="col-sm-6 col-lg-6 col-xl-4 mb-4">
             <div class="block block-rounded">
             <div class="block-header block-header-default">
@@ -108,13 +108,13 @@
             </p>
             <p>Học kỳ {{ groupModule.semester }} - Năm học {{ groupModule.year}}</p>
             <p *ngIf="groupModule.teacher" class="Si-So">Giáo viên: <span>{{ groupModule.teacher.user.name }}</span></p>
-            <p class="Si-So">Sĩ số: <span>{{ groupModule.studentGroupModules.length }}</span></p>
+            <p class="Si-So">Sĩ số: <span>{{ groupModule.studentGroupModules?.length }}</span></p>
         </div>
             </div>
         </div>
     </ng-container>
 
-    <ng-container *ngIf="!(groupModules.length > 0)">
+    <ng-container *ngIf="!(groupModules?.length > 0)">
         <div class="d-flex justify-content-center my-4">Không có bản ghi nào!</div>
     </ng-container>
 </div>

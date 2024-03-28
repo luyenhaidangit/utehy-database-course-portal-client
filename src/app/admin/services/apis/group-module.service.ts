@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PrefixApi } from 'src/app/core/constants/prefix-api.constant';
+import { HttpTeacherLoadingService } from 'src/app/shared/services/https/http-teacher-loading.service';
 
 @Injectable({
   providedIn: `root`, 
 })
 export class GroupModuleService {
   private adminApiPrefix = PrefixApi.admin;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient   ,private httpss: HttpTeacherLoadingService) { }
 
   getGroupModules(request: any): Observable<any> {
     return this.http.get(`${this.adminApiPrefix}/group-module/get`, request);
@@ -35,7 +36,7 @@ export class GroupModuleService {
   }
 
   getGroupModule(request: any): Observable<any> {
-    return this.http.get(`${this.adminApiPrefix}/group-module/get-by-id`, request);
+    return this.httpss.get(`admin/group-module/get-by-id`, request);
   }
 
   exportExcelStudents(request: any): Observable<any> {
@@ -75,5 +76,10 @@ export class GroupModuleService {
 
   getNotificationsByGroupModule(request: any): Observable<any> {
     return this.http.post(`${this.adminApiPrefix}/group-module/get-notifications`, request);
+  }
+
+
+  getGroupModuleByUser(request: any): Observable<any> {
+    return this.httpss.get(`admin/group-module/get-group-module-by-user`, request);
   }
 }

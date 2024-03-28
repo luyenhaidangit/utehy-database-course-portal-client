@@ -53,7 +53,7 @@ export class AddExamComponent {
     title: '',
     description:'',
     duration:0,
-    groupModuleId: 0,
+    groupModuleIds: [],
     sections: [],
     sectionIds: [],
     type: 1,
@@ -138,7 +138,7 @@ export class AddExamComponent {
     formData.append('title', this.exam.title);
     formData.append('description', this.exam.description);
     formData.append('duration', this.exam.duration);
-    formData.append('groupModuleId', this.exam.groupModuleId); 
+    formData.append('groupModuleIds', this.exam.groupModuleIds); 
     formData.append('sectionIds', this.exam.sectionIds);
     formData.append('type', this.exam.type);
     formData.append('isShowContent', this.exam.isShowContent);

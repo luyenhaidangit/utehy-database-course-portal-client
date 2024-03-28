@@ -107,6 +107,24 @@
                         </li>
                     </ul>
                 </li>
+                <li class="{{ isActive('/test-exam') ? 'mm-active' : '' }}">
+                    <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/test-exam') ? 'active' : '' }}">
+                        <div class="navigation-label">
+                            <i class="fa-regular fa-newspaper pb-0"></i>
+                            <span>Bài kiểm tra</span>
+                        </div>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </a>
+                
+                    <ul class="sub-menu {{ isActive('/test-exam') ? 'mm-show' : '' }}">
+                        <li class="cursor-pointer" routerLink="/test-exam">
+                            <a class="{{ currentUrl === '/test-exam' ? 'active' : '' }}">Bài kiểm tra theo nhóm</a>
+                        </li>
+                        <!-- <li class="cursor-pointer" routerLink="/test-exam/approve">
+                            <a class="{{ currentUrl === '/test-exam/approve' ? 'active' : '' }}">Kiểm duyệt bài viết</a>
+                        </li> -->
+                    </ul>
+                </li>
 
                 <li class="{{ isActive('/group1') || isActive('/teacher') || isActive('/student')  ? 'mm-active' : '' }}">
                     <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ isActive('/group1') || isActive('/teacher') || isActive('/student') ? 'active' : '' }}">

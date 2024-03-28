@@ -39,6 +39,7 @@ export class ListGroupModuleComponent {
       };
 
       this.getGroupModules(request);
+
     });
   }
 
@@ -61,6 +62,7 @@ export class ListGroupModuleComponent {
     this.groupModuleService.getGroupModules(request).subscribe((result: any) => {
       if(result.status){
         this.groupModules = result.data.items;
+        console.log(result.data.items);
       }
     });
   }
