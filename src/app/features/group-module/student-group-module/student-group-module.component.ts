@@ -11,12 +11,27 @@ import systemConfig from 'src/app/admin/configs/system.config';
 import sortConstant from 'src/app/admin/constants/sortConstant';
 import fileConstant from 'src/app/admin/constants/file.constant';
 import groupModuleConstant from 'src/app/admin/constants/group-module.constant';
+import { DatePipe } from '@angular/common';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmPopup } from 'primeng/confirmpopup';
+
+interface ClassPeriodOption {
+  period: number;
+  selected: boolean;
+}
+
+interface ClassPeriodGroup {
+  shift: string;
+  periods: ClassPeriodOption[];
+}
+
 
 @Component({
   selector: 'app-student-group-module',
   templateUrl: './student-group-module.component.html',
   styleUrls: ['./student-group-module.component.css'],
-  animations: animationConstant.animations
+  animations: animationConstant.animations,
+  providers: [ConfirmationService]
 })
 export class StudentGroupModuleComponent {
   //Init
@@ -25,7 +40,9 @@ export class StudentGroupModuleComponent {
     private router: Router,
     private groupModuleService: GroupModuleService,
     private modalService: BsModalService,
-    // private ngxToastr: ToastrService
+    private ngxToastr: ToastrService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -37,6 +54,7 @@ export class StudentGroupModuleComponent {
 
       this.getStudentGroupModule({id: id});
     });
+
 
     this.route.queryParams.subscribe(params => {
       request = Object.assign({}, params, request, {
@@ -51,6 +69,7 @@ export class StudentGroupModuleComponent {
       delete this.queryParameters.groupModuleId;
 
       this.getStudentsGroupModule(request);
+      this.generateCalendar()
     });
   }
 
@@ -324,9 +343,9 @@ export class StudentGroupModuleComponent {
         
         this.groupModuleService.addStudentGroupModule(request).subscribe((result: any) => {
           if(result.status){
-            // this.ngxToastr.success(result.message,'',{
-            //   progressBar: true
-            // });
+            this.ngxToastr.success(result.message,'',{
+              progressBar: true
+            });
             this.addStudentModalRef?.hide();
 
             this.route.queryParams.subscribe(params => {
@@ -347,9 +366,9 @@ export class StudentGroupModuleComponent {
           }
         },error => {
           console.log(error);
-          // this.ngxToastr.error(error.error.message,'',{
-          //   progressBar: true
-          // });
+          this.ngxToastr.error(error.error.message,'',{
+            progressBar: true
+          });
         });
       });
     }
@@ -385,13 +404,13 @@ export class StudentGroupModuleComponent {
           };
         } else {
           console.log("Lỗi khi tạo mã mời mới.")
-          // this.ngxToastr.error("Lỗi khi tạo mã mời mới.");
+          this.ngxToastr.error("Lỗi khi tạo mã mời mới.");
         }
       },error => {
         console.log(error);
-        // this.ngxToastr.error(error.error.message,'',{
-        //   progressBar: true
-        // });
+        this.ngxToastr.error(error.error.message,'',{
+          progressBar: true
+        });
       });
     });
     }else{
@@ -419,13 +438,13 @@ export class StudentGroupModuleComponent {
               format: 'mm:ss'
             };
           } else {
-            // this.ngxToastr.error("Lỗi khi tạo mã mời mới.");
+            this.ngxToastr.error("Lỗi khi tạo mã mời mới.");
           }
         },error => {
           console.log(error);
-          // this.ngxToastr.error(error.error.message,'',{
-          //   progressBar: true
-          // });
+          this.ngxToastr.error(error.error.message,'',{
+            progressBar: true
+          });
         });
       });
     }
@@ -451,13 +470,13 @@ export class StudentGroupModuleComponent {
               format: 'mm:ss'
             };
           } else {
-            // this.ngxToastr.error("Lỗi khi tạo mã mời mới.");
+            this.ngxToastr.error("Lỗi khi tạo mã mời mới.");
           }
         },error => {
           console.log(error);
-          // this.ngxToastr.error(error.error.message,'',{
-          //   progressBar: true
-          // });
+          this.ngxToastr.error(error.error.message,'',{
+            progressBar: true
+          });
         });
       });
     }
@@ -493,9 +512,9 @@ export class StudentGroupModuleComponent {
 
     this.groupModuleService.importStudentsExcel(formData).subscribe((result: any) => {
       if (result.status) {
-        // this.ngxToastr.success(result.message,'',{
-        //   progressBar: true
-        // });
+        this.ngxToastr.success(result.message,'',{
+          progressBar: true
+        });
 
         this.addStudentModalRef?.hide();
 
@@ -517,9 +536,9 @@ export class StudentGroupModuleComponent {
       } 
     },error => {
       console.log(error);
-      // this.ngxToastr.error(error.error.message,'',{
-      //   progressBar: true
-      // });
+      this.ngxToastr.error(error.error.message,'',{
+        progressBar: true
+      });
     });
     });
   }
@@ -567,9 +586,9 @@ export class StudentGroupModuleComponent {
 
         this.groupModuleService.removeStudentGroupModule(request).subscribe((result: any) => {
           if(result.status){
-            // this.ngxToastr.success(result.message,'',{
-            //   progressBar: true
-            // });
+            this.ngxToastr.success(result.message,'',{
+              progressBar: true
+            });
            
             swalWithBootstrapButtons.fire({
               title: "Xoá thành công!",
@@ -595,9 +614,9 @@ export class StudentGroupModuleComponent {
           }
         },error => {
           console.log(error);
-          // this.ngxToastr.error(error.error.message,'',{
-          //   progressBar: true
-          // });
+          this.ngxToastr.error(error.error.message,'',{
+            progressBar: true
+          });
         });
       }
     });
@@ -628,9 +647,9 @@ export class StudentGroupModuleComponent {
 
         this.groupModuleService.removeStudentsGroupModule(request).subscribe((result: any) => {
           if(result.status){
-            // this.ngxToastr.success(result.message,'',{
-            //   progressBar: true
-            // });
+            this.ngxToastr.success(result.message,'',{
+              progressBar: true
+            });
            
             swalWithBootstrapButtons.fire({
               title: "Xoá thành công!",
@@ -656,9 +675,9 @@ export class StudentGroupModuleComponent {
           }
         },error => {
           console.log(error);
-          // this.ngxToastr.error(error.error.message,'',{
-          //   progressBar: true
-          // });
+          this.ngxToastr.error(error.error.message,'',{
+            progressBar: true
+          });
         });
       }
     });
@@ -679,9 +698,9 @@ export class StudentGroupModuleComponent {
         } 
       },error => {
         console.log(error);
-        // this.ngxToastr.error(error.error.message,'',{
-        //   progressBar: true
-        // });
+        this.ngxToastr.error(error.error.message,'',{
+          progressBar: true
+        });
       });
 
       this.groupModuleService.getNotificationsByGroupModule({id: this.groupModule.id}).subscribe((result: any) => {
@@ -690,9 +709,9 @@ export class StudentGroupModuleComponent {
         } 
       },error => {
         console.log(error);
-        // this.ngxToastr.error(error.error.message,'',{
-        //   progressBar: true
-        // });
+        this.ngxToastr.error(error.error.message,'',{
+          progressBar: true
+        });
       });
     }
   }
@@ -730,4 +749,201 @@ export class StudentGroupModuleComponent {
   public handleChangePageOption(type: any): void{
     this.statusPageOption = type;
   }
+
+  public classPeriods: ClassPeriodGroup[] = [
+    {
+      shift: 'Ca sáng',
+      periods: [
+        {
+          period: 1,
+          selected: false
+        },
+        {
+          period: 2,
+          selected: false
+        },
+        {
+          period: 3,
+          selected: false
+        }
+        ,{
+          period: 4,
+          selected: false
+        }
+        ,{
+          period: 5,
+          selected: false
+        }
+      ]
+    },
+    {
+      shift: 'Ca chiều',
+      periods: [
+        {
+          period: 7,
+          selected: false
+        },
+        {
+          period: 8,
+          selected: false
+        },
+        {
+          period: 9,
+          selected: false
+        }
+        ,{
+          period: 10,
+          selected: false
+        }
+        ,{
+          period: 11,
+          selected: false
+        }
+      ]
+    }
+  ]
+
+  public schedules: {
+    groupModuleId: number,
+    dateSchool: string,
+    classPeriods: string
+  }[] = [];
+  
+  public scrollAddClassSchedule(){
+    const classScheduleElement = document.getElementById("class-schedule");
+    if(classScheduleElement != null){
+      classScheduleElement.style.right = "200%";
+    }
+    const addClassScheduleElement = document.getElementById("add-class-schedule");
+    if(addClassScheduleElement != null){
+      addClassScheduleElement.style.left = "0";
+
+    }
+  }
+
+  public scrollClassSchedule(){
+    const classScheduleElement = document.getElementById("class-schedule");
+    if(classScheduleElement != null){
+      classScheduleElement.style.right = "0%";
+    }
+    const addClassScheduleElement = document.getElementById("add-class-schedule");
+    if(addClassScheduleElement != null){
+      addClassScheduleElement.style.left = "200%";
+
+    }
+  }
+
+  monthNames: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+  currentDate: Date = new Date();
+  currentMonth: number = this.currentDate.getMonth();
+  currentYear: number = this.currentDate.getFullYear();
+  calendar: number[][] = [];
+  generateCalendar(): void {
+    const weeksInMonth = 6;
+    for (let i = 0; i < weeksInMonth; i++) {
+      this.calendar[i] = [];
+    }
+
+    const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1);
+    const firstDayOfWeek = firstDayOfMonth.getDay();
+
+    const lastDayOfMonth = new Date(this.currentYear, this.currentMonth + 1, 0);
+    const lastDateOfMonth = lastDayOfMonth.getDate();
+
+    let dayCounter = 1;
+    for (let i = 0; i < weeksInMonth; i++) {
+      for (let j = 0; j < 7; j++) {
+        if (i === 0 && j < firstDayOfWeek) {
+          this.calendar[i][j] = -1;
+        } else if (dayCounter > lastDateOfMonth) {
+          this.calendar[i][j] = -1;
+        } else {
+          this.calendar[i][j] = dayCounter++;
+        }
+      }
+    }
+  }
+
+  nextMonth(): void {
+    this.currentMonth++;
+    if (this.currentMonth > 11) {
+      this.currentMonth = 0;
+      this.currentYear++;
+    }
+    this.generateCalendar();
+  }
+
+  previousMonth(): void {
+    this.currentMonth--;
+    if (this.currentMonth < 0) {
+      this.currentMonth = 11;
+      this.currentYear--;
+    }
+    this.generateCalendar();
+  }
+
+  submitScheduleOnDate(date: number){
+    let periodsSelected = "";
+    for(let i = 0; i < this.classPeriods.length; i++){
+      for(let j = 0; j < this.classPeriods[i].periods.length; j++){
+        const period = this.classPeriods[i].periods;
+        if(period[j].selected){
+          periodsSelected += period[j].period + ",";
+        }
+      }
+    }
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      this.schedules.push({
+        groupModuleId: id,
+        dateSchool: `${this.currentYear}-${this.monthNames[this.currentMonth]}-${date}`,
+        classPeriods: periodsSelected.slice(0, -1)
+      })
+    });
+  }
+
+  removeScheduleItem(index: number){
+    this.schedules.splice(index, 1);
+  }
+
+  submitSchedule(){
+    this.groupModuleService.submitSchedule(this.schedules).subscribe((result: any) => {
+      if(result.status){
+        this.ngxToastr.success("Bạn đã đăng ký lịch học thành công!", "", {
+          progressBar: true
+        });
+      }
+    })
+  }
+
+  
+  @ViewChild(ConfirmPopup) confirmPopup!: ConfirmPopup;
+
+  accept() {
+      this.confirmPopup.accept();
+  }
+
+  reject() {
+      this.confirmPopup.reject();
+  }
+
+  confirm(event: Event) {
+    if(this.schedules == null || this.schedules.length == 0) {
+      this.ngxToastr.error("Bạn chưa đăng ký lịch học nào!", '',{
+        progressBar: true
+      });
+      return;
+    }
+
+    else{
+      this.confirmationService.confirm({
+          target: event.target as EventTarget,
+          message: 'Lịch học sẽ được lưu vào hệ thống!',
+          accept: () => {
+              this.submitSchedule();
+          }
+      });
+    }
+  }
+  
 }

@@ -1,3 +1,4 @@
+import { Header } from './../../../core/enums/request.enum';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -31,7 +32,7 @@ export class GroupModuleService {
   }
 
   getStudentsGroupModule(request: any): Observable<any> {
-    return this.http.get(`${this.adminApiPrefix}/group-module/get-students`, request);
+    return this.http.get(`${this.adminApiPrefix}/group-module/get-students`,{params: request});
   }
 
   getGroupModule(request: any): Observable<any> {
@@ -75,5 +76,10 @@ export class GroupModuleService {
 
   getNotificationsByGroupModule(request: any): Observable<any> {
     return this.http.post(`${this.adminApiPrefix}/group-module/get-notifications`, request);
+  }
+
+  submitSchedule(request: any): Observable<any> {
+    console.log(request)
+    return this.http.post(`${this.adminApiPrefix}/schedule/create-list-schedule`, request);
   }
 }
