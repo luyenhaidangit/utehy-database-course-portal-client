@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { Component, ViewChild, TemplateRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -13,12 +14,14 @@ import { TeacherService } from 'src/app/admin/services/apis/teacher.service';
   styleUrls: ['./list-group-module.component.css']
 }) 
 export class ListGroupModuleComponent { 
+
   constructor(
     private teacherService: TeacherService,
     private groupModuleService: GroupModuleService,
     private route: ActivatedRoute,
     private router: Router,
     private modalService: BsModalService,
+    
     // private ngxToastr: ToastrService
   ) { }
 
@@ -39,6 +42,7 @@ export class ListGroupModuleComponent {
       };
 
       this.getGroupModules(request);
+
     });
   }
 
@@ -48,6 +52,9 @@ export class ListGroupModuleComponent {
 
   //Prepare
   public teachers: any = [];
+
+  students: any = [];
+  class: any = null;
 
   public getTeachers(request: any): void{
     this.teacherService.getTeachers(request).subscribe((result: any) => {
@@ -61,6 +68,7 @@ export class ListGroupModuleComponent {
     this.groupModuleService.getGroupModules(request).subscribe((result: any) => {
       if(result.status){
         this.groupModules = result.data.items;
+        console.log(result.data.items);
       }
     });
   }
@@ -376,6 +384,45 @@ export class ListGroupModuleComponent {
           //   progressBar: true
           // });
         });
+      }
+    });
+  }
+
+  // get student in class
+  public getStudentByClassId(id: number){
+    this.route.params.subscribe(params => {
+      let request = {
+            ...params,
+            pageIndex: params['pageIndex'] ? params['pageIndex'] : 1
+          };
+      request = Object.assign({}, request, { groupModuleId: id });
+      
+      this.class = this.groupModules.find((x: any) => x.id === id);
+      console.log(this.class);
+      this.getStudentsGroupModule(request);
+    });
+  }
+
+  public getStudentsGroupModule(request: any): void{
+    this.groupModuleService.getStudentsGroupModule(request).subscribe((result: any) => {
+      if(result.status){
+        if(request.pageIndex !== 1 && result.data.items.length === 0){
+          this.route.queryParams.subscribe(params => {
+            const request = {
+              ...params,
+              pageIndex: 1,
+            };
+      
+            this.router.navigate([], {
+              relativeTo: this.route,
+              queryParams: request,
+              queryParamsHandling: 'merge',
+            });
+          });
+        }
+
+        this.students = result.data.items;
+        console.log(this.students);
       }
     });
   }

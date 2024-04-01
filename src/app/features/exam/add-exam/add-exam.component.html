@@ -86,7 +86,7 @@
                 <label class="col-md-3 col-lg-3 col-form-label" for="description">Giao cho </label>
                 <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
                   <select (blur)="validateFormSuccess.touchSection = true" name="sectionId"
-                    class="custom-select input-type-select ms-0 mt-0" [(ngModel)]="exam.groupModuleId">
+                    class="custom-select input-type-select ms-0 mt-0" [(ngModel)]="exam.groupModuleIds">
                     <option [selected]="" [ngValue]="0">Nhóm</option>
                     <option *ngFor="let groupmodule of groupmodules;" value="{{ groupmodule.id }}">{{ groupmodule.name }}</option>
                   </select>

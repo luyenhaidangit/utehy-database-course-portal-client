@@ -75,6 +75,11 @@ const routes: Routes = [
       {
         path: 'account',
         loadChildren: () => import('./features/account/account.module').then((m) => m.AccountModule),
+      }
+      , 
+      {
+        path: 'test-exam',
+        loadChildren: () => import('./features/test-exam/test-exam.module').then((m) => m.TestExamModule),
       },
     ]
   },

@@ -14,7 +14,7 @@ export class ExamService {
   private adminApiPrefix = PrefixApi.admin;
 
   getExams(request: any = null): Observable<any> {
-    return this.http.get(`${this.adminApiPrefix}/exam/get`, request);
+    return this.httpss.get(`admin/exam/get`, request);
   }
   createExam(request: any): Observable<any> {
     return this.httpss.postFormData(`admin/exam/create`, request);
@@ -28,5 +28,13 @@ export class ExamService {
 
   deleteMultipleExam(request: any): Observable<any> {
     return this.http.post(`${this.adminApiPrefix}/exam/delete-multiple`, request);
+  }
+
+  checkAnswer(request: any): Observable<any> {
+    return this.httpss.post(`admin/exam/check-answers`, request);
+  }
+
+  addExamResult(request: any): Observable<any> {
+    return this.httpss.postFormData(`admin/exam/add-exam-result`, request);
   }
 }

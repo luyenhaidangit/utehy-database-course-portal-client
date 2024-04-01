@@ -29,7 +29,7 @@
                 <input
                    class="form-control"
                    type="text"
-                   placeholder="Tên nhóm"
+                   placeholder="Tên lớp"
                    [(ngModel)]="queryParameters.name"
                    />
             </div>
@@ -81,7 +81,7 @@
 </div>
 
 <div class="row">
-    <ng-container *ngIf="groupModules.length > 0">
+    <ng-container *ngIf="groupModules?.length > 0">
         <div *ngFor="let groupModule of groupModules;" class="col-sm-6 col-lg-6 col-xl-4 mb-4">
             <div class="block block-rounded">
             <div class="block-header block-header-default">
@@ -100,21 +100,21 @@
                         </ul>
                     </div>
                 </div>
-        </div>
-        <div class="block-content">
-            <p class="block-class-note">
-                {{ groupModule.description }}
-                <span class="ms-3 badge {{ groupModule.status ? 'badge-success' : 'badge-danger' }}">{{ groupModule.status ? 'Hoạt động' : 'Không hoạt động' }}</span>
-            </p>
-            <p>Học kỳ {{ groupModule.semester }} - Năm học {{ groupModule.year}}</p>
-            <p *ngIf="groupModule.teacher" class="Si-So">Giáo viên: <span>{{ groupModule.teacher.user.name }}</span></p>
-            <p class="Si-So">Sĩ số: <span>{{ groupModule.studentGroupModules.length }}</span></p>
-        </div>
+                </div>
+                <div class="block-content">
+                    <p class="block-class-note">
+                        {{ groupModule.description }}
+                        <span class="ms-3 badge {{ groupModule.status ? 'badge-success' : 'badge-danger' }}">{{ groupModule.status ? 'Hoạt động' : 'Không hoạt động' }}</span>
+                    </p>
+                    <p>Học kỳ {{ groupModule.semester }} - Năm học {{ groupModule.year}}</p>
+                    <p *ngIf="groupModule.teacher" class="Si-So">Giáo viên: <span>{{ groupModule.teacher.user.name }}</span></p>
+                    <p class="Si-So">Sĩ số: <span>{{ groupModule.studentGroupModules?.length }}</span></p>
+                </div>
             </div>
         </div>
     </ng-container>
 
-    <ng-container *ngIf="!(groupModules.length > 0)">
+    <ng-container *ngIf="!(groupModules?.length > 0)">
         <div class="d-flex justify-content-center my-4">Không có bản ghi nào!</div>
     </ng-container>
 </div>
@@ -297,3 +297,13 @@
      </ng-template>
 </form>
 
+<ng-template #popTemplate>
+    <div class="modal-header">Điểm danh lớp {{class.name}}</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Tên sinh viên</th>
+            </tr>
+        </thead>
+    </table>
+</ng-template>
