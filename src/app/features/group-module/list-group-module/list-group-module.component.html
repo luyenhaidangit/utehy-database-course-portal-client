@@ -81,32 +81,23 @@
 </div>
 
 <div class="row">
-    <ng-container *ngIf="groupModules.length > 0">
+    <ng-container *ngIf="groupModules?.length > 0">
         <div *ngFor="let groupModule of groupModules;" class="col-sm-6 col-lg-6 col-xl-4 mb-4">
             <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title block-class-name">{{ groupModule.name }}</h3>
-                <div class="d-flex">
-                    <!-- <button class="btn btn-info mr-3" (click)="getStudentByClassId(groupModule.id)">Điểm danh</button> -->
-                    <button type="button"  
-                        class="btn btn-info mr-3" 
-                        (click)="getStudentByClassId(groupModule.id)"
-                        [popover]="popTemplate">
-                        Điểm danh
-                    </button>
-                    <div class="block-options" dropdown>
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-light module__dropdown" id="button-basic" dropdownToggle aria-controls="dropdown-basic">
-                            <i class="fa-solid fa-gear"></i>
-                            </button>
-                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
-                            role="menu" aria-labelledby="button-basic">
-                                <li routerLink="/group-module/student/{{ groupModule.id }}" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-circle-info dropdown-group-module-icon"></i> Danh sách sinh viên</span></li>
-                                <li (click)="handleOpenEditGroupModuleModal(groupModule)" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-pen dropdown-group-module-icon"></i> Sửa thông tin</span></li>
-                                <li (click)="handleHideGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-eye-slash dropdown-group-module-icon"></i> Ẩn nhóm</span></li>
-                                <li (click)="handleDeleteGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer text-danger"><i class="fa-solid fa-trash dropdown-group-module-icon"></i> Xoá nhóm</span></li>
-                            </ul>
-                        </div>
+                <div class="block-options" dropdown>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-light module__dropdown" id="button-basic" dropdownToggle aria-controls="dropdown-basic">
+                        <i class="fa-solid fa-gear"></i>
+                        </button>
+                        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                        role="menu" aria-labelledby="button-basic">
+                            <li routerLink="/group-module/student/{{ groupModule.id }}" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-circle-info dropdown-group-module-icon"></i> Danh sách sinh viên</span></li>
+                            <li (click)="handleOpenEditGroupModuleModal(groupModule)" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-pen dropdown-group-module-icon"></i> Sửa thông tin</span></li>
+                            <li (click)="handleHideGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-eye-slash dropdown-group-module-icon"></i> Ẩn nhóm</span></li>
+                            <li (click)="handleDeleteGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer text-danger"><i class="fa-solid fa-trash dropdown-group-module-icon"></i> Xoá nhóm</span></li>
+                        </ul>
                     </div>
                 </div>
                 </div>
@@ -117,13 +108,13 @@
                     </p>
                     <p>Học kỳ {{ groupModule.semester }} - Năm học {{ groupModule.year}}</p>
                     <p *ngIf="groupModule.teacher" class="Si-So">Giáo viên: <span>{{ groupModule.teacher.user.name }}</span></p>
-                    <p class="Si-So">Sĩ số: <span>{{ groupModule.studentGroupModules.length }}</span></p>
+                    <p class="Si-So">Sĩ số: <span>{{ groupModule.studentGroupModules?.length }}</span></p>
                 </div>
             </div>
         </div>
     </ng-container>
 
-    <ng-container *ngIf="!(groupModules.length > 0)">
+    <ng-container *ngIf="!(groupModules?.length > 0)">
         <div class="d-flex justify-content-center my-4">Không có bản ghi nào!</div>
     </ng-container>
 </div>

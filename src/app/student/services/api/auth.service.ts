@@ -6,6 +6,7 @@ import { HttpGuestNotLoadingService } from 'src/app/shared/services/https/http-g
 import { HttpNotLoadingService } from 'src/app/shared/services/https/http-not-loading.service';
 import { HttpStudentLoadingService } from 'src/app/shared/services/https/http-student-loading.service';
 import { HttpStudentNotLoadingService } from 'src/app/shared/services/https/http-student-not-loading.service';
+import { HttpTeacherLoadingService } from 'src/app/shared/services/https/http-teacher-loading.service';
 
 @Injectable({
   providedIn: 'root', 
@@ -15,7 +16,7 @@ export class AuthService {
   public userData: any = null;
   private changeAuthEvent = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpLoading: HttpGuesLoadingService, private http: HttpGuestNotLoadingService, private httpStudentNotLoading: HttpStudentNotLoadingService, private httpNotLoadingService: HttpNotLoadingService) {
+  constructor(private httpLoading: HttpGuesLoadingService, private http: HttpGuestNotLoadingService, private httpStudentNotLoading: HttpStudentNotLoadingService, private httpNotLoadingService: HttpNotLoadingService, private httpss:HttpTeacherLoadingService) {
     // const user = JSON.parse(localStorage.getItem('user') || '{}');
     // if(user?.token){
     //   this.getUserInfo().subscribe(res => {
@@ -64,6 +65,10 @@ export class AuthService {
 
   getUserInfo(): Observable<any> {
     return this.http.get('user/user-info',{});
+  }
+
+  getStudentInfo(request: any): Observable<any> {
+    return this.httpss.get('auth/get-student-user-id',request);
   }
 
   getOtpLoginPhone(phone: string): Observable<any> {

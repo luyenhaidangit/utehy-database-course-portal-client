@@ -18,8 +18,11 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+
+import { RoleComponent } from './features/role/role.component';
+ 
 @NgModule({
-  declarations: [AppComponent, ...SharedLayoutComponent],
+  declarations: [AppComponent,RoleComponent , ...SharedLayoutComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

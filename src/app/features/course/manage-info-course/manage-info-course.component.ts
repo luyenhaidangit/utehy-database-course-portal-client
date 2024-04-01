@@ -1,17 +1,16 @@
-import { AfterViewInit, Component, OnInit,ChangeDetectorRef, ChangeDetectionStrategy, AfterViewChecked  } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ToastrService as NgxToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { CourseService } from 'src/app/core/services/catalog/course.service';
+import { ToastrService } from 'src/app/core/modules/toastr/toastr.service';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/vi';
 import systemConfig from 'src/app/admin/configs/system.config';
 import { CkeditorUploadAdapter } from 'src/app/admin/adapters/ckeditor-upload.adapter';
-import { CourseService } from 'src/app/core/services/catalog/course.service';
 import { Breadcrumb } from 'src/app/core/components/breadcrumb/breadcrumb.interface';
 import { breadcrumbs } from './manage-info-course.config';
 import { Course } from 'src/app/core/models/course/course.model';
 import { classicEditorConfig } from 'src/app/core/configs/ckeditor.config';
 import { CourseField } from './manage-info-course.enum';
+import { TextService } from 'src/app/core/services/utilities/text.service';
 
 @Component({
   selector: 'app-manage-info-course',
@@ -30,8 +29,8 @@ export class ManageInfoCourseComponent {
   //Course
   course: Course = new Course();
 
-  //Prepare
-  constructor(private fb: FormBuilder, private courseService: CourseService,private cdref: ChangeDetectorRef, private router:Router) {}
+  //Constructor
+  constructor(private courseService: CourseService, private toastrService: ToastrService,private textService:TextService) {}
 
   ngOnInit() {
     this.getInfoCourse();
@@ -43,28 +42,29 @@ export class ManageInfoCourseComponent {
     });
   };
 
-  ngAfterViewChecked() {
-    this.cdref.detectChanges();
-  }
-
-  //Course info
-  // form: FormGroup;
-  // course: any = {
-  //   title: '',
-  //   content: '',
-  //   imageFile: null,
-  //   base64Image: '',
-  //   imageUrl: '',
-  //   typeVideo: 1,
-  //   videoUrl: '',
-  //   base64Video: '',
-  // }
-  
   //Ckeditor
   initEditor(editor: ClassicEditor){
     editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
       return new CkeditorUploadAdapter( loader );
     };
+  }
+
+  //Avatar
+  handleChangeImage(event: any) {
+    const file = event.target.files[0];
+  
+    if (file) {
+      const reader = new FileReader();
+  
+      reader.onload = (e: any) => {
+        this.course.base64Image = e.target.result;
+        this.course.imageUrl = '';
+      };
+  
+      reader.readAsDataURL(file);
+  
+      this.course.imageFile = file;
+    }
   }
 
   //Ckeditor
@@ -87,65 +87,21 @@ export class ManageInfoCourseComponent {
     }
   }
 
-  handleChangeImage(event: any) {
-    const file = event.target.files[0];
-  
-    if (file) {
-      const reader = new FileReader();
-  
-      reader.onload = (e: any) => {
-        this.course.base64Image = e.target.result;
-      };
-  
-      reader.readAsDataURL(file);
-  
-      this.course.imageFile = file;
-    }
+  handleSubmitForm(){
+    this.courseService.editCourse(this.course).subscribe(
+      (res) => {
+        if(res.status){
+          this.toastrService.success(res.message);
+        }
+      },
+      (exception) => {
+        this.toastrService.error(exception.error.Message);
+        console.log(exception?.error.Message);
+      }
+    );
   }
 
-  handleChangeQuestionAnswer(event: any,question: any,type: number,index: any = null) {
-    const data = event.editor.getData();
-
-    if(type === 1){
-      question.description = data;
-
-     
-    }else if(type === 2){
-      question.content = data;
-
-      
-    }else{
-      question.feedback = data;
-    }
+  handleGetSlugFromTitle(event: any){
+    this.course.slug = this.textService.convertToSlug(event);
   }
-
-  handleChangeVideo(event: any){
-    const file = event.target.files[0];
-    if (file) {
-      this.convertVideoToBase64(file);
-    }
-  }
-
-  convertVideoToBase64(file: File): void {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      this.course.base64Video = reader.result as string;
-    };
-    reader.readAsDataURL(file);
-  }
-
-  // handleSubmitForm(){
-  //   this.courseService.editCourseDatabase(this.course).subscribe((result: any) => {
-  //     if(result.status){
-  //       // this.ngxToastr.success(result.message,'',{
-  //       //   progressBar: true
-  //       // });
-  //     }
-  //   },error => {
-  //     console.log(error);
-  //     // this.ngxToastr.error(error.error.message,'',{
-  //     //   progressBar: true
-  //     // });
-  //   });
-  // }
 }

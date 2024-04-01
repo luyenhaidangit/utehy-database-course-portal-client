@@ -116,6 +116,7 @@ export class StudentGroupModuleComponent {
             const request = {
               ...params,
               pageIndex: 1,
+              pageSize:10
             };
       
             this.router.navigate([], {
