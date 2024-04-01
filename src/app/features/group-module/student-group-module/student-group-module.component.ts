@@ -830,7 +830,6 @@ export class StudentGroupModuleComponent {
     const addClassScheduleElement = document.getElementById("add-class-schedule");
     if(addClassScheduleElement != null){
       addClassScheduleElement.style.left = "200%";
-
     }
   }
 
@@ -913,6 +912,14 @@ export class StudentGroupModuleComponent {
         this.ngxToastr.success("Bạn đã đăng ký lịch học thành công!", "", {
           progressBar: true
         });
+        const classScheduleElement = document.getElementById("class-schedule");
+        if(classScheduleElement != null){
+          classScheduleElement.style.right = "0%";
+        }
+        const addClassScheduleElement = document.getElementById("add-class-schedule");
+        if(addClassScheduleElement != null){
+          addClassScheduleElement.style.left = "200%";
+        }
       }
     })
   }

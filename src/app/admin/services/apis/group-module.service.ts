@@ -85,6 +85,6 @@ export class GroupModuleService {
   }
   
   getGroupModuleByUser(request: any): Observable<any> {
-    return this.httpss.get(`admin/group-module/get-group-module-by-user`, request);
+    return this.http.get(`admin/group-module/get-group-module-by-user`, request);
   }
 }
