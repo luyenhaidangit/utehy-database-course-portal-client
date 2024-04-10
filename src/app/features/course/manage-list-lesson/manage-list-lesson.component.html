@@ -9,22 +9,168 @@
                     <button
                     type="button"
                     class="btn btn-success waves-effect waves-light"
+                    (click)="handleOpenCreateSectionModal()"
                     >
                     <i class="fa-solid fa-plus mr-1"></i> Thêm mới
                     </button>
                 </div>
             </div>
             <div class="card-body">
-                <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" style="border-collapse: collapse; border-spacing: 0px; width: 100%;" role="grid" aria-describedby="datatable-buttons_info">
-                    <tbody>
-                        <tr *ngFor="let lesson of section.lessons" role="row" class="odd">
-                            <td class="sorting_1 dtr-control"><h6 class="text-primary cursor-pointer">Bài {{ lesson.priority }}: {{ lesson.title }}</h6></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <ng-container *ngIf="section.lessons.length > 0">
+                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" style="border-collapse: collapse; border-spacing: 0px; width: 100%;" role="grid" aria-describedby="datatable-buttons_info">
+                        <tbody>
+                            <tr *ngFor="let lesson of section?.lessons" role="row" class="odd">
+                                <td class="sorting_1 dtr-control"><h6 class="text-primary cursor-pointer">Bài {{ lesson.priority }}: {{ lesson.title }}</h6></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ng-container>
+
+                <ng-container *ngIf="!(section.lessons.length > 0)">
+                    <div class="d-flex justify-content-center my-4">Không có bản ghi nào!</div>
+                </ng-container>
             </div>
         </div>
     </div>
 </div>
+
+<form (ngSubmit)="handleOpenCreateSectionModal()" #createForm="ngForm">
+    <ng-template #createTemplate>
+        <div class="modal-header">
+            <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Thêm bài học</h5>
+            <button type="button" class="close" (click)="createModalRef?.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3 col-lg-3 col-form-label" for="name">Tên bài học <span class="text-danger">*</span></label>
+                  <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                    <input class="form-control" [(ngModel)]="lesson.title" name="title" id="title" type="text" required/>
+                    <div *ngIf="createForm.controls['title']?.invalid && (createForm.controls['title']?.dirty || createForm.controls['title'].touched)" class="danger-notice">
+                        <div *ngIf="createForm.controls['title'].errors?.['required']">Tên bài học không được để trống</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3 col-lg-3 col-form-label" for="name">Độ ưu tiên <span class="text-danger">*</span></label>
+                  <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                    <input class="form-control" [(ngModel)]="lesson.priority" (ngModelChange)="onPriorityChange($event)" name="priority" id="priority" type="number" required/>
+                    <div *ngIf="validateCreateForm.priority.inValidNumber || createForm.controls['priority']?.invalid && (createForm.controls['priority']?.dirty || createForm.controls['title'].touched)" class="danger-notice">
+                        <div *ngIf="createForm.controls['priority'].errors?.['required']">Độ ưu tiên không được để trống</div>
+                        <div *ngIf="validateCreateForm.priority.inValidNumber && !createForm.controls['priority'].errors?.['required']">Chương số phải là số lớn hơn 0</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3 col-lg-3 col-form-label" for="name">Mô tả</label>
+                  <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                    <ckeditor
+                        [config]="classicEditorConfig" 
+                        [editor]="classicEditor"
+                        (change)="handleChangeDataCkeditor($event,lesson)" 
+                        (ready)="initEditor($event)"
+                        data="{{section.content}}">
+                    </ckeditor>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-md-3 col-lg-3 col-form-label" for="name">Trạng thái</label>
+                    <div class="col-md-9 col-lg-8 col-table-reponsive p-0 d-flex align-items-center">
+                        <div class="custom-control custom-switch" dir="ltr">
+                            <input type="checkbox" class="custom-control-input" id="status" name="status" [(ngModel)]="lesson.status" [checked]="lesson.status">
+                            <label class="custom-control-label" for="status"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light waves-effect" (click)="createModalRef?.hide()">Đóng</button>
+            <button [disabled]="createForm.invalid || validateCreateForm.priority.inValidNumber" (click)="handleOnSubmitCreateSection()" type="submit" class="btn btn-primary waves-effect waves-light ml-2">Xác nhận</button>
+        </div>
+     </ng-template>
+</form>
+
+<!-- <form (ngSubmit)="handleOpenCreateSectionModal()" #editForm="ngForm">
+    <ng-template #editTemplate>
+        <div class="modal-header">
+            <h5 class="modal-title mt-0" id="exampleModalScrollableTitle">Sửa chương</h5>
+            <button type="button" class="close" (click)="editModalRef?.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3 col-lg-3 col-form-label" for="name">Tên chương <span class="text-danger">*</span></label>
+                  <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                    <input class="form-control" [(ngModel)]="section.title" name="title" id="title" type="text" required/>
+                    <div *ngIf="editForm.controls['title']?.invalid && (createForm.controls['title']?.dirty || createForm.controls['title'].touched)" class="danger-notice">
+                        <div *ngIf="editForm.controls['title'].errors?.['required']">Tên chương không được để trống</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3 col-lg-3 col-form-label" for="name">Độ ưu tiên <span class="text-danger">*</span></label>
+                  <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                    <input class="form-control" [(ngModel)]="section.priority" (ngModelChange)="onPriorityChange($event)" name="priority" id="priority" type="number" required/>
+                    <div *ngIf="validateEditForm.priority.inValidNumber || editForm.controls['priority']?.invalid && (editForm.controls['priority']?.dirty || editForm.controls['title'].touched)" class="danger-notice">
+                        <div *ngIf="editForm.controls['priority'].errors?.['required']">Độ ưu tiên không được để trống</div>
+                        <div *ngIf="validateEditForm.priority.inValidNumber && !editForm.controls['priority'].errors?.['required']">Chương số phải là số lớn hơn 0</div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3 col-lg-3 col-form-label" for="name">Mô tả</label>
+                  <div class="col-md-9 col-lg-8 col-table-reponsive p-0">
+                    <ckeditor
+                        [config]="classicEditorConfig" 
+                        [editor]="classicEditor"
+                        [disableTwoWayDataBinding]="true"
+                        (change)="handleChangeDataCkeditor($event,section,SectionField.Description)" 
+                        (ready)="initEditor($event)"
+                        data="{{section.description}}">
+                    </ckeditor>
+                  </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-md-3 col-lg-3 col-form-label" for="name">Mô tả</label>
+                    <div class="col-md-9 col-lg-8 col-table-reponsive p-0 d-flex align-items-center">
+                        <div class="custom-control custom-switch" dir="ltr">
+                            <input type="checkbox" class="custom-control-input" id="status" name="status" [(ngModel)]="section.status" [checked]="section.status">
+                            <label class="custom-control-label" for="status"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light waves-effect" (click)="editModalRef?.hide()">Đóng</button>
+            <button [disabled]="editForm.invalid || validateEditForm.priority.inValidNumber" (click)="handleOnSubmitEditSection()" type="submit" class="btn btn-primary waves-effect waves-light ml-2">Xác nhận</button>
+        </div>
+     </ng-template>
+</form> -->
 
 
