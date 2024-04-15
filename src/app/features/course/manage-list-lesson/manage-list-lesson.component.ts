@@ -12,7 +12,9 @@ import { ToastrService } from 'src/app/core/modules/toastr/toastr.service';
 import { LessonService } from 'src/app/core/services/catalog/lesson.service';
 import { Action } from 'src/app/core/enums/action.enum';
 import Swal from 'sweetalert2';
-
+import { CommonStatus } from 'src/app/core/constants/status.constant';
+import { TypeFile } from 'src/app/core/enums/type-file.enum';
+import { DefaultValue } from 'src/app/core/constants/default-value.constant';
 @Component({
   selector: 'app-manage-list-lesson',
   templateUrl: './manage-list-lesson.component.html',
@@ -21,6 +23,8 @@ import Swal from 'sweetalert2';
 export class ManageListLessonComponent {
   //Core
   Action = Action;
+  TypeFile = TypeFile;
+  DefaultValue = DefaultValue
 
   //Config
   breadcrumb: Breadcrumb[] = breadcrumbs;
@@ -88,7 +92,8 @@ export class ManageListLessonComponent {
       content: null,
       status: true,
       priority: 0,
-      sectionId: this.section?.id
+      sectionId: this.section?.id,
+      lessonContents: []
      }
   }
   
@@ -98,7 +103,7 @@ export class ManageListLessonComponent {
      }
   }
  
-   handleOpenCreateSectionModal(){
+  handleOpenCreateSectionModal(){
     this.lesson.priority = this.section?.lessons?.length + 1;
     this.createModalRef = this.modalService.show(this.createSectionTemplate,
        Object.assign({}, { class: 'modal-dialog modal-lg modal-dialog-scrollable' }));
@@ -106,7 +111,7 @@ export class ManageListLessonComponent {
        this.createModalRef.onHidden?.subscribe(() => {
           this.setDefaultLessonValues();
        });
-   }
+  }
 
   onPriorityChange(value: number,action: any) {
     if(action === Action.Add){
@@ -235,5 +240,67 @@ export class ManageListLessonComponent {
         });
       }
     });
+  }
+
+  // Content lesson
+  lessonContent: any = {
+    title: '',
+    fileUrl: '',
+    type: TypeFile.Link,
+    estimatedStudyTime: null
+  };
+
+  setDefaultLessonContentValues(){
+    this.statusActionLessonContent = null;
+
+    this.lesson = {
+      title: '',
+      fileUrl: '',
+      type: TypeFile.Link,
+      estimatedStudyTime: null
+    };
+  }
+
+  statusActionLessonContent: any = null;
+
+  contentModalRef?: BsModalRef;
+  @ViewChild('contentTemplate') contentTemplate!: TemplateRef<any>;
+
+  handleOpenContentModal(lesson: any){
+    const lessonCopy = { ...lesson };
+
+    this.lesson = lessonCopy;
+
+    this.contentModalRef = this.modalService.show(this.contentTemplate,
+      Object.assign({}, { class: 'modal-dialog modal-lg modal-dialog-scrollable' }));
+  
+    this.contentModalRef.onHidden?.subscribe(() => {
+        this.setDefaultLessonValues();
+        this.setDefaultLessonContentValues();
+    });
+  }
+
+  getTypeFileValues(): any[] {
+    return Object.values(TypeFile).filter(value => !isNaN(Number(value)));
+  }
+
+  getTypeFileDisplayName(type: number): string {
+    return TypeFile[type];
+  }
+
+  handleAddLessonContent(){
+    this.statusActionLessonContent = Action.Add;
+  }
+
+  onCheckboxChange(event: any){
+    if (event.target.checked) {
+      this.lessonContent.estimatedStudyTime = DefaultValue.EstimatedStudyTime;
+    } else {
+      this.lessonContent.estimatedStudyTime = null;
+    }
+  }
+
+  handleCloseActionLessonContent(){
+    this.statusActionLessonContent = null;
   }
 }
