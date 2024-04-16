@@ -12,9 +12,9 @@ import { ToastrService } from 'src/app/core/modules/toastr/toastr.service';
 import { LessonService } from 'src/app/core/services/catalog/lesson.service';
 import { Action } from 'src/app/core/enums/action.enum';
 import Swal from 'sweetalert2';
-import { CommonStatus } from 'src/app/core/constants/status.constant';
 import { TypeFile } from 'src/app/core/enums/type-file.enum';
 import { DefaultValue } from 'src/app/core/constants/default-value.constant';
+import { LessonContentService } from 'src/app/core/services/catalog/lesson-content.service';
 @Component({
   selector: 'app-manage-list-lesson',
   templateUrl: './manage-list-lesson.component.html',
@@ -42,6 +42,7 @@ export class ManageListLessonComponent {
     private route: ActivatedRoute, 
     private sectionService: SectionService,
     private lessonService: LessonService,
+    private lessonContentService: LessonContentService,
     private modalService: BsModalService,
     private toastrService: ToastrService,
     ) {}
@@ -72,6 +73,12 @@ export class ManageListLessonComponent {
   getLessonBySectionId(id: any){
     this.lessonService.getLessonBySectionId(id).subscribe((res) => {
       this.section.lessons = res?.data;
+    });
+  }
+
+  getLessonContentByLessonId(id: any): any{
+    this.lessonContentService.getLessonContentByLessonId(id).subscribe((res: any) => {
+      this.lesson.lessonContents = res?.data;
     });
   }
 
@@ -247,7 +254,7 @@ export class ManageListLessonComponent {
     title: '',
     fileUrl: '',
     type: TypeFile.Link,
-    estimatedStudyTime: null
+    estimatedCompletionTime: null
   };
 
   setDefaultLessonContentValues(){
@@ -302,5 +309,23 @@ export class ManageListLessonComponent {
 
   handleCloseActionLessonContent(){
     this.statusActionLessonContent = null;
+  }
+
+  submitAddLessonContent(){
+    this.lessonContent.lessonId = this.lesson.id;
+
+    this.lessonContentService.createLessonContent(this.lessonContent).subscribe(
+      (res) => {
+        if(res.status){
+          this.toastrService.success(res.message);
+          this.getLessonContentByLessonId(this.lesson.id);
+          this.setDefaultLessonContentValues();
+        }
+      },
+      (exception) => {
+        this.toastrService.error(exception?.error.Message);
+        console.log(exception)
+      }
+    );
   }
 }
