@@ -80,11 +80,23 @@ export class GroupModuleService {
   }
 
   submitSchedule(request: any): Observable<any> {
-    console.log(request)
     return this.http.post(`${this.adminApiPrefix}/schedule/create-list-schedule`, request);
+  }
+
+  getSchedule(request: any): Observable<any> {
+    return this.http.get(`${this.adminApiPrefix}/schedule/get`, {params: request});
   }
   
   getGroupModuleByUser(request: any): Observable<any> {
     return this.http.get(`admin/group-module/get-group-module-by-user`, request);
+  }
+
+  createAttendence(request: any): Observable<any> {
+    return this.http.post(`${this.adminApiPrefix}/attendence/create-list-attendence`, request);
+  }
+
+  getAttendenceByScheduleId(request: any): Observable<any> {
+    console.log('request: ', request)
+    return this.http.get(`${this.adminApiPrefix}/attendence/get`, {params: request});
   }
 }

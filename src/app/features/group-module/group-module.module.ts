@@ -17,11 +17,15 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ButtonModule } from 'primeng/button';
 import { TabViewModule } from 'primeng/tabview';
+import { DialogModule } from 'primeng/dialog';
+import { AttendenceModuleComponent } from './attendence-module/attendence-module.component';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
     ListGroupModuleComponent,
-    StudentGroupModuleComponent
+    StudentGroupModuleComponent,
+    AttendenceModuleComponent
   ],
   imports: [
     CommonModule,
@@ -32,6 +36,8 @@ import { TabViewModule } from 'primeng/tabview';
     PopoverModule.forRoot(),
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    TableModule,
+    DialogModule,
     TabViewModule,
     ConfirmPopupModule,
     ButtonModule,
