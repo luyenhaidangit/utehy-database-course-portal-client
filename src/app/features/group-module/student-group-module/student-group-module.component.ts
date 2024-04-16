@@ -69,8 +69,8 @@ export class StudentGroupModuleComponent {
       delete this.queryParameters.groupModuleId;
 
       this.getStudentsGroupModule(request);
-      this.generateCalendar()
     });
+    this.generateCalendar();
   }
 
   public config: any = {
@@ -806,8 +806,9 @@ export class StudentGroupModuleComponent {
 
   public schedules: {
     groupModuleId: number,
-    dateSchool: string,
-    classPeriods: string
+    dateSchool: Date,
+    classPeriods: string,
+    classRoom: string,
   }[] = [];
   
   public scrollAddClassSchedule(){
@@ -835,9 +836,11 @@ export class StudentGroupModuleComponent {
 
   monthNames: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   currentDate: Date = new Date();
+  currentDay: number = 1;
   currentMonth: number = this.currentDate.getMonth();
   currentYear: number = this.currentDate.getFullYear();
   calendar: number[][] = [];
+  classRoom: string = "";
   generateCalendar(): void {
     const weeksInMonth = 6;
     for (let i = 0; i < weeksInMonth; i++) {
@@ -882,7 +885,7 @@ export class StudentGroupModuleComponent {
     this.generateCalendar();
   }
 
-  submitScheduleOnDate(date: number){
+  submitScheduleOnDate(){
     let periodsSelected = "";
     for(let i = 0; i < this.classPeriods.length; i++){
       for(let j = 0; j < this.classPeriods[i].periods.length; j++){
@@ -892,14 +895,18 @@ export class StudentGroupModuleComponent {
         }
       }
     }
+    const dateSchool = `${this.currentYear}-${this.monthNames[this.currentMonth]}-${this.currentDay}`
+    const dateSchoolParse = new Date(dateSchool);
     this.route.params.subscribe(params => {
       const id = params['id'];
       this.schedules.push({
         groupModuleId: id,
-        dateSchool: `${this.currentYear}-${this.monthNames[this.currentMonth]}-${date}`,
-        classPeriods: periodsSelected.slice(0, -1)
+        dateSchool: dateSchoolParse,
+        classPeriods: periodsSelected.slice(0, -1),
+        classRoom: this.classRoom
       })
     });
+    this.visible = false;
   }
 
   removeScheduleItem(index: number){
@@ -907,6 +914,10 @@ export class StudentGroupModuleComponent {
   }
 
   submitSchedule(){
+    // sắp xếp lịch học giảm dần theo ngày
+    this.schedules.sort(function(a,b) {
+      return -(a.dateSchool.getTime() - b.dateSchool.getTime());
+    })
     this.groupModuleService.submitSchedule(this.schedules).subscribe((result: any) => {
       if(result.status){
         this.ngxToastr.success("Bạn đã đăng ký lịch học thành công!", "", {
@@ -954,4 +965,11 @@ export class StudentGroupModuleComponent {
     }
   }
   
+  visible: boolean = false;
+  dialogHeader: string = `Đăng ký lịch dạy ngày ${this.currentDay} - ${this.currentMonth} - ${this.currentYear}` ;
+
+  showDialog(day: number) {
+    this.visible = true;
+    this.currentDay = day;
+  }
 }

@@ -96,3 +96,8 @@
 .modal-backdrop.fade.show{
     opacity: 0;
 }
+
+.btn-attendence{
+    top: 12px;
+    right: 26px;
+}

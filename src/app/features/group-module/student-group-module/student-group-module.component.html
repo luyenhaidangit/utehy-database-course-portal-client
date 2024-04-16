@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<p-tabView styleClass="tabview-custom">
+<p-tabView styleClass="tabview-custom position-relative">
    <p-tabPanel>
       <ng-template pTemplate="header">
          Sinh viên
@@ -218,24 +218,37 @@
    </p-tabPanel>
    <p-tabPanel header="Header II">
       <ng-template pTemplate="header">
-         Lịch học
+         Lịch dạy học
       </ng-template>
       <div class="position-relative">
          <div class="position-absolute w-100 top-0" id="class-schedule">
             <div class="d-flex justify-content-between">
-               <h3>Lịch học cho tháng {{ monthNames[currentMonth] }} - {{ currentYear }}</h3>
+               <h3>Lịch dạy cho tháng {{ monthNames[currentMonth] }} - {{ currentYear }}</h3>
                <button class="btn" (click)="scrollAddClassSchedule()">
-                  <i class="fa-regular fa-calendar mr-2"></i> Thêm lịch học <i class="fa-solid fa-chevron-right"></i>
+                  <i class="fa-regular fa-calendar mr-2"></i> Thêm lịch dạy học <i class="fa-solid fa-chevron-right"></i>
                </button>
             </div>
-            <div class="d-flex flex-wrap position-relative">
+            <div>
+               <table class="table table-bordered">
+                  <thead>
+                     <tr>
+                        <th>Thứ</th>
+                        <th>Tiết</th>
+                        <th>Ký hiệu</th>
+                        <th>Tên môn</th>
+                        <th>Tên lớp học phần</th>
+                        <th>Phòng học</th>
+                        <th>Giảng viên</th>
+                     </tr>
+                  </thead>
+               </table>
             </div>
          </div>
          <div class="position-absolute w-100 top-0" id="add-class-schedule">
             <div class="d-flex justify-content-between">
-               <h3>Thêm lịch học cho tháng {{ monthNames[currentMonth] }} - {{ currentYear }}</h3>
+               <h3>Thêm lịch dạy cho tháng {{ monthNames[currentMonth] }} - {{ currentYear }}</h3>
                <button class="btn" (click)="scrollClassSchedule()">
-                  <i class="fa-solid fa-chevron-left"></i> Xem lịch học
+                  <i class="fa-solid fa-chevron-left"></i> Xem lịch dạy học
                </button>
             </div>
             <div class="modal-body pt-1">
@@ -259,34 +272,7 @@
                               <tr *ngFor="let week of calendar">
                                  <td *ngFor="let day of week" class="text-center custom-control custom-checkbox">
                                     <div class="d-flex justify-content-center" *ngIf="day > 0">
-                                       <button class="btn check-box-school-day d-flex justify-content-center align-items-center" (click)="smModal.show()">{{day}}</button>
-                                    </div>
-                                    <div bsModal #smModal="bs-modal" class="modal fade modal-class-period" role="dialog" aria-labelledby="dialog-sizes-name2">
-                                       <div class="modal-dialog modal-sm">
-                                          <div class="modal-content">
-                                          <div class="modal-header">
-                                             <h4 id="dialog-sizes-name2" class="modal-title pull-left">Đăng ký tiết học ngày {{day}} - {{ monthNames[currentMonth] }} - {{ currentYear }}</h4>
-                                             <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="smModal.hide()">
-                                                <span aria-hidden="true" class="visually-hidden"><i class="fa-solid fa-xmark"></i></span>
-                                             </button>
-                                          </div>
-                                          <div class="modal-body">
-                                             <h3 class="text-center">Tiết học</h3>
-                                          <div class="d-flex justify-content-around">
-                                             <div class="field-checkbox mr-3" *ngFor="let classPeriod of classPeriods">
-                                                <h5>{{classPeriod.shift}}</h5>
-                                                <div  class="flex align-items-center" *ngFor="let period of classPeriod.periods">
-                                                   <div class="custom-control custom-checkbox">
-                                                      <input type="checkbox" class="custom-control-input" id="period-{{period.period}}" [(ngModel)]="period.selected">
-                                                      <label class="custom-control-label" for="period-{{period.period}}">Tiết {{period.period}}</label>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                          </div>
-                                          <button class="btn btn-primary float-end" aria-label="Close" (click)="smModal.hide(); submitScheduleOnDate(day);">Submit</button>
-                                             </div>
-                                          </div>
-                                       </div>
+                                       <div (click)="showDialog(day)" class="btn check-box-school-day d-flex justify-content-center align-items-center">{{day}}</div>
                                     </div>
                                  </td>
                               </tr>
@@ -296,7 +282,7 @@
                      </div>
                      <div class="d-flex flex-wrap container-chip-schedule">
                         <div class="chip-schedule mr-2 mb-1" *ngFor="let daySchool of schedules; let i = index;">
-                           {{daySchool.dateSchool}} - Tiết {{daySchool.classPeriods}} <button class="btn btn-schip-module d-flex justify-content-center align-items-center ml-1" (click)="removeScheduleItem(i)"><i class="fa-solid fa-xmark"></i></button>
+                           {{daySchool.dateSchool | date:'dd/MM/yyyy' }} - Tiết {{daySchool.classPeriods}} - Phòng {{classRoom}} <button class="btn btn-schip-module d-flex justify-content-center align-items-center ml-1" (click)="removeScheduleItem(i)"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                      </div>
                   </div>
@@ -320,6 +306,8 @@
          </div>
       </div>
    </p-tabPanel>
+
+   <button [routerLink]="'/group-module/attendence/' + groupModule.id" class="position-absolute btn-attendence btn btn-primary">Điểm danh</button>
 </p-tabView>
 
 
@@ -487,3 +475,27 @@
        </div>
    </div>
 </div>
+
+<p-dialog [header]="dialogHeader" [(visible)]="visible" [position]="'bottom'" [style]="{ width: '50vw' }">
+   <div class="modal-body">
+      <h3 class="text-center">Tiết học</h3>
+      <div class="d-flex justify-content-around">
+         <div class="field-checkbox mr-3" *ngFor="let classPeriod of classPeriods">
+            <h5>{{classPeriod.shift}}</h5>
+            <div  class="flex align-items-center" *ngFor="let period of classPeriod.periods">
+               <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="period-{{period.period}}" [(ngModel)]="period.selected">
+                  <label class="custom-control-label" for="period-{{period.period}}">Tiết {{period.period}}</label>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="d-flex align-items-end mt-3 ml-3">
+         <label for="select-classroom">Nhập phòng học: </label>
+         <input type="text" id="select-classroom" [(ngModel)]="classRoom" class="form-control ml-2" style="width: 30%;">
+      </div>
+      <div class="float-end">
+         <button class="btn btn-primay" (click)="submitScheduleOnDate()">Áp dụng</button>
+      </div>
+   </div>
+</p-dialog>

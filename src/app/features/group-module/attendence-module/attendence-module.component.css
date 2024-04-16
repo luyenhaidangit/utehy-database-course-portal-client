@@ -1,0 +1,92 @@
+
+.select-box-date-school{
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    width: 180px;
+    height: 36px;
+}
+
+#date-school{
+    text-align: center;
+    border: none;
+    outline: none;
+    padding-right: 6px;
+    width: 180px !important;
+    height: 100%s !important;
+}
+
+.btn-select-box-date-school{
+    cursor: pointer;
+    width: 180px !important;
+    height: 36px !important;
+}
+
+.dropdown-select-box-date-school{
+    width: 180px !important;
+}
+
+.item-box-date-school{
+    cursor: pointer;
+    padding: 4px 10px;
+    border-bottom: 1px solid #ced4da;
+    transition: 0.3s linear;
+}
+
+.item-box-date-school:hover{
+    background-color: rgba(235, 235, 235, 0.5);
+}
+
+.select-box-date-school span{
+    width: 36px;
+    height: 100%;
+    border-left: 1px solid #ced4da;
+}
+
+.date-school-selected{
+    width: 146px;
+    height: 100%;
+}
+
+.box-general{
+    padding: 4px;
+    border: 1px solid #ced4da;
+}
+
+/* input.input-attendence[type=radio]{
+    position: absolute;
+    width: 16px;
+    height: 20px;
+    visibility: hidden;
+}
+
+.label-attendence{
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #fff;
+    padding: 1px;
+}
+
+.label-attendence-attendent{
+    border: 1px solid rgb(0, 160, 209);
+}
+
+.label-attendence-permitted{
+    border: 1px solid rgb(216, 151, 0);
+}
+
+.label-attendence-unpermitted{
+    border: 1px solid rgb(182, 0, 12);
+}
+
+.input-attendence-attendent:checked ~ .label-attendence-attendent{
+    background-color: rgb(0, 160, 209);
+}
+
+.input-attendence-permitted:checked ~ .label-attendence-permitted{
+    background-color: rgb(216, 151, 0);
+}
+
+.input-attendence-unpermitted:checked ~ .label-attendence-unpermitted{
+    background-color: rgb(182, 0, 12);
+} */
