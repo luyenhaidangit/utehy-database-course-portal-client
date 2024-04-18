@@ -310,14 +310,28 @@ export class ManageListLessonComponent {
     }
   }
 
-  handleCloseActionLessonContent(){
-    this.statusActionLessonContent = null;
-  }
-
   submitAddLessonContent(){
     this.lessonContent.lessonId = this.lesson.id;
 
     this.lessonContentService.createLessonContent(this.lessonContent).subscribe(
+      (res) => {
+        if(res.status){
+          this.toastrService.success(res.message);
+          this.getLessonContentByLessonId(this.lesson.id);
+          this.setDefaultLessonContentValues();
+        }
+      },
+      (exception) => {
+        this.toastrService.error(exception?.error.Message);
+        console.log(exception)
+      }
+    );
+  }
+
+  submitEditLessonContent(){
+    this.lessonContent.lessonId = this.lesson.id;
+
+    this.lessonContentService.editLessonContent(this.lessonContent).subscribe(
       (res) => {
         if(res.status){
           this.toastrService.success(res.message);
@@ -372,5 +386,15 @@ export class ManageListLessonComponent {
         });
       }
     });
+  }
+
+  handleOpenLinkWeb(content: any){
+    window.open(content?.fileUrl, '_blank');
+  }
+
+  handleEditLessonContent(content: any){
+    this.statusActionLessonContent = Action.Edit;
+
+    this.lessonContent = JSON.parse(JSON.stringify(content));
   }
 }
