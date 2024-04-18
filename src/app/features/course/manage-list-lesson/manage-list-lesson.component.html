@@ -220,7 +220,7 @@
 
             <div *ngIf="statusActionLessonContent !== null" class="form-group">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                             <label class="col-form-label me-3" for="name">Tiêu đề <span class="text-danger">*</span></label>
                                 <div class="col-table-reponsive p-0">
                                     <input class="form-control" [(ngModel)]="lessonContent.title" name="title" id="title" type="text" required/>
@@ -229,7 +229,16 @@
                                     </div>
                                 </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
+                        <label class="col-form-label me-3" for="name">Độ ưu tiên <span class="text-danger">*</span></label>
+                            <div class="col-table-reponsive p-0">
+                                <input class="form-control" [(ngModel)]="lessonContent.priority" name="priority" id="priority" type="text" required/>
+                                <div *ngIf="contentForm.controls['priority']?.invalid && (contentForm.controls['priority']?.dirty || contentForm.controls['title'].touched)" class="danger-notice">
+                                    <div *ngIf="contentForm.controls['priority'].errors?.['required']">Độ ưu tiên không được để trống</div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-4">
                             <label class="col-form-label me-3" for="name">Loại tài liệu</label>
                             <select class="custom-select" name="fileType" [(ngModel)]="lessonContent.type">
                                 <option *ngFor="let type of getTypeFileValues()" [ngValue]="type">{{ getTypeFileDisplayName(type) }}</option>

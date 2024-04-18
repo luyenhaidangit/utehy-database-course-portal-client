@@ -317,6 +317,8 @@ export class ManageListLessonComponent {
 
   handleAddLessonContent(){
     this.statusActionLessonContent = Action.Add;
+
+    this.lessonContent.priority = this.lesson?.lessonContents?.length + 1;
   }
 
   onCheckboxChange(event: any){
