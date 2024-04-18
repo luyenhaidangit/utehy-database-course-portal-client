@@ -197,11 +197,13 @@
                                     <h6 class="text-primary cursor-pointer col-9">
                                         <i *ngIf="content?.type === TypeFile.Link" class="fa-solid fa-link"></i>
                                         <i *ngIf="content?.type === TypeFile.File" class="fa-regular fa-file me-1"></i>
+                                        <i *ngIf="content?.type === TypeFile.Video" class="fa-regular fa-circle-play"></i>
                                         {{ content?.title }}
                                     </h6>
                                     <div class="action-lesson col-3 text-end">
-                                        <span *ngIf="content.type === TypeFile.File" class="text-info cursor-pointer ml-2" (click)="handleOpenLinkDownload(content)">                                        <i class="fa-solid fa-download"></i></span>
+                                        <span *ngIf="content.type === TypeFile.File" class="text-info cursor-pointer ml-2" (click)="handleOpenLinkDownload(content)"><i class="fa-solid fa-download"></i></span>
                                         <span *ngIf="content.type === TypeFile.Link" class="text-info cursor-pointer ml-2" (click)="handleOpenLinkWeb(content)"><i class="fa-solid fa-earth-americas"></i></span>
+                                        <span *ngIf="content.type === TypeFile.Video" class="text-info cursor-pointer ml-2" (click)="handleOpenLinkVideo(content)"><i class="fa-brands fa-youtube"></i></span>
                                         <span class="text-warning cursor-pointer ml-2" (click)="handleEditLessonContent(content)"><i class="fa-solid fa-pen"></i></span>
                                         <span class="text-danger cursor-pointer ml-2" (click)="handleDeleteContent(content.id)"><i class="fa-solid fa-trash"></i></span>
                                     </div>
@@ -254,20 +256,29 @@
                         <span>{{ lessonContent.fileName }}</span>
                     </div>
                 </div>
+                <div *ngIf="lessonContent.type === TypeFile.Video" class="row">
+                    <div class="col-4">
+                        <label class="col-form-label me-3" for="name">Id video youtube</label>
+                        <div class="col-table-reponsive p-0">
+                            <input class="form-control" [(ngModel)]="lessonContent.videoUrl" (ngModelChange)="handleVideoUrlChange()" name="fileUrl" id="fileUrl" type="text" required/>
+                        </div>
+                    </div>
+                </div>
+                <iframe *ngIf="lessonContent.type === TypeFile.Video && lessonContent.videoUrl" class="mt-3" width="220" height="120" [src]="safeUrl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <div class="row">
                     <div class="col-4">
                         <label class="col-form-label" for="name">Yêu cầu thời gian?</label>
                         <div class="col-table-reponsive p-0 d-flex align-items-center">
                             <div class="custom-control custom-switch" dir="ltr">
-                                <input type="checkbox" class="custom-control-input" id="status" name="status" [(ngModel)]="lessonContent.estimatedStudyTime" [checked]="lessonContent.estimatedStudyTime" (change)="onCheckboxChange($event)">
+                                <input type="checkbox" class="custom-control-input" id="status" name="status" [(ngModel)]="lessonContent.requiedTime" [checked]="lessonContent.requiedTime" (change)="onCheckboxChange($event)">
                                 <label class="custom-control-label" for="status"></label>
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="lessonContent.estimatedStudyTime" class="col-4">
+                    <div *ngIf="lessonContent.requiedTime" class="col-4">
                         <label class="col-form-label me-3" for="name">Thời gian (phút)</label>
                         <div class="col-table-reponsive p-0">
-                            <input class="form-control" [(ngModel)]="lessonContent.estimatedStudyTime" name="estimatedStudyTime" id="estimatedStudyTime" type="number" required/>
+                            <input class="form-control" [(ngModel)]="lessonContent.estimatedCompletionTime" name="estimatedStudyTime" id="estimatedStudyTime" type="number" required/>
                         </div>
                     </div>
                 </div>

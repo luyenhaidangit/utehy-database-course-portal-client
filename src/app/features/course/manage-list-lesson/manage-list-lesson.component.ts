@@ -19,6 +19,7 @@ import { AcceptFile } from 'src/app/core/constants/accept-file.constant';
 import { ObjectService } from 'src/app/core/services/utilities/object.service';
 import { app } from 'src/app/core/configs/app.config';
 import { FileService } from 'src/app/core/services/utilities/file.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-manage-list-lesson',
   templateUrl: './manage-list-lesson.component.html',
@@ -51,7 +52,8 @@ export class ManageListLessonComponent {
     private modalService: BsModalService,
     private toastrService: ToastrService,
     private objectService: ObjectService,
-    private fileService: FileService
+    private fileService: FileService,
+    private sanitizer: DomSanitizer
     ) {}
 
   ngOnInit() {
@@ -59,10 +61,6 @@ export class ManageListLessonComponent {
   }
 
   //Action
-  updateBreadcrumb(){
-    
-  }
-
   handleRouteParamsChange(){
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
@@ -266,9 +264,10 @@ export class ManageListLessonComponent {
     type: TypeFile.Link,
     estimatedCompletionTime: 0,
     fileName: '',
-    videoType: '',
+    videoType: 1,
     isPublished: true,
-    prerequisiteLessonId: 0
+    prerequisiteLessonId: 0,
+    requiedTime: false
   };
 
   setDefaultLessonContentValues(){
@@ -280,9 +279,10 @@ export class ManageListLessonComponent {
       type: TypeFile.Link,
       estimatedCompletionTime: 0,
       fileName: '',
-      videoType: '',
+      videoType: 1,
       isPublished: true,
-      prerequisiteLessonId: 0
+      prerequisiteLessonId: 0,
+      requiedTime: false
     };
   }
 
@@ -290,6 +290,8 @@ export class ManageListLessonComponent {
 
   contentModalRef?: BsModalRef;
   @ViewChild('contentTemplate') contentTemplate!: TemplateRef<any>;
+  videoId: string = 'zuHNAhplYpI'; 
+  safeUrl: SafeResourceUrl = null!;
 
   handleOpenContentModal(lesson: any){
     const lessonCopy = { ...lesson };
@@ -319,9 +321,11 @@ export class ManageListLessonComponent {
 
   onCheckboxChange(event: any){
     if (event.target.checked) {
-      this.lessonContent.estimatedStudyTime = DefaultValue.EstimatedStudyTime;
+      this.lessonContent.requiedTime = true;
+      this.lessonContent.estimatedCompletionTime = DefaultValue.EstimatedStudyTime;
     } else {
-      this.lessonContent.estimatedStudyTime = null;
+      this.lessonContent.requiedTime = false;
+      this.lessonContent.estimatedCompletionTime = null;
     }
   }
 
@@ -351,6 +355,7 @@ export class ManageListLessonComponent {
     this.lessonContent.videoType = this.lessonContent.videoType ?? 1;
     this.lessonContent.isPublished = this.lessonContent.isPublished ?? true;
     this.lessonContent.prerequisiteLessonId = this.lessonContent.prerequisiteLessonId ?? 0;
+    this.lessonContent.estimatedCompletionTime = this.lessonContent.estimatedCompletionTime ?? 0;
 
     const formData = this.objectService.convertToFormData(this.lessonContent);
 
@@ -419,6 +424,12 @@ export class ManageListLessonComponent {
     window.open(app.baseApiUrl + content?.fileUrl, '_blank');
   }
 
+  handleOpenLinkVideo(content: any){
+    const link  = `https://www.youtube.com/embed/${content?.videoUrl}`
+
+    window.open(link, '_blank');
+  }
+
   handleEditLessonContent(content: any){
     this.statusActionLessonContent = Action.Edit;
 
@@ -426,6 +437,14 @@ export class ManageListLessonComponent {
 
     if(this.lessonContent.type === TypeFile.File){
       this.lessonContent.fileName = this.fileService.getFileNameFromFileUrlServer(this.lessonContent.fileUrl);
+    }
+
+    if(this.lessonContent.type === TypeFile.Video){
+      this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.lessonContent.videoUrl}`);
+    }
+
+    if(this.lessonContent.estimatedCompletionTime){
+      this.lessonContent.requiedTime = true;
     }
   }
 
@@ -452,5 +471,9 @@ export class ManageListLessonComponent {
   
       this.lessonContent.file = file;
     }
+  }
+
+  handleVideoUrlChange(){
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.lessonContent.videoUrl}`);
   }
 }
