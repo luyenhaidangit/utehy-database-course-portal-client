@@ -18,4 +18,8 @@ export class LessonContentService {
     createLessonContent(request: any): Observable<any> {
         return this.http.post<any>(`${this.adminApiPrefix}/lessoncontent/create`,request);
     }
+
+    deleteLessonContent(request: any): Observable<any> {
+      return this.http.post<any>(`${this.adminApiPrefix}/lessoncontent/delete`,request);
+    }
 }

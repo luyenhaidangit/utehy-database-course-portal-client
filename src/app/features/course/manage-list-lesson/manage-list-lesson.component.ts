@@ -77,8 +77,11 @@ export class ManageListLessonComponent {
   }
 
   getLessonContentByLessonId(id: any): any{
+    let copyLesson = this.lesson;
+
     this.lessonContentService.getLessonContentByLessonId(id).subscribe((res: any) => {
-      this.lesson.lessonContents = res?.data;
+      copyLesson.lessonContents = res?.data;
+      this.lesson = copyLesson;
     });
   }
 
@@ -260,11 +263,11 @@ export class ManageListLessonComponent {
   setDefaultLessonContentValues(){
     this.statusActionLessonContent = null;
 
-    this.lesson = {
+    this.lessonContent = {
       title: '',
       fileUrl: '',
       type: TypeFile.Link,
-      estimatedStudyTime: null
+      estimatedStudyTime: null,
     };
   }
 
@@ -327,5 +330,47 @@ export class ManageListLessonComponent {
         console.log(exception)
       }
     );
+  }
+
+  handleDeleteContent(id: any){
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        cancelButton: "btn btn-danger ml-2",
+        confirmButton: "btn btn-success",
+      },
+      buttonsStyling: false
+    });
+    swalWithBootstrapButtons.fire({
+      title: `Bạn có chắc muốn xoá tài liệu có Id ${id}?`,
+      text: "Sau khi xoá bản sẽ không thể khôi phục dữ liệu!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xác nhận",
+      cancelButtonText: "Bỏ qua",
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const request = {
+          id: +id
+        }
+
+        this.lessonContentService.deleteLessonContent(request).subscribe((result: any) => {
+          if(result.status){           
+            swalWithBootstrapButtons.fire({
+              title: "Xoá thành công!",
+              text: `Bản ghi tài liệu có Id ${id} đã bị xoá!`,
+              icon: "success"
+            });
+    
+            this.getLessonContentByLessonId(this.lesson.id);
+            this.setDefaultLessonContentValues();
+            console.log(this.lesson)
+          }
+        },error => {
+          this.toastrService.error(error.error.Message);
+          console.log(error?.error.Message);
+        });
+      }
+    });
   }
 }
