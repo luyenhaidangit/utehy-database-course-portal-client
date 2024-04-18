@@ -196,9 +196,11 @@
                                 <td class="sorting_1 dtr-control row">
                                     <h6 class="text-primary cursor-pointer col-9">
                                         <i *ngIf="content?.type === TypeFile.Link" class="fa-solid fa-link"></i>
+                                        <i *ngIf="content?.type === TypeFile.File" class="fa-regular fa-file me-1"></i>
                                         {{ content?.title }}
                                     </h6>
                                     <div class="action-lesson col-3 text-end">
+                                        <span *ngIf="content.type === TypeFile.File" class="text-info cursor-pointer ml-2" (click)="handleOpenLinkDownload(content)">                                        <i class="fa-solid fa-download"></i></span>
                                         <span *ngIf="content.type === TypeFile.Link" class="text-info cursor-pointer ml-2" (click)="handleOpenLinkWeb(content)"><i class="fa-solid fa-earth-americas"></i></span>
                                         <span class="text-warning cursor-pointer ml-2" (click)="handleEditLessonContent(content)"><i class="fa-solid fa-pen"></i></span>
                                         <span class="text-danger cursor-pointer ml-2" (click)="handleDeleteContent(content.id)"><i class="fa-solid fa-trash"></i></span>
@@ -240,6 +242,18 @@
                         </div>
                     </div>
                 </div>
+                <div *ngIf="lessonContent.type === TypeFile.File" class="row">
+                    <div class="col-4">
+                        <label class="col-form-label me-3" for="name">File</label>
+                        <div class="custom-file">
+                            <input (change)="handleChangeFile($event)" type="file" name="image" id="image" class="custom-file-input" id="customFile" multiple="false">
+                            <label class="custom-file-label" for="customFile">Chọn file</label>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <span>{{ lessonContent.fileName }}</span>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-4">
                         <label class="col-form-label" for="name">Yêu cầu thời gian?</label>
@@ -263,10 +277,10 @@
                 <button *ngIf="statusActionLessonContent === null" type="button" class="btn btn-success waves-effect waves-light" (click)="handleAddLessonContent()">
                     <i class="fa-solid fa-plus"></i>
                 </button>
-                <button *ngIf="statusActionLessonContent === Action.Edit" type="button" class="btn btn-primary waves-effect waves-light me-2" (click)="submitEditLessonContent()">
+                <button *ngIf="statusActionLessonContent === Action.Edit" type="button" class="btn btn-primary waves-effect waves-light me-2" [disabled]="!isDisableSubmitLessonContent()" (click)="submitEditLessonContent()">
                     <i class="fa-solid fa-wrench"></i>
                 </button>
-                <button *ngIf="statusActionLessonContent === Action.Add" type="button" class="btn btn-primary waves-effect waves-light me-2" (click)=" submitAddLessonContent()">
+                <button *ngIf="statusActionLessonContent === Action.Add" type="button" class="btn btn-primary waves-effect waves-light me-2"  [disabled]="!isDisableSubmitLessonContent()" (click)="submitAddLessonContent()">
                     <i class="fa-solid fa-check"></i>
                 </button>
                 <button *ngIf="statusActionLessonContent === Action.Add || statusActionLessonContent === Action.Edit" type="button" class="btn btn-danger waves-effect waves-light" (click)="setDefaultLessonContentValues()">

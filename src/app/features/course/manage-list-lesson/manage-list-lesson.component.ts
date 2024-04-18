@@ -15,6 +15,10 @@ import Swal from 'sweetalert2';
 import { TypeFile } from 'src/app/core/enums/type-file.enum';
 import { DefaultValue } from 'src/app/core/constants/default-value.constant';
 import { LessonContentService } from 'src/app/core/services/catalog/lesson-content.service';
+import { AcceptFile } from 'src/app/core/constants/accept-file.constant';
+import { ObjectService } from 'src/app/core/services/utilities/object.service';
+import { app } from 'src/app/core/configs/app.config';
+import { FileService } from 'src/app/core/services/utilities/file.service';
 @Component({
   selector: 'app-manage-list-lesson',
   templateUrl: './manage-list-lesson.component.html',
@@ -25,6 +29,7 @@ export class ManageListLessonComponent {
   Action = Action;
   TypeFile = TypeFile;
   DefaultValue = DefaultValue
+  AcceptFileLessonContent = AcceptFile.LessonContent; 
 
   //Config
   breadcrumb: Breadcrumb[] = breadcrumbs;
@@ -45,6 +50,8 @@ export class ManageListLessonComponent {
     private lessonContentService: LessonContentService,
     private modalService: BsModalService,
     private toastrService: ToastrService,
+    private objectService: ObjectService,
+    private fileService: FileService
     ) {}
 
   ngOnInit() {
@@ -257,7 +264,11 @@ export class ManageListLessonComponent {
     title: '',
     fileUrl: '',
     type: TypeFile.Link,
-    estimatedCompletionTime: null
+    estimatedCompletionTime: 0,
+    fileName: '',
+    videoType: '',
+    isPublished: true,
+    prerequisiteLessonId: 0
   };
 
   setDefaultLessonContentValues(){
@@ -267,7 +278,11 @@ export class ManageListLessonComponent {
       title: '',
       fileUrl: '',
       type: TypeFile.Link,
-      estimatedStudyTime: null,
+      estimatedCompletionTime: 0,
+      fileName: '',
+      videoType: '',
+      isPublished: true,
+      prerequisiteLessonId: 0
     };
   }
 
@@ -313,7 +328,9 @@ export class ManageListLessonComponent {
   submitAddLessonContent(){
     this.lessonContent.lessonId = this.lesson.id;
 
-    this.lessonContentService.createLessonContent(this.lessonContent).subscribe(
+    const formData = this.objectService.convertToFormData(this.lessonContent);
+
+    this.lessonContentService.createLessonContent(formData).subscribe(
       (res) => {
         if(res.status){
           this.toastrService.success(res.message);
@@ -330,8 +347,14 @@ export class ManageListLessonComponent {
 
   submitEditLessonContent(){
     this.lessonContent.lessonId = this.lesson.id;
+    this.lessonContent.fileUrl = this.lessonContent.fileUrl ?? '';
+    this.lessonContent.videoType = this.lessonContent.videoType ?? 1;
+    this.lessonContent.isPublished = this.lessonContent.isPublished ?? true;
+    this.lessonContent.prerequisiteLessonId = this.lessonContent.prerequisiteLessonId ?? 0;
 
-    this.lessonContentService.editLessonContent(this.lessonContent).subscribe(
+    const formData = this.objectService.convertToFormData(this.lessonContent);
+
+    this.lessonContentService.editLessonContent(formData).subscribe(
       (res) => {
         if(res.status){
           this.toastrService.success(res.message);
@@ -340,7 +363,7 @@ export class ManageListLessonComponent {
         }
       },
       (exception) => {
-        this.toastrService.error(exception?.error.Message);
+        this.toastrService.error(exception?.error.message);
         console.log(exception)
       }
     );
@@ -392,9 +415,42 @@ export class ManageListLessonComponent {
     window.open(content?.fileUrl, '_blank');
   }
 
+  handleOpenLinkDownload(content: any){
+    window.open(app.baseApiUrl + content?.fileUrl, '_blank');
+  }
+
   handleEditLessonContent(content: any){
     this.statusActionLessonContent = Action.Edit;
 
     this.lessonContent = JSON.parse(JSON.stringify(content));
+
+    if(this.lessonContent.type === TypeFile.File){
+      this.lessonContent.fileName = this.fileService.getFileNameFromFileUrlServer(this.lessonContent.fileUrl);
+    }
+  }
+
+  isDisableSubmitLessonContent(): boolean{
+    if(!this.lessonContent.title){
+      return false;
+    }
+
+    return true;
+  }
+
+  public handleChangeFile(event: any): void {
+    const file = event.target.files[0];
+  
+    if (file) {
+      this.lessonContent.fileName = file.name;
+
+      const reader = new FileReader();
+  
+      reader.onload = (e: any) => {
+      };
+  
+      reader.readAsDataURL(file);
+  
+      this.lessonContent.file = file;
+    }
   }
 }

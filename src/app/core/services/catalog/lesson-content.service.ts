@@ -15,7 +15,7 @@ export class LessonContentService {
         return this.http.get<any>(`${this.adminApiPrefix}/lessoncontent/get-lesson-content-by-lesson-id?id=${id}`);
       }  
 
-    createLessonContent(request: any): Observable<any> {
+    createLessonContent(request: FormData): Observable<any> {
         return this.http.post<any>(`${this.adminApiPrefix}/lessoncontent/create`,request);
     }
 
