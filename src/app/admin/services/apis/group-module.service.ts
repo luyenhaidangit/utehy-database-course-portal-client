@@ -1,3 +1,4 @@
+import { Header } from './../../../core/enums/request.enum';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -32,7 +33,7 @@ export class GroupModuleService {
   }
 
   getStudentsGroupModule(request: any): Observable<any> {
-    return this.http.get(`${this.adminApiPrefix}/group-module/get-students`, request);
+    return this.http.get(`${this.adminApiPrefix}/group-module/get-students`,{params: request});
   }
 
   getGroupModule(request: any): Observable<any> {
@@ -78,8 +79,27 @@ export class GroupModuleService {
     return this.http.post(`${this.adminApiPrefix}/group-module/get-notifications`, request);
   }
 
+  submitSchedule(request: any): Observable<any> {
+    return this.http.post(`${this.adminApiPrefix}/schedule/create-list-schedule`, request);
+  }
 
+  getSchedule(request: any): Observable<any> {
+    return this.http.get(`${this.adminApiPrefix}/schedule/get`, {params: request});
+  }
+  
   getGroupModuleByUser(request: any): Observable<any> {
-    return this.httpss.get(`admin/group-module/get-group-module-by-user`, request);
+    return this.http.get(`admin/group-module/get-group-module-by-user`, request);
+  }
+
+  createAttendence(request: any): Observable<any> {
+    return this.http.post(`${this.adminApiPrefix}/attendence/create-list-attendence`, request);
+  }
+
+  getAttendenceByScheduleId(request: any): Observable<any> {
+    return this.http.get(`${this.adminApiPrefix}/attendence/get`, {params: request});
+  }
+
+  exportExcelAttendenceSheet(request: any): Observable<any> {
+    return this.http.get(`${this.adminApiPrefix}/schedule/export-excel-attendence-sheet`, {params: request, responseType: 'blob'});
   }
 }
