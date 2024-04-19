@@ -185,12 +185,10 @@
        </ng-template>
        <div>
         <div class="card">
-            <div class="float-end">
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center justify-content-between">
                     <div class="mr-3">C: có mặt, P: Nghỉ có phép, K: Nghỉ không phép</div>
                     <button class="btn btn-info" (click)="exportExcelAttendenceSheet()">Xuất bảng điểm danh</button>
                 </div>
-            </div>
             <p-table
                 #dt2
                 dataKey="id"
@@ -213,18 +211,23 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-attendence>
                     <tr>
-                        <td style="text-align: center;">{{ attendence.index }}</td>
-                        <td style="text-align: center;">
+                        <td style="text-align: center;width: 100px;">{{ attendence.index }}</td>
+                        <td style="text-align: center;width:200px">
                             {{ attendence.name }}
                         </td>
-                        <td style="text-align: center;">{{ attendence.studentId }}</td>
-                        <td *ngFor="let item of schedules; let i = index" style="text-align: center;">
+                        <td style="text-align: center;width: 120px">{{ attendence.studentId }}</td>
+                        <td *ngFor="let item of schedules; let i = index" style="text-align: center;width: 140px">
                             <ng-container *ngIf="attendence">
                                 <ng-container *ngIf="attendence.attendence[i]">
                                     {{attendence.attendence[i]}}
                                 </ng-container>
                             </ng-container>
                         </td>
+                        <td style="text-align: center;width: 120px;">{{ schedules.length }}</td>
+                        <td style="text-align: center;width: 150px;">{{ attendence.attendence.length }}</td>
+                        <td style="text-align: center;width: 100px;">{{ attendence.numberLessonPresent }}</td>
+                        <td style="text-align: center;width: 100px;">{{ attendence.numberLessonAbsented }}</td>
+                        <td style="text-align: center;width: 100px;">{{ attendence.schoolAttendanceRate }}</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">

@@ -218,7 +218,7 @@
       <div class="position-relative">
          <div class="position-absolute w-100 top-0" id="class-schedule">
             <div class="d-flex justify-content-between">
-               <h3>Lịch dạy cho tháng {{ monthNames[currentMonth] }} - {{ currentYear }}</h3>
+               <div>Lịch dạy học lớp 125219 - Năm học 2021 - Học kỳ 2 </div>
                <button class="btn" (click)="scrollAddClassSchedule()">
                   <i class="fa-regular fa-calendar mr-2"></i> Thêm lịch dạy học <i class="fa-solid fa-chevron-right"></i>
                </button>
@@ -227,15 +227,20 @@
                <table class="table table-bordered">
                   <thead>
                      <tr>
-                        <th>Thứ</th>
+                        <th>Ngày</th>
                         <th>Tiết</th>
-                        <th>Ký hiệu</th>
-                        <th>Tên môn</th>
-                        <th>Tên lớp học phần</th>
                         <th>Phòng học</th>
                         <th>Giảng viên</th>
                      </tr>
                   </thead>
+                  <tbody>
+                     <tr *ngFor="let schedule of schedulesList">
+                        <td>{{schedule.dateSchool | date:'EEEE dd/MM/yyyy'}}</td>
+                        <td>{{schedule.classPeriods}}</td>
+                        <td>{{schedule.classRoom}}</td>
+                        <td></td>
+                     </tr>
+                  </tbody>
                </table>
             </div>
          </div>

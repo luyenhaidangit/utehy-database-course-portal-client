@@ -71,6 +71,8 @@ export class StudentGroupModuleComponent {
       this.getStudentsGroupModule(request);
     });
     this.generateCalendar();
+
+    this.getScheduleByGroupModuleId();
   }
 
   public config: any = {
@@ -145,6 +147,7 @@ export class StudentGroupModuleComponent {
     this.groupModuleService.getGroupModule(request).subscribe((result: any) => {
       if(result.status){
         this.groupModule = result.data;
+        console.log('groupModule: ', this.groupModule)
       }
     });
   }
@@ -935,7 +938,6 @@ export class StudentGroupModuleComponent {
     })
   }
 
-  
   @ViewChild(ConfirmPopup) confirmPopup!: ConfirmPopup;
 
   accept() {
@@ -971,5 +973,34 @@ export class StudentGroupModuleComponent {
   showDialog(day: number) {
     this.visible = true;
     this.currentDay = day;
+  }
+
+  schedulesList: any = [];
+
+  getScheduleByGroupModuleId(){
+    let request = {};
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      request = Object.assign({}, request, { groupModuleId: id });
+
+      this.groupModuleService.getSchedule(request).subscribe((result: any) => {
+        if(result.status){
+          const scheduleClass = result.data.items;
+
+          for(let i = 0; i < scheduleClass.length; i++){
+            var dateSchool = new Date(scheduleClass[i].dateSchool);
+            var today = new Date();
+            if(dateSchool.getMonth() >= today.getMonth()){
+              if(dateSchool.getDate() >= today.getDate()){
+                const classPeriods = scheduleClass[i].classPeriods.split(',');
+                scheduleClass[i].classPeriods = `${classPeriods[0]} ~ ${classPeriods[classPeriods.length - 1]}`;
+                this.schedulesList.push(scheduleClass[i]);
+              }
+            }
+          }
+        }
+      })
+    });
+
   }
 }
