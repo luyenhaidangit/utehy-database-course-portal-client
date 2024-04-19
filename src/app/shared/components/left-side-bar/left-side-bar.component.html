@@ -24,8 +24,6 @@
                     <ul class="sub-menu {{ Menu.MenuLevel1.Course.includes(currentUrl) || currentUrl.includes(Page.ManageListSection) ? 'mm-show' : '' }}">
                         <li class="cursor-pointer" [routerLink]="Page.ManageInfoCourse"><a class="{{ (currentUrl === Page.ManageInfoCourse) ? 'active' : '' }}">Thông tin khoá học</a></li>
                         <li class="cursor-pointer" [routerLink]="Page.ManageListSection"><a class="{{ Menu.MenuLevel2.ManageCourseSection.includes(currentUrl) || currentUrl.includes(Page.ManageListSection)? 'active' : '' }}">Quản lý bài giảng</a></li>
-                        <!-- <li class="cursor-pointer" routerLink="/admin/course/lesson"><a class="{{ isActive('/admin/course/lesson')? 'active' : '' }}">Quản lý bài giảng</a></li> -->
-                        <li class="cursor-pointer" routerLink="/group-module"><a class="{{ isActive('/group-module')? 'active' : '' }}">Quản lý lớp học</a></li>
                     </ul>
                 </li>
 
