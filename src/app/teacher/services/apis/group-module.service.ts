@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpAdminLoadingService } from 'src/app/shared/services/https/http-admin-loading.service';
+import { HttpTeacherLoadingService } from 'src/app/shared/services/https/http-teacher-loading.service';
 
 @Injectable({
   providedIn: 'root', 
 })
 export class GroupModuleService {
-  constructor(private httpAdminLoading: HttpAdminLoadingService, private http: HttpClient) { }
+  constructor(private httpAdminLoading: HttpAdminLoadingService, private http: HttpClient,private httpTC: HttpTeacherLoadingService) { }
 
   getGroupModules(request: any): Observable<any> {
     return this.httpAdminLoading.get('group-module/get', request);
@@ -38,7 +39,7 @@ export class GroupModuleService {
   }
   
   getGroupModuleByExamId(request: any): Observable<any> {
-    return this.httpAdminLoading.get('group-module/get-by-exam-id', request);
+    return this.httpTC.get('admin/group-module/get-by-exam-id', request);
   }
 
   exportExcelStudents(request: any): Observable<any> {

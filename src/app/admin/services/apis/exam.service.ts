@@ -37,4 +37,8 @@ export class ExamService {
   addExamResult(request: any): Observable<any> {
     return this.httpss.postFormData(`admin/exam/add-exam-result`, request);
   }
+
+  GetExamResultByStudentOne(request: any ): Observable<any> {
+    return this.httpss.get(`admin/exam/get-exam-result-by-student-exam-id`, request);
+  }
 }
