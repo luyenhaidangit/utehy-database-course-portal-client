@@ -11,11 +11,12 @@ import groupModuleConstant from 'src/app/admin/constants/group-module.constant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Table } from 'primeng/table';
 import { ToastrService } from 'ngx-toastr';
+import orderConstant from 'src/app/admin/constants/orderConstant';
 
 @Component({
   selector: 'app-attendence-module',
   templateUrl: './attendence-module.component.html',
-  styleUrls: ['./attendence-module.component.css']
+  styleUrls: ['./attendence-module.component.css'],
 })
 export class AttendenceModuleComponent implements OnInit {
 
@@ -28,15 +29,31 @@ export class AttendenceModuleComponent implements OnInit {
 
   public attendences: any = [];
 
+  public attendencesByMonth: any = [];
+
   public scheduleSelected: any = null;
 
   public daySelected: any = null;
+
+  public checkDateSelected: boolean = true;
+
+  public hasAttendanted: boolean = false;
+
+  public disableEdit: boolean = true;
 
   public config: any = {
     paging: pagingConfig.default,
     perPageOptions: DEFAULT_PER_PAGE_OPTIONS,
     baseUrl: systemConfig.baseFileSystemUrl,
   }
+
+  public constant: any = {
+    order: orderConstant,
+    sort: sortConstant,
+    file: fileConstant,
+    groupModule: groupModuleConstant
+  }
+
 
   public queryParameters: any = {
     ...this.config.paging,
@@ -60,9 +77,7 @@ export class AttendenceModuleComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private ngxToastr: ToastrService,
-  ) {
-    
-  }
+  ) {}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -73,9 +88,8 @@ export class AttendenceModuleComponent implements OnInit {
     this.route.params.subscribe(params => {
       const id = params['id'];
       request = Object.assign({}, request, { groupModuleId: id });
-
       this.getStudentGroupModule({id: id});
-      this.getSchedules(request);
+
     });
 
     this.route.queryParams.subscribe(params => {
@@ -114,8 +128,16 @@ export class AttendenceModuleComponent implements OnInit {
         }
 
         this.students = result.data.items;
-        console.log('students: ', this.students)
     
+        let requestGetSchedule = {};
+
+        this.route.params.subscribe(params => {
+          const id = params['id'];
+          requestGetSchedule = Object.assign({}, requestGetSchedule, { groupModuleId: id });
+          this.getSchedules(requestGetSchedule)
+    
+        });
+
         if(this.students.length === 0){
           this.paging.pageIndex = 1;
         }
@@ -141,13 +163,72 @@ export class AttendenceModuleComponent implements OnInit {
       if(result.status){
         this.schedules = result.data.items;
 
+        console.log('schedules: ', this.schedules);
+        console.log('student: ', this.students);
         for(let i = 0; i < this.schedules.length; i++) {
-          if(new Date(this.schedules[i].dateSchool).toDateString() == new Date().toDateString()){
-            this.scheduleSelected = this.schedules[i];
+          var dateSchoolSchedule = new Date(this.schedules[i].dateSchool);
+          var today = new Date();
+
+          if(dateSchoolSchedule.getMonth() == today.getMonth()){
+            if(dateSchoolSchedule.getDate() == today.getDate())
+              this.scheduleSelected = this.schedules[i];
           }
         }
+
+        var listAttendenceByStudentId = []
+        for(let i = 0; i < this.students.length; i++){
+          for(let j = 0; j < this.schedules.length; j++){
+            for(let k = 0; k < this.schedules[j].attendances.length; k++){
+              const attendance = this.schedules[j].attendances[k];
+              if(this.students[i].studentId == attendance.studentId){
+                var attendantValue = "";
+                if(attendance.attendant == true){
+                  attendantValue = "C";
+                }
+                else if(attendance.permittedLeave == true){
+                  attendantValue = "P";
+                }
+                else if(attendance.unpermittedLeave == true){
+                  attendantValue = "K";
+                }
+
+                // lưu ngày điểm danh của tất cả sinh viên thành mảng 1 chiều;
+                listAttendenceByStudentId.push({
+                  studentId: attendance.studentId,
+                  name: this.students[i].user.name,
+                  attendence: attendantValue
+                })
+              }
+            }
+          }
+        }
+
+        // gom nhóm listAttendenceByStudentId theo studentId
+        var getListAttendencesByStudentId: any = []; // [key: value] <=> [studentId: attendence]
+        listAttendenceByStudentId.forEach((attenByStudentId) =>{
+          if(!getListAttendencesByStudentId[attenByStudentId.studentId]){
+            getListAttendencesByStudentId[attenByStudentId.studentId] = [];
+          }
+
+          getListAttendencesByStudentId[attenByStudentId.studentId].push(attenByStudentId.attendence);
+        });
+
+        for(let i = 0; i < this.students.length; i++){
+          this.attendencesByMonth.push({
+            index: i + 1,
+            studentId: this.students[i].studentId,
+            name: this.students[i].user.name,
+            attendence: getListAttendencesByStudentId[this.students[i].studentId]
+          });
+        }
+
+        console.log('attendencesByMonth: ', this.attendencesByMonth);
+
         if(this.scheduleSelected){
           this.getAttendenceByScheduleId(this.scheduleSelected);
+        }
+        else{
+          this.hasAttendanted = false;
         }
       }
     });
@@ -174,30 +255,86 @@ export class AttendenceModuleComponent implements OnInit {
   }
 
   getAttendenceByScheduleId(schedule: any) {
+    this.disableEdit = true;
     this.scheduleSelected = schedule;
     this.daySelected = schedule.dateSchool;
     
-      var request = {
-        scheduleId: schedule.id
-      }
-      this.groupModuleService.getAttendenceByScheduleId(request).subscribe((result) => {
-        if(result.status){
-          this.attendences = result.data.items;
+    var dateSchoolSchedule = new Date(new Date(this.daySelected));
+    var today = new Date();
 
-          if(this.attendences != null && this.attendences.length != 0){
-            for(let i = 0; i < this.students.length; i++){
+    if(dateSchoolSchedule.getMonth() <= today.getMonth()){
+      if(dateSchoolSchedule.getDate() <= today.getDate())
+      {
+        var request = {
+          scheduleId: schedule.id
+        }
+        this.groupModuleService.getAttendenceByScheduleId({scheduleId: schedule.id}).subscribe((result) => {
+          if(result.status){
+            this.attendences = [];
 
+            var attendenceResponse = result.data.items;
+
+            if(attendenceResponse != null && attendenceResponse.length != 0){
+              this.hasAttendanted = true;
+              var index = 0;
+              for(let i = 0; i < this.students.length; i++){
+                for(let j = 0; j < attendenceResponse.length; j++){
+                  if(this.students[i].studentId == attendenceResponse[j].studentId){
+                    index++;
+                    var attendantValue = "";
+                    if(attendenceResponse[j].attendant == true){
+                      attendantValue = "attendant"
+                    }
+                    else if(attendenceResponse[j].permittedLeave == true){
+                      attendantValue = "permittedLeave"
+                    }
+                    else if (attendenceResponse[j].unpermittedLeave == true){
+                      attendantValue = "unpermittedLeave"
+                    }
+                    this.attendences.push({
+                      index: index,
+                      studentId: this.students[i].studentId,
+                      attendance: attendantValue,
+                      user: this.students[i].user,
+                      note: attendenceResponse[j].note
+                    })
+                  }
+                }
+              }
+            }
+            else{
+              this.hasAttendanted = false;
+              this.attendences = this.students.map((student: any, index: number) => {
+                var attendence = Object.assign({}, student);
+                attendence["index"] = index + 1;
+                attendence["attendance"] = false;
+                return attendence;
+              })
             }
           }
-          else{
-            this.attendences = this.students.map((student: any, index: number) => {
-              var attendence = Object.assign({}, student);
-              attendence["index"] = index + 1;
-              attendence["attendance"] = false;
-              return attendence;
-            })
-          }
-        }
-      })
+        })
+      }
     }
+    else{
+      this.checkDateSelected = false;
+    }
+  }
+
+  exportExcelAttendenceSheet(){
+
+    var request = {};
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      request = Object.assign({}, request, { groupModuleId: id });
+      this.groupModuleService.exportExcelAttendenceSheet({groupModuleId: id}).subscribe((data: Blob) => {
+        console.log("ok")
+        console.log(data);
+        const excelFile = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const downloadLink = document.createElement('a');
+        downloadLink.href = window.URL.createObjectURL(excelFile);
+        downloadLink.download = "BangDiemDanhLop" + this.groupModule.name + ".xlsx";
+        downloadLink.click();
+      });
+    });
+  }
 }

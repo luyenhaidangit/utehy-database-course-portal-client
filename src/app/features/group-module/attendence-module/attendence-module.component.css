@@ -52,41 +52,10 @@
     border: 1px solid #ced4da;
 }
 
-/* input.input-attendence[type=radio]{
-    position: absolute;
-    width: 16px;
-    height: 20px;
-    visibility: hidden;
+#table-attendences-group-module{
+    width: 100%;
 }
 
-.label-attendence{
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background-color: #fff;
-    padding: 1px;
+#table-attendences-group-module table{
+    overflow-x: scroll;
 }
-
-.label-attendence-attendent{
-    border: 1px solid rgb(0, 160, 209);
-}
-
-.label-attendence-permitted{
-    border: 1px solid rgb(216, 151, 0);
-}
-
-.label-attendence-unpermitted{
-    border: 1px solid rgb(182, 0, 12);
-}
-
-.input-attendence-attendent:checked ~ .label-attendence-attendent{
-    background-color: rgb(0, 160, 209);
-}
-
-.input-attendence-permitted:checked ~ .label-attendence-permitted{
-    background-color: rgb(216, 151, 0);
-}
-
-.input-attendence-unpermitted:checked ~ .label-attendence-unpermitted{
-    background-color: rgb(182, 0, 12);
-} */
