@@ -147,8 +147,8 @@ export class TestingComponent implements OnInit {
 
       const request = {
         ...params,
-        userId:'D5E5B63A-53A1-4F88-A399-1F7C7F4B08A7',  //dữ liệu mẫu,thì mới có dữ liệu
-        //  userId:id,
+        // userId:'D5E5B63A-53A1-4F88-A399-1F7C7F4B08A7',  //dữ liệu mẫu,thì mới có dữ liệu
+         userId:id,
       };
 
       this.studentAuthService.getStudentInfo(request).subscribe((result:any)=>{
@@ -202,7 +202,6 @@ export class TestingComponent implements OnInit {
       if (result.status) {
         this.result = result.data;
 
-
         //lưu kết quả
         this.route.paramMap.subscribe(params => {
           // const examId = params.get('id');
@@ -221,6 +220,8 @@ export class TestingComponent implements OnInit {
           this.examService.addExamResult(requestResult).subscribe((result: any) => {
             if (result.status) {
               alert("Đã nộp bài!");
+              this.router.navigate(['/test-exam']);
+
             }
           });
           

@@ -49,8 +49,8 @@ export class GroupTestExamComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       const request = {
         ...params,
-        userId:'D5E5B63A-53A1-4F88-A399-1F7C7F4B08A7'//dữ liệu mẫu,thì mới có dữ liệu
-        // userId:this.userCurrent.id,
+        // userId:'D5E5B63A-53A1-4F88-A399-1F7C7F4B08A7'//dữ liệu mẫu,thì mới có dữ liệu
+        userId:this.userCurrent.id,
       };
 
       this.queryParameters = {

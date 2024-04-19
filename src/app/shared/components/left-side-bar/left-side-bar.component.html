@@ -12,7 +12,7 @@
                     </a>
                 </li>
 
-                <li class="{{ Menu.MenuLevel1.Course.includes(currentUrl) || currentUrl.includes(Page.ManageListSection)  ? 'mm-active' : '' }}">
+                <li class="{{ Menu.MenuLevel1.Course.includes(currentUrl) || currentUrl.includes(Page.ManageListSection)  ? 'mm-active' : '' }} {{ user.permissions.includes('Admin') ? '' : 'd-none' }}">
                     <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ Menu.MenuLevel1.Course.includes(currentUrl) || currentUrl.includes(Page.ManageListSection) ? 'active' : '' }}">
                         <div class="navigation-label">
                             <i class="fa-solid fa-school pb-0"></i>
@@ -24,8 +24,6 @@
                     <ul class="sub-menu {{ Menu.MenuLevel1.Course.includes(currentUrl) || currentUrl.includes(Page.ManageListSection) ? 'mm-show' : '' }}">
                         <li class="cursor-pointer" [routerLink]="Page.ManageInfoCourse"><a class="{{ (currentUrl === Page.ManageInfoCourse) ? 'active' : '' }}">Thông tin khoá học</a></li>
                         <li class="cursor-pointer" [routerLink]="Page.ManageListSection"><a class="{{ Menu.MenuLevel2.ManageCourseSection.includes(currentUrl) || currentUrl.includes(Page.ManageListSection)? 'active' : '' }}">Quản lý bài giảng</a></li>
-                        <!-- <li class="cursor-pointer" routerLink="/admin/course/lesson"><a class="{{ isActive('/admin/course/lesson')? 'active' : '' }}">Quản lý bài giảng</a></li> -->
-                        <li class="cursor-pointer" routerLink="/group-module"><a class="{{ isActive('/group-module')? 'active' : '' }}">Quản lý lớp học</a></li>
                     </ul>
                 </li>
 
@@ -55,6 +53,9 @@
                     <ul class="sub-menu {{ isActive('/exam') ? 'mm-show' : '' }}">
                         <li class="cursor-pointer" [routerLink]="['/exam']"><a class="{{ isActive('/exam') ? 'active' : '' }}">Quản lý đề thi</a></li>
                     </ul>
+                    <!-- <ul class="sub-menu {{ isActive('/transcript') ? 'mm-show' : '' }}">
+                        <li class="cursor-pointer" [routerLink]="['/transcript']"><a class="{{ isActive('/transcript') ? 'active' : '' }}">Xem bảng điểm</a></li>
+                    </ul> -->
                 </li>
 
                 <!-- <li class="{{ isActive('/admin/course')  ? 'mm-active' : '' }}">

@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="examresult==null">
     <div class="container mt-3">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -38,11 +38,29 @@
 
 
                         <div class="d-flex justify-content-center">
-                            <button routerLink="/test-exam/testing/{{exam.id}}" class="btn btn-primary" [disabled]="statusButton(exam) !== 2" >Bắt đầu thi</button>
-                          </div>
-                          
+                            <button routerLink="/test-exam/testing/{{exam.id}}" class="btn btn-primary"
+                                [disabled]="statusButton(exam) !== 2">Bắt đầu thi</button>
+                        </div>
+
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row d-flex justify-content-center" *ngIf="examresult != null">
+    <!-- Phần hiển thị điểm -->
+    <div class="col-md-6">
+        <h2 class="text-center">Bạn đã thi bài thi này rồi</h2>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Điểm thi</h5>
+                <p class="card-text">Điểm: <span id="score">{{examresult.score}}</span></p>
+            </div>
+            <div class="text-center mb-3">
+                <button class="btn btn-primary" (click)="goBack()">Quay lại</button>
             </div>
         </div>
     </div>

@@ -17,6 +17,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ListExamComponent } from './list-exam/list-exam.component';
 import { SharedModule } from 'src/app/core/modules/shared/shared.module';
 import { ToastrService ,ToastrModule} from 'ngx-toastr';
+import { TranscriptStudentComponent } from './transcript-student/transcript-student.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ToastrService ,ToastrModule} from 'ngx-toastr';
     AddExamComponent,
     EditExamComponent,
     DetailExamComponent,
+    TranscriptStudentComponent
   ],
   imports: [
  
