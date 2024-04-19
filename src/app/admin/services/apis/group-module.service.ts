@@ -88,7 +88,7 @@ export class GroupModuleService {
   }
   
   getGroupModuleByUser(request: any): Observable<any> {
-    return this.http.get(`admin/group-module/get-group-module-by-user`, request);
+    return this.http.get(`/admin/group-module/get-group-module-by-user`, {params: request});
   }
 
   createAttendence(request: any): Observable<any> {

@@ -55,14 +55,15 @@ export class GroupTestExamComponent implements OnInit {
 
       this.queryParameters = {
         ...params,
-        teacherId: params['teacherId'] ? params['teacherId'] : 0,
-        semester: params['semester'] ? params['semester'] :  0,
-        status: params['status'] ? params['status'] : 0,
-        year: params['year'] ? params['year'] : null,
+        userId: params['userId'] ? params['userId'] : 0,
+
       };
 
       this.getGroupModules(request);
+      console.log(this.userCurrent.id);
     });
+
+    
   }
 
   public constant: any = {
@@ -84,7 +85,7 @@ export class GroupTestExamComponent implements OnInit {
     this.groupModuleService.getGroupModuleByUser(request).subscribe((result: any) => {
       if(result.status){
         this.groupModules = result.data;
-        console.log(result.data[1])
+        console.log(result.data)
       }
     });
 
