@@ -86,18 +86,21 @@
             <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title block-class-name">{{ groupModule.name }}</h3>
-                <div class="block-options" dropdown>
-                    <div class="dropdown">
-                        <button type="button" class="btn btn-light module__dropdown" id="button-basic" dropdownToggle aria-controls="dropdown-basic">
-                        <i class="fa-solid fa-gear"></i>
-                        </button>
-                        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
-                        role="menu" aria-labelledby="button-basic">
-                            <li routerLink="/group-module/student/{{ groupModule.id }}" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-circle-info dropdown-group-module-icon"></i> Danh sách sinh viên</span></li>
-                            <li (click)="handleOpenEditGroupModuleModal(groupModule)" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-pen dropdown-group-module-icon"></i> Sửa thông tin</span></li>
-                            <li (click)="handleHideGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-eye-slash dropdown-group-module-icon"></i> Ẩn nhóm</span></li>
-                            <li (click)="handleDeleteGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer text-danger"><i class="fa-solid fa-trash dropdown-group-module-icon"></i> Xoá nhóm</span></li>
-                        </ul>
+                <div class="d-flex">
+                    <button [routerLink]="'/group-module/attendence/' + groupModule.id" class="mr-3 btn-attendence btn btn-primary">Điểm danh</button>
+                    <div class="block-options" dropdown>
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-light module__dropdown" id="button-basic" dropdownToggle aria-controls="dropdown-basic">
+                            <i class="fa-solid fa-gear"></i>
+                            </button>
+                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                            role="menu" aria-labelledby="button-basic">
+                                <li routerLink="/group-module/student/{{ groupModule.id }}" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-circle-info dropdown-group-module-icon"></i> Danh sách sinh viên</span></li>
+                                <li (click)="handleOpenEditGroupModuleModal(groupModule)" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-pen dropdown-group-module-icon"></i> Sửa thông tin</span></li>
+                                <li (click)="handleHideGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer"><i class="fa-solid fa-eye-slash dropdown-group-module-icon"></i> Ẩn nhóm</span></li>
+                                <li (click)="handleDeleteGroupModule(groupModule.id)" role="menuitem"><span class="dropdown-item cursor-pointer text-danger"><i class="fa-solid fa-trash dropdown-group-module-icon"></i> Xoá nhóm</span></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 </div>

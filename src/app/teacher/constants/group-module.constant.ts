@@ -21,7 +21,8 @@ const groupModuleConstant = {
     ],
     file:{
         studentsExport: 'DanhSachSinhVien.xlsx',
-        scoreStudentsExport: 'BangDiemSinhVien.xlsx'
+        scoreStudentsExport: 'BangDiemSinhVien.xlsx',
+        attendenceSheet: 'BangDiemDanhSinhVien.xlsx'
     }
 };
 

@@ -96,7 +96,10 @@ export class GroupModuleService {
   }
 
   getAttendenceByScheduleId(request: any): Observable<any> {
-    console.log('request: ', request)
     return this.http.get(`${this.adminApiPrefix}/attendence/get`, {params: request});
+  }
+
+  exportExcelAttendenceSheet(request: any): Observable<any> {
+    return this.http.get(`${this.adminApiPrefix}/schedule/export-excel-attendence-sheet`, {params: request, responseType: 'blob'});
   }
 }
