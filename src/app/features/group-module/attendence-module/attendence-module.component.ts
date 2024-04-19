@@ -192,7 +192,7 @@ export class AttendenceModuleComponent implements OnInit {
                   attendantValue = "K";
                 }
 
-                // lưu ngày điểm danh của tất cả sinh viên thành mảng 1 chiều;
+                // lưu từng bản ghi điểm danh của tất cả sinh viên thành mảng 1 chiều;
                 listAttendenceByStudentId.push({
                   studentId: attendance.studentId,
                   name: this.students[i].user.name,
@@ -214,12 +214,28 @@ export class AttendenceModuleComponent implements OnInit {
         });
 
         for(let i = 0; i < this.students.length; i++){
-          this.attendencesByMonth.push({
-            index: i + 1,
-            studentId: this.students[i].studentId,
-            name: this.students[i].user.name,
-            attendence: getListAttendencesByStudentId[this.students[i].studentId]
-          });
+          let numberLessonPresent = 0;
+          let numberLessonAbsented = 0;
+          if(getListAttendencesByStudentId[this.students[i].studentId] != null){
+            for(let j = 0; j < getListAttendencesByStudentId[this.students[i].studentId].length; j++){
+              if(getListAttendencesByStudentId[this.students[i].studentId][j] == "C"){
+                numberLessonPresent++;
+              }
+              if(getListAttendencesByStudentId[this.students[i].studentId][j] == "P" || 
+              getListAttendencesByStudentId[this.students[i].studentId][j] == "K"){
+                numberLessonAbsented++;
+              }
+            }
+            this.attendencesByMonth.push({
+              index: i + 1,
+              studentId: this.students[i].studentId,
+              name: this.students[i].user.name,
+              attendence: getListAttendencesByStudentId[this.students[i].studentId],
+              numberLessonPresent: numberLessonPresent,
+              numberLessonAbsented: numberLessonAbsented,
+              schoolAttendanceRate: ((numberLessonPresent / getListAttendencesByStudentId[this.students[i].studentId].length) * 100).toFixed(2) + "%"
+            });
+          }
         }
 
         console.log('attendencesByMonth: ', this.attendencesByMonth);
