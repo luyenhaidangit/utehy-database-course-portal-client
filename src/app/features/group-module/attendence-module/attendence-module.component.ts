@@ -12,13 +12,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Table } from 'primeng/table';
 import { ToastrService } from 'ngx-toastr';
 import orderConstant from 'src/app/admin/constants/orderConstant';
-import { ExcelService } from '../services/ExcelService';
 
 @Component({
   selector: 'app-attendence-module',
   templateUrl: './attendence-module.component.html',
   styleUrls: ['./attendence-module.component.css'],
-  providers: [ExcelService]
 })
 export class AttendenceModuleComponent implements OnInit {
 
@@ -79,7 +77,6 @@ export class AttendenceModuleComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private ngxToastr: ToastrService,
-    private excelService: ExcelService
   ) {}
 
   ngOnInit(): void {
