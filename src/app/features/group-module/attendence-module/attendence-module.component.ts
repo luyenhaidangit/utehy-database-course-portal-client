@@ -216,24 +216,26 @@ export class AttendenceModuleComponent implements OnInit {
         for(let i = 0; i < this.students.length; i++){
           let numberLessonPresent = 0;
           let numberLessonAbsented = 0;
-          for(let j = 0; j < getListAttendencesByStudentId[this.students[i].studentId].length; j++){
-            if(getListAttendencesByStudentId[this.students[i].studentId][j] == "C"){
-              numberLessonPresent++;
+          if(getListAttendencesByStudentId[this.students[i].studentId] != null){
+            for(let j = 0; j < getListAttendencesByStudentId[this.students[i].studentId].length; j++){
+              if(getListAttendencesByStudentId[this.students[i].studentId][j] == "C"){
+                numberLessonPresent++;
+              }
+              if(getListAttendencesByStudentId[this.students[i].studentId][j] == "P" || 
+              getListAttendencesByStudentId[this.students[i].studentId][j] == "K"){
+                numberLessonAbsented++;
+              }
             }
-            if(getListAttendencesByStudentId[this.students[i].studentId][j] == "P" || 
-            getListAttendencesByStudentId[this.students[i].studentId][j] == "K"){
-              numberLessonAbsented++;
-            }
+            this.attendencesByMonth.push({
+              index: i + 1,
+              studentId: this.students[i].studentId,
+              name: this.students[i].user.name,
+              attendence: getListAttendencesByStudentId[this.students[i].studentId],
+              numberLessonPresent: numberLessonPresent,
+              numberLessonAbsented: numberLessonAbsented,
+              schoolAttendanceRate: ((numberLessonPresent / getListAttendencesByStudentId[this.students[i].studentId].length) * 100).toFixed(2) + "%"
+            });
           }
-          this.attendencesByMonth.push({
-            index: i + 1,
-            studentId: this.students[i].studentId,
-            name: this.students[i].user.name,
-            attendence: getListAttendencesByStudentId[this.students[i].studentId],
-            numberLessonPresent: numberLessonPresent,
-            numberLessonAbsented: numberLessonAbsented,
-            schoolAttendanceRate: ((numberLessonPresent / getListAttendencesByStudentId[this.students[i].studentId].length) * 100) + "%"
-          });
         }
 
         console.log('attendencesByMonth: ', this.attendencesByMonth);

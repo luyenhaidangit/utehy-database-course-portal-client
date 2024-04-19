@@ -234,12 +234,19 @@
                      </tr>
                   </thead>
                   <tbody>
-                     <tr *ngFor="let schedule of schedulesList">
-                        <td>{{schedule.dateSchool | date:'EEEE dd/MM/yyyy'}}</td>
-                        <td>{{schedule.classPeriods}}</td>
-                        <td>{{schedule.classRoom}}</td>
-                        <td></td>
-                     </tr>
+                     <ng-container *ngIf="schedulesList">
+                        <tr *ngFor="let schedule of schedulesList">
+                           <td>{{schedule.dateSchool | date:'EEEE dd/MM/yyyy'}}</td>
+                           <td>{{schedule.classPeriods}}</td>
+                           <td>{{schedule.classRoom}}</td>
+                           <td></td>
+                        </tr>
+                     </ng-container>
+                     <ng-container *ngIf="schedulesList">
+                        <tr>
+                           Lớp học chưa không có lịch học nào
+                        </tr>
+                     </ng-container>
                   </tbody>
                </table>
             </div>
