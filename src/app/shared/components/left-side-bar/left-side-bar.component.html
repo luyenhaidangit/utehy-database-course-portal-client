@@ -12,7 +12,7 @@
                     </a>
                 </li>
 
-                <li class="{{ Menu.MenuLevel1.Course.includes(currentUrl) || currentUrl.includes(Page.ManageListSection)  ? 'mm-active' : '' }}">
+                <li class="{{ Menu.MenuLevel1.Course.includes(currentUrl) || currentUrl.includes(Page.ManageListSection)  ? 'mm-active' : '' }} {{ user.permissions.includes('Admin') ? '' : 'd-none' }}">
                     <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ Menu.MenuLevel1.Course.includes(currentUrl) || currentUrl.includes(Page.ManageListSection) ? 'active' : '' }}">
                         <div class="navigation-label">
                             <i class="fa-solid fa-school pb-0"></i>
