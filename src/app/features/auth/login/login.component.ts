@@ -47,7 +47,7 @@ export class LoginComponent {
       (res) => {
         if(res.status){
           this.authService.setAuthTokenLocalStorage(res.data);
-          this.router.navigate([Page.Dashboard]);
+          this.router.navigate(['/course/section']);
         }
       },
       (exception) => {

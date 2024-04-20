@@ -223,13 +223,13 @@
                                         <td>{{ question.section.title }}</td>
                                         <!-- <td>{{ question.questionCategoryName }}</td> -->
                                         <td>
-                                            <!-- {{ questionHelper.getDifficultyQuestion(question.difficulty) }} -->
-                                            <span *ngIf="question.difficulty === 1"
+                                            {{ questionHelper.getDifficultyQuestion(question.difficulty) }}
+                                            <!-- <span *ngIf="question.difficulty === 1"
                                                 class="badge badge-success px-2 py-1">Dễ</span>
                                             <span *ngIf="question.difficulty === 2"
                                                 class="badge badge-warning px-2 py-1">Trung bình</span>
                                             <span *ngIf="question.difficulty === 3"
-                                                class="badge badge-danger px-2 py-1">Khó</span>
+                                                class="badge badge-danger px-2 py-1">Khó</span> -->
                                         </td>
                                         <!-- <td>{{ question.score }}</td> -->
                                         <td>

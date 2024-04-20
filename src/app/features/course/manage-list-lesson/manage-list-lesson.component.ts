@@ -20,6 +20,7 @@ import { ObjectService } from 'src/app/core/services/utilities/object.service';
 import { app } from 'src/app/core/configs/app.config';
 import { FileService } from 'src/app/core/services/utilities/file.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { AuthService } from 'src/app/core/services/identity/auth.service';
 @Component({
   selector: 'app-manage-list-lesson',
   templateUrl: './manage-list-lesson.component.html',
@@ -44,6 +45,8 @@ export class ManageListLessonComponent {
     lessons: []
   };
 
+  user: any;
+
   constructor(
     private route: ActivatedRoute, 
     private sectionService: SectionService,
@@ -53,11 +56,16 @@ export class ManageListLessonComponent {
     private toastrService: ToastrService,
     private objectService: ObjectService,
     private fileService: FileService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private userService: AuthService
     ) {}
 
   ngOnInit() {
     this.handleRouteParamsChange();
+
+    this.user = this.userService.getUserCurrent();
+
+    console.log(this.user)
   }
 
   //Action

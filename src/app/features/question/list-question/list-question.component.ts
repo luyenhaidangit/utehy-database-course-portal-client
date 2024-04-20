@@ -312,6 +312,7 @@ export class ListQuestionComponent implements OnInit {
       if(result.status){
         this.questions = result.data.items;
         this.totalPages = result.data.totalPages;
+        console.log(this.questions)
       }
     });
 

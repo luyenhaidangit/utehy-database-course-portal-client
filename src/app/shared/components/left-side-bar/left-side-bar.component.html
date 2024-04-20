@@ -12,7 +12,7 @@
                     </a>
                 </li>
 
-                <li class="{{ Menu.MenuLevel1.Course.includes(currentUrl) || currentUrl.includes(Page.ManageListSection)  ? 'mm-active' : '' }} {{ user.permissions.includes('Admin') ? '' : 'd-none' }}">
+                <li class="{{ Menu.MenuLevel1.Course.includes(currentUrl) || currentUrl.includes(Page.ManageListSection)  ? 'mm-active' : '' }}">
                     <a class="waves-effect navigation-menu-main d-flex justify-content-between {{ Menu.MenuLevel1.Course.includes(currentUrl) || currentUrl.includes(Page.ManageListSection) ? 'active' : '' }}">
                         <div class="navigation-label">
                             <i class="fa-solid fa-school pb-0"></i>
@@ -104,7 +104,7 @@
                             <a class="{{ currentUrl === '/post' ? 'active' : '' }}">Quản lý bài viết</a>
                         </li>
                         <li class="cursor-pointer" routerLink="/post/approve">
-                            <a class="{{ currentUrl === '/post/approve' ? 'active' : '' }}">Kiểm duyệt bài viết</a>
+                            <!-- <a class="{{ currentUrl === '/post/approve' ? 'active' : '' }}">Kiểm duyệt bài viết</a> -->
                         </li>
                     </ul>
                 </li>
@@ -140,7 +140,7 @@
                         <!-- <li class="cursor-pointer" routerLink="/group"><a class="{{ isActive('/group') ? 'active' : '' }}">Quản lý nhóm người</a></li> -->
                         <li class="cursor-pointer" routerLink="/teacher"><a class="{{ isActive('/teacher') ? 'active' : '' }}">Quản lý giáo viên</a></li>
                         <li class="cursor-pointer" routerLink="/student"><a class="{{ isActive('/student') ? 'active' : '' }}">Quản lý sinh viên</a></li>
-                        <li class="cursor-pointer" routerLink="/role"><a class="{{ isActive('/role') ? 'active' : '' }}">Quản lý vai trò </a></li>
+                        <!-- <li class="cursor-pointer" routerLink="/role"><a class="{{ isActive('/role') ? 'active' : '' }}">Quản lý vai trò </a></li> -->
 
                     </ul>
                 </li>

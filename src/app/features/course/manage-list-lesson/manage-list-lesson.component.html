@@ -297,7 +297,7 @@
                 <button *ngIf="statusActionLessonContent === null" type="button" class="btn btn-success waves-effect waves-light" (click)="handleAddLessonContent()">
                     <i class="fa-solid fa-plus"></i>
                 </button>
-                <button *ngIf="statusActionLessonContent === Action.Edit" type="button" class="btn btn-primary waves-effect waves-light me-2" [disabled]="!isDisableSubmitLessonContent()" (click)="submitEditLessonContent()">
+                <button *ngIf="statusActionLessonContent === Action.Edit && user.permissions[0] !== 'Student'" type="button" class="btn btn-primary waves-effect waves-light me-2" [disabled]="!isDisableSubmitLessonContent()" (click)="submitEditLessonContent()">
                     <i class="fa-solid fa-wrench"></i>
                 </button>
                 <button *ngIf="statusActionLessonContent === Action.Add" type="button" class="btn btn-primary waves-effect waves-light me-2"  [disabled]="!isDisableSubmitLessonContent()" (click)="submitAddLessonContent()">
