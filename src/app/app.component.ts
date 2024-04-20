@@ -1,7 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { LoadingBarService } from '@ngx-loading-bar/core';
-import { map, delay, withLatestFrom } from 'rxjs/operators';
-import { AuthService } from './student/services/api/auth.service';
+import { AuthToken } from './core/models/interfaces/common/auth-token.interface';
+import { AuthService } from './core/services/identity/auth.service';
+import { HttpStatus } from './core/enums/http-status.enum';
+import { defaultSpinner } from './core/configs/spinner.config';
 
 @Component({
   selector: 'app-root',
@@ -10,22 +11,7 @@ import { AuthService } from './student/services/api/auth.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
-  constructor(private loader: LoadingBarService, private authService: AuthService) {}
-
-  // ngOnInit(): void {
-  //   const user = JSON.parse(localStorage.getItem('user') || '{}');
-  //   if(user?.token){
-  //     this.authService.getUserInfo().subscribe(res => {
-  //       if(res.status){
-  //         this.authService.setAuthData(res.data);
-  //         this.isInitialized = true;
-  //       }
-  //     })
-  //   }else{
-  //     this.authService.removeAuthData();
-  //     this.isInitialized = true;
-  //   }
-  // }
-
-  public isInitialized: boolean = true;
+  //Core
+  public DefaultSpinner = defaultSpinner;
+  public title = 'UTEHY Databacourse Portal';
 }

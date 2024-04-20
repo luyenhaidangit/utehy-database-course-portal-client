@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { LoadingUiService } from '../../components/loading-ui/loading-ui.service';
 import loadingUiConstant from '../../components/loading-ui/loading-ui.constant';
 
@@ -13,7 +11,7 @@ import loadingUiConstant from '../../components/loading-ui/loading-ui.constant';
 })
 export class HttpTeacherLoadingService {
   //   private baseUrl: string = environment.apiStudentBaseUrl;
-  private baseUrl: string = environment.host.apiTeacherBaseUrl;
+  private baseUrl: string = '';
 
 
   constructor(
@@ -45,6 +43,7 @@ export class HttpTeacherLoadingService {
     const queryParams = this.buildQueryParams(data);
     this.loadingUi.show(loadingUiConstant.type.dualRing);
 
+    console.log(`url: ${this.baseUrl}/${endpoint}`);
     return this.http.get(`${this.baseUrl}/${endpoint}${queryParams ? `?${queryParams}` : ''}`, { headers }).pipe(
       catchError((error: HttpErrorResponse) => {
         this.handleErrorResponse(error);

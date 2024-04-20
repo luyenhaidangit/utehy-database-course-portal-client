@@ -31,7 +31,6 @@ import { CoursesQuestionComponent } from './components/courses-question/courses-
     AuthComponent,
     AuthEmailPhoneComponent,
     AuthGoogleComponent,
-    AuthFacebookComponent,
     AuthGithubComponent,
     SidebarComponent,
     NewsFeedComponent,

@@ -13,7 +13,7 @@ export class ExamService {
   }
 
   getExamResults(request: any = null): Observable<any> {
-    return this.http.get('exam/get-result', request);
+    return this.http.get('admin/exam/get-result', request);
   } 
   createExam(request: any): Observable<any> {
     return this.http.postFormData('exam/create', request);
